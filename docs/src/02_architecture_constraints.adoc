@@ -1,27 +1,47 @@
-ifndef::imagesdir[:imagesdir: ../images]
-
 [[section-architecture-constraints]]
 == Architecture Constraints
 
+=== Technical Constraints
 
-[role="arc42help"]
-****
-.Contents
-Any requirement that constraints software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
+[cols="1,2", options="header"]
+|=========================================================================================================================================================================================================
+| Constraint | Explanation                                                                                                                                                                                
+| Docker     | The application will operate within a Docker environment.                                                                                                                                  
+| GitHub     | We'll leverage GitHub as our remote repository for project development, task delegation among team members, and version control. GitHub streamlines communication and project organization.
+                                             
+|=========================================================================================================================================================================================================
 
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
+=== Organizational Constraints
 
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
+[cols="1,2", options="header"]
+|==========================================================================================================================================================================================================================================================
+| Constraint       | Explanation                                                                                                                                                                                                                           
+| Size of the team | The team comprises six individuals.                                                                                                                                                                                                   
+| Meetings         | Weekly meetings are scheduled to discuss task organization during each laboratory class session. In the event of requiring an extraordinary meeting, various tools such as WhatsApp or Discord are employed to coordinate effectively.
+| Testing          | Various scenarios will be explored to ensure the app's functionality is tested. We'll employ a range of techniques to maximize test coverage, striving for comprehensive assessment.                                       
+| Experience       | Team members possess limited experience with the diverse technologies being employed.                                                                                                                                                 
+|==========================================================================================================================================================================================================================================================
 
 
-.Further Information
+=== Conventions
 
-See https://docs.arc42.org/section-2/[Architecture Constraints] in the arc42 documentation.
+[cols="1,2", options="header"]
+|===
+| Constraint | Explanation
 
-****
+
+| Documentation
+| The documentation must adhere to the Arc42 method, ensuring it is clear, simple, and effective.
+
+| Accessibility
+| The application should be user-friendly, allowing all individuals to navigate effortlessly, irrespective of any disabilities, ensuring inclusivity for all users.
+
+| Programming Language conventions
+| We ought to follow the conventions specific to the programming languages we're employing.
+
+| Clean Code
+| The code in the application must be meticulously crafted and neat, with a focus on readability and maintainability.
+
+| Mircroservices
+| The application will be divided into microservices to facilitate its development.
+|===

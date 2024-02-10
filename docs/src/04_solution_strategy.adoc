@@ -3,6 +3,54 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-solution-strategy]]
 == Solution Strategy
 
+=== Technology Decisions
+
+In order to develop the application and adhere to the constraints, we selected the following technologies:
+
+- ReactJS: JavaScript library that streamlines the development of graphical interfaces for web applications.
+- TypeScript: Extension of JavaScript, bolstering it with type support for improved development.
+- GitHub: Platform offering remote repository services for project development, task management, and version control.
+- MongoDB: A non-linear database selected to oversee storage of diverse application contents, with each microservice possessing its dedicated database.
+- NodeJS: Facilitates efficient management of asynchronous events, notably beneficial for scalable network applications and database administration.
+- Docker: Employed for seamless deployment of the application environment.
+
+=== Top-level Decomposition
+
+==== Diagramming tools
+
+We will use PlantUML and UMLet for creating the documentation's diagrams.
+
+=== Approaches to Achieve Top Quality Goals
+
+[cols="1,2,3"]
+|===
+| Quality Goal | Scenario | Solution Approach
+
+| Privacy
+| Users seek reassurance in the safety and privacy of their data within our app.
+| Ensuring user data security and privacy within the application.
+
+| Usability
+| Seamless execution of all application functions is crucial for user satisfaction.
+| Optimizing usability through the utilization of React.
+
+| Maintainability
+| Application architecture must facilitate seamless addition or modification of functionalities with minimal code changes.
+| Implementing design patterns and adhering to code conventions to ensure clean and maintainable code. Additionally, prioritizing testing during development for long-term maintainability.
+
+| Scalability
+| The application's design must accommodate changes effortlessly throughout its lifecycle.
+| Employing a microservices approach to minimize code repetition and enhance understanding of application distribution, ensuring future scalability.
+
+|===
+
+=== Organizational Decisions
+
+We've established the following organizational guidelines:
+
+- *Language*: Adhering to international standards, the project, encompassing code and documentation, will be developed in English as the primary language.
+- *Issues:* All deliberations will be documented as issues on GitHub.
+- *GitHub Projects:* Employing this tool, we'll plan the application's development process, utilizing GitHub's integrated features for efficient project management in accordance with AGILE methodology.
 
 [role="arc42help"]
 ****
