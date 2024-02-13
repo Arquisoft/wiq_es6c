@@ -51,3 +51,4 @@ occurs.
 |The user must answer a series of questions in which the user must select the correct answer in each case.
 |For each of the questions, the user must select the correct answer from those provided by the system.
 |High
+|===
