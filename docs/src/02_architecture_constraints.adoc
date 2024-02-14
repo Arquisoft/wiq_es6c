@@ -6,22 +6,45 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 [role="arc42help"]
 ****
-.Contents
-Any requirement that constraints software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
 
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
+.Technical constraints
 
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
+[cols="e,2e" options="header"]
+|===
+|Constraint           |Explanation
 
+|OS/Browser Independence        |The project must be available to the maximum amount of users feasible. That includes support for mainstream OSs (Windows, Linux, MacOS) and browsers. (Chrome, Safari, Firefox, Edge)
+|Usage of REACT      |The REACT JS Framework will be used to develop the front-end of the project.
+|Version Control      |In order of the project to be graded adequately, it must use GitHub as its version control software. The contributions of each team member and agreements made must be easily traceable.
+|Continuous integration and delivery      |The development must progress through frequent integration of small changes into the main branch. New features must be automatically deployed with ease. (In our case, using Docker)
 
-.Further Information
+|===
 
-See https://docs.arc42.org/section-2/[Architecture Constraints] in the arc42 documentation.
+.Organizational constraints
+
+[cols="e,2e" options="header"]
+|===
+|Constraint           |Explanation
+
+|Time        |The team has to complete the project during the semester. 
+|Team size        |The development teams must be composed of 5-7 members. In our case, the final team is composed of 6 members.
+|Budget        |No budget is provided for the development, so any costs that may arise have to be covered by the development team.
+|Deliverables          |Along the development process, the team must prepare deliverables set for certain dates, consisting of documentation and/or application prototypes.
+|Team meetings          |In order to plan the development of the project, as well as to assign tasks and make design decisions, the team will participate in several meetings. These meetings can be done in and out of the classroom, as needed. A record must be created for every meeting, summarizing the progress made.
+|Project testing         |The development team must test acceptable coverage of the project via different methods (unit testing, integration testing, acceptance testing... etc.)
+|Knowledge        |There are many aspects of the development of this project that are foreign to some of us (usage of REACT, deployments, microsystems architecture... etc.) so some research is required to keep up.
+|===
+
+.Conventions
+
+[cols="e,2e" options="header"]
+|===
+|Constraint           |Explanation
+
+|Use of English        |The totality of the project must be written in English, as to facilitate its understanding internationally. 
+|Documentation format          |We have decided to use the ARC42 template structure.
+|Clean code      |In order to facilitate the understanding and maintenance of the project, all code written must be organized, descriptive and easy to read.
+|Ease of use      |The application needs to have an intuitive design, as well as the capability to help and guide users towards their goal. User experience has to be as seamless as it can be made.
+|===
 
 ****
