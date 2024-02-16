@@ -1,47 +1,47 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
 
-=== Technical Constraints
+=== Technical constraints
 
-[cols="1,2", options="header"]
-|=========================================================================================================================================================================================================
-| Constraint | Explanation                                                                                                                                                                                
-| Docker     | The application will operate within a Docker environment.                                                                                                                                  
-| GitHub     | We'll leverage GitHub as our remote repository for project development, task delegation among team members, and version control. GitHub streamlines communication and project organization.
-                                             
-|=========================================================================================================================================================================================================
+[cols="2,4" options="header"]
+|===
+|Constraint           |Explanation
 
-=== Organizational Constraints
+|*OS/Browser Independence*        |The project must be available to the maximum amount of users feasible. That includes support for mainstream OSs (_Windows_, _Linux_, _MacOS_) and browsers. (_Chrome_, _Safari_, _Firefox_, _Edge_)
+|*Usage of _REACT_*      |The _REACT JS_ framework will be used to develop the front-end of the project.
+|*Docker*     | The application will operate within a Docker environment.
+|*Version Control*      |In order of the project to be graded adequately, it must use _GitHub_ as its version control software. The contributions of each team member and agreements reached must be easily traceable.
+|*Continuous integration and delivery*      |The development must progress through frequent integration of small changes into the main branch. New features must be automatically deployed with ease. (In our case, using _Docker_)
 
-[cols="1,2", options="header"]
-|==========================================================================================================================================================================================================================================================
-| Constraint       | Explanation                                                                                                                                                                                                                           
-| Size of the team | The team comprises six individuals.                                                                                                                                                                                                   
-| Meetings         | Weekly meetings are scheduled to discuss task organization during each laboratory class session. In the event of requiring an extraordinary meeting, various tools such as WhatsApp or Discord are employed to coordinate effectively.
-| Testing          | Various scenarios will be explored to ensure the app's functionality is tested. We'll employ a range of techniques to maximize test coverage, striving for comprehensive assessment.                                       
-| Experience       | Team members possess limited experience with the diverse technologies being employed.                                                                                                                                                 
-|==========================================================================================================================================================================================================================================================
+|===
 
+=== Organizational constraints
+
+[cols="2,7" options="header"]
+|===
+|Constraint           |Explanation
+
+|*Time*        |The team has to complete the project during the semester. 
+|*Team size*        |The development teams must be composed of 5-7 members. In our case, the final team is composed of 6 members.
+|*Budget*        |No budget is provided for the development, so any costs that may arise have to be covered by the development team.
+|*Deliverables*          |Along the development process, the team must prepare deliverables set for certain dates, consisting of documentation and/or application prototypes.
+|*Team meetings*          |In order to plan the development of the project, as well as to assign tasks and make design decisions, the team will participate in several meetings. These meetings can be done in and out of the classroom, as needed. A record must be created for every meeting, summarizing the progress made.
+|*Project testing*         |The development team must test acceptable coverage of the project using different methods (_unit testing_, _integration testing_, _acceptance testing_... etc.)
+|*Knowledge*        |There are many aspects of the development of this project that are foreign to some of us (usage of _REACT_, deployments, microsystems architecture... etc.) so some research is required to keep up.
+|===
 
 === Conventions
 
-[cols="1,2", options="header"]
+[cols="2,4" options="header"]
 |===
-| Constraint | Explanation
+|Constraint           |Explanation
 
-
-| Documentation
-| The documentation must adhere to the Arc42 method, ensuring it is clear, simple, and effective.
-
-| Accessibility
-| The application should be user-friendly, allowing all individuals to navigate effortlessly, irrespective of any disabilities, ensuring inclusivity for all users.
-
-| Programming Language conventions
-| We ought to follow the conventions specific to the programming languages we're employing.
-
-| Clean Code
-| The code in the application must be meticulously crafted and neat, with a focus on readability and maintainability.
-
-| Mircroservices
-| The application will be divided into microservices to facilitate its development.
+|*Use of English*        |The totality of the project must be written in English, as to facilitate its understanding internationally. 
+|*Programming Language conventions*      | We ought to follow the conventions specific to the programming languages we're employing.
+|*Documentation format*          |The documentation must adhere to the Arc42 method, ensuring it is clear, simple, and effective.
+|*Clean code*      |In order to ease the understanding and maintenance of the project, all code written must be organized, descriptive and easy to read.
+|*Accesibility*      |The application should be user-friendly, allowing all individuals to navigate effortlessly, irrespective of any disabilities, ensuring inclusivity for all users.
+|*Microservices*      | The application will be divided into microservices to facilitate its development.
 |===
+
+=======
