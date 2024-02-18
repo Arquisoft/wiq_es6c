@@ -4,9 +4,11 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 === Level 1: Overall System's whitebox
 
+image::51.png["Level-1-block-view"]
+
 ==== Motivation
 
-*_WiQ_* application is the general structure of a system in which users will have the possibility to play a video game implementation of the popular RTVE programme, "Saber y Ganar". 
+This level shows how the application will work internally in generaly. The client, WebApp, access to the different services provided by the microservices which make up the program.
 
 ==== Contained Building Blocks
 
@@ -23,6 +25,8 @@ ifndef::imagesdir[:imagesdir: ../images]
 |===
 
 === Level 2
+
+image::52.png["Level-2-block-view"]
 
 ==== Motivation
 
