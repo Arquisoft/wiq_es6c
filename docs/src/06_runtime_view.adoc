@@ -87,3 +87,16 @@ Alice <-- Bob: another authentication Response
 === ...
 
 === <Runtime Scenario n>
+
+=== Wikidata questions requests
+
+[plantuml,"Sequence diagram WikidataApi",png]
+----
+actor User
+entity App
+entity WikidataApi
+User -> App: Starts a game
+App -> WikidataApi: Request data
+App <-- WikidataApi: Returns data
+User <-- App: Displays data in question-answer format
+----
