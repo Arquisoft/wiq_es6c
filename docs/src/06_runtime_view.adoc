@@ -37,7 +37,8 @@ See https://docs.arc42.org/section-6/[Runtime View] in the arc42 documentation.
 
 ****
 
-=== Utility
+=== Usage diagram
+[plantuml,"Scenario diagram",png]
 ----
 actor User
 entity APP
