@@ -7,19 +7,54 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 === Business Context
 
+image::03_Business_Context_Diagram.png[]
+
 [cols=3 options="header"]
 |===
 |Entity           |Input        |Output
 
 |*User*      | App usage and experience. | The user will introduce and send its credentials every time it creates a new account or logs into an existing one.
-|*WebApp*     | User data and input, as well as external API calls received.  | Handled API calls, sent to their respective microservice in order to be processed and answered.
-|*Wikidata*      |Calls to Wikidata's REST API asking for certain data, which will be used to construct the questions.  | Said data. Its format may vary, according to the necessities of the questions generator. 
+|*App*     | User data and input.  | The necessary API calls, sent to either Wikidata to fetch information to create questions, or to the REST API in order to query stored data.
+|*REST API*     | API calls from the app, requesting stored information. | Said data. It may be user information and statistics about their matches, or some of the questions generated in games.
+|*Database*     | Petitions from the REST API, in order to query data. | Said data. It may be user information and statistics about their matches, or some of the questions generated in games.
+|*Wikidata*      | Calls to Wikidata's REST API asking for certain data, which will be used to construct the questions.  | Said data. Its format may vary, according to the necessities of the questions generator. 
 
 |===
 
 === Technical Context
 [role="arc42help"]
 
-The following diagram represents the general structure of the project, as well as the communication channels between various system components. It shows communication to external sources, as well as communications between the various microsystems.
+[plantuml, "Technical Context diagram", png]
+----
 
-image::03-deployment-diagram-EN.png[]
+@startuml
+!theme vibrant
+
+<style>
+    arrow {
+        LineThickness 2.5
+    }
+    database {
+        LineThickness: 1
+        LineColor: black
+    }
+</style>
+
+actor "User"
+database "\nMongoDB\n" as MongoDB    #white
+
+node "App"{
+    rectangle "Web App"
+    rectangle "REST API"
+}
+
+rectangle "Wikidata" #lightblue 
+
+User -right- "Web App" : "HTTPS                       "
+"Web App" -right- "REST API" : HTTPS (REST)
+"REST API" -right-- "MongoDB" : "           HTTPS"
+"Web App" -down- "Wikidata" : "\n HTTPS (REST)"
+@enduml
+
+----
+
