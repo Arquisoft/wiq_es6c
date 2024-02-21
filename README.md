@@ -1,8 +1,8 @@
-# wiq_es6c
+# wiq_0
 
-[![Deploy on release](https://github.com/Arquisoft/wiq_es6c/actions/workflows/release.yml/badge.svg)](https://github.com/Arquisoft/wiq_es6c/actions/workflows/release.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_es6c&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_es6c)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_es6c&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_es6c)
+[![Deploy on release](https://github.com/Arquisoft/wiq_0/actions/workflows/release.yml/badge.svg)](https://github.com/Arquisoft/wiq_0/actions/workflows/release.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_0&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_0)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_0&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_0)
 
 This is a base repo for the [Software Architecture course](http://arquisoft.github.io/) in [2023/2024 edition](https://arquisoft.github.io/course2324.html). 
 
@@ -22,13 +22,19 @@ Both the user and auth service share a Mongo database that is accessed with mong
 The fastest way for launching this sample project is using docker. Just clone the project:
 
 ```sh
-git clone https://github.com/Arquisoft/wiq_es6c.git
+git clone https://github.com/Arquisoft/wiq_0.git
 ```
 
 and launch it with docker compose:
 
 ```sh
 docker compose --profile dev up --build
+```
+
+and tear it down:
+
+```sh
+docker compose --profile dev down
 ```
 
 ### Starting Component by component
@@ -100,9 +106,9 @@ deploy:
         user: ${{ secrets.DEPLOY_USER }}
         key: ${{ secrets.DEPLOY_KEY }}
         command: |
-          wget https://raw.githubusercontent.com/arquisoft/wiq_es6c/master/docker-compose.yml -O docker-compose.yml
-          wget https://raw.githubusercontent.com/arquisoft/wiq_es6c/master/.env -O .env
-          docker compose down
+          wget https://raw.githubusercontent.com/arquisoft/wiq_0/master/docker-compose.yml -O docker-compose.yml
+          wget https://raw.githubusercontent.com/arquisoft/wiq_0/master/.env -O .env
+          docker compose --profile prod down
           docker compose --profile prod up -d
 ```
 
