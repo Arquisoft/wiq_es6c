@@ -7,16 +7,6 @@ ifndef::imagesdir[:imagesdir: ../images]
 === Infrastructure Level 1
 
 [role="arc42help"]
-****
-Describe (usually in a combination of diagrams, tables, and text):
-
-* distribution of a system to multiple locations, environments, computers, processors, .., as well as physical connections between them
-* important justifications or motivations for this deployment structure
-* quality and/or performance features of this infrastructure
-* mapping of software artifacts to elements of this infrastructure
-
-For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.
-****
 
 image::deployment.svg["Deployment View"]
 In addition to what is shown in the diagram, we will also use Graphana and Prometheus during the production stage as code monitoring systems.
@@ -30,3 +20,4 @@ Final product will be deployed in http://wiq.sytes.net/ (if that does not work, 
 Quality and/or Performance Features::
 As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
 If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
+MongoDB will be used in both Databases.
