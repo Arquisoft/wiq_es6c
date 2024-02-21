@@ -6,7 +6,6 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 [role="arc42help"]
 ****
-
 .Content
 This section contains all quality requirements as quality tree with scenarios. The most important ones have already been described in section 1.2. (quality goals)
 
@@ -24,6 +23,9 @@ concrete and measurable.
 See https://docs.arc42.org/section-10/[Quality Requirements] in the arc42 documentation.
 
 ****
+
+To describe the quality requirements that the game will have, we will use quality scenarios. Quality scenarios describe 
+the action to be performed by the user or the system (stimulus) in order to generate a response to the interaction.
 
 === Quality Tree
 
@@ -43,8 +45,9 @@ The quality tree is a high-level overview of the quality goals and requirements:
 
 In any case the tree should include links to the scenarios of the following section.
 
-
 ****
+
+image::QualityTree.png[]
 
 === Quality Scenarios
 
@@ -71,3 +74,40 @@ more precisely down to a level of scenarios that can be discussed and evaluated.
 .Form
 Tabular or free form text.
 ****
+
+Quality scenarios, also known as use cases, are detailed descriptions of situations in which a user interacts with 
+a system and describe the expected outcomes along with the conditions of the environment in which the interaction 
+occurs.
+
+[options="header",cols="1,3,3,1"]
+|===
+|Quality goal
+|Motivation
+|Usage Scenarios
+|Priority
+
+|Privacy
+|In order to be able to play, the user must log in to the application.
+|Only the user who created/owns the account will have access to it (unless he/she gives someone else his/her credentials).
+|High 
+
+|Usability
+|The ease of interaction with the user should be enhanced through intuitive and simple interfaces to enhance the user experience. 
+|Users will be able to understand how the game works thanks to the clarity of its rules and ease of navigation.
+|High
+
+|Diversity
+|The questions provided by the application will be of various topics.
+|The user must correctly answer questions on different topics. This will improve the user experience and maintain the interest of the participants.
+|High
+
+|Integrity
+|The game must be played without errors.
+|The answer determined as correct for each question by the system shall be the one that is actually correct.
+|High
+
+|Interactivity
+|The user must answer a series of questions in which the user must select the correct answer in each case.
+|For each of the questions, the user must select the correct answer from those provided by the system.
+|High
+|===
