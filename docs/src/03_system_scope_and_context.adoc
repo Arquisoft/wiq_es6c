@@ -72,27 +72,15 @@ together with a mapping table showing the relationships between channels and inp
 [plantuml, "Technical Context diagram", png]
 ----
 
-!theme vibrant
-
-<style>
-    arrow {
-        LineThickness 2.5
-    }
-    database {
-        LineThickness: 1
-        LineColor: black
-    }
-</style>
-
 actor "User"
-database "\nMongoDB\n" as MongoDB    #white
+database "\nMongoDB\n" as MongoDB
 
 node "App"{
     rectangle "Web App"
     rectangle "REST API"
 }
 
-rectangle "Wikidata" #lightblue 
+rectangle "Wikidata" 
 
 User -right- "Web App" : "HTTPS                       "
 "Web App" -right- "REST API" : HTTPS (REST)
