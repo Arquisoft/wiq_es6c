@@ -31,12 +31,6 @@ and launch it with docker compose:
 docker compose --profile dev up --build
 ```
 
-and tear it down:
-
-```sh
-docker compose --profile dev down
-```
-
 ### Starting Component by component
 
 First, start the database. Either install and run Mongo or run it using docker:
@@ -108,7 +102,7 @@ deploy:
         command: |
           wget https://raw.githubusercontent.com/arquisoft/wiq_es6c/master/docker-compose.yml -O docker-compose.yml
           wget https://raw.githubusercontent.com/arquisoft/wiq_es6c/master/.env -O .env
-          docker compose --profile prod down
+          docker compose prod down
           docker compose --profile prod up -d
 ```
 
