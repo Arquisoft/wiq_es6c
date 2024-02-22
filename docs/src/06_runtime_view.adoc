@@ -39,7 +39,7 @@ See https://docs.arc42.org/section-6/[Runtime View] in the arc42 documentation.
 
 === User plays a match. Only one question batch is needed.
 
-[plantuml,"Sequence diagram",png]
+[plantuml,"Question generation 1",png]
 ----
 
 @startuml
@@ -71,7 +71,7 @@ In circumstances in which few questions are needed for the game, it may be possi
 
 === User plays a match. An example of dynamic question generation.
 
-[plantuml,"Sequence diagram",png]
+[plantuml,"Question generation 2",png]
 ----
 
 @startuml
@@ -116,7 +116,7 @@ In cases where a lot of questions are needed, or wikidata querying has a great i
 
 === User consults its game statistics.
 
-[plantuml,"Sequence diagram",png]
+[plantuml,"Consult Statistics",png]
 ----
 
 @startuml
@@ -135,7 +135,7 @@ user -> "Player Statistics Service" : Requests user data
 
 === User consults questions used in games.
 
-[plantuml,"Sequence diagram",png]
+[plantuml,"Consult questions",png]
 ----
 @startuml
 !theme vibrant
