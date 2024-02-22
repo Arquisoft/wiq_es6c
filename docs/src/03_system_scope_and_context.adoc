@@ -69,6 +69,5 @@ together with a mapping table showing the relationships between channels and inp
 
 ****
 
-The following diagram represents the general structure of the project, as well as the communication channels between various system components. It shows communication to external sources, as well as communications between the various microsystems.
+image::03_Technical_Context.png[]
 
-image::03-deployment-diagram-EN.png[]
