@@ -45,11 +45,8 @@ In the best case you will get away with examples or simple signatures.
 
 === Level 1: Overall System's whitebox
 
-[plantuml,"Level 1: Overall System's whitebox",png]
-----
-:user: -> [WIQ App] : Interacts with
-[WIQ App] <.> [WikiData] : Gets Data
-----
+image::05_level1Diagram.png[Level 1 Diagram]
+
 
 ==== Motivation
 
@@ -112,20 +109,9 @@ according the the following black box template:
 * (Optional) Open issues/problems/risks
 ****
 
-[plantuml,"Level 2:general structure of a system",png]
-----
-:usuario:
-package "WIQ App" {
-:usuario: -> [WebApp] : interacts
-[WebApp] <---> [Questions Service] : Get data
-[WebApp] <---> [Game Service] : Plays
-[WebApp] <--> [Question Historic Service] : Store/load data
-[WebApp] <--> [User Statistics Service] : Store/load data
-[WebApp] <-> [Authentification Service] : logs in / Register
-}
 
-[Questions Service] <..> [WikiData] : Get data
-----
+image::05_level2Diagram.png[Level 2 Diagram]
+
 
 ==== Motivation
 
@@ -153,7 +139,7 @@ package "WIQ App" {
 
 === Level 3
 
-image::05_Level_3_Diagram.png[]
+image::05_Level_3_Diagram.png[Level 3 Diagram]
 
 ==== Motivation
 
