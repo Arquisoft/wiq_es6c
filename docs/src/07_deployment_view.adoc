@@ -55,11 +55,8 @@ Describe (usually in a combination of diagrams, tables, and text):
 For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.
 ****
 
-=== Infrastructure Level 1
+image::deployment.png["Deployment View"]
 
-[role="arc42help"]
-
-image::deployment.svg["Deployment View"]
 In addition to what is shown in the diagram, we will also use Graphana and Prometheus during the production stage as code monitoring systems.
 
 Motivation::
@@ -71,4 +68,4 @@ Final product will be deployed in http://wiq.sytes.net/ (if that does not work, 
 Quality and/or Performance Features::
 As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
 If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
-MongoDB will be used in both Databases.
+Each microservice has its own container aswell as its own database in case of needing one.
