@@ -72,7 +72,6 @@ together with a mapping table showing the relationships between channels and inp
 [plantuml, "Technical Context diagram", png]
 ----
 
-@startuml
 !theme vibrant
 
 <style>
@@ -99,7 +98,6 @@ User -right- "Web App" : "HTTPS                       "
 "Web App" -right- "REST API" : HTTPS (REST)
 "REST API" -right-- "MongoDB" : "           HTTPS"
 "Web App" -down- "Wikidata" : "\n HTTPS (REST)"
-@enduml
 
 ----
 
