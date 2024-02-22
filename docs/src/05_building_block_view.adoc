@@ -189,7 +189,71 @@ When you need more detailed levels of your architecture please copy this
 part of arc42 for additional levels.
 ****
 
-image::05_Level_3_Diagram.png["Hierarchy of building blocks"]
+[plantuml, "Level 3 Diagram", png]
+----
+@startuml
+
+rectangle "Wikidata"
+actor "User"
+
+package "WIQ App"{ 
+
+    component "WebApp"
+    component "Authentification Service"
+
+    package "Questions Service"{
+        component "Wikidata Extractor"
+        component "Questions Generator"
+    }
+
+    package "Game Service" {
+        component "Game UI"
+        component "Game Controller"
+    }
+
+    package "User Stats Service" as USS {
+        component "Statistics UI"
+        component "Statistics Controller"
+        database "Database" as USDB
+    }
+
+    package "Questions Historic Service" as QHS{
+        component "Question Historic Controller" as QHController
+        database "Database" as QhDB
+    }
+}
+
+User -right-> WebApp : Uses
+
+WebApp <-down-> "Game Service"
+WebApp <--down--> "QHS"
+WebApp <-right-> "USS"
+WebApp <--right--> "Authentification Service" : "Handles user login/registry"
+
+"Game Controller" -down-> "Questions Generator"
+"Game Controller" <-left- "Questions Generator" : Asks for/Returns questions
+"Game Controller" -right-> "Statistics Controller" : "                       Sends stats"
+
+"Game Controller" -up-> "Game UI"
+"Game Controller" <-up- "Game UI"
+
+"Wikidata Extractor" --down-> "Wikidata" : Queries
+"Wikidata Extractor" <-down- "Wikidata" : "Returns data"
+"Wikidata Extractor" -left-> "Questions Generator"
+"Wikidata Extractor" <-left- "Questions Generator"
+
+
+"QHController" --> "QhDB"
+"QHController" <-down- "QhDB" 
+"QHController" <-left- "Questions Generator" : "    Sends generated questions    "
+
+"Statistics UI" -left-> "Statistics Controller"
+"Statistics UI" <-right- "Statistics Controller"
+"Statistics Controller" -down-> USDB
+"Statistics Controller" <-up- USDB 
+
+@enduml
+----
 
 ==== Motivation
 
