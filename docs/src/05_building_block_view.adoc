@@ -4,7 +4,11 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 === Level 1: Overall System's whitebox
 
-image::51.png["Level-1-block-view"]
+[plantuml,"Level 1: Overall System's whitebox",png]
+----
+:user: -> [WIQ App] : Interacts with
+[WIQ App] <.> [WikiData] : Gets Data
+----
 
 ==== Motivation
 
@@ -26,7 +30,20 @@ This level shows how the application will work internally in generaly. The clien
 
 === Level 2
 
-image::52.png["Level-2-block-view"]
+[plantuml,"Level 2:general structure of a system",png]
+----
+:usuario:
+package "WIQ App" {
+:usuario: -> [WebApp] : interacts
+[WebApp] <---> [Questions Service] : Get data
+[WebApp] <---> [Game Service] : Plays
+[WebApp] <--> [Question Historic Service] : Store/load data
+[WebApp] <--> [User Statistics Service] : Store/load data
+[WebApp] <-> [Authentification Service] : logs in / Register
+}
+
+[Questions Service] <..> [WikiData] : Get data
+----
 
 ==== Motivation
 
