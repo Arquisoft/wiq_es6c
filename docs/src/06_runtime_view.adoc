@@ -37,6 +37,31 @@ See https://docs.arc42.org/section-6/[Runtime View] in the arc42 documentation.
 
 ****
 
+=== Usage diagram
+[plantuml,"Scenario diagram",png]
+----
+actor User
+entity APP
+entity QandA
+Activate User
+Activate APP
+User -> APP : Start Game
+Activate QandA
+APP -> QandA : Request
+QandA -> QandA : Generate QandA
+QandA --> APP : Return QandA
+deactivate QandA
+APP --> User : Game Prepared
+loop 
+   User -> APP: User Plays
+   APP -> User :Game Responds
+end
+APP --> User: Game Ends
+deactivate APP
+deactivate User
+----
+
+
 === <Runtime Scenario 1>
 
 
@@ -63,3 +88,16 @@ Alice <-- Bob: another authentication Response
 === ...
 
 === <Runtime Scenario n>
+
+=== Wikidata questions requests
+
+[plantuml,"Sequence diagram WikidataApi",png]
+----
+actor User
+entity App
+entity WikidataApi
+User -> App: Starts a game
+App -> WikidataApi: Request data
+App <-- WikidataApi: Returns data
+User <-- App: Displays data in question-answer format
+----

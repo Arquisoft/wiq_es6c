@@ -5,6 +5,30 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 [role="arc42help"]
 ****
+.Contents
+The most important domain and technical terms that your stakeholders use when discussing the system.
+
+You can also see the glossary as source for translations if you work in multi-language teams.
+
+.Motivation
+You should clearly define your terms, so that all stakeholders
+
+* have an identical understanding of these terms
+* do not use synonyms and homonyms
+
+
+.Form
+
+A table with columns <Term> and <Definition>.
+
+Potentially more columns in case you need translations.
+
+
+.Further Information
+
+See https://docs.arc42.org/section-12/[Glossary] in the arc42 documentation.
+
+****
 
 [cols="e,2e" options="header"]
 |===
@@ -14,5 +38,3 @@ ifndef::imagesdir[:imagesdir: ../images]
 |REACT          |Open source JavaScript library developed by Facebook to build interactive and responsive user interfaces (UI). It is one of the most popular tools for modern web application development.
 |Usability      |Ease with which users can interact with a product, system or application to achieve their objectives effectively, efficiently and satisfactorily. 
 |===
-
-****
