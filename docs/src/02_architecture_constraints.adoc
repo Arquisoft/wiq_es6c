@@ -33,7 +33,8 @@ See https://docs.arc42.org/section-2/[Architecture Constraints] in the arc42 doc
 |*OS/Browser Independence*        |The project must be available to the maximum amount of users feasible. That includes support for mainstream OSs (_Windows_, _Linux_, _MacOS_) and browsers. (_Chrome_, _Safari_, _Firefox_, _Edge_)
 |*Usage of _REACT_*      |The _REACT JS_ framework will be used to develop the front-end of the project.
 |*Docker*     | The application will operate within a Docker environment.
-|*Version Control*      |In order of the project to be graded adequately, it must use _GitHub_ as its version control software. The contributions of each team member and agreements reached must be easily traceable.
+|*Version Control*      |In order of the project to be graded adequately, it must use _GitHub_ as its version control system. The contributions of each team member and agreements reached must be easily traceable.
+|*Wikidata* | To generate questions, WikiData would be used as a knowledge base. Wikidata is a free and open knowledge base that can be read and edited by both humans and machines. Wikidata acts as central storage for the structured data of its sister Wikimedia projects, including Wikipedia, Wikivoyage, Wiktionary, Wikisource and others. 
 |*Continuous integration and delivery*      |The development must progress through frequent integration of small changes into the main branch. New features must be automatically deployed with ease. (In our case, using _Docker_)
 |===
 
