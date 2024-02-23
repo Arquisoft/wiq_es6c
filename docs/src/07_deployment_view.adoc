@@ -2,7 +2,6 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-deployment-view]]
 
-
 == Deployment View
 
 [role="arc42help"]
@@ -56,39 +55,17 @@ Describe (usually in a combination of diagrams, tables, and text):
 For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.
 ****
 
-_**<Overview Diagram>**_
+image::deployment.png["Deployment View"]
+
+In addition to what is shown in the diagram, we will also use Graphana and Prometheus during the production stage as code monitoring systems.
 
 Motivation::
 
-_<explanation in text form>_
+Our goal is to run the application with Docker in a Azure VM.
+However, during the production stage, each contributor will deploy the project locally.
+Final product will be deployed in http://wiq.sytes.net/ (if that does not work, try http://20.77.37.219:3000/).
 
 Quality and/or Performance Features::
-
-_<explanation in text form>_
-
-Mapping of Building Blocks to Infrastructure::
-_<description of the mapping>_
-
-
-=== Infrastructure Level 2
-
-[role="arc42help"]
-****
-Here you can include the internal structure of (some) infrastructure elements from level 1.
-
-Please copy the structure from level 1 for each selected element.
-****
-
-==== _<Infrastructure Element 1>_
-
-_<diagram + explanation>_
-
-==== _<Infrastructure Element 2>_
-
-_<diagram + explanation>_
-
-...
-
-==== _<Infrastructure Element n>_
-
-_<diagram + explanation>_
+As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
+If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
+Each microservice has its own container aswell as its own database in case of needing one.

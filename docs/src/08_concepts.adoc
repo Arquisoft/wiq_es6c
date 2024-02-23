@@ -56,18 +56,5 @@ See https://docs.arc42.org/section-8/[Concepts] in the arc42 documentation.
 ****
 
 
-=== _<Concept 1>_
-
-_<explanation>_
-
-
-
-=== _<Concept 2>_
-
-_<explanation>_
-
-...
-
-=== _<Concept n>_
-
-_<explanation>_
+=== Domain model
+image::08_domain_model.png["Domain model"]

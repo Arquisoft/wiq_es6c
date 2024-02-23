@@ -37,29 +37,115 @@ See https://docs.arc42.org/section-6/[Runtime View] in the arc42 documentation.
 
 ****
 
-=== <Runtime Scenario 1>
+=== User plays a match. Only one question batch is needed.
 
-
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
-
-It is possible to use a sequence diagram:
-
-[plantuml,"Sequence diagram",png]
-----
-actor Alice
-actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+[plantuml,"Question generation 1",png]
 ----
 
-=== <Runtime Scenario 2>
+@startuml
+!theme vibrant
+autonumber
 
-=== ...
+actor "User" as user
 
-=== <Runtime Scenario n>
+user -> "Game Service": Begins game
+"Game Service" -> "Question Service" : Requests n questions
+"Question Service" -> "Wikidata REST API" : Requests information to create questions
+"Wikidata REST API" -> "Question Service" : Returns information
+"Question Service" -> "Question Service" : Creates questions
+"Question Service" -> "Game Service" : Returns questions
+
+loop n times
+    "Game Service" -> user : Shows question
+    …
+    user -> "Game Service" : Responds question
+end
+
+"Game Service" -> "Question Historic Service" : Sends the shown questions
+"Game Service" -> "Player Statistics Service" : Sends the  user's match data
+@enduml 
+
+----
+
+In circumstances in which few questions are needed for the game, it may be possible to extract all of them in a batch without affecting performance and response times. Besides, extracting them this way opens up the possibility of using multiple threads to gather the data, greatly increasing performance. However, if the querying times are too high, this strategy may cause great delays while loading the game. A possible alternative is explained below:
+
+=== User plays a match. An example of dynamic question generation.
+
+[plantuml,"Question generation 2",png]
+----
+
+@startuml
+!theme vibrant
+autonumber
+
+actor "User" as user
+
+user -> "Game Service": Begins game
+"Game Service" -> "Question Service" : Requests n questions
+"Question Service" -> "Wikidata REST API" : Requests information to create questions
+"Wikidata REST API" -> "Question Service" : Returns information
+"Question Service" -> "Game Service" : Returns questions
+
+loop Until the game ends
+    loop n-k times
+        "Game Service" -> user : Shows question
+        ...
+        user -> "Game Service" : Responds question
+    end
+
+    "Game Service" -> "Question Service" : Requests n questions
+    "Question Service" -> "Wikidata REST API" : Requests information to create questions
+    "Wikidata REST API" -> "Question Service" : Returns information
+    "Question Service" -> "Question Service" : Creates questions
+    "Question Service" -> "Game Service" : Returns questions
+
+    loop k times
+        "Game Service" -> user : Shows question
+        ...
+        user -> "Game Service" : Responds question
+    end
+end
+
+"Game Service" -> "Question Historic Service" : Sends the shown questions
+"Game Service" -> "Player Statistics Service" : Sends the  user's match data
+@enduml 
+
+----
+
+In cases where a lot of questions are needed, or wikidata querying has a great impact on performance, this alternative may prove to be convenient. By distributing the data fetching along the entire match, bottlenecks on performance will be reduced. Depending on the system load (or, optionally client device's specifications!) batch sizes may vary, adapting to maintain responsiveness.
+
+=== User consults its game statistics.
+
+[plantuml,"Consult Statistics",png]
+----
+
+@startuml
+!theme vibrant
+autonumber
+
+actor "User" as user
+
+user -> "Player Statistics Service" : Requests user data
+"Player Statistics Service" -> "MongoDB Server" : Makes petition through REST API
+"MongoDB Server" -> "Player Statistics Service" : Returns information
+"Player Statistics Service" -> user : Shows data
+@enduml 
+
+----
+
+=== User consults questions used in games.
+
+[plantuml,"Consult questions",png]
+----
+@startuml
+!theme vibrant
+autonumber
+
+actor "User" as user
+
+user -> "Question Historic Service" : Requests user data
+"Question Historic Service" -> "MongoDB Server" : Makes petition through REST API
+"MongoDB Server" -> "Question Historic Service" : Returns information
+"Question Historic Service" -> user : Shows data
+@enduml 
+----

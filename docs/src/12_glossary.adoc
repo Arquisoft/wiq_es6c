@@ -32,11 +32,12 @@ See https://docs.arc42.org/section-12/[Glossary] in the arc42 documentation.
 
 [cols="e,2e" options="header"]
 |===
-|Term |Definition
+|Term           |Definition
 
-|<Term-1>
-|<definition-1>
-
-|<Term-2>
-|<definition-2>
+|MongoDB        |NoSQL database system that, instead of storing data in tables as a relational database does, stores data in JSON-like documents with a flexible schema. 
+|REACT          |Open source JavaScript library developed by Facebook to build interactive and responsive user interfaces (UI). It is one of the most popular tools for modern web application development.
+|Usability      |Ease with which users can interact with a product, system or application to achieve their objectives effectively, efficiently and satisfactorily. 
+|Dynamic question generation      | There may be circumstances where pre-generating the questions isn't feasible. So instead, questions can be generated while the user is playing the game and answering questions. 
+|Decoy answer          | For questions that offer multiple options to select the correct answer from, it will be necessary to generate believable incorrect answers, that match the topic and theme of the question. For example, when asking about the longest river in Egypt, along with the correct answer (The Nile) some other river names of the country could be chosen for alternatives.
+|Question template     | General structure of a question, which can or cannot transcend topics. For example, valid templates for questions could be: "What's the tallest mountain in <country>?" "What is <concept>?" "Who invented <x>?"
 |===
