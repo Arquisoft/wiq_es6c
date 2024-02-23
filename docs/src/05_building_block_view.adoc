@@ -71,7 +71,7 @@ Its headline is the name of the black box.
 ****
 
 [options="header"]
-[cols="1,2"]
+[cols="1,4"]
 |===
 |Name |Description
 |User
@@ -119,22 +119,15 @@ image::05_level2Diagram.png[Level 2 Diagram]
 
 ==== Contained Building Blocks
 
-[options="header"]
-[cols="1,2"]
+[cols="1,4" options="header"]
 |===
 |Name |Description
-|Web App
-|Layer in which the user will interact directly and which will connect with the different services.
-|Questions Service
-|Microservice to generate the questions used by the application from WikiData
-|Game Service
-|Microservice that implements the quiz game
-|Question Historic Service
-|Microservice that stores the generated questions for later consultation
-|User Statistics Service
-|Microservice that stores the statistics of the games played by the user.
-|Authentification Service
-|Authentication microservice that allows the user to register and log in.
+|Web App |Layer in which the user will interact directly and which will connect with the different services.
+|Questions Service |Microservice to generate the questions used by the application from WikiData
+|Game Service |Microservice that implements the quiz game
+|Question Historic Service |Microservice that stores the generated questions for later consultation
+|User Statistics Service |Microservice that stores the statistics of the games played by the user.
+|Authentification Service |Authentication microservice that allows the user to register and log in.
 |===
 
 === Level 3
@@ -147,20 +140,25 @@ To display the inner architecture of the different microservices, as well as how
 
 ==== Contained Building Blocks
 
-[options="header"]
-[cols="1,2"]
+[cols="1,4" options="header"]
 |===
 |Name |Description
+
 |Questions Generator
 |Contains the required templates and proceedings to construct questions. In order to do so, it delegates the Wikidata querying to the Wikidata extractor. When the data is returned, the question is formulated through templates. 
+
 |Wikidata Extractor
 |Handles extraction and formatting of Wikidata’s output. It’s queries must cover all necessary information in order to construct the question(s), including not only the correct response, but also believable and coherent “decoy responses”.
+
 |Questions Historic Controller
 |Receives the generated questions, and sends them to the database. Besides, it also handles recovering them from the database and sending them where they are needed. (e.g: as response from an API call, or to the UI)
+
 |User Statistics Controller
 |Receives various information about the player’s performance in the match. There, some processing may occur before storing it in the database. Also handles retrieving the information and sending it where it’s needed (e.g: as response from an API call, or to the UI).
+
 |Game Controller
 |Handles all the game’s logic; where the user input’s processing takes place. It can request questions to the Questions Microservice, and also gather user statistics, to later be set to the User Statistics Controller.
+
 |UI for the game and statistics
 |Handles appeareance and presentation. Actions taken by the user are communicated to their respective controllers, that may respond accordingly.
 |===
