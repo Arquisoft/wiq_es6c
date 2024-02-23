@@ -68,4 +68,4 @@ Final product will be deployed in http://wiq.sytes.net/ (if that does not work, 
 Quality and/or Performance Features::
 As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
 If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
-Each microservice has its own container aswell as its own database in case of needing one.
+Each microservice has its own container as well as its own database in case of needing one.
