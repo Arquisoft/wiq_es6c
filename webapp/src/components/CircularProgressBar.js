@@ -4,26 +4,23 @@ import React, { useState, useEffect } from 'react';
 import { Container, Typography } from '@mui/material';
 
 
-function CircularProgress() {
-    const [percentage, setPercentage] = useState(100);
-    var control = 100
+
+function CircularProgress(initialValue) {
+    const [percentage, setPercentage] = useState(initialValue);
+
     useEffect(() => {
       const intervalId = setInterval(() => {
-        // Generar un nuevo porcentaje de progreso aleatorio (solo para propósitos de demostración)
-        control = control - 1
-        setPercentage(control); // Actualizar el estado con el nuevo porcentaje
-      }, 100); // Intervalo de 1000 milisegundos (1 segundo)
+        setPercentage(prevPercentage => prevPercentage - 1); // Actualizar el estado con el nuevo porcentaje
+      }, 100); // Intervalo de 100 milisegundos (0.1 segundo)
   
       // Limpiar el intervalo cuando el componente se desmonte
       return () => clearInterval(intervalId);
     }, []); // La dependencia vacía asegura que useEffect solo se ejecute una vez al montar el componente
-  
+    
+    var listaDevolver = [<CircularProgressbar value={percentage}/>, percentage]
     return (
-      <div style={{ width: '100px' }}>
-        <CircularProgressbar value={percentage}/>
-      </div>
+        listaDevolver
     );
   }
 
-
-  export default CircularProgress();
+  export default CircularProgress;

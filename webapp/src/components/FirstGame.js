@@ -23,6 +23,10 @@ const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
+  const MiComponente = CircularProgress(100);
+  const MiCircularProgressbar = MiComponente[0];
+  const MiPercentage = MiComponente[1];
+
 
   const esperar = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -81,7 +85,7 @@ const Quiz = () => {
         </div>
         
         <div class="progressBar">
-          <CircularProgress defaultValue="100"/>
+          {MiCircularProgressbar}
         </div>
         <div class="allAnswers">
         {questions[currentQuestionIndex].options.map((option, index) => (
@@ -108,7 +112,7 @@ const Quiz = () => {
         <p>{isCorrect ? '¡Respuesta correcta!' : 'Respuesta incorrecta.'}</p>
       )} */}
     </Container>
-  );
+  );)
 };
 
 
