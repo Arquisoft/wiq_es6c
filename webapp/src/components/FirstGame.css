@@ -1,0 +1,15 @@
+button {
+    font-size: 20px; 
+    width: 200px;
+    height: 50px; 
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.questionStructure .answers {
+    display: flex;
+    justify-content: center; /* Alinea los elementos en el centro horizontal /
+    align-items: center; / Alinea los elementos en el centro vertical /
+    height: 100vh; / Ajusta la altura al 100% del viewport */
+}
+  
