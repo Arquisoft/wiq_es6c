@@ -86,11 +86,6 @@ occurs.
 |Usage Scenarios
 |Priority
 
-|Privacy
-|In order to be able to play, the user must log in to the application.
-|Only the user who created/owns the account will have access to it (unless he/she gives someone else his/her credentials).
-|High 
-
 |Usability
 |The ease of interaction with the user should be enhanced through intuitive and simple interfaces to enhance the user experience. 
 |Users will be able to understand how the game works thanks to the clarity of its rules and ease of navigation.
@@ -104,10 +99,15 @@ occurs.
 |Integrity
 |The game must be played without errors.
 |The answer determined as correct for each question by the system shall be the one that is actually correct.
-|High
+|Medium
 
 |Interactivity
 |The user must answer a series of questions in which the user must select the correct answer in each case.
 |For each of the questions, the user must select the correct answer from those provided by the system.
-|High
+|Medium
+
+|Privacy
+|In order to be able to play, the user must log in to the application.
+|Only the user who created/owns the account will have access to it (unless he/she gives someone else his/her credentials).
+|Low 
 |===
