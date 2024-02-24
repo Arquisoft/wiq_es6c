@@ -12,4 +12,30 @@ button {
     align-items: center; / Alinea los elementos en el centro vertical /
     height: 100vh; / Ajusta la altura al 100% del viewport */
 }
-  
+
+.allAnswers {
+    width:100%;
+    display: block;
+}
+
+.asnwers {
+    width:100%;
+}
+.progressBar {
+    height: 100%; 
+    margin-top: 10;
+    width:10%;
+    display: inline-block;
+}  
+
+.question {
+    height: 100%;
+    width: 90%;
+    display: inline-block;
+}
+
+.questionText {
+    display: flex;
+    margin-bottom: 25px;
+    
+}
