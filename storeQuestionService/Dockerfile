@@ -2,7 +2,7 @@
 FROM node:20
 
 # Set the working directory in the container
-WORKDIR /usr/src/userservice
+WORKDIR /usr/src/storequestionservice
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 8001
+EXPOSE 8004
 
 # Define the command to run your app
-CMD ["node", "user-service.js"]
+CMD ["node", "store-q-service.js"]
