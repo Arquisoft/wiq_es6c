@@ -3,7 +3,6 @@ import { Container, Typography } from '@mui/material';
 import './FirstGame.css';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import CircularProgress from './CircularProgressBar';
 
 const Quiz = () => {
   const questions = [
@@ -22,29 +21,43 @@ const Quiz = () => {
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [isCorrect, setIsCorrect] = useState(null);
-  const MiComponente = CircularProgress(100);
-  const MiCircularProgressbar = MiComponente[0];
-  const MiPercentage = MiComponente[1];
-
+  const [isCorrect, setIsCorrect] = useState(true);
 
   const esperar = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   };
 
-  function ProgressComponent({ initialPercentage }) {
-    const [percentage, setPercentage] = useState(initialPercentage);
-  
+  function CircularProgress(valorInicial) {
+    const [percentage, setPercentage] = useState(valorInicial);
+
     useEffect(() => {
       const intervalId = setInterval(() => {
-        // Simulando un progreso que cambia dinámicamente
-        const newPercentage = percentage < 100 ? percentage + 1 : 0;
-        setPercentage(newPercentage);
-      }, 100); // Cambia el progreso cada 100 milisegundos
+        if (percentage <= 0) {
+          clearInterval(intervalId); // Detener el intervalo
+          return 0; // Mantener percentage en 0
+        } else {
+          setPercentage(prevPercentage => prevPercentage - 1); // Actualizar el estado con el nuevo porcentaje
+        }
+      }, 100); // Intervalo de 100 milisegundos (0.1 segundo)
   
+      // Limpiar el intervalo cuando el componente se desmonte
       return () => clearInterval(intervalId);
-    }, [percentage]); // El efecto se ejecuta cada vez que 'percentage' cambia
+    }, []); // La dependencia vacía asegura que useEffect solo se ejecute una vez al montar el componente
+    
+    var listaDevolver = [<CircularProgressbar value={percentage}/>, percentage]
+    return (
+        listaDevolver
+    );
   }
+
+  const [MiCircularProgressbar, MiPercentage] = CircularProgress(100);
+
+  useEffect(() => {
+    if (MiPercentage === 0) {
+      // Realizar alguna acción cuando MiPercentage llegue a 0
+    }
+  }, [MiPercentage]); // Este efecto se ejecuta cada vez que 'MiPercentage' cambia
+
   const checkAnswer = async (option) => {
     setIsCorrect(option === questions[currentQuestionIndex].correctAnswer);
     setSelectedOption(option);
@@ -112,9 +125,7 @@ const Quiz = () => {
         <p>{isCorrect ? '¡Respuesta correcta!' : 'Respuesta incorrecta.'}</p>
       )} */}
     </Container>
-  );)
+  );
 };
-
-
 
 export default Quiz;
