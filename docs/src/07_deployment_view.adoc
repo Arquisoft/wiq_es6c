@@ -59,7 +59,7 @@ For multiple environments or alternative deployments please copy and adapt this 
 ----
 !pragma layout smetana
 
-cloud "Azure Cloud" {
+cloud "Azure Cloud\n" {
     node "Virtual Machine" {
         node "Docker" {
             node "App Container"{
@@ -68,19 +68,19 @@ cloud "Azure Cloud" {
             node "Gateway Container"{
                 node "Gateway Service"
             }
-            node "User Container"{
+            node "  User Container  "{
                 node "User Service"
             }
-            node "Auth Container"{
+            node "  Auth Container  "{
                 node "Auth Service"
             }
-            node "Game Container"{
+            node "\tGame Container\t"{
                 node "Game Generator Service"
             }
             node "Questions History Container"{
                 node "Questions History Service"
             }
-            node "User Stats Container"{
+            node "User Stats Container\t"{
                 node "User Stats Service"
             }
             node "Questions Generator Container"{
