@@ -69,5 +69,21 @@ together with a mapping table showing the relationships between channels and inp
 
 ****
 
-image::03_Technical_Context.png[]
+[plantuml,"Technical_Context Diagram",png]
+----
+!pragma layout smetana
+
+actor "User"
+node "\t\t\tApp\t\t\t\t"{
+    rectangle "Web App"
+    rectangle "REST API"
+}
+rectangle "Wikidata" #lightblue
+database "\nMongoDB\n" as MongoDB #white
+
+User -right- "Web App" : "HTTPS\t"
+"Web App" -right- "REST API" : HTTPS (REST)
+"REST API" -right-- "MongoDB" : "\tHTTPS"
+"Web App" -down- "Wikidata" : " HTTPS (REST)"
+----
 
