@@ -45,8 +45,13 @@ In the best case you will get away with examples or simple signatures.
 
 === Level 1: Overall System's whitebox
 
-image::05_level1Diagram.png[Level 1 Diagram]
+[plantuml,"Level 1 Diagram",png]
+----
+!pragma layout smetana
 
+:User: -> [WIQ App] : "Interacts with"
+[WIQ App] <.> [WikiData] : "Gets data"
+----
 
 ==== Motivation
 
@@ -110,8 +115,24 @@ according the the following black box template:
 ****
 
 
-image::05_level2Diagram.png[Level 2 Diagram]
+[plantuml,"Level 2 Diagram",png]
+----
+!pragma layout smetana
 
+:User:
+package "WIQ App" {
+:User: -> [WebApp] : " Interacts    "
+[WebApp] <-> [Gateway Service] : Redirects Requests
+[Gateway Service] <--down-> [Game Service] : Plays
+[Gateway Service] <-- [Question Historic Service] : Loads data
+[Gateway Service] <-- [User Statistics Service] : Loads data
+[Gateway Service] <-> [UserAuth Service] : Logs in / Registers
+[Game Service] -> [User Statistics Service] : Stores data
+[Game Service] <-left-> [Questions Service] : Gets questions
+[Questions Service] -up-> [Question Historic Service] : Stores data
+}
+[Questions Service] <.left.> [WikiData] : "  Gets data  "
+----
 
 ==== Motivation
 
@@ -123,20 +144,86 @@ image::05_level2Diagram.png[Level 2 Diagram]
 |===
 |Name |Description
 |Web App |Layer in which the user will interact directly and which will connect with the different services.
+|Gateway Service |Microservice that redirects the requests from the WebApp to its corresponding microservices
 |Questions Service |Microservice to generate the questions used by the application from WikiData
 |Game Service |Microservice that implements the quiz game
 |Question Historic Service |Microservice that stores the generated questions for later consultation
 |User Statistics Service |Microservice that stores the statistics of the games played by the user.
-|Authentification Service |Authentication microservice that allows the user to register and log in.
+|UserAuth Service |Authentication microservices that allows the user to register and log in.
 |===
 
 === Level 3
 
-image::05_Level_3_Diagram.png[Level 3 Diagram]
+[plantuml,"Level 3 Diagram",png]
+----
+!pragma layout smetana
+
+actor "User"
+rectangle "Wikidata"
+
+package "WIQ App"{
+
+    component "WebApp"
+    component "Gateway Service" as GatewayS
+
+    package "Game Service" {
+        component "Game Controller"
+    }
+
+    package "User Statistics Service" as USS {
+        component "Statistics Controller"
+        database "Database" as USDB
+    }
+
+    package "Questions Historic Service" as QHS{
+        component "Question Historic Controller" as QHController
+        database "Database" as QhDB
+    }
+    package "Questions Service"{
+        component "Wikidata Extractor"
+        component "Questions Generator"
+        database "Database" as QSDB
+    }
+    package "UserAuth Service" {
+        component "Auth Service"
+        component "User Service"
+        database "Database" as UADB
+    }
+}
+
+User -right-> WebApp : Uses
+WebApp <-right-> GatewayS: Redirects requests
+
+GatewayS <--up--> "UserAuth Service" : "Handles user\nlogin/registry"
+GatewayS <-down-> "Game Service" : "Handles user current game\n"
+GatewayS <--up-- "QHS" : "\nReceives generated\nquestions"
+GatewayS <--- "USS" : "Receives\t\t\t\nuser statistics\t\t\t"
+
+"Game Service" <---> "Questions Service" : "Receives question petitions,\nsends questions\n\n"
+"Game Service" ---> "USS" : "Sends user\t\nstatistics\t\t"
+"Questions Service" -up-> "QHS" : "Sends\ngenerated\nquestions"
+
+"Wikidata" .up.> "Wikidata Extractor" : "Returns data"
+"Wikidata" <.up. "Wikidata Extractor" : "Queries"
+"Wikidata Extractor" --> QSDB
+"Questions Generator" <-- QSDB
+"Questions Generator" --> QSDB
+
+"QHController" --> QhDB
+"QHController" <-- QhDB
+
+"Statistics Controller" --> USDB
+"Statistics Controller" <-- USDB
+
+"Auth Service" --> UADB
+"Auth Service" <-- UADB
+"User Service" --> UADB
+"User Service" <-- UADB
+----
 
 ==== Motivation
 
-To display the inner architecture of the different microservices, as well as how do their components interact with themselves and with other components from other microsystems. All microservices follow the MVC architectural pattern, to the exception of the questions generator service. (since it has no UI to handle)
+To display the inner architecture of the different microservices, as well as how do their components interact with themselves and with other components from other microsystems. All microservices follow the MVC architectural pattern, to the exception of those who have no UI to handle.
 
 ==== Contained Building Blocks
 
@@ -144,11 +231,14 @@ To display the inner architecture of the different microservices, as well as how
 |===
 |Name |Description
 
-|Questions Generator
-|Contains the required templates and proceedings to construct questions. In order to do so, it delegates the Wikidata querying to the Wikidata extractor. When the data is returned, the question is formulated through templates. 
+|User Service
+|It retrieves the data from new users and registers them in the database.
 
-|Wikidata Extractor
-|Handles extraction and formatting of Wikidata’s output. It’s queries must cover all necessary information in order to construct the question(s), including not only the correct response, but also believable and coherent “decoy responses”.
+|Auth Service
+|It retrieves the data from returning users and checks if they are in the database.
+
+|Game Controller
+|Handles all the game’s logic; where the user input’s processing takes place. It can request questions to the Questions Microservice, and also gather user statistics, to later be sent to the User Statistics Controller.
 
 |Questions Historic Controller
 |Receives the generated questions, and sends them to the database. Besides, it also handles recovering them from the database and sending them where they are needed. (e.g: as response from an API call, or to the UI)
@@ -156,9 +246,9 @@ To display the inner architecture of the different microservices, as well as how
 |User Statistics Controller
 |Receives various information about the player’s performance in the match. There, some processing may occur before storing it in the database. Also handles retrieving the information and sending it where it’s needed (e.g: as response from an API call, or to the UI).
 
-|Game Controller
-|Handles all the game’s logic; where the user input’s processing takes place. It can request questions to the Questions Microservice, and also gather user statistics, to later be set to the User Statistics Controller.
+|Questions Generator
+|Contains the required templates and proceedings to construct questions. In order to do so, it delegates the Wikidata querying to the Wikidata extractor. It gets the data through the database so when the data is returned, the question is formulated through templates. 
 
-|UI for the game and statistics
-|Handles appeareance and presentation. Actions taken by the user are communicated to their respective controllers, that may respond accordingly.
+|Wikidata Extractor
+|Handles extraction and formatting of Wikidata’s output. It’s queries must cover all necessary information in order to construct the question(s), including not only the correct response, but also believable and coherent “decoy responses”. It stores the data retrieved on the database.
 |===
