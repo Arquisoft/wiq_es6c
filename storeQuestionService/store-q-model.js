@@ -6,6 +6,10 @@ const questionStorageSchema = new mongoose.Schema({
         required: true,
     },
     answers: [{ type: String, required: true }],
+    createdAt: {
+        type: Date,
+        default: Date.now, 
+      },
 });
 
 const Question = mongoose.model('Question', questionStorageSchema);
