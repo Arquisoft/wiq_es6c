@@ -55,7 +55,61 @@ Describe (usually in a combination of diagrams, tables, and text):
 For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.
 ****
 
-image::deployment.png["Deployment View"]
+[plantuml,"Deployment View",png]
+----
+!pragma layout smetana
+
+cloud "Azure Cloud\n" {
+    node "Virtual Machine" {
+        node "Docker" {
+            node "App Container"{
+                node "Web App"
+            }
+            node "Gateway Container"{
+                node "Gateway Service"
+            }
+            node "  User Container  "{
+                node "User Service"
+            }
+            node "  Auth Container  "{
+                node "Auth Service"
+            }
+            node "\tGame Container\t"{
+                node "Game Generator Service"
+            }
+            node "Questions History Container"{
+                node "Questions History Service"
+            }
+            node "User Stats Container\t"{
+                node "User Stats Service"
+            }
+            node "Questions Generator Container"{
+                node "Questions Generator Service"
+            }
+        }
+    }
+}
+
+cloud "Wikidata"
+actor "User"
+
+
+"User" -left- "Web App" : "\t\tHTTP/port:3000\t\t"
+
+"Web App" -- "Gateway Service" : "port: 8000"
+
+"Gateway Service" -- "Questions History Service" : "port: 8004             "
+"Gateway Service" -- "User Stats Service" : "port: 8003"
+"Gateway Service" -up- "Auth Service" : "port: 8002         "
+"Gateway Service" -up- "User Service" : "port: 8001"
+"Gateway Service" -right- "Game Generator Service"  : "           port: 8005     "
+
+"Game Generator Service" -- "User Stats Service" : "port: 8003"
+"Game Generator Service" -- "Questions Generator Service" : " port: 8006"
+
+"Questions Generator Service" -- "Questions History Service" : "port: 8004"
+"Questions Generator Service" -- "Wikidata" : "HTTPS"
+----
 
 In addition to what is shown in the diagram, we will also use Graphana and Prometheus during the production stage as code monitoring systems.
 
@@ -68,4 +122,4 @@ Final product will be deployed in http://wiq.sytes.net/ (if that does not work, 
 Quality and/or Performance Features::
 As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
 If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
-Each microservice has its own container aswell as its own database in case of needing one.
+Each microservice has its own container as well as its own database in case of needing one.
