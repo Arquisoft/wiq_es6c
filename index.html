@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.21">
+<meta name="generator" content="Asciidoctor 2.0.20">
 <title>Template</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -140,7 +140,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #content::before{content:none}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
-#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
 #header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
@@ -162,7 +162,6 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
-body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
 #toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
 #toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
@@ -328,7 +327,7 @@ a.image{text-decoration:none;display:inline-block}
 a.image object{pointer-events:none}
 sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
 sup.footnote a,sup.footnoteref a{text-decoration:none}
-sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
 #footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
@@ -691,6 +690,10 @@ If you as an architect do not know how the quality of your work will be judged&#
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Learnability</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Any user must be able to use the app with ease. The interface must remind the user to the one in  Saber y Ganar quiz show.</em></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Satisfaction</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Users will not get repeated questions in at least a hundred questions.</em></p></td>
 </tr>
@@ -701,10 +704,6 @@ If you as an architect do not know how the quality of your work will be judged&#
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Testability</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>The application should be able to go through different test and complete them successfully.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Learnability</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Any user must be able to use the app with ease. The interface must remind the user to the one in  Saber y Ganar quiz show.</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Time behaviour</em></p></td>
@@ -857,7 +856,7 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Version Control</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">In order of the project to be graded adequately, it must use <em>GitHub</em> as its version control system. The contributions of each team member and agreements reached must be easily traceable.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In order for the project to be graded adequately, it must use <em>GitHub</em> as its version control system. The contributions of each team member and agreements reached must be easily traceable.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Wikidata</strong></p></td>
@@ -1021,16 +1020,18 @@ The title of the table is the name of your system, the three columns contain the
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
 </colgroup>
-<tbody>
+<thead>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Entity</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Input</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Output</p></td>
+<th class="tableblock halign-left valign-top">Entity</th>
+<th class="tableblock halign-left valign-top">Input</th>
+<th class="tableblock halign-left valign-top">Output</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>User</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">App usage and experience.</p></td>
@@ -1070,7 +1071,7 @@ together with a mapping table showing the relationships between channels and inp
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/03_Technical_Context.png" alt="03 Technical Context">
+<img src="./images/Technical_Context%20Diagram.png" alt="Technical Context Diagram" width="576" height="201">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1089,9 +1090,6 @@ together with a mapping table showing the relationships between channels and inp
 <ul>
 <li>
 <p>ReactJS: JavaScript library that streamlines the development of graphical interfaces for web applications.</p>
-</li>
-<li>
-<p>TypeScript: Extension of JavaScript, bolstering it with type support for improved development.</p>
 </li>
 <li>
 <p>GitHub: Platform offering remote repository services for project development, task management, and version control.</p>
@@ -1134,9 +1132,9 @@ together with a mapping table showing the relationships between channels and inp
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Privacy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Users seek reassurance in the safety and privacy of their data within our app.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Ensuring user data security and privacy within the application.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scalability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application&#8217;s design must accommodate changes effortlessly throughout its lifecycle.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Employing a microservices approach to minimize code repetition and enhance understanding of application distribution, ensuring future scalability.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
@@ -1147,11 +1145,6 @@ together with a mapping table showing the relationships between channels and inp
 <td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Application architecture must facilitate seamless addition or modification of functionalities with minimal code changes.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Implementing design patterns and adhering to code conventions to ensure clean and maintainable code. Additionally, prioritizing testing during development for long-term maintainability.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Scalability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application&#8217;s design must accommodate changes effortlessly throughout its lifecycle.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Employing a microservices approach to minimize code repetition and enhance understanding of application distribution, ensuring future scalability.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1228,7 +1221,7 @@ In the best case you will get away with examples or simple signatures.</p>
 <h3 id="_level_1_overall_systems_whitebox">5.1. Level 1: Overall System&#8217;s whitebox</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/05_level1Diagram.png" alt="Level 1 Diagram">
+<img src="./images/Level%201%20Diagram.png" alt="Level 1 Diagram" width="405" height="94">
 </div>
 </div>
 <div class="sect3">
@@ -1276,8 +1269,8 @@ Its headline is the name of the black box.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 20%;">
+<col style="width: 80%;">
 </colgroup>
 <thead>
 <tr>
@@ -1337,7 +1330,7 @@ according the the following black box template:
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/05_level2Diagram.png" alt="Level 2 Diagram">
+<img src="./images/Level%202%20Diagram.png" alt="Level 2 Diagram" width="867" height="313">
 </div>
 </div>
 <div class="sect3">
@@ -1350,8 +1343,8 @@ according the the following black box template:
 <h4 id="_contained_building_blocks_2">5.2.2. Contained Building Blocks</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 20%;">
+<col style="width: 80%;">
 </colgroup>
 <thead>
 <tr>
@@ -1363,6 +1356,10 @@ according the the following black box template:
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Web App</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Layer in which the user will interact directly and which will connect with the different services.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gateway Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microservice that redirects the requests from the WebApp to its corresponding microservices</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Questions Service</p></td>
@@ -1381,8 +1378,8 @@ according the the following black box template:
 <td class="tableblock halign-left valign-top"><p class="tableblock">Microservice that stores the statistics of the games played by the user.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Authentification Service</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication microservice that allows the user to register and log in.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UserAuth Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication microservices that allows the user to register and log in.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1392,21 +1389,21 @@ according the the following black box template:
 <h3 id="_level_3">5.3. Level 3</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/05_Level_3_Diagram.png" alt="Level 3 Diagram">
+<img src="./images/Level%203%20Diagram.png" alt="Level 3 Diagram" width="795" height="894">
 </div>
 </div>
 <div class="sect3">
 <h4 id="_motivation_3">5.3.1. Motivation</h4>
 <div class="paragraph">
-<p>To display the inner architecture of the different microservices, as well as how do their components interact with themselves and with other components from other microsystems. All microservices follow the MVC architectural pattern, to the exception of the questions generator service. (since it has no UI to handle)</p>
+<p>To display the inner architecture of the different microservices, as well as how do their components interact with themselves and with other components from other microsystems. All microservices follow the MVC architectural pattern, to the exception of those who have no UI to handle.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_contained_building_blocks_3">5.3.2. Contained Building Blocks</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 20%;">
+<col style="width: 80%;">
 </colgroup>
 <thead>
 <tr>
@@ -1416,12 +1413,16 @@ according the the following black box template:
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Questions Generator</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the required templates and proceedings to construct questions. In order to do so, it delegates the Wikidata querying to the Wikidata extractor. When the data is returned, the question is formulated through templates.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It retrieves the data from new users and registers them in the database.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Wikidata Extractor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Handles extraction and formatting of Wikidata’s output. It’s queries must cover all necessary information in order to construct the question(s), including not only the correct response, but also believable and coherent “decoy responses”.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auth Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It retrieves the data from returning users and checks if they are in the database.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Game Controller</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handles all the game’s logic; where the user input’s processing takes place. It can request questions to the Questions Microservice, and also gather user statistics, to later be sent to the User Statistics Controller.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Questions Historic Controller</p></td>
@@ -1432,12 +1433,12 @@ according the the following black box template:
 <td class="tableblock halign-left valign-top"><p class="tableblock">Receives various information about the player’s performance in the match. There, some processing may occur before storing it in the database. Also handles retrieving the information and sending it where it’s needed (e.g: as response from an API call, or to the UI).</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Game Controller</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Handles all the game’s logic; where the user input’s processing takes place. It can request questions to the Questions Microservice, and also gather user statistics, to later be set to the User Statistics Controller.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Questions Generator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the required templates and proceedings to construct questions. In order to do so, it delegates the Wikidata querying to the Wikidata extractor. It gets the data through the database so when the data is returned, the question is formulated through templates.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">UI for the game and statistics</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Handles appeareance and presentation. Actions taken by the user are communicated to their respective controllers, that may respond accordingly.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wikidata Extractor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handles extraction and formatting of Wikidata’s output. It’s queries must cover all necessary information in order to construct the question(s), including not only the correct response, but also believable and coherent “decoy responses”. It stores the data retrieved on the database.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1639,7 +1640,7 @@ when your infrastructure is more complex.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/deployment.png" alt="Deployment View">
+<img src="./images/Deployment%20View.png" alt="Deployment View" width="842" height="655">
 </div>
 </div>
 <div class="paragraph">
@@ -1657,7 +1658,7 @@ Final product will be deployed in <a href="http://wiq.sytes.net/" class="bare">h
 <dd>
 <p>As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
 If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
-Each microservice has its own container aswell as its own database in case of needing one.</p>
+Each microservice has its own container as well as its own database in case of needing one.</p>
 </dd>
 </dl>
 </div>
@@ -1771,7 +1772,7 @@ on this list.</p>
 <h3 id="_domain_model">8.1. Domain model</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/08_domain_model.png" alt="Domain model">
+<img src="./images/domain%20model.png" alt="domain model" width="339" height="495">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -2050,8 +2051,8 @@ occurs.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
 </colgroup>
 <thead>
 <tr>
@@ -2114,8 +2115,8 @@ occurs.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 20%;">
+<col style="width: 80%;">
 </colgroup>
 <thead>
 <tr>
@@ -2125,28 +2126,28 @@ occurs.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>MongoDB</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>NoSQL database system that, instead of storing data in tables as a relational database does, stores data in JSON-like documents with a flexible schema.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NoSQL database system that, instead of storing data in tables as a relational database does, stores data in JSON-like documents with a flexible schema.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>REACT</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Open source JavaScript library developed by Facebook to build interactive and responsive user interfaces (UI). It is one of the most popular tools for modern web application development.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REACT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open source JavaScript library developed by Facebook to build interactive and responsive user interfaces (UI). It is one of the most popular tools for modern web application development.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Usability</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Ease with which users can interact with a product, system or application to achieve their objectives effectively, efficiently and satisfactorily.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ease with which users can interact with a product, system or application to achieve their objectives effectively, efficiently and satisfactorily.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Dynamic question generation</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>There may be circumstances where pre-generating the questions isn&#8217;t feasible. So instead, questions can be generated while the user is playing the game and answering questions.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dynamic question generation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">There may be circumstances where pre-generating the questions isn&#8217;t feasible. So instead, questions can be generated while the user is playing the game and answering questions.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Decoy answer</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>For questions that offer multiple options to select the correct answer from, it will be necessary to generate believable incorrect answers, that match the topic and theme of the question. For example, when asking about the longest river in Egypt, along with the correct answer (The Nile) some other river names of the country could be chosen for alternatives.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decoy answer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For questions that offer multiple options to select the correct answer from, it will be necessary to generate believable incorrect answers, that match the topic and theme of the question. For example, when asking about the longest river in Egypt, along with the correct answer (The Nile) some other river names of the country could be chosen for alternatives.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Question template</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>General structure of a question, which can or cannot transcend topics. For example, valid templates for questions could be: "What&#8217;s the tallest mountain in &lt;country&gt;?" "What is &lt;concept&gt;?" "Who invented &lt;x&gt;?"</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Question template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">General structure of a question, which can or cannot transcend topics. For example, valid templates for questions could be: "What&#8217;s the tallest mountain in &lt;country&gt;?" "What is &lt;concept&gt;?" "Who invented &lt;x&gt;?"</p></td>
 </tr>
 </tbody>
 </table>
@@ -2156,7 +2157,7 @@ occurs.</p>
 <div id="footer">
 <div id="footer-text">
 Version 8.2 EN<br>
-Last updated 2024-02-15 18:06:26 +0100
+Last updated 2024-02-07 00:36:09 +0100
 </div>
 </div>
 </body>
