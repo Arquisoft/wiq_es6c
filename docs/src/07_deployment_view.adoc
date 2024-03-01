@@ -2,7 +2,6 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-deployment-view]]
 
-
 == Deployment View
 
 [role="arc42help"]
@@ -56,39 +55,71 @@ Describe (usually in a combination of diagrams, tables, and text):
 For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.
 ****
 
-_**<Overview Diagram>**_
+[plantuml,"Deployment View",png]
+----
+!pragma layout smetana
+
+cloud "Azure Cloud\n" {
+    node "Virtual Machine" {
+        node "Docker" {
+            node "App Container"{
+                node "Web App"
+            }
+            node "Gateway Container"{
+                node "Gateway Service"
+            }
+            node "  User Container  "{
+                node "User Service"
+            }
+            node "  Auth Container  "{
+                node "Auth Service"
+            }
+            node "\tGame Container\t"{
+                node "Game Generator Service"
+            }
+            node "Questions History Container"{
+                node "Questions History Service"
+            }
+            node "User Stats Container\t"{
+                node "User Stats Service"
+            }
+            node "Questions Generator Container"{
+                node "Questions Generator Service"
+            }
+        }
+    }
+}
+
+cloud "Wikidata"
+actor "User"
+
+
+"User" -left- "Web App" : "\t\tHTTP/port:3000\t\t"
+
+"Web App" -- "Gateway Service" : "port: 8000"
+
+"Gateway Service" -- "Questions History Service" : "port: 8004             "
+"Gateway Service" -- "User Stats Service" : "port: 8003"
+"Gateway Service" -up- "Auth Service" : "port: 8002         "
+"Gateway Service" -up- "User Service" : "port: 8001"
+"Gateway Service" -right- "Game Generator Service"  : "           port: 8005     "
+
+"Game Generator Service" -- "User Stats Service" : "port: 8003"
+"Game Generator Service" -- "Questions Generator Service" : " port: 8006"
+
+"Questions Generator Service" -- "Questions History Service" : "port: 8004"
+"Questions Generator Service" -- "Wikidata" : "HTTPS"
+----
+
+In addition to what is shown in the diagram, we will also use Graphana and Prometheus during the production stage as code monitoring systems.
 
 Motivation::
 
-_<explanation in text form>_
+Our goal is to run the application with Docker in a Azure VM.
+However, during the production stage, each contributor will deploy the project locally.
+Final product will be deployed in http://wiq.sytes.net/ (if that does not work, try http://20.77.37.219:3000/).
 
 Quality and/or Performance Features::
-
-_<explanation in text form>_
-
-Mapping of Building Blocks to Infrastructure::
-_<description of the mapping>_
-
-
-=== Infrastructure Level 2
-
-[role="arc42help"]
-****
-Here you can include the internal structure of (some) infrastructure elements from level 1.
-
-Please copy the structure from level 1 for each selected element.
-****
-
-==== _<Infrastructure Element 1>_
-
-_<diagram + explanation>_
-
-==== _<Infrastructure Element 2>_
-
-_<diagram + explanation>_
-
-...
-
-==== _<Infrastructure Element n>_
-
-_<diagram + explanation>_
+As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
+If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
+Each microservice has its own container as well as its own database in case of needing one.

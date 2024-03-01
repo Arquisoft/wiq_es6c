@@ -56,18 +56,41 @@ See https://docs.arc42.org/section-8/[Concepts] in the arc42 documentation.
 ****
 
 
-=== _<Concept 1>_
+=== Domain model
 
-_<explanation>_
+[plantuml,"domain model",png]
+----
+!pragma layout smetana
+skinparam style strictuml
 
+class User {
+    + long: user_id;
+    + String: username;
+    + String: password;
+}
 
+class Game{
+}
 
-=== _<Concept 2>_
+class Question{
+    + String: question;
+    + List<String> answers;
+    + String: correctAnswer;
+}
 
-_<explanation>_
+class History{
+    + int: rightTotalAnswers;
+    + int: wrongTotalAnswers;
+}
 
-...
+class GameStats{
+    + int: rightAnswers;
+    + int: wrongAnswers;
+}
 
-=== _<Concept n>_
-
-_<explanation>_
+History "1" -- "1" User: consulta
+History "1" -- "*" GameStats: componen
+Game "1" -- "*" Question: tiene
+User "1" -- "*" Game: juega
+Game "1" -- "1" GameStats: genera
+----

@@ -1,212 +1,254 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [[section-building-block-view]]
-
-
-== Building Block View
-
 [role="arc42help"]
 ****
 .Content
 The building block view shows the static decomposition of the system into building blocks (modules, components, subsystems, classes, interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations, data structures, ...) as well as their dependencies (relationships, associations, ...)
-
 This view is mandatory for every architecture documentation.
 In analogy to a house this is the _floor plan_.
-
 .Motivation
 Maintain an overview of your source code by making its structure understandable through
 abstraction.
-
 This allows you to communicate with your stakeholder on an abstract level without disclosing implementation details.
-
 .Form
 The building block view is a hierarchical collection of black boxes and white boxes
 (see figure below) and their descriptions.
-
 image::05_building_blocks-EN.png["Hierarchy of building blocks"]
-
 *Level 1* is the white box description of the overall system together with black
 box descriptions of all contained building blocks.
-
 *Level 2* zooms into some building blocks of level 1.
 Thus it contains the white box description of selected building blocks of level 1, together with black box descriptions of their internal building blocks.
-
 *Level 3* zooms into selected building blocks of level 2, and so on.
-
-
 .Further Information
-
 See https://docs.arc42.org/section-5/[Building Block View] in the arc42 documentation.
-
 ****
 
-=== Whitebox Overall System
+== Building block view
+
 
 [role="arc42help"]
 ****
 Here you describe the decomposition of the overall system using the following white box template. It contains
-
  * an overview diagram
  * a motivation for the decomposition
  * black box descriptions of the contained building blocks. For these we offer you alternatives:
-
    ** use _one_ table for a short and pragmatic overview of all contained building blocks and their interfaces
    ** use a list of black box descriptions of the building blocks according to the black box template (see below).
    Depending on your choice of tool this list could be sub-chapters (in text files), sub-pages (in a Wiki) or nested elements (in a modeling tool).
-
-
  * (optional:) important interfaces, that are not explained in the black box templates of a building block, but are very important for understanding the white box.
 Since there are so many ways to specify interfaces why do not provide a specific template for them.
  In the worst case you have to specify and describe syntax, semantics, protocols, error handling,
  restrictions, versions, qualities, necessary compatibilities and many things more.
 In the best case you will get away with examples or simple signatures.
-
 ****
 
-_**<Overview Diagram>**_
+=== Level 1: Overall System's whitebox
 
-Motivation::
+[plantuml,"Level 1 Diagram",png]
+----
+!pragma layout smetana
 
-_<text explanation>_
+:User: -> [WIQ App] : "Interacts with"
+[WIQ App] <.> [WikiData] : "Gets data"
+----
+
+==== Motivation
 
 
-Contained Building Blocks::
-_<Description of contained building block (black boxes)>_
+This level shows how the application will work internally in generaly. The client, WebApp, access to the different services provided by the microservices which make up the program.
 
-Important Interfaces::
-_<Description of important interfaces>_
+==== Contained Building Blocks
 
 [role="arc42help"]
 ****
 Insert your explanations of black boxes from level 1:
-
 If you use tabular form you will only describe your black boxes with name and
 responsibility according to the following schema:
-
 [cols="1,2" options="header"]
 |===
 | **Name** | **Responsibility**
-| _<black box 1>_ | _<Text>_
-| _<black box 2>_ | _<Text>_
+| _<black box 1>_ | _<Text>_
+| _<black box 2>_ | _<Text>_
 |===
-
-
-
 If you use a list of black box descriptions then you fill in a separate black box template for every important building block .
 Its headline is the name of the black box.
 ****
 
-
-==== <Name black box 1>
-
-[role="arc42help"]
-****
-Here you describe <black box 1>
-according the the following black box template:
-
-* Purpose/Responsibility
-* Interface(s), when they are not extracted as separate paragraphs. This interfaces may include qualities and performance characteristics.
-* (Optional) Quality-/Performance characteristics of the black box, e.g.availability, run time behavior, ....
-* (Optional) directory/file location
-* (Optional) Fulfilled requirements (if you need traceability to requirements).
-* (Optional) Open issues/problems/risks
-
-****
-
-_<Purpose/Responsibility>_
-
-_<Interface(s)>_
-
-_<(Optional) Quality/Performance Characteristics>_
-
-_<(Optional) Directory/File Location>_
-
-_<(Optional) Fulfilled Requirements>_
-
-_<(optional) Open Issues/Problems/Risks>_
-
-
-
-
-==== <Name black box 2>
-
-_<black box template>_
-
-==== <Name black box n>
-
-_<black box template>_
-
-
-==== <Name interface 1>
-
-...
-
-==== <Name interface m>
-
-
-
-=== Level 2
+[options="header"]
+[cols="1,4"]
+|===
+|Name |Description
+|User
+|Client of the application which will interact with it.
+|WIQ App
+|System developed to be used by the users. The games will be based on the information obtanined from WikiData
+|WikiData
+|Service external to the application from which the application questions will be obtained. Wikidata is a collaboratively edited multilingual knowledge graph hosted by the Wikimedia Foundation.
+|===
 
 [role="arc42help"]
 ****
 Here you can specify the inner structure of (some) building blocks from level 1 as white boxes.
-
 You have to decide which building blocks of your system are important enough to justify such a detailed description.
 Please prefer relevance over completeness. Specify important, surprising, risky, complex or volatile building blocks.
 Leave out normal, simple, boring or standardized parts of your system
 ****
-
-==== White Box _<building block 1>_
 
 [role="arc42help"]
 ****
 ...describes the internal structure of _building block 1_.
 ****
 
-_<white box template>_
+=== Level 2
 
-==== White Box _<building block 2>_
+[role="arc42help"]
+****
+Here you describe <black box 1>
+according the the following black box template:
+* Purpose/Responsibility
+* Interface(s), when they are not extracted as separate paragraphs. This interfaces may include qualities and performance characteristics.
+* (Optional) Quality-/Performance characteristics of the black box, e.g.availability, run time behavior, ....
+* (Optional) directory/file location
+* (Optional) Fulfilled requirements (if you need traceability to requirements).
+* (Optional) Open issues/problems/risks
+****
 
 
-_<white box template>_
+[plantuml,"Level 2 Diagram",png]
+----
+!pragma layout smetana
 
-...
+:User:
+package "WIQ App" {
+:User: -> [WebApp] : " Interacts    "
+[WebApp] <-> [Gateway Service] : Redirects Requests
+[Gateway Service] <--down-> [Game Service] : Plays
+[Gateway Service] <-- [Question Historic Service] : Loads data
+[Gateway Service] <-- [User Statistics Service] : Loads data
+[Gateway Service] <-> [UserAuth Service] : Logs in / Registers
+[Game Service] -> [User Statistics Service] : Stores data
+[Game Service] <-left-> [Questions Service] : Gets questions
+[Questions Service] -up-> [Question Historic Service] : Stores data
+}
+[Questions Service] <.left.> [WikiData] : "  Gets data  "
+----
 
-==== White Box _<building block m>_
+==== Motivation
 
+*_WiQ_* application is the general structure of a system in which users will have the possibility to play a video game implementation of the popular RTVE programme, "Saber y Ganar". 
 
-_<white box template>_
+==== Contained Building Blocks
 
-
+[cols="1,4" options="header"]
+|===
+|Name |Description
+|Web App |Layer in which the user will interact directly and which will connect with the different services.
+|Gateway Service |Microservice that redirects the requests from the WebApp to its corresponding microservices
+|Questions Service |Microservice to generate the questions used by the application from WikiData
+|Game Service |Microservice that implements the quiz game
+|Question Historic Service |Microservice that stores the generated questions for later consultation
+|User Statistics Service |Microservice that stores the statistics of the games played by the user.
+|UserAuth Service |Authentication microservices that allows the user to register and log in.
+|===
 
 === Level 3
 
-[role="arc42help"]
-****
-Here you can specify the inner structure of (some) building blocks from level 2 as white boxes.
+[plantuml,"Level 3 Diagram",png]
+----
+!pragma layout smetana
 
-When you need more detailed levels of your architecture please copy this
-part of arc42 for additional levels.
-****
+actor "User"
+rectangle "Wikidata"
 
+package "WIQ App"{
 
-==== White Box <_building block x.1_>
+    component "WebApp"
+    component "Gateway Service" as GatewayS
 
-[role="arc42help"]
-****
-Specifies the internal structure of _building block x.1_.
-****
+    package "Game Service" {
+        component "Game Controller"
+    }
 
+    package "User Statistics Service" as USS {
+        component "Statistics Controller"
+        database "Database" as USDB
+    }
 
-_<white box template>_
+    package "Questions Historic Service" as QHS{
+        component "Question Historic Controller" as QHController
+        database "Database" as QhDB
+    }
+    package "Questions Service"{
+        component "Wikidata Extractor"
+        component "Questions Generator"
+        database "Database" as QSDB
+    }
+    package "UserAuth Service" {
+        component "Auth Service"
+        component "User Service"
+        database "Database" as UADB
+    }
+}
 
+User -right-> WebApp : Uses
+WebApp <-right-> GatewayS: Redirects requests
 
-==== White Box <_building block x.2_>
+GatewayS <--up--> "UserAuth Service" : "Handles user\nlogin/registry"
+GatewayS <-down-> "Game Service" : "Handles user current game\n"
+GatewayS <--up-- "QHS" : "\nReceives generated\nquestions"
+GatewayS <--- "USS" : "Receives\t\t\t\nuser statistics\t\t\t"
 
-_<white box template>_
+"Game Service" <---> "Questions Service" : "Receives question petitions,\nsends questions\n\n"
+"Game Service" ---> "USS" : "Sends user\t\nstatistics\t\t"
+"Questions Service" -up-> "QHS" : "Sends\ngenerated\nquestions"
 
+"Wikidata" .up.> "Wikidata Extractor" : "Returns data"
+"Wikidata" <.up. "Wikidata Extractor" : "Queries"
+"Wikidata Extractor" --> QSDB
+"Questions Generator" <-- QSDB
+"Questions Generator" --> QSDB
 
+"QHController" --> QhDB
+"QHController" <-- QhDB
 
-==== White Box <_building block y.1_>
+"Statistics Controller" --> USDB
+"Statistics Controller" <-- USDB
 
-_<white box template>_
+"Auth Service" --> UADB
+"Auth Service" <-- UADB
+"User Service" --> UADB
+"User Service" <-- UADB
+----
+
+==== Motivation
+
+To display the inner architecture of the different microservices, as well as how do their components interact with themselves and with other components from other microsystems. All microservices follow the MVC architectural pattern, to the exception of those who have no UI to handle.
+
+==== Contained Building Blocks
+
+[cols="1,4" options="header"]
+|===
+|Name |Description
+
+|User Service
+|It retrieves the data from new users and registers them in the database.
+
+|Auth Service
+|It retrieves the data from returning users and checks if they are in the database.
+
+|Game Controller
+|Handles all the game’s logic; where the user input’s processing takes place. It can request questions to the Questions Microservice, and also gather user statistics, to later be sent to the User Statistics Controller.
+
+|Questions Historic Controller
+|Receives the generated questions, and sends them to the database. Besides, it also handles recovering them from the database and sending them where they are needed. (e.g: as response from an API call, or to the UI)
+
+|User Statistics Controller
+|Receives various information about the player’s performance in the match. There, some processing may occur before storing it in the database. Also handles retrieving the information and sending it where it’s needed (e.g: as response from an API call, or to the UI).
+
+|Questions Generator
+|Contains the required templates and proceedings to construct questions. In order to do so, it delegates the Wikidata querying to the Wikidata extractor. It gets the data through the database so when the data is returned, the question is formulated through templates. 
+
+|Wikidata Extractor
+|Handles extraction and formatting of Wikidata’s output. It’s queries must cover all necessary information in order to construct the question(s), including not only the correct response, but also believable and coherent “decoy responses”. It stores the data retrieved on the database.
+|===

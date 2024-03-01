@@ -40,15 +40,15 @@ There you will find links and examples about ADR.
 |Advantages
 |Disagvantanges
 
-|React
+|Use of React
 |It is the most used javascript framework and there is a lot of documentation about it. 
 |All of us in the team will have to learn how to use it because we have never worked with it.
 
-|JavaScript
+|Use of JavaScript
 |It is a language we have all used. 
 |It is a complex language that can cause us problems while other simpler languages could make our work easier. 
 
-|MongoDB
+|Use of MongoDB
 |Being a non-relational database, it is easier to use. In addition, it is used by large telecommunications companies.
 |Non-relational databases are the ones with which we have the least experience.
 |===
