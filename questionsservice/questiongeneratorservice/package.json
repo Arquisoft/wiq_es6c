@@ -1,11 +1,11 @@
 {
-  "name": "questionsgenerator",
+  "name": "questiongeneratorservice",
   "version": "1.0.0",
   "description": "Questions service, in charge of generating and returning random questions in the application",
-  "main": "questions-model.js",
+  "main": "questiongenerator-service.js",
   "scripts": {
-    "devStart": "nodemon questions-service.js",
-    "start": "node questions-service.js"
+    "devStart": "nodemon questiongenerator-service.js",
+    "start": "node questiongenerator-service.js"
   },
   "repository": {
     "type": "git",

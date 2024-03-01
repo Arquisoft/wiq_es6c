@@ -1,17 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const {Question} = require('./questions-model')
-const {Request} = require('./questions-model')
+const {Question} = require('./questiongenerator-model')
+const {Request} = require('./questiongenerator-model')
 
 const app = express();
 const port = 8006; 
 
 // Connect to MongoDB
-const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/questions';
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/questions';
 mongoose.connect(mongoUri);
 const db = mongoose.connection;
 db.on('error', (error) => console.error(`MongoDB connection error: ${error}`));
-db.once('open', () => console.log("Connected to MongoDB"));
+db.once('open', () => console.log("Connected to MongoDB: %s", mongoUri));
 
 // Middleware to parse JSON in request body
 app.use(express.json());

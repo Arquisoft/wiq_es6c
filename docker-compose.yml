@@ -11,6 +11,17 @@ services:
     networks:
       - mynetwork
 
+  mongodb_wiki:
+    container_name: mongodb-wiki-${teamname:-defaultASW}
+    image: mongo
+    profiles: ["dev", "prod"]
+    volumes:
+      - mongodb_wiki_data:/data/db
+    ports:
+      - "27018:27017"
+    networks:
+      - mynetwork
+
   authservice:
     container_name: authservice-${teamname:-defaultASW}
     image: ghcr.io/arquisoft/wiq_es6c/authservice:latest
@@ -38,6 +49,20 @@ services:
       - mynetwork
     environment:
       MONGODB_URI: mongodb://mongodb:27017/userdb
+
+  questiongeneratorservice:
+    container_name: questiongeneratorservice-${teamname:-defaultASW}
+    image: ghcr.io/arquisoft/wiq_es6c/questiongeneratorservice:latest
+    profiles: ["dev", "prod"]
+    build: ./questionsservice/questiongeneratorservice
+    depends_on:
+      - mongodb_wiki
+    ports:
+      - "8007:8006"
+    networks:
+      - mynetwork
+    environment:
+      MONGODB_URI: mongodb://mongodb_wiki:27017/questions
 
   gatewayservice:
     container_name: gatewayservice-${teamname:-defaultASW}
@@ -102,6 +127,7 @@ services:
 
 volumes:
   mongodb_data:
+  mongodb_wiki_data:
   prometheus_data: 
   grafana_data: 
 
