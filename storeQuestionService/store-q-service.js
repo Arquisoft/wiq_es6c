@@ -25,11 +25,12 @@ function validateRequiredFields(req, requiredFields) {
 app.post('/addquestion', async (req, res) => {
     try {
         // Check if required fields are present in the request body
-        validateRequiredFields(req, ['question', 'answers']);
+        validateRequiredFields(req, ['question', 'c_answer','w_answers']);
 
         const newQuestion = new Question({
             question: req.body.question,
-            answers: req.body.answers,
+            c_answer: req.body.answers,
+            w_answers: req.body.answers,
         });
 
         await newQuestion.save();
@@ -46,19 +47,20 @@ app.post('/addquestions', async (req, res) => {
           throw new Error('Invalid request format. Expected an array of questions.');
       }
       for (const question of req.body) {
-          validateRequiredFields(question, ['question', 'answers']);
+          validateRequiredFields(question, ['question', 'c_answer','w_answers']);
       }
 
       const newQuestions = [];
 
       for (const questionData of req.body) {
-          const newQuestion = new Question({
-              question: questionData.question,
-              answers: questionData.answers,
-          });
+        const newQuestion = new Question({
+            question: req.body.question,
+            c_answer: req.body.answers,
+            w_answers: req.body.answers,
+        });
 
-          await newQuestion.save();
-          newQuestions.push(newQuestion);
+        await newQuestion.save();
+        newQuestions.push(newQuestion);
       }
       
       res.json(newQuestions);

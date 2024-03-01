@@ -5,7 +5,8 @@ const questionStorageSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    answers: [{ type: String, required: true }],
+    c_answer: { type: String, required: true },
+    w_answers: [{ type: String, required: true }],
     createdAt: {
         type: Date,
         default: Date.now, 
