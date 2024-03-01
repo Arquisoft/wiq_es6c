@@ -96,7 +96,7 @@ occurs.
 |The user must correctly answer questions on different topics. This will improve the user experience and maintain the interest of the participants.
 |High
 
-|Reliability
+|Fiability
 |The game must be played without errors.
 |The answer determined as correct for each question by the system shall be the one that is actually correct.
 |Medium
