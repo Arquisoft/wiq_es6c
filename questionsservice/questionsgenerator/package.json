@@ -1,0 +1,28 @@
+{
+  "name": "questionsgenerator",
+  "version": "1.0.0",
+  "description": "Questions service, in charge of generating and returning random questions in the application",
+  "main": "questions-model.js",
+  "scripts": {
+    "devStart": "nodemon questions-service.js",
+    "start": "node questions-service.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arquisoft/wiq_es6c.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arquisoft/wiq_es6c/issues"
+  },
+  "homepage": "https://github.com/arquisoft/wiq_es6c#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
