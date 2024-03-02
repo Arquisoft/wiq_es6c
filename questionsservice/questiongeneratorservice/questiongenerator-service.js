@@ -16,6 +16,29 @@ db.once('open', () => console.log("Connected to MongoDB: %s", mongoUri));
 // Middleware to parse JSON in request body
 app.use(express.json());
 
+// Function to generate the required number of questions
+function getQuestions(req) {
+  const response = [];
+  if ('n_preguntas' in req.body) {
+    const n_preguntas = Number(req.body.n_preguntas);
+    for (let index = 0; index < n_preguntas; index++) {
+      response.push(new Question({
+        pregunta: "¿Cómo me llamo?",
+        respuesta_correcta: "Abel",
+        respuestas_incorrectas: ["Federico", "Eusebio", "Gervasio"]
+      }));
+    }
+  }
+  else {
+    response.push(new Question({
+      pregunta: "¿Cómo me llamo?",
+      respuesta_correcta: "Abel",
+      respuestas_incorrectas: ["Federico", "Eusebio", "Gervasio"]
+    }));
+  }
+  return response
+}
+
 // Route for getting questions
 app.get('/questions', async (req, res) => {
   try {
@@ -27,11 +50,7 @@ app.get('/questions', async (req, res) => {
 
     // TODO: Implement logic to fetch questions from MongoDB and send response 
     // const questions = await Question.find()
-    // res.json(questions)
-    const defaultQuestion = new Question({
-      pregunta: "¿Cómo me llamo?",
-      respuestas: ["Abel", "Federico", "Eusebio", "Gervasio"]
-    });
+    const defaultQuestion = getQuestions(req)
     res.json(defaultQuestion);
   } catch (error) {
     // res.status(500).json({ message: error.message })

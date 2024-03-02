@@ -5,7 +5,11 @@ const questionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    respuestas: {
+    respuesta_correcta: {
+        type: String,
+        required: true
+    },
+    respuestas_incorrectas: {
         type: [String],
         required: true
     },
