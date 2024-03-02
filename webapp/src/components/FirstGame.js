@@ -21,7 +21,7 @@ const Quiz = () => {
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [isCorrect, setIsCorrect] = useState(true);
+  const [isCorrect, setIsCorrect] = useState(null);
 
   const esperar = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -52,11 +52,11 @@ const Quiz = () => {
 
   const [MiCircularProgressbar, MiPercentage] = CircularProgress(100);
 
-  useEffect(() => {
-    if (MiPercentage === 0) {
-      // Realizar alguna acción cuando MiPercentage llegue a 0
-    }
-  }, [MiPercentage]); // Este efecto se ejecuta cada vez que 'MiPercentage' cambia
+  // useEffect(() => {
+  //   if (MiPercentage === 0) {
+  //     // Realizar alguna acción cuando MiPercentage llegue a 0
+  //   }
+  // }, [MiPercentage]); // Este efecto se ejecuta cada vez que 'MiPercentage' cambia
 
   const checkAnswer = async (option) => {
     setIsCorrect(option === questions[currentQuestionIndex].correctAnswer);
