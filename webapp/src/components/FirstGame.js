@@ -3,9 +3,26 @@ import { Container, Typography } from '@mui/material';
 import './FirstGame.css';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import axios from 'axios';
+
+const apiEndpoint = 'http://localhost:8006';
+
+var jsonApi = ''
+
 
 const Quiz = () => {
-  const questions = [
+  
+  const getQuestions = async() => {
+    try {
+      jsonApi = await axios.get(`${apiEndpoint}/questions`);
+        
+    } catch (error) {
+      console.log(error.jsonApi.data.error);
+    }
+  };
+  
+
+  const questions = [    
     {
       question: '¿Cuál es la capital de España?',
       options: ['Madrid', 'Barcelona', 'Valencia', 'Sevilla'],
@@ -58,9 +75,13 @@ const Quiz = () => {
   //   }
   // }, [MiPercentage]); // Este efecto se ejecuta cada vez que 'MiPercentage' cambia
 
+
   const checkAnswer = async (option) => {
     setIsCorrect(option === questions[currentQuestionIndex].correctAnswer);
     setSelectedOption(option);
+
+    getQuestions()
+    console.log(jsonApi.data)
 
     const botonIncorrecta = document.getElementById('option-' + questions[currentQuestionIndex].options.indexOf(option))
     if (!isCorrect) {
