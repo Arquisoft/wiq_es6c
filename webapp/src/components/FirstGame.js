@@ -4,38 +4,52 @@ import './FirstGame.css';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
+import { json } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-const apiEndpoint = 'http://localhost:8006';
 
-var jsonApi = ''
-
+var questionsCalled = false
 
 const Quiz = () => {
   
-  const getQuestions = async() => {
-    try {
-      jsonApi = await axios.get(`${apiEndpoint}/questions`);
+  const questions = useLocation().state.questions;
+  console.log(questions)
+
+  //  useEffect (() => {
+  //   if (!isApiCalledRef) {
+  //     getQuestions();
+  //     isApiCalledRef = true;
+  //   }
+  // }, []); // Dependencia vacía para ejecutar solo al montar el componente
+
+  // const getQuestions = async () => {
+  //   try {
+  //     const response = await axios.get(`${apiEndpoint}/questions`);
+  //     for (var i = 0; i < response.data.length; i++) {
+  //       var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
+  //       possibleAnswers = shuffleArray(possibleAnswers)
+  //       console.log(possibleAnswers)
+  //       questions.push({
+  //         question: response.data[0].pregunta,
+  //         options: possibleAnswers,
+  //         correctAnswer: response.data[i].respuesta_correcta
+  //       })
+  //     }
+  //     console.log(questions)
+      
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  // const getQuestions = async() => {
+  //   try {
+  //     jsonApi = await axios.get(`${apiEndpoint}/questions`);
         
-    } catch (error) {
-      console.log(error.jsonApi.data.error);
-    }
-  };
+  //   } catch (error) {
+  //     console.log(error.jsonApi.data.error);
+  //   }
+  // };
   
-
-  const questions = [    
-    {
-      question: '¿Cuál es la capital de España?',
-      options: ['Madrid', 'Barcelona', 'Valencia', 'Sevilla'],
-      correctAnswer: 'Madrid',
-    },
-    {
-      question: '¿Cual es la capital de Francia?',
-      options: ['Touluse', 'Paris', 'Lyon', 'Marseille'],
-      correctAnswer: 'Paris'
-    }
-    // Agrega más preguntas aquí
-  ];
-
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
@@ -67,7 +81,7 @@ const Quiz = () => {
     );
   }
 
-  const [MiCircularProgressbar, MiPercentage] = CircularProgress(100);
+  // const [MiCircularProgressbar, MiPercentage] = CircularProgress(100);
 
   // useEffect(() => {
   //   if (MiPercentage === 0) {
@@ -79,9 +93,6 @@ const Quiz = () => {
   const checkAnswer = async (option) => {
     setIsCorrect(option === questions[currentQuestionIndex].correctAnswer);
     setSelectedOption(option);
-
-    getQuestions()
-    console.log(jsonApi.data)
 
     const botonIncorrecta = document.getElementById('option-' + questions[currentQuestionIndex].options.indexOf(option))
     if (!isCorrect) {
@@ -97,8 +108,6 @@ const Quiz = () => {
     await esperar(2000); // Espera 2000 milisegundos (2 segundos)
     botonIncorrecta.style.backgroundColor = 'lightgrey'
     botonCorrecta.style.backgroundColor = 'lightgrey' 
-    console.log(questions.length-1)
-    console.log(currentQuestionIndex)
     if (questions.length-1 !== currentQuestionIndex) {
       
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -108,9 +117,7 @@ const Quiz = () => {
   };
 
   return (
-    <Container component="main" maxWidth="sm" sx={{ marginTop: 4 }}>
-      
-      
+    <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
       <div className="questionStructure">
         <div class="question">
         <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
@@ -119,7 +126,7 @@ const Quiz = () => {
         </div>
         
         <div class="progressBar">
-          {MiCircularProgressbar}
+          {/* {MiCircularProgressbar} */}
         </div>
         <div class="allAnswers">
         {questions[currentQuestionIndex].options.map((option, index) => (
@@ -134,11 +141,7 @@ const Quiz = () => {
               {option}
             </button>
           </div>
-
-
-          
         )
-        
         )}
         </div>
       </div>

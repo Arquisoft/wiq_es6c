@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 
 import FirstGame from './components/FirstGame';
+import Menu from './components/Menu';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -24,6 +25,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App/>}></Route>
         <Route path="/firstGame" element={<FirstGame/>}></Route>
+        <Route path="/menu" element={<Menu/>}></Route>
       </Routes>
     </Router>
   </React.StrictMode>

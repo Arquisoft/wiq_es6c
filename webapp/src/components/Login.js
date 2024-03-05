@@ -27,7 +27,7 @@ const Login = () => {
       setLoginSuccess(true);
 
       setOpenSnackbar(true);
-      navigation("/firstGame")
+      navigation("/menu")
 
     } catch (error) {
       setError(error.response.data.error);
@@ -38,6 +38,7 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
+  
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       {loginSuccess ? (

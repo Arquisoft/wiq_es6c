@@ -42,6 +42,7 @@ function getQuestions(req) {
 // Route for getting questions
 app.get('/questions', async (req, res) => {
   try {
+    res.setHeader("Access-Control-Allow-Origin", "*");
     const request = new Request({
       n_preguntas: Number(req.body.n_preguntas),
       n_respuestas: Number(req.body.n_respuestas),
