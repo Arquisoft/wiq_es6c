@@ -99,6 +99,20 @@ services:
     depends_on: 
       - prometheus
 
+  storequestion:
+    container_name: storequestion-${teamname:-defaultASW}
+    image: ghcr.io/arquisoft/wiq_es6c/storequestionservice:latest
+    profiles: ["dev", "prod"]
+    build: ./storequestionservice
+    depends_on:
+      - mongodb
+    ports:
+      - "8004:8004"
+    networks:
+      - mynetwork
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/userdb
+
 
 volumes:
   mongodb_data:
