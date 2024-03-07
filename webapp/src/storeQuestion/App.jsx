@@ -20,7 +20,9 @@ function App(){
       const newQuestion3 = {
         question: '¿Cuál es el país mas poblado de la tierra?',
         answers: ['China','Estados Unidos','Brazil','India'],
-      };*/
+      };
+
+      let preguntas = [newQuestion, newQuestion1, newQuestion2, newQuestion3]*/
       
       const [preguntas, setPreguntas] = useState([]);
 
