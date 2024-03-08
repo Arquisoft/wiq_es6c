@@ -27,7 +27,7 @@ function App(){
       useEffect(() => {
         const obtenerPreguntas = async () => {
           try {
-            const response = await axios.get('http://localhost:8004/questions').then(setPreguntas(response.data)).error();
+            const response = await axios.get('http://localhost:8004').then(setPreguntas(response.data)).error();
             console.log(response)
             //setPreguntas(response.data);
           } catch (error) {

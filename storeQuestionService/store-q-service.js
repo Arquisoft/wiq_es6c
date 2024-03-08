@@ -10,7 +10,7 @@ const port = 8004;
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/userdb';
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/storedquestion';
 mongoose.connect(mongoUri);
 
 // Function to validate required fields in the request body

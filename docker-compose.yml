@@ -111,7 +111,7 @@ services:
     networks:
       - mynetwork
     environment:
-      MONGODB_URI: mongodb://mongodb:27017/userdb
+      MONGODB_URI: mongodb://mongodb:27017/storedquestion
 
 
 volumes:
