@@ -26,12 +26,15 @@ function App(){
       
       const [preguntas, setPreguntas] = useState([]);
 
+      const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+
       useEffect(() => {
+        
         const obtenerPreguntas = async () => {
           try {
-            const response = await axios.get('http://localhost:8004').then(setPreguntas(response.data)).error();
+            const response = await axios.gets(`${apiEndpoint}/questions`).then(setPreguntas(response.data)).error();
             console.log(response)
-            //setPreguntas(response.data);
+            setPreguntas(response.data);
           } catch (error) {
             console.error('Error al obtener las preguntas:', error.response.data.error);
           }
