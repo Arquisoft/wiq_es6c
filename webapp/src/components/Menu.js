@@ -6,7 +6,7 @@ import axios from 'axios';
 import { json } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
 
-const apiEndpoint = 'http://localhost:8006';
+const apiEndpoint = 'http://localhost:8007';
 
 var jsonApi = ''
 
@@ -63,13 +63,13 @@ const Menu = () => {
     const getQuestions = async () => {
         try {
             setn_preguntas(5)
-          const response = await axios.get(`${apiEndpoint}/questions`, {n_preguntas});
+          const response = await axios.get(`${apiEndpoint}/questions?n_preguntas=${n_preguntas}`);
           console.log(response.data.length)
           for (var i = 0; i < response.data.length; i++) {
             var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
             possibleAnswers = shuffleArray(possibleAnswers)
             questions.push({
-              question: response.data[0].pregunta,
+              question: response.data[i].pregunta,
               options: possibleAnswers,
               correctAnswer: response.data[i].respuesta_correcta
             })
