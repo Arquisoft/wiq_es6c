@@ -98,7 +98,6 @@ function getQuestions(req) {
 // Route for getting questions
 app.get('/questions', async (req, res) => {
   try {
-    // res.setHeader("Access-Control-Allow-Origin", "*");
     // TODO: Implement logic to fetch questions from MongoDB and send response 
     // const questions = await Question.find()
     const defaultQuestion = getQuestions(req)
