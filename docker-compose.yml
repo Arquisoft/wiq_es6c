@@ -18,8 +18,6 @@ services:
     build: ./users/authservice
     depends_on:
       - mongodb
-    ports:
-      - "8002:8002"
     networks:
       - mynetwork
     environment:
@@ -32,8 +30,6 @@ services:
     build: ./users/userservice
     depends_on:
       - mongodb
-    ports:
-      - "8001:8001"
     networks:
       - mynetwork
     environment:
