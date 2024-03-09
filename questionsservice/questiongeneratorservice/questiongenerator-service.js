@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const { Question } = require('./questiongenerator-model')
 const { Request } = require('./questiongenerator-model')
@@ -15,6 +16,9 @@ db.once('open', () => console.log("Connected to MongoDB: %s", mongoUri));
 
 // Middleware to parse JSON in request body
 app.use(express.json());
+
+// Middleware to enable CORS (cross-origin resource sharing). In order for the API to be accessible by other origins (domains).
+app.use(cors());
 
 const mockedQuestions = [
   {
