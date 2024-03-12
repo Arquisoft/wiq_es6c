@@ -8,6 +8,7 @@ const port = 8000;
 
 const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:8002';
 const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
+const userStatsService = process.env.USER_STATS_SERVICE_URL || 'http://localhost:8003';
 
 app.use(cors());
 app.use(express.json());
@@ -40,6 +41,8 @@ app.post('/adduser', async (req, res) => {
     res.status(error.response.status).json({ error: error.response.data.error });
   }
 });
+
+//TODO: Marco - Petición GET UserStatsService
 
 // Start the gateway service
 const server = app.listen(port, () => {

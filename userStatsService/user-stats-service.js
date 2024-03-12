@@ -43,7 +43,7 @@ app.post('/addgame', async (req, res) => {
     }
 });
 
-app.get('/getgame', async (req, res) => {
+app.get('/getgame', async (req, res) => {//FIXME: Marcos - Debería devolver varias partidas -> /getGames
     try {
         // Check if required fields are present in the query parameters
         validateRequiredFields(req.query, ['username']);
