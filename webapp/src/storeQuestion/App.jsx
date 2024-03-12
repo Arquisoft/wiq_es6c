@@ -32,7 +32,7 @@ function App(){
         
         const obtenerPreguntas = async () => {
           try {
-            const response = await axios.gets(`${apiEndpoint}/questions`).then(setPreguntas(response.data)).error();
+            const response = await axios.get(`${apiEndpoint}/questions`)
             console.log(response)
             setPreguntas(response.data);
           } catch (error) {
@@ -46,9 +46,12 @@ function App(){
 
     return (
       <>
-        {preguntas.map(question => (
-          <Question key={question._id} newQuestion={question} />
-        ))}
+        <h2>Almacén de preguntas</h2>
+        <main className='grid'>
+          {preguntas.map(question => (
+            <Question key={question._id} newQuestion={question} />
+          ))}
+        </main>
       </>
     );
 
