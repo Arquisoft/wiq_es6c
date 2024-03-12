@@ -72,8 +72,18 @@ app.post('/addquestions', async (req, res) => {
 
 app.get('/questions', async (req, res) => {
     try {
+        res.setHeader("Access-Control-Allow-Origin", "*");//Puede ser innecesario?
         const questions = await Question.find({}); // Get all questions
         res.json(questions);
+        /*res.json([{ //FORMATO VIEJO
+            question: '¿Cuál es la capital de la comunidad autónoma de Casstilla y León?',
+            answers: ['Segovia','León','Valladolid','Ninguna'],
+          }]);*/
+        /*res.json([{
+            question: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
+            c_answer: 'Ninguna',
+            w_answers: ['Segovia','León','Valladolid']
+          }]);*/
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
