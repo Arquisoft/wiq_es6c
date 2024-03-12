@@ -79,35 +79,6 @@ app.get('/getgames', async (req, res) => {
 
         const { username } = req.query;
 
-        // Find the user by username in the database
-        const user = await Game.findOne({ username });
-
-        // Check if the user exists
-        if (user) {
-            // Respond with the user information
-            res.json({
-                id: user.id,
-                username: user.username,
-                points: user.points,
-                questions: user.questions,
-                createdAt: user.createdAt
-            });
-        } else {
-            res.status(404).json({ error: 'User not found!' });
-        }
-    } catch (error) {
-        // Handle errors during database query
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-app.get('/getgames', async (req, res) => {
-    try {
-        // Check if required fields are present in the query parameters
-        validateRequiredFields(req.query, ['username']);
-
-        const { username } = req.query;
-
         // Find all games by username in the database with function find
         const games = await Game.find({ username });
 
