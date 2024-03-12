@@ -58,7 +58,8 @@
     color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
     background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
     border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
-    
+    border-radius: 3%;
+    border-style: dashed;
 }
 
 body{
@@ -91,7 +92,7 @@ body{
     border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
 }
 
-.question .grid p .right{
+.question .grid p.right{
     width: max-content;
     border-style: dashed;
     border-radius: 15%;
@@ -103,7 +104,7 @@ body{
     --label-g: 255;
     --label-b: 0;
     --label-h: 120;
-    --label-s: 100;
+    --label-s: 50;
     --label-l: 50;
 
     --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
@@ -123,7 +124,13 @@ body{
     padding: 5px;
 }
 
-#root {
+
+h2{
+    width: 100%;
+    text-align: center;
+}
+
+#root main{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
     padding: 5px;
