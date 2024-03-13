@@ -6,7 +6,11 @@ import { Router } from 'react-router-dom';
 
 test('renders learn react link', () => {
   render(
-    <App />
+  <ContextFun>
+    <Router>
+      <App />
+    </Router>
+  </ContextFun>
   );
   const linkElement = screen.getByText(/Welcome to wiq_0/i);
   expect(linkElement).toBeInTheDocument();
