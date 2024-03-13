@@ -1,14 +1,21 @@
 const mongoose = require('mongoose');
 
 const questionStorageSchema = new mongoose.Schema({
-    question: {
+    pregunta: {
         type: String,
         required: true,
     },
-    c_answer: { type: String, required: true },
-    w_answers: [{ type: String, required: true }],
+    respuesta_correcta: { 
+        type: String, 
+        required: true 
+    },
+    respuestas_incorrectas: [{ 
+        type: String, 
+        required: true 
+    }],
     createdAt: {
         type: Date,
+        required: true,
         default: Date.now, 
       },
 });
