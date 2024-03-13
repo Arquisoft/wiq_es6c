@@ -47,6 +47,7 @@ app.get('/questions', async (req, res) => {
     const response = await axios.get(storeQuestionsServiceUrl+'/questions');
     res.json(response.data);
   } catch (error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
   }
 })
 
