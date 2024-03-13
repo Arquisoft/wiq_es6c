@@ -22,7 +22,7 @@ function validateRequiredFields(req, requiredFields) {
     }
 }
 
-app.post('/history/questions', async (req, res) => {
+app.post('/history/question', async (req, res) => {
     try {
         // Check if required fields are present in the request body
         validateRequiredFields(req, ['pregunta', 'respuesta_correcta','respuestas_incorrectas']);
@@ -41,7 +41,7 @@ app.post('/history/questions', async (req, res) => {
     }
 });
 
-app.post('/addquestions', async (req, res) => {
+app.post('/history/questions', async (req, res) => {
   try {
       // Check if required fields are present in the request body
       if (!Array.isArray(req.body)) {
