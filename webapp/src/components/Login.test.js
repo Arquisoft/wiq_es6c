@@ -16,9 +16,12 @@ describe('Login component', () => {
   });
 
   it('should log in successfully', async () => {
-    render(<Router>
+    render(
+      <Context>
+      <Router>
       <Login />
-      </Router>);
+      </Router>
+      </Context>);
 
     const usernameInput = screen.getByLabelText(/Username/i);
     const passwordInput = screen.getByLabelText(/Password/i);
