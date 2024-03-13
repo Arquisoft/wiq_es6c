@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 import { ContextFun } from './components/Context';
-import { Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 
 test('renders learn react link', () => {
