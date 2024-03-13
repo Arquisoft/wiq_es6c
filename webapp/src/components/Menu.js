@@ -88,7 +88,7 @@ const Menu = () => {
     };
 
     const openStoredQuestions = async () => {
-      navigation("/firstGame")
+      navigation("/appQuestion")
     }
 
     return (
@@ -102,11 +102,11 @@ const Menu = () => {
               Clasico
             </button>
             <button
-              name="quiz"
+              name="openStoredQuestions"
               onClick={() => openStoredQuestions()}
               style={{backgroundColor: 'lightgrey'}}
             >
-              Clasico
+              Preguntas guardadas
             </button>
 
         </Container>

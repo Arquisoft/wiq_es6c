@@ -27,6 +27,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App/>}></Route>
         <Route path="/firstGame" element={<FirstGame/>}></Route>
+        <Route path="/appQuestion" element={<AppQuestion/>}></Route>
         <Route path="/menu" element={<Menu/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
       </Routes>
