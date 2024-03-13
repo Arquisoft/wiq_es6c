@@ -27,7 +27,7 @@ describe('Store questions service', () => {
 
     const response = await request(app).post('/history/question').send(newQuestion);
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('question', 'c_answer', 'w_answers');
+    expect(response.body).toHaveProperty('pregunta', 'respuesta_correcta', 'respuestas_incorrectas');
   });
 });
 
