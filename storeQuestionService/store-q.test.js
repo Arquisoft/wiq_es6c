@@ -17,7 +17,7 @@ afterAll(async () => {
 });
 
 describe('Store questions service', () => {
-  it('should add a new question on POST /addquestion', async () => {
+  it('should add a new question on POST /history/question', async () => {
     const newQuestion = {
       question: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
       c_answer: 'Ninguna',
