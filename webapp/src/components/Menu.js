@@ -87,6 +87,10 @@ const Menu = () => {
         console.log(questions)
     };
 
+    const openStoredQuestions = async () => {
+      navigation("/appQuestion")
+    }
+
     return (
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
             <p>Bienvenido a wiq_06c por favor seleccione un modo de juego para comenzar partida:</p>
@@ -97,6 +101,14 @@ const Menu = () => {
             >
               Clasico
             </button>
+            <button
+              name="openStoredQuestions"
+              onClick={() => openStoredQuestions()}
+              style={{backgroundColor: 'lightgrey'}}
+            >
+              Preguntas guardadas
+            </button>
+
         </Container>
     );
 

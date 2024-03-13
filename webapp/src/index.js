@@ -16,7 +16,8 @@ import {
 
 import FirstGame from './components/FirstGame';
 import Menu from './components/Menu';
-import Login from './components/Login'
+import Login from './components/Login';
+import AppQuestion from './storeQuestion/App'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -26,6 +27,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App/>}></Route>
         <Route path="/firstGame" element={<FirstGame/>}></Route>
+        <Route path="/appQuestion" element={<AppQuestion/>}></Route>
         <Route path="/menu" element={<Menu/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
       </Routes>
