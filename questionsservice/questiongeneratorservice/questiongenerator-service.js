@@ -50,7 +50,6 @@ const generateQuestion = async () => {
     isWikiChecked = true;
   }
   elementos = shuffle(elementos);
-  console.log("caca", elementos);
   mockedQuestions = [{
     pregunta: "¿Cual es la capital de " + elementos[0].countryLabel + "?",
     respuesta_correcta: elementos[0].capitalLabel,
