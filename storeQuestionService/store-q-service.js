@@ -7,7 +7,7 @@ const app = express();
 const port = 8004;
 
 // Middleware to parse JSON in request body
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Connect to MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/storedquestion';
