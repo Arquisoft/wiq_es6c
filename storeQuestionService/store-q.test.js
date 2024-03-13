@@ -19,9 +19,10 @@ afterAll(async () => {
 describe('Store questions service', () => {
   it('should add a new question on POST /history/question', async () => {
     const newQuestion = {
-      question: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
-      c_answer: 'Ninguna',
-      w_answers: ['Segovia','León','Valladolid'],
+      pregunta: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
+      respuesta_correcta: 'Ninguna',
+      respuestas_incorrectas: ['Segovia','León','Valladolid'],
+      createdAt: '<2002-02-02>'
     };
 
     const response = await request(app).post('/history/question').send(newQuestion);
@@ -33,19 +34,22 @@ describe('Store questions service', () => {
 describe('Store questions service', () => {
   it('should get all questions on GET /history/questions', async () => {
     const newQuestion1 = {
-      question: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
-      c_answer: 'Ninguna',
-      w_answers: ['Segovia','León','Valladolid'],
+      pregunta: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
+      respuesta_correcta: 'Ninguna',
+      respuestas_incorrectas: ['Segovia','León','Valladolid'],
+      createdAt: '<2002-02-02>'
     };
     const newQuestion2 = {
-      question: '¿Cuál es la capital Italia?',
-      c_answer: 'Roma',
-      w_answers: ['Nápoles','Florencia','Milán'],
+      pregunta: '¿Cuál es la capital Italia?',
+      respuesta_correcta: 'Roma',
+      respuestas_incorrectas: ['Nápoles','Florencia','Milán'],
+      createdAt: '<2002-02-02>'
     };
     const newQuestion3 = {
-      question: '¿Cuál es el país mas poblado de la tierra?',
-      c_answer: 'India',
-      w_answers: ['China','Estados Unidos','Brazil'],
+      pregunta: '¿Cuál es el país mas poblado de la tierra?',
+      respuesta_correcta: 'India',
+      respuestas_incorrectas: ['China','Estados Unidos','Brazil'],
+      createdAt: '<2002-02-02>'
     };
   
     request(app).post('/history/question').send(newQuestion1);
