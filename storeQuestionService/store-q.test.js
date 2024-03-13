@@ -52,7 +52,7 @@ describe('Store questions service', () => {
     request(app).post('/addquestion').send(newQuestion2);
     request(app).post('/addquestion').send(newQuestion3);
 
-    const response = await request(app).get('/questions');
+    const response = await request(app).get('/history/questions');
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(
