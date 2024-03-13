@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 const Context = createContext();
 
-export function UserProvider({ children }) {
+export function ContextFun({ children }) {
     const [usernameGlobal, setUsernameGlobal] = useState('');
 
     return (
