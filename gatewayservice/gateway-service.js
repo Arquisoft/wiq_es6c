@@ -42,6 +42,15 @@ app.post('/adduser', async (req, res) => {
   }
 });
 
+app.post('/history/question', async (req, res) => {
+  try {
+    const response = await axios.post(storeQuestionsServiceUrl+'/history/question', req.body);
+    res.json(response.data);
+  } catch (error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+})
+
 app.get('/history/questions', async (req, res) => {
   try {
     const response = await axios.get(storeQuestionsServiceUrl+'/history/questions');
