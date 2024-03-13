@@ -56,6 +56,7 @@ services:
       AUTH_SERVICE_URL: http://authservice:8002
       USER_SERVICE_URL: http://userservice:8001
       USER_STATS_SERVICE_URL: http://userstatsservice:8003 
+      STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
 
   webapp:
     container_name: webapp-${teamname:-defaultASW}
@@ -100,19 +101,33 @@ services:
     depends_on: 
       - prometheus
 
-    userstatsservice:
-      container_name: userstats-${teamname:-defaultASW}
-      image: ghcr.io/arquisoft/wiq_es6c/userstatsservice:latest
-      profiles: ["dev", "prod"]
-      build: ./userstatsservice
-      depends_on:
-        - mongodb
-      ports:
-        - "8003:8003"
-      networks:
-        - mynetwork
-      environment:
-        MONGODB_URI: mongodb://mongodb:27017/statsdb
+  storequestionservice:
+    container_name: storequestion-${teamname:-defaultASW}
+    image: ghcr.io/arquisoft/wiq_es6c/storequestionservice:latest
+    profiles: ["dev", "prod"]
+    build: ./storequestionservice
+    depends_on:
+      - mongodb
+    ports:
+      - "8004:8004"
+    networks:
+      - mynetwork
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/storedquestion
+
+  userstatsservice:
+    container_name: userstats-${teamname:-defaultASW}
+    image: ghcr.io/arquisoft/wiq_es6c/userstatsservice:latest
+    profiles: ["dev", "prod"]
+    build: ./userstatsservice
+    depends_on:
+      - mongodb
+    ports:
+      - "8003:8003"
+    networks:
+      - mynetwork
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/statsdb
 
 
 volumes:
