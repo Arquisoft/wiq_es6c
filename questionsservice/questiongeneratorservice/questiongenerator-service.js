@@ -7,7 +7,7 @@ const { Question } = require('./questiongenerator-model')
 const app = express();
 const port = 8006;
 
-const questionHistoryServiceUrl = process.env.QUESTION_HISTORY_SERVICE_URL || 'http://localhost:8004';
+const questionHistoryServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004';
 
 const WikiQueries = require('./wikidataExtractor/wikidataQueries');
 // Connect to MongoDB
