@@ -130,9 +130,24 @@ h2{
     text-align: center;
 }
 
+h3{
+    text-align: center;
+}
+
 #root main{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
     padding: 5px;
     grid-gap: 10px;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+.container.footer{
+    display: flex;
+    justify-content: right;
+    margin-right: 1em;
 }

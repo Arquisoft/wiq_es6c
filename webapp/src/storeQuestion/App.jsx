@@ -28,12 +28,12 @@ function App(){
 
       const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
+      
       useEffect(() => {
         
         const obtenerPreguntas = async () => {
           try {
-            const response = await axios.get(`${apiEndpoint}/questions`)
-            console.log(response)
+            const response = await axios.get(`${apiEndpoint}/history/questions`)
             setPreguntas(response.data);
           } catch (error) {
             console.error('Error al obtener las preguntas:', error.response.data.error);
@@ -41,8 +41,8 @@ function App(){
         };
     
         obtenerPreguntas();
+        //eslint-disable-next-line
       }, []);
-
 
     return (
       <>

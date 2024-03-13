@@ -5,12 +5,19 @@ function Question(props) {
 
   return (
     <div className='question'>
-      <h3>{newQuestion.question}</h3>
+      <h3>{newQuestion.pregunta}</h3>
         <div className='grid'>
-          <p className='right'>{newQuestion.c_answer}</p>
-          {newQuestion.w_answers.map((answer, index) => (
+          <div className='container'>
+            <p className='right'>{newQuestion.respuesta_correcta}</p>
+          </div>
+          {newQuestion.respuestas_incorrectas.map((answer, index) => (
+            <div className='container'>
               <p>{answer}</p>
+            </div>
           ))}
+        </div>
+        <div className='container footer'>
+          <footer>{newQuestion.createdAt.substring(0,10)}</footer>
         </div>
     </div>
   );
