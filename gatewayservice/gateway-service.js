@@ -44,7 +44,7 @@ app.post('/adduser', async (req, res) => {
 
 app.get('/questions', async (req, res) => {
   try {
-    const response = await axios.get(storeQuestionsServiceUrl+'/questions');
+    const response = await axios.get(storeQuestionsServiceUrl+'/history/questions');
     res.json(response.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });
