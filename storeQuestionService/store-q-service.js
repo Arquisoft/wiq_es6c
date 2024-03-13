@@ -74,7 +74,6 @@ app.post('/history/questions', async (req, res) => {
 
 app.get('/history/questions', async (req, res) => {
     try {
-        res.setHeader("Access-Control-Allow-Origin", "*");//Puede ser innecesario?
         const questions = await Question.find({}); // Get all questions
         res.json(questions);
         /*res.json([{ //FORMATO VIEJO
