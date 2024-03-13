@@ -28,7 +28,6 @@ root.render(
         <Route path="/firstGame" element={<FirstGame/>}></Route>
         <Route path="/menu" element={<Menu/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
-        <Route path="/App" element={<App />}></Route>
       </Routes>
     </Router>
   </React.StrictMode>
