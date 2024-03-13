@@ -31,7 +31,7 @@ describe('Store questions service', () => {
 });
 
 describe('Store questions service', () => {
-  it('should get all questions on GET /questions', async () => {
+  it('should get all questions on GET /history/questions', async () => {
     const newQuestion1 = {
       question: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
       c_answer: 'Ninguna',
