@@ -1,13 +1,15 @@
 const express = require('express');
 const cors = require('cors');
+const axios = require('axios');
 const mongoose = require('mongoose');
 const { Question } = require('./questiongenerator-model')
-const { Request } = require('./questiongenerator-model')
 
 const app = express();
 const port = 8006;
 
-const WikiQueries = require('./wikidataExtractor/wikidataQueries')
+const questionHistoryServiceUrl = process.env.QUESTION_HISTORY_SERVICE_URL || 'http://localhost:8004';
+
+const WikiQueries = require('./wikidataExtractor/wikidataQueries');
 // Connect to MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/questions';
 mongoose.connect(mongoUri);
@@ -21,9 +23,9 @@ app.use(express.json());
 // Middleware to enable CORS (cross-origin resource sharing). In order for the API to be accessible by other origins (domains).
 app.use(cors());
 
-var mockedQuestions = []
-var isWikiChecked = false
-var elementos
+var mockedQuestions = [];
+var isWikiChecked = false;
+var elementos;
 
 function shuffle(array) {
   let currentIndex = array.length;
@@ -31,12 +33,12 @@ function shuffle(array) {
 
   // Mientras queden elementos para mezclar.
   while (currentIndex > 0) {
-      // Escoge un elemento aleatorio.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
+    // Escoge un elemento aleatorio.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
 
-      // Intercambia el elemento actual con el elemento aleatorio.
-      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    // Intercambia el elemento actual con el elemento aleatorio.
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
 
   return array;
@@ -44,17 +46,16 @@ function shuffle(array) {
 
 const generateQuestion = async () => {
   if (!isWikiChecked) {
-    elementos = await WikiQueries.obtenerPaisYCapital()
-    isWikiChecked = true
+    elementos = await WikiQueries.obtenerPaisYCapital();
+    isWikiChecked = true;
   }
-  elementos = shuffle(elementos)
-  console.log("caca", elementos)
+  elementos = shuffle(elementos);
   mockedQuestions = [{
     pregunta: "¿Cual es la capital de " + elementos[0].countryLabel + "?",
     respuesta_correcta: elementos[0].capitalLabel,
     respuestas_incorrectas: [elementos[1].capitalLabel, elementos[2].capitalLabel, elementos[3].capitalLabel]
-  }]
-  console.log(mockedQuestions)
+  }];
+  console.log(mockedQuestions);
 }
 
 
@@ -129,11 +130,11 @@ async function getQuestions(req) {
   //   return mockedQuestions.slice(0, 4);
   // }
   // const response = [];
-    await generateQuestion()
-    // for (let i = 0; i < preguntas; i++) {
-    //   response.push(mockedQuestions[i % 11]);
-    // }
-    return mockedQuestions
+  await generateQuestion();
+  // for (let i = 0; i < preguntas; i++) {
+  //   response.push(mockedQuestions[i % 11]);
+  // }
+  return mockedQuestions;
 }
 
 // Route for getting questions
@@ -141,7 +142,9 @@ app.get('/questions', async (req, res) => {
   try {
     // TODO: Implement logic to fetch questions from MongoDB and send response 
     // const questions = await Question.find()
-    const defaultQuestion = await getQuestions(req)
+    const defaultQuestion = await getQuestions(req);
+
+    const questionsHistoryResponse = await axios.post(questionHistoryServiceUrl + '/history/questions', defaultQuestion);
     res.json(defaultQuestion);
   } catch (error) {
     // res.status(500).json({ message: error.message })
