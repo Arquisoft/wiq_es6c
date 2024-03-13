@@ -22,7 +22,7 @@ function validateRequiredFields(req, requiredFields) {
     }
 }
 
-app.post('/addquestion', async (req, res) => {
+app.post('/history/questions', async (req, res) => {
     try {
         // Check if required fields are present in the request body
         validateRequiredFields(req, ['question', 'c_answer','w_answers']);
