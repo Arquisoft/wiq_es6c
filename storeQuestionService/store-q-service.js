@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const Question = require('./store-q-model');
 
 const app = express();
@@ -82,7 +81,7 @@ app.get('/history/questions', async (req, res) => {
           }]);*/
         /*res.json([{
             pregunta: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
-            respuesta_incorrecta: 'Ninguna',
+            respuesta_correcta: 'Ninguna',
             respuestas_incorrectas: ['Segovia','León','Valladolid']
           }]);*/
     } catch (error) {
