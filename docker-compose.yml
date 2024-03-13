@@ -57,12 +57,14 @@ services:
     build: ./questionsservice/questiongeneratorservice
     depends_on:
       - mongodb_wiki
+      - storequestionservice
     ports:
       - "8007:8006"
     networks:
       - mynetwork
     environment:
       MONGODB_URI: mongodb://mongodb_wiki:27017/questions
+      STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
 
   gatewayservice:
     container_name: gatewayservice-${teamname:-defaultASW}
