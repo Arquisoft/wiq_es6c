@@ -16,8 +16,6 @@ mongoose.connect(mongoUri);
 function validateRequiredFields(body, requiredFields) {
     for (const field of requiredFields) {
         if (!(field in body)) {
-            console.log(field)
-            console.log(body)
             throw new Error(`Missing required field: ${field}`);
         }
     }
@@ -49,14 +47,11 @@ app.post('/history/questions', async (req, res) => {
             throw new Error('Invalid request format. Expected an array of questions.');
         }
         for (const question of req.body) {
-            console.log(question)
             validateRequiredFields(question, ['pregunta', 'respuesta_correcta', 'respuestas_incorrectas']);
         }
-        console.log("Pasa validación")
         const newQuestions = [];
 
         for (const questionData of req.body) {
-            console.log(questionData)
             const newQuestion = new Question({
                 pregunta: questionData.pregunta,
                 respuesta_correcta: questionData.respuesta_correcta,

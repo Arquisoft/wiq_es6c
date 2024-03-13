@@ -44,7 +44,6 @@ function App(){
         //eslint-disable-next-line
       }, []);
 
-    console.log(preguntas)
     return (
       <>
         <h2>Almacén de preguntas</h2>
