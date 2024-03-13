@@ -13,9 +13,11 @@ const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/storedque
 mongoose.connect(mongoUri);
 
 // Function to validate required fields in the request body
-function validateRequiredFields(req, requiredFields) {
+function validateRequiredFields(body, requiredFields) {
     for (const field of requiredFields) {
-        if (!(field in req.body)) {
+        if (!(field in body)) {
+            console.log(field)
+            console.log(body)
             throw new Error(`Missing required field: ${field}`);
         }
     }
@@ -24,7 +26,7 @@ function validateRequiredFields(req, requiredFields) {
 app.post('/history/question', async (req, res) => {
     try {
         // Check if required fields are present in the request body
-        validateRequiredFields(req, ['pregunta', 'respuesta_correcta','respuestas_incorrectas']);
+        validateRequiredFields(req.body, ['pregunta', 'respuesta_correcta', 'respuestas_incorrectas']);
 
         const newQuestion = new Question({
             pregunta: req.body.pregunta,
@@ -41,33 +43,35 @@ app.post('/history/question', async (req, res) => {
 });
 
 app.post('/history/questions', async (req, res) => {
-  try {
-      // Check if required fields are present in the request body
-      if (!Array.isArray(req.body)) {
-          throw new Error('Invalid request format. Expected an array of questions.');
-      }
-      for (const question of req.body) {
-          validateRequiredFields(question, ['pregunta', 'respuesta_correcta','respuestas_incorrectas']);
-      }
+    try {
+        // Check if required fields are present in the request body
+        if (!Array.isArray(req.body)) {
+            throw new Error('Invalid request format. Expected an array of questions.');
+        }
+        for (const question of req.body) {
+            console.log(question)
+            validateRequiredFields(question, ['pregunta', 'respuesta_correcta', 'respuestas_incorrectas']);
+        }
+        console.log("Pasa validación")
+        const newQuestions = [];
 
-      const newQuestions = [];
+        for (const questionData of req.body) {
+            console.log(questionData)
+            const newQuestion = new Question({
+                pregunta: questionData.pregunta,
+                respuesta_correcta: questionData.respuesta_correcta,
+                respuestas_incorrectas: questionData.respuestas_incorrectas,
+                createdAt: questionData.createdAt
+            });
 
-      for (const questionData of req.body) {
-        const newQuestion = new Question({
-            pregunta: req.body.pregunta,
-            respuesta_correcta: req.body.respuesta_correcta,
-            respuestas_incorrectas: req.body.respuestas_incorrectas,
-            createdAt: req.body.createdAt
-        });
+            await newQuestion.save();
+            newQuestions.push(newQuestion);
+        }
 
-        await newQuestion.save();
-        newQuestions.push(newQuestion);
-      }
-      
-      res.json(newQuestions);
-  } catch (error) {
-      res.status(400).json({ error: error.message });
-  }
+        res.json(newQuestions);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 });
 
 
