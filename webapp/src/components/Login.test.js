@@ -3,10 +3,6 @@ import { render, fireEvent, screen, waitFor, act } from '@testing-library/react'
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Login from './Login';
-import { ContextFun } from './Context';
-import { BrowserRouter as Router } from 'react-router-dom';
-
-
 
 const mockAxios = new MockAdapter(axios);
 
@@ -16,12 +12,7 @@ describe('Login component', () => {
   });
 
   it('should log in successfully', async () => {
-    render(
-      <ContextFun>
-        <Router>
-          <Login />
-        </Router>
-      </ContextFun>);
+    render(<Login />);
 
     const usernameInput = screen.getByLabelText(/Username/i);
     const passwordInput = screen.getByLabelText(/Password/i);
@@ -32,10 +23,10 @@ describe('Login component', () => {
 
     // Simulate user input
     await act(async () => {
-      fireEvent.change(usernameInput, { target: { value: 'testUser' } });
-      fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
-      fireEvent.click(loginButton);
-    });
+        fireEvent.change(usernameInput, { target: { value: 'testUser' } });
+        fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+        fireEvent.click(loginButton);
+      });
 
     // Verify that the user information is displayed
     expect(screen.getByText(/Hello testUser!/i)).toBeInTheDocument();
@@ -43,14 +34,7 @@ describe('Login component', () => {
   });
 
   it('should handle error when logging in', async () => {
-
-    render(
-      <ContextFun>
-        <Router>
-          <Login />
-        </Router>
-      </ContextFun>
-    );
+    render(<Login />);
 
     const usernameInput = screen.getByLabelText(/Username/i);
     const passwordInput = screen.getByLabelText(/Password/i);

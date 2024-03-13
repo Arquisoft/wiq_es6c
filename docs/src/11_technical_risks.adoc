@@ -24,7 +24,7 @@ See https://docs.arc42.org/section-11/[Risks and Technical Debt] in the arc42 do
 
 ****
 
-[cols="2,4" options="header"]
+[options="header"]
 |===
 |Risk                       |Consequence
 

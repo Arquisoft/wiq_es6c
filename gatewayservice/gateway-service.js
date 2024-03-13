@@ -8,7 +8,6 @@ const port = 8000;
 
 const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:8002';
 const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
-const storeQuestionsServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004'
 
 app.use(cors());
 app.use(express.json());
@@ -41,15 +40,6 @@ app.post('/adduser', async (req, res) => {
     res.status(error.response.status).json({ error: error.response.data.error });
   }
 });
-
-app.get('/history/questions', async (req, res) => {
-  try {
-    const response = await axios.get(storeQuestionsServiceUrl+'/history/questions');
-    res.json(response.data);
-  } catch (error) {
-    res.status(error.response.status).json({ error: error.response.data.error });
-  }
-})
 
 // Start the gateway service
 const server = app.listen(port, () => {

@@ -4,34 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Routes,
-  useNavigate,
-  MemoryRouter
-  as Router
-} from "react-router-dom";
-
-import FirstGame from './components/FirstGame';
-import Menu from './components/Menu';
-import Login from './components/Login';
-import AppQuestion from './storeQuestion/App'
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<App/>}></Route>
-        <Route path="/firstGame" element={<FirstGame/>}></Route>
-        <Route path="/appQuestion" element={<AppQuestion/>}></Route>
-        <Route path="/menu" element={<Menu/>}></Route>
-        <Route path="/login" element={<Login/>}></Route>
-      </Routes>
-    </Router>
+    <App />
   </React.StrictMode>
 );
 
@@ -39,4 +15,3 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-

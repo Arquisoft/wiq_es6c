@@ -11,17 +11,6 @@ services:
     networks:
       - mynetwork
 
-  mongodb_wiki:
-    container_name: mongodb-wiki-${teamname:-defaultASW}
-    image: mongo
-    profiles: ["dev", "prod"]
-    volumes:
-      - mongodb_wiki_data:/data/db
-    ports:
-      - "27018:27017"
-    networks:
-      - mynetwork
-
   authservice:
     container_name: authservice-${teamname:-defaultASW}
     image: ghcr.io/arquisoft/wiq_es6c/authservice:latest
@@ -50,22 +39,6 @@ services:
     environment:
       MONGODB_URI: mongodb://mongodb:27017/userdb
 
-  questiongeneratorservice:
-    container_name: questiongeneratorservice-${teamname:-defaultASW}
-    image: ghcr.io/arquisoft/wiq_es6c/questiongeneratorservice:latest
-    profiles: ["dev", "prod"]
-    build: ./questionsservice/questiongeneratorservice
-    depends_on:
-      - mongodb_wiki
-      - storequestionservice
-    ports:
-      - "8007:8006"
-    networks:
-      - mynetwork
-    environment:
-      MONGODB_URI: mongodb://mongodb_wiki:27017/questions
-      STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
-
   gatewayservice:
     container_name: gatewayservice-${teamname:-defaultASW}
     image: ghcr.io/arquisoft/wiq_es6c/gatewayservice:latest
@@ -82,7 +55,6 @@ services:
     environment:
       AUTH_SERVICE_URL: http://authservice:8002
       USER_SERVICE_URL: http://userservice:8001
-      STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
 
   webapp:
     container_name: webapp-${teamname:-defaultASW}
@@ -127,24 +99,9 @@ services:
     depends_on: 
       - prometheus
 
-  storequestionservice:
-    container_name: storequestion-${teamname:-defaultASW}
-    image: ghcr.io/arquisoft/wiq_es6c/storequestionservice:latest
-    profiles: ["dev", "prod"]
-    build: ./storequestionservice
-    depends_on:
-      - mongodb
-    ports:
-      - "8004:8004"
-    networks:
-      - mynetwork
-    environment:
-      MONGODB_URI: mongodb://mongodb:27017/storedquestion
-
 
 volumes:
   mongodb_data:
-  mongodb_wiki_data:
   prometheus_data: 
   grafana_data: 
 

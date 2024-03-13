@@ -41,6 +41,9 @@ See https://docs.arc42.org/section-6/[Runtime View] in the arc42 documentation.
 
 [plantuml,"Question generation 1",png]
 ----
+
+@startuml
+!theme vibrant
 autonumber
 
 actor "User" as user
@@ -60,6 +63,8 @@ end
 
 "Game Service" -> "Question Historic Service" : Sends the shown questions
 "Game Service" -> "Player Statistics Service" : Sends the  user's match data
+@enduml 
+
 ----
 
 In circumstances in which few questions are needed for the game, it may be possible to extract all of them in a batch without affecting performance and response times. Besides, extracting them this way opens up the possibility of using multiple threads to gather the data, greatly increasing performance. However, if the querying times are too high, this strategy may cause great delays while loading the game. A possible alternative is explained below:
@@ -68,6 +73,9 @@ In circumstances in which few questions are needed for the game, it may be possi
 
 [plantuml,"Question generation 2",png]
 ----
+
+@startuml
+!theme vibrant
 autonumber
 
 actor "User" as user
@@ -100,6 +108,8 @@ end
 
 "Game Service" -> "Question Historic Service" : Sends the shown questions
 "Game Service" -> "Player Statistics Service" : Sends the  user's match data
+@enduml 
+
 ----
 
 In cases where a lot of questions are needed, or wikidata querying has a great impact on performance, this alternative may prove to be convenient. By distributing the data fetching along the entire match, bottlenecks on performance will be reduced. Depending on the system load (or, optionally client device's specifications!) batch sizes may vary, adapting to maintain responsiveness.
@@ -108,6 +118,9 @@ In cases where a lot of questions are needed, or wikidata querying has a great i
 
 [plantuml,"Consult Statistics",png]
 ----
+
+@startuml
+!theme vibrant
 autonumber
 
 actor "User" as user
@@ -116,12 +129,16 @@ user -> "Player Statistics Service" : Requests user data
 "Player Statistics Service" -> "MongoDB Server" : Makes petition through REST API
 "MongoDB Server" -> "Player Statistics Service" : Returns information
 "Player Statistics Service" -> user : Shows data
+@enduml 
+
 ----
 
 === User consults questions used in games.
 
 [plantuml,"Consult questions",png]
 ----
+@startuml
+!theme vibrant
 autonumber
 
 actor "User" as user
@@ -130,4 +147,5 @@ user -> "Question Historic Service" : Requests user data
 "Question Historic Service" -> "MongoDB Server" : Makes petition through REST API
 "MongoDB Server" -> "Question Historic Service" : Returns information
 "Question Historic Service" -> user : Shows data
+@enduml 
 ----
