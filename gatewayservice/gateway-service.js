@@ -42,7 +42,7 @@ app.post('/adduser', async (req, res) => {
   }
 });
 
-app.get('/questions', async (req, res) => {
+app.get('/history/questions', async (req, res) => {
   try {
     const response = await axios.get(storeQuestionsServiceUrl+'/history/questions');
     res.json(response.data);
