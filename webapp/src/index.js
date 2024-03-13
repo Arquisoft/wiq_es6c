@@ -16,7 +16,8 @@ import {
 
 import FirstGame from './components/FirstGame';
 import Menu from './components/Menu';
-import Login from './components/Login'
+import Login from './components/Login';
+import AppQuestion from './storeQuestion/App'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
