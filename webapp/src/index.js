@@ -16,6 +16,7 @@ import {
 
 import FirstGame from './components/FirstGame';
 import Menu from './components/Menu';
+import Login from './components/Login'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -26,6 +27,7 @@ root.render(
         <Route path="/" element={<App/>}></Route>
         <Route path="/firstGame" element={<FirstGame/>}></Route>
         <Route path="/menu" element={<Menu/>}></Route>
+        <Route path="/login" element={<Login/>}></Route>
       </Routes>
     </Router>
   </React.StrictMode>
