@@ -3,7 +3,6 @@ const cors = require('cors');
 const axios = require('axios');
 const mongoose = require('mongoose');
 const { Question } = require('./questiongenerator-model')
-const { Request } = require('./questiongenerator-model')
 
 const app = express();
 const port = 8006;
