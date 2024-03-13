@@ -8,7 +8,6 @@ ifndef::imagesdir[:imagesdir: ../images]
 In order to develop the application and adhere to the constraints, we selected the following technologies:
 
 - ReactJS: JavaScript library that streamlines the development of graphical interfaces for web applications.
-- TypeScript: Extension of JavaScript, bolstering it with type support for improved development.
 - GitHub: Platform offering remote repository services for project development, task management, and version control.
 - MongoDB: A non-linear database selected to oversee storage of diverse application contents, with each microservice possessing its dedicated database.
 - NodeJS: Facilitates efficient management of asynchronous events, notably beneficial for scalable network applications and database administration.
@@ -22,13 +21,13 @@ We will use PlantUML and UMLet for creating the documentation's diagrams.
 
 === Approaches to Achieve Top Quality Goals
 
-[cols="1,2,3"]
+[cols="1,2,3" options="header"]
 |===
 | Quality Goal | Scenario | Solution Approach
 
-| Privacy
-| Users seek reassurance in the safety and privacy of their data within our app.
-| Ensuring user data security and privacy within the application.
+| Scalability
+| The application's design must accommodate changes effortlessly throughout its lifecycle.
+| Employing a microservices approach to minimize code repetition and enhance understanding of application distribution, ensuring future scalability.
 
 | Usability
 | Seamless execution of all application functions is crucial for user satisfaction.
@@ -38,9 +37,6 @@ We will use PlantUML and UMLet for creating the documentation's diagrams.
 | Application architecture must facilitate seamless addition or modification of functionalities with minimal code changes.
 | Implementing design patterns and adhering to code conventions to ensure clean and maintainable code. Additionally, prioritizing testing during development for long-term maintainability.
 
-| Scalability
-| The application's design must accommodate changes effortlessly throughout its lifecycle.
-| Employing a microservices approach to minimize code repetition and enhance understanding of application distribution, ensuring future scalability.
 
 |===
 

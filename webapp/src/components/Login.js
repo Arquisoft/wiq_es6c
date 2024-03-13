@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Typography, TextField, Button, Snackbar } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // Importa useHistory
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -12,6 +13,8 @@ const Login = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+
+  const navigation = useNavigate(); // Añade esto
 
   const loginUser = async () => {
     try {
@@ -24,6 +27,8 @@ const Login = () => {
       setLoginSuccess(true);
 
       setOpenSnackbar(true);
+      navigation("/menu")
+
     } catch (error) {
       setError(error.response.data.error);
     }
@@ -33,6 +38,7 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
+  
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       {loginSuccess ? (
