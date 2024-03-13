@@ -48,7 +48,7 @@ describe('Store questions service', () => {
       w_answers: ['China','Estados Unidos','Brazil'],
     };
   
-    request(app).post('/addquestion').send(newQuestion1);
+    request(app).post('/history/question').send(newQuestion1);
     request(app).post('/history/question').send(newQuestion2);
     request(app).post('/history/question').send(newQuestion3);
 
