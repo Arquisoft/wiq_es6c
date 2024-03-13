@@ -25,12 +25,13 @@ function validateRequiredFields(req, requiredFields) {
 app.post('/history/questions', async (req, res) => {
     try {
         // Check if required fields are present in the request body
-        validateRequiredFields(req, ['question', 'c_answer','w_answers']);
+        validateRequiredFields(req, ['pregunta', 'respuesta_correcta','respuestas_incorrectas']);
 
         const newQuestion = new Question({
-            question: req.body.question,
-            c_answer: req.body.answers,
-            w_answers: req.body.answers,
+            pregunta: req.body.pregunta,
+            respuesta_correcta: req.body.respuesta_correcta,
+            respuestas_incorrectas: req.body.respuestas_incorrectas,
+            createdAt: req.body.createdAt
         });
 
         await newQuestion.save();
@@ -47,16 +48,17 @@ app.post('/addquestions', async (req, res) => {
           throw new Error('Invalid request format. Expected an array of questions.');
       }
       for (const question of req.body) {
-          validateRequiredFields(question, ['question', 'c_answer','w_answers']);
+          validateRequiredFields(question, ['pregunta', 'respuesta_correcta','respuestas_incorrectas']);
       }
 
       const newQuestions = [];
 
       for (const questionData of req.body) {
         const newQuestion = new Question({
-            question: req.body.question,
-            c_answer: req.body.answers,
-            w_answers: req.body.answers,
+            pregunta: req.body.pregunta,
+            respuesta_correcta: req.body.respuesta_correcta,
+            respuestas_incorrectas: req.body.respuestas_incorrectas,
+            createdAt: req.body.createdAt
         });
 
         await newQuestion.save();
@@ -80,9 +82,9 @@ app.get('/history/questions', async (req, res) => {
             answers: ['Segovia','León','Valladolid','Ninguna'],
           }]);*/
         /*res.json([{
-            question: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
-            c_answer: 'Ninguna',
-            w_answers: ['Segovia','León','Valladolid']
+            pregunta: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
+            respuesta_incorrecta: 'Ninguna',
+            respuestas_incorrectas: ['Segovia','León','Valladolid']
           }]);*/
     } catch (error) {
         res.status(500).json({ error: error.message });
