@@ -49,7 +49,7 @@ describe('Store questions service', () => {
     };
   
     request(app).post('/addquestion').send(newQuestion1);
-    request(app).post('/addquestion').send(newQuestion2);
+    request(app).post('/history/question').send(newQuestion2);
     request(app).post('/history/question').send(newQuestion3);
 
     const response = await request(app).get('/history/questions');
