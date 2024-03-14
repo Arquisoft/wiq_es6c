@@ -2,6 +2,7 @@ import Question from './components/Question';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/questions.css';
+import { useNavigate } from 'react-router-dom'; // Importa useHistory
 
 function App(){
     /*const newQuestion = {
@@ -28,6 +29,7 @@ function App(){
 
       const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
+      const navigation = useNavigate();
       
       useEffect(() => {
         
@@ -44,9 +46,20 @@ function App(){
         //eslint-disable-next-line
       }, []);
 
+      const goBack = async () => {
+        navigation('/menu')
+      }
+
     return (
       <>
         <h2>Almacén de preguntas</h2>
+        <button
+              name="openStoredQuestions"
+              onClick={() => goBack()}
+              style={{backgroundColor: 'lightgrey'}}
+            >
+              Volver al menu
+            </button>
         <main className='grid'>
           {preguntas.map(question => (
             <Question key={question._id} newQuestion={question} />

@@ -5,10 +5,15 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 import { json } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 
 const apiEndpoint = 'http://localhost:8007';
 const Quiz = () => {
+
+  const navigation = useNavigate(); // Añade esto
+
+
   var questions = useLocation().state.questions;
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
@@ -91,17 +96,17 @@ const Quiz = () => {
     
   };
 
+  const goBack = async () => {
+    navigation('/menu')
+  }
+
   return (
     <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
       <div className="questionStructure">
-        <div class="question">
+        <div class="questionFirstGame">
         <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
           {questions[currentQuestionIndex].question}
         </Typography>
-        </div>
-        
-        <div class="progressBar">
-          {/* {MiCircularProgressbar} */}
         </div>
         <div class="allAnswers">
         {questions[currentQuestionIndex].options.map((option, index) => (
@@ -119,7 +124,15 @@ const Quiz = () => {
         )
         )}
         </div>
+        <button
+              name="openStoredQuestions"
+              onClick={() => goBack()}
+              style={{backgroundColor: 'lightgrey'}}
+            >
+              Volver al menu
+            </button>
       </div>
+      
       {/* {isCorrect !== null && (
         <p>{isCorrect ? '¡Respuesta correcta!' : 'Respuesta incorrecta.'}</p>
       )} */}

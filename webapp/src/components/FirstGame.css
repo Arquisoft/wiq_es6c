@@ -21,16 +21,10 @@ button {
 .asnwers {
     width:100%;
 }
-.progressBar {
-    height: 100%; 
-    margin-top: 10;
-    width:10%;
-    display: inline-block;
-}  
 
-.question {
+
+.questionFirstGame {
     height: 100%;
-    width: 90%;
     display: inline-block;
 }
 

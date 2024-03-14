@@ -91,6 +91,8 @@ const Menu = () => {
       navigation("/appQuestion")
     }
 
+    
+
     return (
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
             <p>Bienvenido a wiq_06c por favor seleccione un modo de juego para comenzar partida:</p>
@@ -108,6 +110,8 @@ const Menu = () => {
             >
               Preguntas guardadas
             </button>
+            
+
 
         </Container>
     );
