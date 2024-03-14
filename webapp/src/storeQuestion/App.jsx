@@ -51,7 +51,7 @@ function App(){
       }
 
     return (
-      <>
+      <div id='storeQuestion'>
         <h2>Almacén de preguntas</h2>
         <button
               name="openStoredQuestions"
@@ -65,7 +65,7 @@ function App(){
             <Question key={question._id} newQuestion={question} />
           ))}
         </main>
-      </>
+      </div>
     );
 
     /*
