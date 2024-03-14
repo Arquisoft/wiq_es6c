@@ -50,7 +50,7 @@ const Quiz = () => {
 
   const getQuestions = async () => {
     try {
-      const response = await axios.get(`${apiEndpoint}/questions?n_preguntas=${1}`);
+      const response = await axios.get(`${apiEndpoint}/questions`);
       console.log(response.data.length)
       for (var i = 0; i < response.data.length; i++) {
         var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
