@@ -5,11 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import {
-  createBrowserRouter,
-  RouterProvider,
   Route,
   Routes,
-  useNavigate,
   MemoryRouter
   as Router
 } from "react-router-dom";
