@@ -50,9 +50,6 @@ function shuffleArray(array) {
 
 
 const Menu = () => {
-
-    const [n_preguntas, setn_preguntas] = useState(5);
-
     const navigation = useNavigate(); // Añade esto
 
     const initiateGame = async () => {
@@ -65,7 +62,6 @@ const Menu = () => {
 
     const getQuestions = async () => {
         try {
-            setn_preguntas(5)
           const response = await axios.get(`${apiEndpoint}/questions`);
           console.log(response.data.length)
           for (var i = 0; i < response.data.length; i++) {
