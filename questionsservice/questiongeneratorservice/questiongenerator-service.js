@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const { Question } = require('./questiongenerator-model')
 
 const app = express();
-const port = 8006;
+const port = 8007;
 
 const questionHistoryServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004';
 

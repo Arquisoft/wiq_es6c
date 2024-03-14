@@ -59,7 +59,7 @@ services:
       - mongodb_wiki
       - storequestionservice
     ports:
-      - "8007:8006"
+      - "8007:8007"
     networks:
       - mynetwork
     environment:
@@ -83,6 +83,7 @@ services:
       AUTH_SERVICE_URL: http://authservice:8002
       USER_SERVICE_URL: http://userservice:8001
       STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
+      QUESTIONS_GENERATOR_SERVICE_URL: http://questiongeneratorservice:8007
 
   webapp:
     container_name: webapp-${teamname:-defaultASW}

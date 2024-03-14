@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 
-const apiEndpoint = process.env.CONNECTION_WITH_QUESTIONS_API || 'http://localhost:8007';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 const Quiz = () => {
 
   const navigation = useNavigate(); // Añade esto
