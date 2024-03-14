@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Container } from '@mui/material';
 import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
-import { json } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
 
 const apiEndpoint = 'http://localhost:8007';
 
-var jsonApi = ''
 
 var isApiCalledRef = false;
 
-
-const DatosContext = React.createContext();
 
 var questions = []
 

@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Container, Typography } from '@mui/material';
 import './FirstGame.css';
-import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
-import { json } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 
@@ -17,7 +15,6 @@ const Quiz = () => {
   var questions = useLocation().state.questions;
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
-  const [selectedOption, setSelectedOption] = React.useState(null);
   const [isCorrect, setIsCorrect] = React.useState(null);
 
   const esperar = (ms) => {
@@ -73,7 +70,6 @@ const Quiz = () => {
   const checkAnswer = async (option) => {
     getQuestions()
     setIsCorrect(option === questions[currentQuestionIndex].correctAnswer);
-    setSelectedOption(option);
 
     const botonIncorrecta = document.getElementById('option-' + questions[currentQuestionIndex].options.indexOf(option))
     if (!isCorrect) {
