@@ -22,7 +22,124 @@ afterAll(async () => {
     await mongoServer.stop();
 });
 
-describe('User Stats Service', () => {
+describe('User Stats Service, fields are wrong in post(/addgame) method', () => {
+
+  // Case 1: All fields are missing
+  it('should return 400 if required fields are missing on POST /addgame', async () => {
+    const response = await request(app).post('/addgame').send({});
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error');
+    expect(response.body.error).toBe('Missing required fields: id, points, username, questions');
+  });
+
+  // Case 2: Field id is missing
+  it('should return 400 if id field is missing on POST /addgame', async () => {
+    const newGame = {
+      username: 'testuser',
+      points: 100,
+      questions: [{
+        title: 'Question 1',
+        answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+        ansIndex: [1, 2]
+      }]
+    };
+
+    const response = await request(app).post('/addgame').send(newGame);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error');
+    expect(response.body.error).toBe('Missing required field: id');
+  });
+
+  // Case 3: Field points is missing
+  it('should return 400 if points field is missing on POST /addgame', async () => {
+    const newGame = {
+      id: 1,
+      username: 'testuser',
+      questions: [{
+        title: 'Question 1',
+        answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+        ansIndex: [1, 2]
+      }]
+    };
+
+    const response = await request(app).post('/addgame').send(newGame);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error');
+    expect(response.body.error).toBe('Missing required field: points');
+  });
+
+  // Case 4: Filed username is missing
+  it('should return 400 if username field is missing on POST /addgame', async () => {
+    const newGame = {
+      id: 1,
+      points: 100,
+      questions: [{
+        title: 'Question 1',
+        answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+        ansIndex: [1, 2]
+      }]
+    };
+
+    const response = await request(app).post('/addgame').send(newGame);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error');
+    expect(response.body.error).toBe('Missing required field: username');
+  });
+
+  // Case 5: Field questions is missing
+  it('should return 400 if questions field is missing on POST /addgame', async () => {
+    const newGame = {
+      id: 1,
+      username: 'testuser',
+      points: 100,
+    };
+
+    const response = await request(app).post('/addgame').send(newGame);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error');
+    expect(response.body.error).toBe('Missing required field: questions');
+  });
+
+  // Case 6: Some fields are missing
+  it('should return 400 if some required fields are empty on POST /addgame', async () => {
+    const newGame = {
+      id: '',
+      username: '',
+      points: '',
+      questions: [],
+    };
+
+    const response = await request(app).post('/addgame').send(newGame);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error');
+    expect(response.body.error).toBe('Required fields cannot be empty');
+  });
+
+  // Case 7: All fields are nulls
+  it('should return 400 if all required fields are null on POST /addgame', async () => {
+    const newGame = {
+      id: null,
+      username: null,
+      points: null,
+      questions: null,
+    };
+
+    const response = await request(app).post('/addgame').send(newGame);
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error');
+    expect(response.body.error).toBe('Required fields cannot be null');
+  });
+});
+
+
+describe('User Stats Service correct data is inserted', () => {
   it('should add a new game on POST /addgame', async () => {
     const newGame = {
       id: 1,
