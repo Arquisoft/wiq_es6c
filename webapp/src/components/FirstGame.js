@@ -5,7 +5,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-
+var storedInt = 0;
 const apiEndpoint = 'http://localhost:8007';
 const Quiz = () => {
 
@@ -14,7 +14,7 @@ const Quiz = () => {
 
   var questions = useLocation().state.questions;
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(storedInt);
   const [isCorrect, setIsCorrect] = React.useState(null);
 
   const esperar = (ms) => {
@@ -93,6 +93,7 @@ const Quiz = () => {
   };
 
   const goBack = async () => {
+    storedInt = currentQuestionIndex
     navigation('/menu')
   }
 
