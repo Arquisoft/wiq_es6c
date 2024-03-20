@@ -64,8 +64,10 @@ app.get('/history/questions', async (req, res) => {
 
 app.get('/gameUnlimitedQuestions', async (req, res) => {
   try {
+    console.log("Antes de la llamada")
     const response = await axios.get(gameService + `/gameUnlimitedQuestions`)
-    res.json(response.data) 
+    console.log(response.data)
+    res.json(response.data)
   } catch (error) {
     res.status(error.response.status).json({error: error.response.data.error})
   }

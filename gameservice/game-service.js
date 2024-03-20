@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 8005;
 
-const questionService =   'http://localhost:8007';
+const questionService = process.env.QUESTIONS_GENERATOR_SERVICE_URL || 'http://localhost:8007';
 
 // Middleware to parse JSON in request body
 app.use(express.json());
@@ -23,8 +23,9 @@ app.get('/gameUnlimitedQuestions', async (req, res) => {
     // const questions = await Question.find()
     
     const questionGenerated = await axios.get(`${questionService}/questions?n_preguntas=${1}`);
-    
-    res.json(questionGenerated);
+    console.log(questionGenerated)
+    console.log("Propagamos llamada")
+    res.json(questionGenerated.data);
   } catch (error) {
     // res.status(500).json({ message: error.message })
     res.status(500).json({ error: 'Internal Server Error' });

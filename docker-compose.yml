@@ -62,7 +62,7 @@ services:
     networks:
       - mynetwork
     environment:
-      GAME_SERVICE_URL: http://gameservice:8005
+      QUESTIONS_GENERATOR_SERVICE_URL: http://questiongeneratorservice:8007
 
   questiongeneratorservice:
     container_name: questiongeneratorservice-${teamname:-defaultASW}
