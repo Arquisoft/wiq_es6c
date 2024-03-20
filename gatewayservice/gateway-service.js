@@ -9,7 +9,8 @@ const port = 8000;
 const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:8002';
 const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
 const storeQuestionsServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004'
-const questionsGeneratorServiceUrl = process.env.QUESTIONS_GENERATOR_SERVICE_URL || 'http://localhost:8007'
+// const questionsGeneratorServiceUrl = process.env.QUESTIONS_GENERATOR_SERVICE_URL || 'http://localhost:8007'
+const gameService = process.env.GAME_SERVICE_URL || 'http://localhost:8005'
 
 app.use(cors());
 app.use(express.json());
@@ -52,12 +53,21 @@ app.get('/history/questions', async (req, res) => {
   }
 })
 
-app.get(`/questions`, async (req, res) => {
+// app.get(`/questions`, async (req, res) => {
+//   try {
+//     const response = await axios.get(questionsGeneratorServiceUrl+`/questions`);
+//     res.json(response.data);
+//   } catch (error) {
+//     res.status(error.response.status).json({ error: error.response.data.error });
+//   }
+// })
+
+app.get('/gameUnlimitedQuestions', async (req, res) => {
   try {
-    const response = await axios.get(questionsGeneratorServiceUrl+`/questions`);
-    res.json(response.data);
+    const response = await axios.get(gameService + `/gameUnlimitedQuestions`)
+    res.json(response.data) 
   } catch (error) {
-    res.status(error.response.status).json({ error: error.response.data.error });
+    res.status(error.response.status).json({error: error.response.data.error})
   }
 })
 
