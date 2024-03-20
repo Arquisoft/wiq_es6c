@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container } from '@mui/material';
 import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
 
-const apiEndpoint = 'http://localhost:8007';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
 
 var isApiCalledRef = false;
@@ -50,9 +50,6 @@ function shuffleArray(array) {
 
 
 const Menu = () => {
-
-    const [n_preguntas, setn_preguntas] = useState(5);
-
     const navigation = useNavigate(); // Añade esto
 
     const initiateGame = async () => {
@@ -65,8 +62,7 @@ const Menu = () => {
 
     const getQuestions = async () => {
         try {
-            setn_preguntas(5)
-          const response = await axios.get(`${apiEndpoint}/questions?n_preguntas=${n_preguntas}`);
+          const response = await axios.get(`${apiEndpoint}/questions`);
           console.log(response.data.length)
           for (var i = 0; i < response.data.length; i++) {
             var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
