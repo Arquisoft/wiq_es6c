@@ -8,7 +8,8 @@ const port = 8000;
 
 const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:8002';
 const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
-const userStatsService = process.env.USER_STATS_SERVICE_URL || 'http://localhost:8003';
+const storeQuestionsServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004'
+const questionsGeneratorServiceUrl = process.env.QUESTIONS_GENERATOR_SERVICE_URL || 'http://localhost:8007'
 
 app.use(cors());
 app.use(express.json());
@@ -42,7 +43,23 @@ app.post('/adduser', async (req, res) => {
   }
 });
 
-//TODO: Marco - Petición GET UserStatsService
+app.get('/history/questions', async (req, res) => {
+  try {
+    const response = await axios.get(storeQuestionsServiceUrl+'/history/questions');
+    res.json(response.data);
+  } catch (error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+})
+
+app.get(`/questions`, async (req, res) => {
+  try {
+    const response = await axios.get(questionsGeneratorServiceUrl+`/questions`);
+    res.json(response.data);
+  } catch (error) {
+    res.status(error.response.status).json({ error: error.response.data.error });
+  }
+})
 
 // Start the gateway service
 const server = app.listen(port, () => {
