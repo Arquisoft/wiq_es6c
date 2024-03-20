@@ -14,6 +14,8 @@ app.use(express.json());
 // Middleware to enable CORS (cross-origin resource sharing). In order for the API to be accessible by other origins (domains).
 app.use(cors());
 
+var gameId = 0;
+
 
 // Route for getting questions
 app.get('/gameUnlimitedQuestions', async (req, res) => {
@@ -21,10 +23,10 @@ app.get('/gameUnlimitedQuestions', async (req, res) => {
     console.log("Llegamos al nuevo servicio")
     // TODO: Implement logic to fetch questions from MongoDB and send response 
     // const questions = await Question.find()
-    
+    console.log("Antes de incrementar: ", gameId)
     const questionGenerated = await axios.get(`${questionService}/questions?n_preguntas=${1}`);
-    console.log(questionGenerated)
-    console.log("Propagamos llamada")
+    gameId = gameId + 1
+    console.log("Despues de incrementar: ", gameId)
     res.json(questionGenerated.data);
   } catch (error) {
     // res.status(500).json({ message: error.message })
