@@ -12,25 +12,71 @@ code {
     monospace;
 }
 
+.modes{
+  display: flex;
+  flex-wrap: wrap;
+}
 
-.questionStructure, button{
-  /* RGB & HSL params */
-  --label-r: 128;
-  --label-g: 128;
-  --label-b: 128;
-  --label-h: 0;
-  --label-s: 0;
-  --label-l: 50;
 
-  --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
-  --lightness-switch: max(0, min(calc((1/(var(--lightness-threshold) - var(--perceived-lightness)))), 1));
-  --lightness-threshold: 0.6;
-  --background-alpha: 0.18;
-  --border-alpha: 0.3;
-  --lighten-by: calc(((var(--lightness-threshold) - var(--perceived-lightness)) * 100) * var(--lightness-switch));
-  color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
-  background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
-  border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
-  border-radius: 3%;
-  border-style: dashed;
+.card_box {
+  width: 200px;
+  height: 250px;
+  border-radius: 10%;
+  /*Dull option*/
+  background: linear-gradient(170deg, rgba(255, 255, 255, 0.8) 0%, rgb(81, 81, 81) 100%);
+  /*Meme option
+  background-image: url('../public/image.png');
+  background-size: cover;
+  background-position: center; /* Centrar la imagen dentro del div */
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.55);
+  cursor: pointer;
+  transition: all .3s;
+
+  margin: 3em;
+}
+
+.card_box:hover {
+  transform: scale(0.9);
+}
+
+.card_box span {
+  position: absolute;
+  overflow: hidden;
+  width: 75%;
+  height: 60%;
+  top: -4%;
+  left: -5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card_box span::before {
+  content: attr(data-text);
+  position: absolute;
+  width: 150%;
+  height: 27%;
+  background-image: linear-gradient(45deg, #ff6547 0%, #ffb144  51%, #ff7053  100%);
+  transform: rotate(-45deg) translateY(-20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.23);
+}
+
+.card_box span::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  bottom: 0;
+  left: 0;
+  height: 10px;
+  z-index: -1;
+  box-shadow: 140px -140px #cc3f47;
+  background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
 }

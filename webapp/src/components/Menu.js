@@ -87,20 +87,37 @@ const Menu = () => {
 
     return (
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
-            <p>Bienvenido a wiq_06c por favor seleccione un modo de juego para comenzar partida:</p>
-            <button
-              name="quiz"
-              onClick={() => initiateGame()}
-              style={{backgroundColor: 'lightgrey'}}
-            >
-              Clasico
-            </button>
+            <h2>Modos de juego:</h2>
+            <div className='modes'>
+              <div className='card_box'
+                name="quiz"
+                onClick={() => initiateGame()}
+                style={{backgroundColor: 'lightgrey'}}
+              >
+                <span data-text="Clásico"></span>
+              </div>
+              <div className='card_box'
+                name="quiz"
+                onClick={() => initiateGame()}
+                style={{backgroundColor: 'lightgrey'}}
+              >
+                <span data-text="Capitales"></span>
+              </div>
+              <div className='card_box'
+                name="quiz"
+                onClick={() => initiateGame()}
+                style={{backgroundColor: 'lightgrey'}}
+              >
+                <span data-text="Calculadora"></span>
+              </div>
+              </div>
+            <h2>Esto irá en el nav(?)</h2>
             <button
               name="openStoredQuestions"
               onClick={() => openStoredQuestions()}
               style={{backgroundColor: 'lightgrey'}}
             >
-              Preguntas guardadas
+              Almacén de preguntas
             </button>
             
 
