@@ -1,14 +1,17 @@
 // user-stats-service.js
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const cors = require('cors');
 const Game = require('./game-stats-model');
 
 const app = express();
 const port = 8003;
 
 // Middleware to parse JSON in request body
-app.use(bodyParser.json());
+app.use(express.json());
+
+// Middleware to enable CORS (cross-origin resource sharing). In order for the API to be accessible by other origins (domains).
+app.use(cors());
 
 // Connect to MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/statsdb';
