@@ -26,7 +26,7 @@ function validateRequiredFields(req, requiredFields) {
     }
 }
 
-app.post('/addgame', async (req, res) => {
+app.post('/history/addgame', async (req, res) => {
     try {
         // Check if required fields are present in the request body
         validateRequiredFields(req, ['id', 'points', 'username', 'questions']);
@@ -46,10 +46,8 @@ app.post('/addgame', async (req, res) => {
     }
 });
 
-app.get('/getgame', async (req, res) => {
+app.get('/history/getgame', async (req, res) => {
     try {
-        // Check if required fields are present in the query parameters
-        validateRequiredFields(req.query, ['username']);
 
         const { username } = req.query;
 
@@ -71,38 +69,37 @@ app.get('/getgame', async (req, res) => {
         }
     } catch (error) {
         // Handle errors during database query
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/getgames', async (req, res) => {
+app.get('/history/getgames', async (req, res) => {
     try {
-        // Check if required fields are present in the query parameters
-        validateRequiredFields(req.query, ['username']);
-
         const { username } = req.query;
 
-        // Find the user by username in the database
-        const user = await Game.findOne({ username });
+        // Find users by username in the database
+        const users = await Game.find({ username });
 
-        // Check if the user exists
-        if (user) {
-            // Respond with the user information
-            res.json({
+        // Check if any users were found
+        if (users.length > 0) {
+            // Respond with the users' information
+            const userInformation = users.map(user => ({
                 id: user.id,
                 username: user.username,
                 points: user.points,
                 questions: user.questions,
                 createdAt: user.createdAt
-            });
+            }));
+            res.json(userInformation);
         } else {
             res.status(404).json({ error: 'User not found!' });
         }
     } catch (error) {
         // Handle errors during database query
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: error.message });
     }
 });
+
 
 const server = app.listen(port, () => {
     console.log(`User Stats Service listening at http://localhost:${port}`);
