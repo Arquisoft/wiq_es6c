@@ -20,37 +20,33 @@ function secureRandomNumber(max) {
 }
 
 function shuffleArray(array) {
-  // Crea una copia del array original
-  const shuffledArray = [...array];
+    // Copia del array original
+    const shuffledArray = [...array];
 
-  // Recorre el array desde el último elemento hasta el primero
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    // Genera un índice aleatorio entre 0 y el índice actual
-    //const randomIndex = Math.floor(Math.random() * (i + 1));
-    const randomIndex = secureRandomNumber(i + 1);
+    // Recorrer el array desde el último elemento hasta el primero
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      // Genera un índice aleatorio entre 0 y el índice actual
+      //const randomIndex = Math.floor(Math.random() * (i + 1));
+      const randomIndex = secureRandomNumber(i + 1);
 
-    // Intercambia el elemento actual con el elemento del índice aleatorio
-    const temp = shuffledArray[i];
-    shuffledArray[i] = shuffledArray[randomIndex];
-    shuffledArray[randomIndex] = temp;
-  }
+      // Intercambia el elemento actual con el elemento del índice aleatorio
+      const temp = shuffledArray[i];
+      shuffledArray[i] = shuffledArray[randomIndex];
+      shuffledArray[randomIndex] = temp;
+    }
 
   // Devuelve el array barajado
   return shuffledArray;
 }
 
-// useEffect (() => {
-//     if (!isApiCalledRef) {
-//       getQuestions();
-//       isApiCalledRef = true;
-//     }
-//   }, []);
-
-
-
-
 const Menu = () => {
-    const navigation = useNavigate(); // Añade esto
+
+    const navigation = useNavigate(); 
+
+    const [selectedButtonCustomize, isSelectedButtonCustomize] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedValue, setSelectedValue] = useState('');
+
 
     const initiateGame = async () => {
         if (!isApiCalledRef) {
@@ -83,6 +79,23 @@ const Menu = () => {
       navigation("/appQuestion")
     }
 
+    const handleSelectecButtonCustomixe = () => {
+      isSelectedButtonCustomize(true);
+    }
+
+    const handleCategoryChange = (event) => {
+      setSelectedCategory(event.target.value);
+    };
+  
+    const handleValueChange = (event) => {
+      setSelectedValue(event.target.value);
+    };
+  
+    const handlePlayClick = () => {
+      console.log('Categoría seleccionada: ${selectedCategory}');
+      console.log('Valor seleccionado: ${selectedValue}');
+    };
+
     
 
     return (
@@ -93,8 +106,44 @@ const Menu = () => {
               onClick={() => initiateGame()}
               style={{backgroundColor: 'lightgrey'}}
             >
-              Clasico
+              Clásico
             </button>
+
+            <button
+              name="quiz"
+              onClick={() => handleSelectecButtonCustomixe()}
+              style={{backgroundColor: 'lightgrey'}}
+            >
+              Personalizar partida
+            </button>
+
+            {isSelectedButtonCustomize ? (
+              <div>
+                <div>
+                  <label htmlFor="category">Categoría:</label>
+                  <select id="category" value={selectedCategory} onChange={handleCategoryChange}>
+                    <option value="">Selecciona una categoría</option>
+                    <option value="geografia">Geografía</option>
+                    <option value="entretenimiento">Entretenimiento</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="value">Preguntas:</label>
+                  <select id="value" value={selectedValue} onChange={handleValueChange}>
+                    <option value="">Selecciona el número de preguntas</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                  </select>
+                </div>
+                <button onClick={handlePlayClick}>A jugar</button>
+              </div>
+            ) : ( 
+            <div> 
+
+            </div>
+            )}
+
             <button
               name="openStoredQuestions"
               onClick={() => openStoredQuestions()}
@@ -102,9 +151,7 @@ const Menu = () => {
             >
               Preguntas guardadas
             </button>
-            
-
-
+          
         </Container>
     );
 
