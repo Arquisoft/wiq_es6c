@@ -89,33 +89,29 @@ const Menu = () => {
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
             <h2>Modos de juego:</h2>
             <div className='modes'>
-              <div className='card_box'
+             <div className='border'>
+              <div className='glowbutton'
                 name="quiz"
                 onClick={() => initiateGame()}
-                style={{backgroundColor: 'lightgrey'}}
-              >
-                <span data-text="Clásico"></span>
+              >Clásico</div>
               </div>
-              <div className='card_box'
+             <div className='border'>
+              <div className='glowbutton'
                 name="quiz"
                 onClick={() => initiateGame()}
-                style={{backgroundColor: 'lightgrey'}}
-              >
-                <span data-text="Capitales"></span>
+              >Capitales</div>
               </div>
-              <div className='card_box'
+             <div className='border'>
+              <div className='glowbutton'
                 name="quiz"
                 onClick={() => initiateGame()}
-                style={{backgroundColor: 'lightgrey'}}
-              >
-                <span data-text="Calculadora"></span>
+              >Calculadora</div>
               </div>
               </div>
             <h2>Esto irá en el nav(?)</h2>
             <button
               name="openStoredQuestions"
               onClick={() => openStoredQuestions()}
-              style={{backgroundColor: 'lightgrey'}}
             >
               Almacén de preguntas
             </button>

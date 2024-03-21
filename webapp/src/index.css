@@ -22,9 +22,9 @@ code {
   width: 200px;
   height: 250px;
   border-radius: 10%;
-  /*Dull option*/
-  background: linear-gradient(170deg, rgba(255, 255, 255, 0.8) 0%, rgb(81, 81, 81) 100%);
-  /*Meme option
+  /*Dull option
+  background: linear-gradient(170deg, rgba(255, 255, 255, 0.8) 0%, rgb(81, 81, 81) 100%);*/
+  
   background-image: url('../public/image.png');
   background-size: cover;
   background-position: center; /* Centrar la imagen dentro del div */
@@ -79,4 +79,66 @@ code {
   z-index: -1;
   box-shadow: 140px -140px #cc3f47;
   background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+}
+/*
+.glowbutton {
+  --glow-color: rgb(176, 252, 255);
+  --glow-spread-color: rgba(123, 251, 255, 0.781);
+  --enhanced-glow-color: rgb(206, 255, 255);
+  --btn-color: rgb(61, 127, 136);
+  border: 0.25em solid var(--glow-color);
+  padding: 1em 3em;
+  color: var(--glow-color);
+  font-size: 15px;
+  font-weight: bold;
+  background-color: var(--btn-color);
+  border-radius: 1em;
+  outline: none;
+  box-shadow: 0 0 1em 0.25em var(--glow-color),
+    0 0 4em 1em var(--glow-spread-color),
+    inset 0 0 0.75em 0.25em var(--glow-color);
+  text-shadow: 0 0 0.5em var(--glow-color);
+  position: relative;
+  transition: all 60s;
+  margin: 3em;
+}
+
+.glowbutton:hover {
+  color: var(--btn-color);
+  background-color: var(--glow-color);
+  box-shadow: 0 0 1em 0.25em var(--glow-color),
+    0 0 4em 2em var(--glow-spread-color),
+    inset 0 0 0.75em 0.25em var(--glow-color);
+}
+
+.glowbutton:active {
+  box-shadow: 0 0 0.6em 0.25em var(--glow-color),
+    0 0 2.5em 2em var(--glow-spread-color),
+    inset 0 0 0.5em 0.25em var(--glow-color);
+}*/
+
+main .border {
+  background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+  border-radius: 1em;
+  transition: all .3s;
+  margin: 3em;
+}
+
+.glowbutton:hover {
+  transform: scale(0.98);
+  border-radius: 1em;
+}
+
+main .border:hover {
+  box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
+}
+
+.glowbutton{
+  background-color: #1a1a1a;
+  transition: all .2s;
+  border-radius: 1em;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 1em 3em;
+  text-align: center;
 }
