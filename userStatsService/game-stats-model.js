@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const gameSchema = new mongoosenew.Schema({
+const gameSchema = new mongoose.Schema({
   id: {
       type: Number,
       required: true,

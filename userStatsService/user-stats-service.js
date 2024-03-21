@@ -1,14 +1,17 @@
 // user-stats-service.js
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const cors = require('cors');
 const Game = require('./game-stats-model');
 
 const app = express();
 const port = 8003;
 
 // Middleware to parse JSON in request body
-app.use(bodyParser.json());
+app.use(express.json());
+
+// Middleware to enable CORS (cross-origin resource sharing). In order for the API to be accessible by other origins (domains).
+app.use(cors());
 
 // Connect to MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/statsdb';
@@ -23,7 +26,7 @@ function validateRequiredFields(req, requiredFields) {
     }
 }
 
-app.post('/addgame', async (req, res) => {
+app.post('/history/addgame', async (req, res) => {
     try {
         // Check if required fields are present in the request body
         validateRequiredFields(req, ['id', 'points', 'username', 'questions']);
@@ -43,10 +46,8 @@ app.post('/addgame', async (req, res) => {
     }
 });
 
-app.get('/getgame', async (req, res) => {
+app.get('/history/getgame', async (req, res) => {
     try {
-        // Check if required fields are present in the query parameters
-        validateRequiredFields(req.query, ['username']);
 
         const { username } = req.query;
 
@@ -68,37 +69,34 @@ app.get('/getgame', async (req, res) => {
         }
     } catch (error) {
         // Handle errors during database query
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/getgames', async (req, res) => {
+app.get('/history/getgames', async (req, res) => {
     try {
-        // Check if required fields are present in the query parameters
-        validateRequiredFields(req.query, ['username']);
-
         const { username } = req.query;
 
-        // Find all games by username in the database with function find
-        const games = await Game.find({ username });
+        // Find users by username in the database
+        const users = await Game.find({ username });
 
-        // Check if any games exist
-        if (games.length > 0) {
-            // Respond with the array of games using map
-            const gamesData = games.map(game => ({
-                id: game.id,
-                username: game.username,
-                points: game.points,
-                questions: game.questions,
-                createdAt: game.createdAt
+        // Check if any users were found
+        if (users.length > 0) {
+            // Respond with the users' information
+            const userInformation = users.map(user => ({
+                id: user.id,
+                username: user.username,
+                points: user.points,
+                questions: user.questions,
+                createdAt: user.createdAt
             }));
-            res.json(gamesData);
+            res.json(userInformation);
         } else {
-            res.status(404).json({ error: 'No games found for the user!' });
+            res.status(404).json({ error: 'User not found!' });
         }
     } catch (error) {
         // Handle errors during database query
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: error.message });
     }
 });
 

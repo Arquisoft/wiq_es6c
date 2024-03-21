@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const Question = require('./store-q-model');
 
@@ -7,6 +8,9 @@ const port = 8004;
 
 // Middleware to parse JSON in request body
 app.use(express.json());
+
+// Middleware to enable CORS (cross-origin resource sharing). In order for the API to be accessible by other origins (domains).
+app.use(cors());
 
 // Connect to MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/storedquestion';
