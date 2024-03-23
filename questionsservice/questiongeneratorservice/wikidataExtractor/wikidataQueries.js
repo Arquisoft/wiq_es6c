@@ -70,6 +70,62 @@ class WikiQueries {
         return results;
 
     }
+
+    //      REVISAR     //
+
+    static async obtenerPaisYLenguaje() {
+        const query = `
+        SELECT ?countryLabel ?languageLabel  WHERE {
+            ?country wdt:P31 wd:Q6256.
+            ?country wdt:P37 ?language.
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
+            }
+            LIMIT 500
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
+    static async obtenerPaisYBandera() {
+        const query = `
+        SELECT ?flag ?flagLabel ?countryLabel WHERE {
+            ?country wdt:P31 wd:Q6256; 
+                wdt:P41 ?flag. 
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
+            }
+            LIMIT 200
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
+    static async obtenerCantanteYCancion() {
+        const query = `
+        SELECT ?song ?songLabel ?singer ?singerLabel
+            WHERE {
+                ?song wdt:P31 wd:Q7366; # Canción
+                        wdt:P175 ?singer. # Cantante
+                ?singer wdt:P27 wd:Q29. # Español
+                MINUS {
+                    ?song wdt:P175 ?anotherSinger.  # Quitamos canciones con más de un cantante
+                    FILTER (?anotherSinger != ?singer)
+                }
+                SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+            }
+            LIMIT 200
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
 }
 
 
