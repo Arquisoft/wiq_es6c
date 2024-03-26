@@ -17,17 +17,17 @@ code {
   flex-wrap: wrap;
 }
 
-
+/*
 .card_box {
   width: 200px;
   height: 250px;
   border-radius: 10%;
   /*Dull option
-  background: linear-gradient(170deg, rgba(255, 255, 255, 0.8) 0%, rgb(81, 81, 81) 100%);*/
+  background: linear-gradient(170deg, rgba(255, 255, 255, 0.8) 0%, rgb(81, 81, 81) 100%);*//*
   
   background-image: url('../public/image.png');
   background-size: cover;
-  background-position: center; /* Centrar la imagen dentro del div */
+  background-position: center; /* Centrar la imagen dentro del div *//*
   position: relative;
   box-shadow: 0 25px 50px rgba(0,0,0,0.55);
   cursor: pointer;
@@ -79,8 +79,8 @@ code {
   z-index: -1;
   box-shadow: 140px -140px #cc3f47;
   background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
-}
-/*
+}*/
+/* Glowy CSS 
 .glowbutton {
   --glow-color: rgb(176, 252, 255);
   --glow-spread-color: rgba(123, 251, 255, 0.781);
@@ -117,28 +117,52 @@ code {
     inset 0 0 0.5em 0.25em var(--glow-color);
 }*/
 
-main .border {
+.border {
   background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
   border-radius: 1em;
   transition: all .3s;
   margin: 3em;
+  display: inline-block;
 }
 
-.glowbutton:hover {
+.inner:hover {
   transform: scale(0.98);
   border-radius: 1em;
 }
 
-main .border:hover {
+.border:hover {
   box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
 }
 
-.glowbutton{
+.inner{
   background-color: #1a1a1a;
+  color: #F0F0F0;
   transition: all .2s;
   border-radius: 1em;
   box-sizing: border-box;
   height: 100%;
   padding: 1em 3em;
   text-align: center;
+}
+
+a{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+input, label{
+  color: #F0F0F0 !important;
+}
+
+.login .border, .addUser .border{
+  margin: 0;
+  text-wrap: nowrap;
+}
+
+.login .inner{
+  padding: 1em 5em;
+}
+
+.addUser .inner{
+  padding: 1em 4.25em;
 }

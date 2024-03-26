@@ -47,31 +47,6 @@ body {
     color: #F0F0F0
 }
 
-.border {
-    background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
-    border-radius: 20px;
-    transition: all .3s;
-}
-
-.question:hover {
-    transform: scale(0.98);
-    border-radius: 20px;
-}
-
-.border:hover {
-    box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
-    
-}
-
-#storeQuestion .question{
-    background-color: #1a1a1a;
-    transition: all .2s;
-    border-radius: 20px;
-    box-sizing: border-box;
-    height: 100%;
-    display: flow-root;
-}
-
 #storeQuestion .question .grid {
     display: grid;
     grid-template-columns: auto auto;

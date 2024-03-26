@@ -5,7 +5,7 @@ function Question(props) {
 
   return (
     <div className='border'>
-      <div className='question'>
+      <div className='question inner'>
         <h3>{newQuestion.pregunta}</h3>
           <div className='grid'>
             <div className='container'>

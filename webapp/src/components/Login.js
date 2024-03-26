@@ -1,8 +1,9 @@
 // src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, Typography, TextField, Button, Snackbar } from '@mui/material';
+import { Container, Typography, TextField, Snackbar } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
+import Button from './Button';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -51,7 +52,7 @@ const Login = () => {
           </Typography>
         </div>
       ) : (
-        <div>
+        <div className='login'>
           <Typography component="h1" variant="h5">
             Login
           </Typography>
@@ -70,9 +71,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={loginUser}>
-            Login
-          </Button>
+          <Button text="Login" onClick={loginUser}/>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
           {error && (
             <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
