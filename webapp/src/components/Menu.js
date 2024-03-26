@@ -4,6 +4,8 @@ import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
+import { Footer } from '../footer/Footer';
+import { Nav } from '../nav/Nav';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
@@ -99,6 +101,8 @@ const Menu = () => {
     
 
     return (
+      <>
+        <Nav />
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
             <p>Bienvenido a wiq_06c por favor seleccione un modo de juego para comenzar partida:</p>
             <button
@@ -153,6 +157,8 @@ const Menu = () => {
             </button>
           
         </Container>
+        <Footer />
+    </>
     );
 
 }
