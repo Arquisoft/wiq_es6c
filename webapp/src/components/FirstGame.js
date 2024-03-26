@@ -1,9 +1,11 @@
 import React from 'react';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, LinearProgress} from '@mui/material';
 import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Footer } from '../footer/Footer';
+import { Nav } from '../nav/Nav';
 
 var storedInt = 0;
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
@@ -98,42 +100,55 @@ const Quiz = () => {
   }
 
   return (
-    <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
-      <div className="questionStructure">
-        <div class="questionFirstGame">
-        <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-          {questions[currentQuestionIndex].question}
-        </Typography>
-        </div>
-        <div class="allAnswers">
-        {questions[currentQuestionIndex].options.map((option, index) => (
-          <div key={index} className="answers">
-            <button
-              id={`option-${index}`}
-              name="quiz"
-              value={option}
-              onClick={() => checkAnswer(option)}
-              style={{backgroundColor: 'lightgrey'}}
-            >
-              {option}
-            </button>
+    <>
+      <Nav />
+      <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
+        <div className="questionStructure">
+          <div class="questionFirstGame">
+          <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
+            {questions[currentQuestionIndex].question}
+          </Typography>
           </div>
-        )
-        )}
+          <div class="allAnswers">
+          {questions[currentQuestionIndex].options.map((option, index) => (
+            <div key={index} className="answers">
+              <button
+                id={`option-${index}`}
+                name="quiz"
+                value={option}
+                onClick={() => checkAnswer(option)}
+                style={{backgroundColor: 'lightgrey'}}
+              >
+                {option}
+              </button>
+            </div>
+          )
+          )}
+          </div>
+          <button
+                name="openStoredQuestions"
+                onClick={() => goBack()}
+                style={{backgroundColor: 'lightgrey'}}
+              >
+                Volver al menu
+              </button>
         </div>
-        <button
-              name="openStoredQuestions"
-              onClick={() => goBack()}
-              style={{backgroundColor: 'lightgrey'}}
-            >
-              Volver al menu
-            </button>
-      </div>
-      
-      {/* {isCorrect !== null && (
-        <p>{isCorrect ? '¡Respuesta correcta!' : 'Respuesta incorrecta.'}</p>
-      )} */}
-    </Container>
+
+        {/* Usar LinearProgress por defecto o ProgressBar creado ?? */}
+        <Box sx={{ 
+                  width: '100%',
+                  padding: 3}}>
+
+          <LinearProgress color="secondary" variant={loading? "indeterminate" : "determinate"} value={remTime} />
+
+        </Box>
+        
+        {/* {isCorrect !== null && (
+          <p>{isCorrect ? '¡Respuesta correcta!' : 'Respuesta incorrecta.'}</p>
+        )} */}
+      </Container>
+      <Footer />
+    </>
   );
 };
 
