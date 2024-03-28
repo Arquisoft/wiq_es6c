@@ -138,21 +138,13 @@ body {
     padding: 5px;
 }
 
-
-h2{
+#storeQuestion h2{
     width: 100%;
     text-align: center;
 }
 
 #storeQuestion h3{
     text-align: center;
-}
-
-#root main{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
-    padding: 5px;
-    grid-gap: 10px;
 }
 
 #storeQuestion .container{
@@ -164,4 +156,8 @@ h2{
     display: flex;
     justify-content: right;
     margin-right: 1em;
+}
+
+#storeQuestion .border{
+    margin: 1em;
 }
