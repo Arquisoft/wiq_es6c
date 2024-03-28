@@ -1,7 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
 import { AppBar, Toolbar, Box, Button, IconButton, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { context } from '../Context';
 
 

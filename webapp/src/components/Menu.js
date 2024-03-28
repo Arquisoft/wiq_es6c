@@ -45,10 +45,11 @@ const Menu = () => {
 
     const navigation = useNavigate(); 
 
+    /*
     const [selectedButtonCustomize, isSelectedButtonCustomize] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedValue, setSelectedValue] = useState('');
-
+    */
 
     const initiateGame = async () => {
         if (!isApiCalledRef) {
@@ -81,6 +82,7 @@ const Menu = () => {
       navigation("/appQuestion")
     }
 
+    /*
     const handleSelectecButtonCustomixe = () => {
       isSelectedButtonCustomize(true);
     }
@@ -97,65 +99,19 @@ const Menu = () => {
       console.log('Categoría seleccionada: ${selectedCategory}');
       console.log('Valor seleccionado: ${selectedValue}');
     };
-
+    */
     
 
     return (
       <>
         <Nav />
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
-            <p>Bienvenido a wiq_06c por favor seleccione un modo de juego para comenzar partida:</p>
-            <button
-              name="quiz"
-              onClick={() => initiateGame()}
-              style={{backgroundColor: 'lightgrey'}}
-            >
-              Clásico
-            </button>
-
-            <button
-              name="quiz"
-              onClick={() => handleSelectecButtonCustomixe()}
-              style={{backgroundColor: 'lightgrey'}}
-            >
-              Personalizar partida
-            </button>
-
-            {isSelectedButtonCustomize ? (
-              <div>
-                <div>
-                  <label htmlFor="category">Categoría:</label>
-                  <select id="category" value={selectedCategory} onChange={handleCategoryChange}>
-                    <option value="">Selecciona una categoría</option>
-                    <option value="geografia">Geografía</option>
-                    <option value="entretenimiento">Entretenimiento</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="value">Preguntas:</label>
-                  <select id="value" value={selectedValue} onChange={handleValueChange}>
-                    <option value="">Selecciona el número de preguntas</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                  </select>
-                </div>
-                <button onClick={handlePlayClick}>A jugar</button>
-              </div>
-            ) : ( 
-            <div> 
-
+        <h2>Modos de juego:</h2>
+            <div className='modes'>
+              <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
             </div>
-            )}
-
-            <button
-              name="openStoredQuestions"
-              onClick={() => openStoredQuestions()}
-              style={{backgroundColor: 'lightgrey'}}
-            >
-              Preguntas guardadas
-            </button>
-          
+            <h2>Esto irá en el nav(?)</h2>
+            <Button text = "Álmacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
         </Container>
         <Footer />
     </>
