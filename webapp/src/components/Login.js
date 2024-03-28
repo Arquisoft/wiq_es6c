@@ -26,6 +26,7 @@ const Login = () => {
 
       setCreatedAt(userCreatedAt);
       setLoginSuccess(true);
+      localStorage.setItem('username', username)
 
       setOpenSnackbar(true);
       navigation("/menu")
