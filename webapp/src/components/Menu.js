@@ -95,7 +95,7 @@ const Menu = () => {
               <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
             </div>
             <h2>Esto irá en el nav(?)</h2>
-            <Button text = "Álmacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
+            <Button text = "Almacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
             <Button text = "Historial" name="openHistory" onClick={() => openHistory()}/>
         </Container>
     );
