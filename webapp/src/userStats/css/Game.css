@@ -40,7 +40,7 @@
     border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
 }*/
 
-.question{
+#history .question{
     /* RGB & HSL params */
     --label-r: 128;
     --label-g: 128;
@@ -64,7 +64,7 @@
     margin-bottom: 1%;
 }
 
-.dropdown{
+#history .dropdown{
     /* RGB & HSL params */
     --label-r: 128;
     --label-g: 128;
@@ -87,22 +87,18 @@
     padding: 1%;
 }
 
-.header{
+#history .header{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-body{
-    background-color: #fff;
-}
-
-.question .grid p{
+#history .grid p{
     width: max-content;
     border-style: dashed;
     border-radius: 15%;
     border-width: 1px;
-    padding: 1rem;
+    padding: 1vw;
 
     /* RGB & HSL params */
     --label-r: 128;
@@ -123,13 +119,13 @@ body{
     border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
 }
 
-.question .grid{
+#history .grid{
     display: grid;
     grid-template-columns: auto auto;
     padding: 1%;
 }
 
-#root main{
+#history  main{
     display: grid;
     /* Option 1 */
     /*grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));*/
@@ -140,10 +136,10 @@ body{
     margin-left: 20%;*/
     
     padding: 1%;
-    grid-gap: 10px;
+    grid-gap: 2vh;
 }
 
-.question .grid .right{
+#history .grid .right{
     --label-r: 0;
     --label-g: 255;
     --label-b: 0;
@@ -162,7 +158,7 @@ body{
     border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
 }
 
-.question .grid .choice{
+#history .grid .choice{
     --label-r: 255;
     --label-g: 128;
     --label-b: 0;
@@ -181,14 +177,37 @@ body{
     border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
 }
 
-.dropdown-content{
+#history .dropdown-button{
+    width: auto;
+    height: auto;
+    margin-left: 1em;
+    background-color: #212121;
+    color: #F0F0F0;
+}
+
+#history .dropdown-content{
     position: flex;
     flex-direction: column;
     /*Quiero meter un gap*/
 }
 
-.game{
+#history .game{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+    grid-template-columns: repeat(2, minmax(40%, 1fr));
     gap: 1%;
+}
+
+@media (max-width: 720px) {
+    #history .game{
+        display: grid;
+        grid-template-columns: repeat(1, minmax(40%, 1fr));
+    }
+}
+
+@media (max-width: 375px) {
+    #history .grid{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
 }

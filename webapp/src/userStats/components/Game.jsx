@@ -13,8 +13,8 @@ function Game(props){
     return (
         <div className="dropdown">
             <div className="header">
-                <h3>TODO:DATE - {game.points+'/'+game.questions.length}</h3>
-                <button onClick={toggleDropdown}>{isOpen ? '▲' : '▼'}</button>
+                <h3>{game.createdAt} - {game.points+'/'+game.questions.length}</h3>
+                <button className="dropdown-button" onClick={toggleDropdown}>{isOpen ? '▲' : '▼'}</button>
             </div>
             {isOpen && (
                 <div className="dropdown-content">

@@ -84,7 +84,9 @@ const Menu = () => {
       navigation("/appQuestion")
     }
 
-    
+    const openHistory = async () => {
+      navigation("/History")
+    }
 
     return (
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
@@ -94,6 +96,7 @@ const Menu = () => {
             </div>
             <h2>Esto irá en el nav(?)</h2>
             <Button text = "Álmacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
+            <Button text = "Historial" name="openHistory" onClick={() => openHistory()}/>
         </Container>
     );
 
