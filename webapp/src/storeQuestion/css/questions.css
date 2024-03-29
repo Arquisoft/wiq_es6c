@@ -161,6 +161,11 @@ body {
     margin: 1em;
 }
 
+#storeQuestion footer{
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width: 820px) {
     #storeQuestion .grid{
         display: grid;

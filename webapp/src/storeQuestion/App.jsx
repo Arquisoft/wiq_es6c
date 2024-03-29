@@ -1,67 +1,77 @@
-import Question from './components/Question';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/questions.css';
 import GoBackButton from '../components/GoBackButton';
+import Question from './components/Question';
+import Button from '../components/Button';
 
-function App(){
-    /*const newQuestion = {
-        question: '¿Cuál es tu pregunta?',
-        answers: ['Respuesta 1', 'Respuesta 2', 'Respuesta 3', 'Respuesta 4']
+function App() {
+  const [preguntas, setPreguntas] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Número de preguntas por página
+
+  const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+
+  useEffect(() => {
+    const obtenerPreguntas = async () => {
+      try {
+        const response = await axios.get(`${apiEndpoint}/history/questions`);
+        setPreguntas(response.data);
+      } catch (error) {
+        console.error('Error al obtener las preguntas:', error.response.data.error);
+      }
     };
 
-    const newQuestion1 = {
-        question: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
-        answers: ['Segovia','León','Valladolid','Ninguna'],
-      };
-      const newQuestion2 = {
-        question: '¿Cuál es la capital Italia?',
-        answers: ['Roma','Nápoles','Florencia','Milán'],
-      };
-      const newQuestion3 = {
-        question: '¿Cuál es el país mas poblado de la tierra?',
-        answers: ['China','Estados Unidos','Brazil','India'],
-      };
+    obtenerPreguntas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-      let preguntas = [newQuestion, newQuestion1, newQuestion2, newQuestion3]*/
-      
-      const [preguntas, setPreguntas] = useState([]);
+  // Calcular el índice inicial y final de las preguntas a mostrar en la página actual
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentQuestions = preguntas.slice(startIndex, endIndex);
 
-      const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
-      
-      useEffect(() => {
-        
-        const obtenerPreguntas = async () => {
-          try {
-            const response = await axios.get(`${apiEndpoint}/history/questions`)
-            setPreguntas(response.data);
-          } catch (error) {
-            console.error('Error al obtener las preguntas:', error.response.data.error);
-          }
-        };
-    
-        obtenerPreguntas();
-        //eslint-disable-next-line
-      }, []);
+  // Funciones para cambiar de página
+  const nextPage = () => {
+    if(currentPage < Math.ceil(preguntas.length / itemsPerPage))
+      setCurrentPage(currentPage + 1);
+  };
 
-    return (
-      <div id='storeQuestion'>
-        <h2>Almacén de preguntas</h2>
-        <GoBackButton/>
-        <main className='grid'>
-          {preguntas.map(question => (
-            <Question key={question._id} newQuestion={question} />
-          ))}
-        </main>
-      </div>
-    );
+  const prevPage = () => {
+    if(currentPage !== 1)
+      setCurrentPage(currentPage - 1);
+  };
 
-    /*
-          <Question newQuestion={newQuestion} />
-          <Question newQuestion={newQuestion2} />
-          <Question newQuestion={newQuestion1} />
-          <Question newQuestion={newQuestion3} />
-    */
+  const firstPage = () => {
+    setCurrentPage(1);
+  }
+
+  const lastPage = () => {
+    setCurrentPage(Math.ceil(preguntas.length / itemsPerPage));
+  }
+
+  // const refresh = () => {
+  //   setCurrentPage(currentPage);
+  // }
+
+  return (
+    <div id='storeQuestion'>
+      <h2>Almacén de preguntas</h2>
+      <GoBackButton />
+      <main className='grid'>
+        {currentQuestions.map(question => (
+          <Question key={question._id} newQuestion={question} />
+        ))}
+      </main>
+      <footer>
+        <Button text='Primera' onClick={firstPage}/>
+        <Button text='Anterior' onClick={prevPage}/>
+        {/* <Button text={currentPage} onClick={refresh} /> */}
+        <Button text='Siguiente' onClick={nextPage}/>
+        <Button text='Última' onClick={lastPage} />
+      </footer>
+    </div>
+  );
 }
 
 export default App;
