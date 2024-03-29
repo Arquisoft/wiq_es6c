@@ -17,7 +17,7 @@ const paisSchema = new mongoose.Schema({
         type: String,
         required: false
     }
-}, { timestamps: {} }); // Añade y gestiona automáticamente los campos createdAt y updatedAt
+}, {timestamps: {}}); // Añade y gestiona automáticamente los campos createdAt y updatedAt
 
 
 const Pais = mongoose.model('Pais', paisSchema);

@@ -2,14 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const mongoose = require('mongoose');
-const { Question } = require('./questiongenerator-model')
+const { Pais } = require('./questiongenerator-model')
 
 const app = express();
 const port = 8007;
 
 const questionHistoryServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004';
 
-const WikiQueries = require('./wikidataExtractor/wikidataQueries');
 // Connect to MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/questions';
 mongoose.connect(mongoUri);
@@ -23,106 +22,39 @@ app.use(express.json());
 // Middleware to enable CORS (cross-origin resource sharing). In order for the API to be accessible by other origins (domains).
 app.use(cors());
 
-var mockedQuestions = [];
-var isWikiChecked = false;
-var elementos;
-
 function shuffle(array) {
   let currentIndex = array.length;
   let randomIndex;
-
   // Mientras queden elementos para mezclar.
   while (currentIndex > 0) {
     // Escoge un elemento aleatorio.
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
-
     // Intercambia el elemento actual con el elemento aleatorio.
     [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
-
   return array;
 }
 
-const generateQuestion = async () => {
-  if (!isWikiChecked) {
-    elementos = await WikiQueries.obtenerPaisYCapital();
-    isWikiChecked = true;
-  }
+async function generateQuestion() {
+  var elementos = await Pais.find({ capital: { $exists: true } }).exec();
+  console.log("Find:\n" + elementos)
   elementos = shuffle(elementos);
-  mockedQuestions = [{
-    pregunta: "¿Cual es la capital de " + elementos[0].countryLabel + "?",
-    respuesta_correcta: elementos[0].capitalLabel,
-    respuestas_incorrectas: [elementos[1].capitalLabel, elementos[2].capitalLabel, elementos[3].capitalLabel]
+  var mockedQuestions = [{
+    pregunta: "¿Cual es la capital de " + elementos[0].pais + "?",
+    respuesta_correcta: elementos[0].capital,
+    respuestas_incorrectas: [elementos[1].capital, elementos[2].capital, elementos[3].capital]
   }];
   console.log(mockedQuestions);
+  return mockedQuestions
 }
-
-
-// const mockedQuestions = [
-//   {
-//     pregunta: "¿Cómo me llamo?",
-//     respuesta_correcta: "Abel",
-//     respuestas_incorrectas: ["Federico", "Eusebio", "Gervasio"]
-//   },
-//   {
-//     pregunta: "¿Cuál es el río más largo del mundo?",
-//     respuesta_correcta: "Amazonas",
-//     respuestas_incorrectas: ["Nilo", "Misisipi", "Yangtsé"]
-//   },
-//   {
-//     pregunta: "¿En qué año comenzó la Segunda Guerra Mundial?",
-//     respuesta_correcta: "1939",
-//     respuestas_incorrectas: ["1941", "1942", "1945"]
-//   },
-//   {
-//     pregunta: "¿Quién escribió 'El Quijote'?",
-//     respuesta_correcta: "Miguel de Cervantes",
-//     respuestas_incorrectas: ["Garcilaso de la Vega", "Federico García Lorca", "Pablo Neruda"]
-//   },
-//   {
-//     pregunta: "¿Cuál es el símbolo químico del oro?",
-//     respuesta_correcta: "Au",
-//     respuestas_incorrectas: ["Ag", "Fe", "Cu"]
-//   },
-//   {
-//     pregunta: "¿Cuál es el planeta más grande del sistema solar?",
-//     respuesta_correcta: "Júpiter",
-//     respuestas_incorrectas: ["Saturno", "Marte", "Venus"]
-//   },
-//   {
-//     pregunta: "¿Quién pintó la 'Mona Lisa'?",
-//     respuesta_correcta: "Leonardo da Vinci",
-//     respuestas_incorrectas: ["Pablo Picasso", "Vincent van Gogh", "Rembrandt"]
-//   },
-//   {
-//     pregunta: "¿En qué país se encuentra la Torre Eiffel?",
-//     respuesta_correcta: "Francia",
-//     respuestas_incorrectas: ["Italia", "España", "Alemania"]
-//   },
-//   {
-//     pregunta: "¿Qué año marcó el fin de la Segunda Guerra Mundial?",
-//     respuesta_correcta: "1945",
-//     respuestas_incorrectas: ["1943", "1944", "1946"]
-//   },
-//   {
-//     pregunta: "¿Quién escribió 'Romeo y Julieta'?",
-//     respuesta_correcta: "William Shakespeare",
-//     respuestas_incorrectas: ["Jane Austen", "Charles Dickens", "F. Scott Fitzgerald"]
-//   },
-//   {
-//     pregunta: "¿Qué inventó Thomas Edison?",
-//     respuesta_correcta: "Bombilla eléctrica",
-//     respuestas_incorrectas: ["Teléfono", "Automóvil", "Avión"]
-//   }
-// ]
 
 // Function to generate the required number of questions
 async function getQuestions(req) {
   const { n_preguntas, n_respuestas, tema } = req.query;
   var preguntas = Number(n_preguntas);
   var respuestas = Number(n_respuestas);
-  var temad = String(tema);
+  var temas = String(tema);
 
   // if (isNaN(preguntas)) {
   //   generateQuestion()
@@ -130,11 +62,11 @@ async function getQuestions(req) {
   //   return mockedQuestions.slice(0, 4);
   // }
   // const response = [];
-  await generateQuestion();
+  //  generateQuestion();
   // for (let i = 0; i < preguntas; i++) {
   //   response.push(mockedQuestions[i % 11]);
   // }
-  return mockedQuestions;
+  return await generateQuestion();
 }
 
 // Route for getting questions
