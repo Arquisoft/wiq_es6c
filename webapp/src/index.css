@@ -17,6 +17,10 @@ code {
   flex-wrap: wrap;
 }
 
+#root > main > h1{
+  text-align: center;
+}
+
 /*
 .card_box {
   width: 200px;
