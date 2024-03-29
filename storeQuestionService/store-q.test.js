@@ -43,7 +43,6 @@ describe('Store a question service', () => {
 
     // Enviar la pregunta al servidor
     const response = await request(app).post('/history/question').send(newQuestion);
-    console.log(response)//PRINT - 
     // Verificar que la respuesta sea válida
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('pregunta', newQuestion.pregunta);
