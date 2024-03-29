@@ -3,8 +3,11 @@ import "./css/Game.css"
 import GoBackButton from "../components/GoBackButton";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Button from "../components/Button";
 
 function App() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Número de partidas por página
 
   const [games, setGames] = useState([]);
 
@@ -16,7 +19,6 @@ function App() {
 
     const getGames = async () => {
       try {
-        console.log(`${apiEndpoint}/history/games/${username}`);//PRINT - 
         const response = await axios.get(`${apiEndpoint}/history/games/${username}`)
         setGames(response.data);
       } catch (error) {
@@ -28,6 +30,34 @@ function App() {
     //eslint-disable-next-line
   }, []);
 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentGames = games.slice(startIndex, endIndex) || [];
+  console.log(currentGames)
+
+  // Funciones para cambiar de página
+  const nextPage = () => {
+    if(currentPage < Math.ceil(games.length / itemsPerPage))
+      setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    if(currentPage !== 1)
+      setCurrentPage(currentPage - 1);
+  };
+
+  const firstPage = () => {
+    setCurrentPage(1);
+  }
+
+  const lastPage = () => {
+    setCurrentPage(Math.ceil(games.length / itemsPerPage));
+  }
+
+  const refresh = () => {
+    setCurrentPage(currentPage);
+  }
+
   return (
     <div id="history">
       <div className="header">
@@ -35,10 +65,17 @@ function App() {
       </div>
       <GoBackButton />
       <main>
-        {games.map(game => (
+        {currentGames.map(game => (
           <Game key={game.id} game={game} />
         ))}
       </main>
+      <footer className="pagination">
+        <Button text='Primera' onClick={firstPage}/>
+        <Button text='Anterior' onClick={prevPage}/>
+        <Button text={currentPage} onClick={refresh} />
+        <Button text='Siguiente' onClick={nextPage}/>
+        <Button text='Última' onClick={lastPage} />
+      </footer>
     </div>
   );
 }

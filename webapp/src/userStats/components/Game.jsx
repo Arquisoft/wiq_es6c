@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 function Game(props){
     const {game} = props
 
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);

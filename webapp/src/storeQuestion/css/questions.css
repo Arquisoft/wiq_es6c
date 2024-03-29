@@ -161,7 +161,7 @@ body {
     margin: 1em;
 }
 
-#storeQuestion footer{
+.pagination{
     display: flex;
     justify-content: center;
 }
@@ -174,7 +174,7 @@ body {
 }
 
 @media (max-width: 680px) {
-    #storeQuestion footer{
+    .pagination{
         display: ruby;
     }
 }

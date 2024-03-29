@@ -63,7 +63,7 @@ function App() {
           <Question key={question._id} newQuestion={question} />
         ))}
       </main>
-      <footer>
+      <footer className='pagination'>
         <Button text='Primera' onClick={firstPage}/>
         <Button text='Anterior' onClick={prevPage}/>
         <Button text={currentPage} onClick={refresh} />
