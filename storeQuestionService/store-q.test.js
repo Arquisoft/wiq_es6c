@@ -147,33 +147,40 @@ describe('Store individual questions service', () => {
       pregunta: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
       respuesta_correcta: 'Ninguna',
       respuestas_incorrectas: ['Segovia','León','Valladolid'],
-      createdAt: '<2002-02-02>'
+      createdAt: '2002-02-01T23:00:00.000Z'
     };
     const newQuestion2 = {
       pregunta: '¿Cuál es la capital Italia?',
       respuesta_correcta: 'Roma',
       respuestas_incorrectas: ['Nápoles','Florencia','Milán'],
-      createdAt: '<2002-02-02>'
+      createdAt: '2002-02-01T23:00:00.000Z'
     };
     const newQuestion3 = {
       pregunta: '¿Cuál es el país mas poblado de la tierra?',
       respuesta_correcta: 'India',
       respuestas_incorrectas: ['China','Estados Unidos','Brazil'],
-      createdAt: '<2002-02-02>'
+      createdAt: '2002-02-01T23:00:00.000Z'
     };
   
+    // Mandamos las preguntas una a una
     request(app).post('/history/question').send(newQuestion1);
     request(app).post('/history/question').send(newQuestion2);
     request(app).post('/history/question').send(newQuestion3);
 
+    // Obtenemos las preguntas almacenadas
     const response = await request(app).get('/history/questions');
 
-    const solution = [{"__v": 0, "_id": "65fabd5ad3b92643c297925b", "createdAt": "2002-02-01T23:00:00.000Z", "pregunta": "¿Cuál es la capital de la comunidad autónoma de Castilla y León?", "respuesta_correcta": "Ninguna", "respuestas_incorrectas": ["Segovia", "León", "Valladolid"]}, {"__v": 0, "_id": "65fabd5ad3b92643c297925e", "createdAt": "2002-02-01T23:00:00.000Z", "pregunta": "¿Cuál es la capital de la comunidad autónoma de Castilla y León?", "respuesta_correcta": "Ninguna", "respuestas_incorrectas": ["Segovia", "León", "Valladolid"]}, {"__v": 0, "_id": "65fabd5ad3b92643c2979260", "createdAt": "2002-02-01T23:00:00.000Z", "pregunta": "¿Cuál es la capital de la comunidad autónoma de Castilla y León?", "respuesta_correcta": "Ninguna", "respuestas_incorrectas": ["Segovia", "León", "Valladolid"]}]
+    const qsolutions = [newQuestion1,newQuestion2,newQuestion3]
 
+    // Verificamos que la respuesta sea un array que contenga las preguntas originales
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(
-      expect.arrayContaining(solution)
-    );
+
+    // Comparamos preguntas sin los identificadores únicos (_id)
+    const questionsWithoutId = response.body.map(q => {
+      const { _id, __v,...rest } = q;
+      return rest;
+    });
+    expect(questionsWithoutId).toEqual(expect.arrayContaining(qsolutions));
   });
 });
 
@@ -184,32 +191,36 @@ describe('Store an array of questions', () => {
         pregunta: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
         respuesta_correcta: 'Ninguna',
         respuestas_incorrectas: ['Segovia', 'León', 'Valladolid'],
-        createdAt: '<2002-02-02>'
+        createdAt: '2002-02-01T23:00:00.000Z'
       },
       {
         pregunta: '¿Cuál es la capital Italia?',
         respuesta_correcta: 'Roma',
         respuestas_incorrectas: ['Nápoles', 'Florencia', 'Milán'],
-        createdAt: '<2002-02-02>'
+        createdAt: '2002-02-01T23:00:00.000Z'
       },
       {
         pregunta: '¿Cuál es el país mas poblado de la tierra?',
         respuesta_correcta: 'India',
         respuestas_incorrectas: ['China', 'Estados Unidos', 'Brazil'],
-        createdAt: '<2002-02-02>'
+        createdAt: '2002-02-01T23:00:00.000Z'
       }
     ];
 
-    // Simulamos el envío de las preguntas al servidor
-    request(app).post('/history/questions').send(questions);
+    // Simulamos el envío de las preguntas al servidor y guardamos los IDs generados
+    await request(app).post('/history/questions').send(questions);
 
     // Obtenemos las preguntas almacenadas
     const response = await request(app).get('/history/questions');
 
-    const solution = [{"__v": 0, "_id": "65fabd5ad3b92643c297925b", "createdAt": "2002-02-01T23:00:00.000Z", "pregunta": "¿Cuál es la capital de la comunidad autónoma de Castilla y León?", "respuesta_correcta": "Ninguna", "respuestas_incorrectas": ["Segovia", "León", "Valladolid"]}, {"__v": 0, "_id": "65fabd5ad3b92643c297925e", "createdAt": "2002-02-01T23:00:00.000Z", "pregunta": "¿Cuál es la capital de la comunidad autónoma de Castilla y León?", "respuesta_correcta": "Ninguna", "respuestas_incorrectas": ["Segovia", "León", "Valladolid"]}, {"__v": 0, "_id": "65fabd5ad3b92643c2979260", "createdAt": "2002-02-01T23:00:00.000Z", "pregunta": "¿Cuál es la capital de la comunidad autónoma de Castilla y León?", "respuesta_correcta": "Ninguna", "respuestas_incorrectas": ["Segovia", "León", "Valladolid"]}]
-
     // Verificamos que la respuesta sea un array que contenga las preguntas originales
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(expect.arrayContaining(solution));
+
+    // Comparamos preguntas sin los identificadores únicos (_id)
+    const questionsWithoutId = response.body.map(q => {
+      const { _id, __v,...rest } = q;
+      return rest;
+    });
+    expect(questionsWithoutId).toEqual(expect.arrayContaining(questions));
   });
 });
