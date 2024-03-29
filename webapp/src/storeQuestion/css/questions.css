@@ -166,10 +166,16 @@ body {
     justify-content: center;
 }
 
-@media (max-width: 820px) {
+@media (max-width: 880px) {
     #storeQuestion .grid{
         display: grid;
         grid-template-columns: repeat(1, minmax(40%, 1fr));
+    }
+}
+
+@media (max-width: 680px) {
+    #storeQuestion footer{
+        display: ruby;
     }
 }
 

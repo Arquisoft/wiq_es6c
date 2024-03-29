@@ -44,9 +44,10 @@ app.post('/adduser', async (req, res) => {
   }
 });
 
-app.get('/history/getgames', async (req, res) => {
+app.get('/history/games/:username', async (req, res) => {
   try {
-    const response = await axios.get(userStatsServiceUrl+'/history/getgames?username='+req.query.username);
+    const username = req.params.username;
+    const response = await axios.get(`${userStatsServiceUrl}/history/games/${username}`);
     res.json(response.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });

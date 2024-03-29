@@ -50,9 +50,9 @@ function App() {
     setCurrentPage(Math.ceil(preguntas.length / itemsPerPage));
   }
 
-  // const refresh = () => {
-  //   setCurrentPage(currentPage);
-  // }
+  const refresh = () => {
+    setCurrentPage(currentPage);
+  }
 
   return (
     <div id='storeQuestion'>
@@ -66,7 +66,7 @@ function App() {
       <footer>
         <Button text='Primera' onClick={firstPage}/>
         <Button text='Anterior' onClick={prevPage}/>
-        {/* <Button text={currentPage} onClick={refresh} /> */}
+        <Button text={currentPage} onClick={refresh} />
         <Button text='Siguiente' onClick={nextPage}/>
         <Button text='Última' onClick={lastPage} />
       </footer>

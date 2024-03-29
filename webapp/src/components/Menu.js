@@ -85,7 +85,7 @@ const Menu = () => {
     }
 
     const openHistory = async () => {
-      navigation("/History")
+      navigation("/history")
     }
 
     return (

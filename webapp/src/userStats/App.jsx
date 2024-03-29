@@ -16,10 +16,11 @@ function App() {
 
     const getGames = async () => {
       try {
-        const response = await axios.get(`${apiEndpoint}/history/getgames?username=` + username)//
+        console.log(`${apiEndpoint}/history/games/${username}`);//PRINT - 
+        const response = await axios.get(`${apiEndpoint}/history/games/${username}`)
         setGames(response.data);
       } catch (error) {
-        console.error('Error al obtener los juegos:', error.response.data.error);
+        console.error('Error al obtener los juegos:', error);
       }
     };
 

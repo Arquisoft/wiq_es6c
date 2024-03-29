@@ -34,11 +34,11 @@ afterAll(async () => {
     await mongoServer.stop();
 });
 
-describe('User Stats Service, fields are wrong in post(/addgame) method', () => {
+describe('User Stats Service, fields are wrong in post(/game) method', () => {
 
   // Case 1: All fields are missing
-  it('should return 400 if required fields are missing on POST /addgame', async () => {
-    const response = await request(app).post('/history/addgame').send({});
+  it('should return 400 if required fields are missing on POST /game', async () => {
+    const response = await request(app).post('/history/game').send({});
 
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('error');
@@ -46,7 +46,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
   });
 
   // Case 2: Field id is missing
-  it('should return 400 if id field is missing on POST /addgame', async () => {
+  it('should return 400 if id field is missing on POST /game', async () => {
     const newGame = {
       username: 'testuser',
       points: 100,
@@ -57,7 +57,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
       }]
     };
 
-    const response = await request(app).post('/history/addgame').send(newGame);
+    const response = await request(app).post('/history/game').send(newGame);
 
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('error');
@@ -65,7 +65,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
   });
 
   // Case 3: Field points is missing
-  it('should return 400 if points field is missing on POST /addgame', async () => {
+  it('should return 400 if points field is missing on POST /game', async () => {
     const newGame = {
       id: 1,
       username: 'testuser',
@@ -76,7 +76,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
       }]
     };
 
-    const response = await request(app).post('/history/addgame').send(newGame);
+    const response = await request(app).post('/history/game').send(newGame);
 
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('error');
@@ -84,7 +84,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
   });
 
   // Case 4: Filed username is missing
-  it('should return 400 if username field is missing on POST /addgame', async () => {
+  it('should return 400 if username field is missing on POST /game', async () => {
     const newGame = {
       id: 1,
       points: 100,
@@ -95,7 +95,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
       }]
     };
 
-    const response = await request(app).post('/history/addgame').send(newGame);
+    const response = await request(app).post('/history/game').send(newGame);
 
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('error');
@@ -103,14 +103,14 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
   });
 
   // Case 5: Field questions is missing
-  it('should return 400 if questions field is missing on POST /addgame', async () => {
+  it('should return 400 if questions field is missing on POST /game', async () => {
     const newGame = {
       id: 1,
       username: 'testuser',
       points: 100,
     };
 
-    const response = await request(app).post('/history/addgame').send(newGame);
+    const response = await request(app).post('/history/game').send(newGame);
 
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('error');
@@ -118,7 +118,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
   });
 
   // Case 6: Some fields are missing
-  it('should return 400 if some required fields are empty on POST /addgame', async () => {
+  it('should return 400 if some required fields are empty on POST /game', async () => {
     const newGame = {
       id: '',
       username: '',
@@ -126,7 +126,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
       questions: [],
     };
 
-    const response = await request(app).post('/history/addgame').send(newGame);
+    const response = await request(app).post('/history/game').send(newGame);
 
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('error');
@@ -134,7 +134,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
   });
 
   // Case 7: All fields are nulls
-  it('should return 400 if all required fields are null on POST /addgame', async () => {
+  it('should return 400 if all required fields are null on POST /game', async () => {
     const newGame = {
       id: null,
       username: null,
@@ -142,7 +142,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
       questions: null,
     };
 
-    const response = await request(app).post('/history/addgame').send(newGame);
+    const response = await request(app).post('/history/game').send(newGame);
 
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('error');
@@ -152,7 +152,7 @@ describe('User Stats Service, fields are wrong in post(/addgame) method', () => 
 
 
 describe('User Stats Service correct data is inserted', () => {
-  it('should add a new game on POST /addgame', async () => {
+  it('should add a new game on POST /game', async () => {
     const newGame = {
       id: 1,
       username: 'testuser',
@@ -168,7 +168,7 @@ describe('User Stats Service correct data is inserted', () => {
       }]
     };
 
-    const response = await request(app).post('/history/addgame').send(newGame);
+    const response = await request(app).post('/history/game').send(newGame);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('id', newGame.id);
@@ -184,35 +184,35 @@ describe('User Stats Service correct data is inserted', () => {
     });
   });
 
-  it('should get a game by username on GET /getgame', async () => {
+  it('should get a game by username on GET /games with limit=1', async () => {
     const username = 'user1';
-    const response = await request(app).get(`/history/getgame?username=${username}`);
+    const response = await request(app).get(`/history/games/${username}?limit=1`);
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('id', 1);
-    expect(response.body).toHaveProperty('username', username);
-    expect(response.body).toHaveProperty('points', 100);
+    expect(response.body[0]).toHaveProperty('id', 1);
+    expect(response.body[0]).toHaveProperty('username', username);
+    expect(response.body[0]).toHaveProperty('points', 100);
   });
 
-  it('should return 404 if user does not exist on GET /getgame', async () => {
+  it('should return 404 if user does not exist on GET /games with limit=1', async () => {
     const username = 'nonexistentuser';
-    const response = await request(app).get(`/history/getgame?username=${username}`);
+    const response = await request(app).get(`/history/games/${username}?limit=1`);
 
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty('error', 'User not found!');
   });
 
-  it('should get a game by username on GET /getgames', async () => {
+  it('should get a game by username on GET /games', async () => {
     const username = 'user1';
-    const response = await request(app).get(`/history/getgames?username=${username}`);
+    const response = await request(app).get(`/history/games/${username}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(2);
   });
 
-  it('should return 404 if user does not exist on GET /getgames', async () => {
+  it('should return 404 if user does not exist on GET /games', async () => {
     const username = 'nonexistentuser';
-    const response = await request(app).get(`/history/getgames?username=${username}`);
+    const response = await request(app).get(`/history/games/${username}`);
 
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty('error', 'User not found!');

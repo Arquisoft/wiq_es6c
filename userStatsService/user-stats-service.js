@@ -26,7 +26,7 @@ function validateRequiredFields(req, requiredFields) {
     }
 }
 
-app.post('/history/addgame', async (req, res) => {
+app.post('/history/game', async (req, res) => {
     try {
         // Check if required fields are present in the request body
         validateRequiredFields(req, ['id', 'points', 'username', 'questions']);
@@ -46,36 +46,9 @@ app.post('/history/addgame', async (req, res) => {
     }
 });
 
-app.get('/history/getgame', async (req, res) => {
+app.get('/history/games/:username', async (req, res) => {
     try {
-
-        const { username } = req.query;
-
-        // Find the user by username in the database
-        const user = await Game.findOne({ username });
-
-        // Check if the user exists
-        if (user) {
-            // Respond with the user information
-            res.json({
-                id: user.id,
-                username: user.username,
-                points: user.points,
-                questions: user.questions,
-                createdAt: user.createdAt
-            });
-        } else {
-            res.status(404).json({ error: 'User not found!' });
-        }
-    } catch (error) {
-        // Handle errors during database query
-        res.status(500).json({ error: error.message });
-    }
-});
-
-app.get('/history/getgames', async (req, res) => {
-    try {
-        const { username } = req.query;
+        const { username } = req.params;
 
         // Find users by username in the database
         const users = await Game.find({ username });
@@ -90,7 +63,7 @@ app.get('/history/getgames', async (req, res) => {
                 questions: user.questions,
                 createdAt: user.createdAt
             }));
-            res.json(userInformation);
+            res.json(userInformation.slice(0, req.query.limit || userInformation.length));
         } else {
             res.status(404).json({ error: 'User not found!' });
         }

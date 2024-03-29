@@ -3,12 +3,12 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 
 let mongoServer;
 let app;
+app = require('./store-q-service'); 
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/storedquestion';
   process.env.MONGODB_URI = mongoUri;
-  app = require('./store-q-service'); 
 });
 
 afterAll(async () => {
@@ -43,7 +43,7 @@ describe('Store a question service', () => {
 
     // Enviar la pregunta al servidor
     const response = await request(app).post('/history/question').send(newQuestion);
-
+    console.log(response)//PRINT - 
     // Verificar que la respuesta sea válida
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('pregunta', newQuestion.pregunta);
