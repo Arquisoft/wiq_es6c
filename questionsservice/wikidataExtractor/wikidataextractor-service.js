@@ -1,12 +1,12 @@
 const express = require('express');
 const cron = require('node-cron');
 const mongoose = require('mongoose');
-const { Pais } = require('./wikidataextractor-model')
+const WikiQueries = require('./wikidataQueries');
+const { Pais } = require('./wikidataextractor-model');
 
 const app = express();
 const port = 8008;
 
-const WikiQueries = require('./wikidataQueries');
 // Connect to MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/questions';
 mongoose.connect(mongoUri);
@@ -35,16 +35,22 @@ async function extractData() {
         console.log(p);
         return p;
     });
-    await Pais.bulkWrite(paises)
+    await Pais.bulkWrite(paises);
 
-    return paises
+    return paises;
 }
 
-var minutes = 10
+var minutes = 30;
 cron.schedule(`*/${minutes} * * * *`, () => {
     console.log(`Running a task every ${minutes} minutes: ${Date()}`);
     // Call function here
+    extractData();
 });
+
+ /* 
+    ALL ROUTES ARE ONLY FOR DEVELOPING PURPOSES, THEY SHOULD GET DELETED IN PRODUCTION 
+    THIS SERVICE SHOULD NOT BE ACCESSIBLE FROM OUTSIDE
+ */
 
 // Route for extracting countries
 app.get('/extract', async (req, res) => {
