@@ -2,14 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const mongoose = require('mongoose');
-const { Question } = require('./questiongenerator-model')
+const { Pais } = require('./questiongenerator-model')
 
 const app = express();
 const port = 8007;
 
 const questionHistoryServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004';
 
-const WikiQueries = require('../wikidataExtractor/wikidataQueries');
 // Connect to MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/questions';
 mongoose.connect(mongoUri);
@@ -22,10 +21,6 @@ app.use(express.json());
 
 // Middleware to enable CORS (cross-origin resource sharing). In order for the API to be accessible by other origins (domains).
 app.use(cors());
-
-var mockedQuestions = [];
-var isWikiChecked = false;
-var elementos;
 
 function shuffle(array) {
   let currentIndex = array.length;
@@ -41,18 +36,17 @@ function shuffle(array) {
   return array;
 }
 
-const generateQuestion = async () => {
-  if (!isWikiChecked) {
-    elementos = await WikiQueries.obtenerPaisYCapital();
-    isWikiChecked = true;
-  }
+async function generateQuestion() {
+  var elementos = await Pais.find({ capital: { $exists: true } }).exec();
+  console.log("Find:\n" + elementos)
   elementos = shuffle(elementos);
-  mockedQuestions = [{
-    pregunta: "¿Cual es la capital de " + elementos[0].countryLabel + "?",
-    respuesta_correcta: elementos[0].capitalLabel,
-    respuestas_incorrectas: [elementos[1].capitalLabel, elementos[2].capitalLabel, elementos[3].capitalLabel]
+  var mockedQuestions = [{
+    pregunta: "¿Cual es la capital de " + elementos[0].pais + "?",
+    respuesta_correcta: elementos[0].capital,
+    respuestas_incorrectas: [elementos[1].capital, elementos[2].capital, elementos[3].capital]
   }];
   console.log(mockedQuestions);
+  return mockedQuestions
 }
 
 // Function to generate the required number of questions
@@ -68,11 +62,11 @@ async function getQuestions(req) {
   //   return mockedQuestions.slice(0, 4);
   // }
   // const response = [];
-  await generateQuestion();
+  //  generateQuestion();
   // for (let i = 0; i < preguntas; i++) {
   //   response.push(mockedQuestions[i % 11]);
   // }
-  return mockedQuestions;
+  return await generateQuestion();
 }
 
 // Route for getting questions

@@ -1,28 +1,27 @@
 const mongoose = require('mongoose');
 
-const questionSchema = new mongoose.Schema({
-    pregunta: {
+const paisSchema = new mongoose.Schema({
+    pais: {
         type: String,
         required: true
     },
-    respuesta_correcta: {
+    capital: {
         type: String,
-        required: true
+        required: false
     },
-    respuestas_incorrectas: {
-        type: [String],
-        required: true
+    lenguaje: {
+        type: String,
+        required: false
     },
-    createdAt: {
-        type: Date,
-        required: true,
-        default: Date.now
+    bandera: {
+        type: String,
+        required: false
     }
-});
+}, { timestamps: {} }); // Añade y gestiona automáticamente los campos createdAt y updatedAt
 
 
-const Question = mongoose.model('Question', questionSchema);
+const Pais = mongoose.model('Pais', paisSchema);
 
 module.exports = {
-    Question
+    Pais
 };
