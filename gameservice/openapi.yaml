@@ -1,0 +1,41 @@
+openapi: 3.0.0
+info:
+  title: GameService API
+  description: Gateway OpenAPI specification.
+  version: 0.2.0
+servers:
+  - url: http://localhost:8005
+    description: Development server
+  - url: http://gameservice:8005
+    description: Production server
+paths:
+  /gameUnlimitedQuestions:
+    post:
+      summary: Get a number of random question with each call.
+      operationId: getQuestion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                n_preguntas:
+                  type: int
+                  description: The number of questions that we want.
+                password:
+                  type: string
+                  description: User password.
+      responses:
+        '200':
+          description: Questions returned successfuly.
+        '400':
+          description: Failed to get questions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
