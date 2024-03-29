@@ -4,6 +4,7 @@ import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
+import Button from './Button'
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
@@ -87,24 +88,12 @@ const Menu = () => {
 
     return (
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
-            <p>Bienvenido a wiq_06c por favor seleccione un modo de juego para comenzar partida:</p>
-            <button
-              name="quiz"
-              onClick={() => initiateGame()}
-              style={{backgroundColor: 'lightgrey'}}
-            >
-              Clasico
-            </button>
-            <button
-              name="openStoredQuestions"
-              onClick={() => openStoredQuestions()}
-              style={{backgroundColor: 'lightgrey'}}
-            >
-              Preguntas guardadas
-            </button>
-            
-
-
+            <h2>Modos de juego:</h2>
+            <div className='modes'>
+              <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
+            </div>
+            <h2>Esto irá en el nav(?)</h2>
+            <Button text = "Álmacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
         </Container>
     );
 
