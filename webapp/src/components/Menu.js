@@ -4,6 +4,7 @@ import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
+import Button from './Button'
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 
@@ -106,7 +107,6 @@ const Menu = () => {
       <>
         <Nav />
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
-
           <div className="instructions">
             <h2>
               Cómo jugar
@@ -134,18 +134,17 @@ const Menu = () => {
           <h2>Modos de juego:</h2>
 
           <div className='modes'>
-            <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
-          </div>
-
+              <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
+            </div>
+            
           <h2>Esto irá en el nav(?)</h2>
+          
           <Button text = "Álmacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
-
+        
         </Container>
         <Footer />
-    </>
+      </>
     );
-
 }
-
 
 export default Menu;

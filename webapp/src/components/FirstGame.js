@@ -3,17 +3,15 @@ import { Container, Typography, LinearProgress} from '@mui/material';
 import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import Button from './Button';
+import GoBackButton from './GoBackButton';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 
 var storedInt = 0;
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 const Quiz = () => {
-
-  const navigation = useNavigate(); // Añade esto
-
-
   var questions = useLocation().state.questions;
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(storedInt);
@@ -74,6 +72,7 @@ const Quiz = () => {
     setIsCorrect(option === questions[currentQuestionIndex].correctAnswer);
 
     const botonIncorrecta = document.getElementById('option-' + questions[currentQuestionIndex].options.indexOf(option))
+    const previousBackgroundColor = botonIncorrecta.style.backgroundColor
     if (!isCorrect) {
       botonIncorrecta.style.backgroundColor = 'red'
     }
@@ -84,8 +83,8 @@ const Quiz = () => {
     // Pasar a la siguiente pregunta después de responder
 
     await esperar(2000); // Espera 2000 milisegundos (2 segundos)
-    botonIncorrecta.style.backgroundColor = 'lightgrey'
-    botonCorrecta.style.backgroundColor = 'lightgrey' 
+    botonIncorrecta.style.backgroundColor = previousBackgroundColor
+    botonCorrecta.style.backgroundColor = previousBackgroundColor
     if (questions.length-1 !== currentQuestionIndex) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     }
@@ -94,54 +93,47 @@ const Quiz = () => {
     
   };
 
-  const goBack = async () => {
-    storedInt = currentQuestionIndex
-    navigation('/menu')
-  }
-
   return (
     <>
       <Nav />
       <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
+
         <div className="questionStructure">
+
           <div class="questionFirstGame">
-          <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-            {questions[currentQuestionIndex].question}
-          </Typography>
+
+            <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
+              {questions[currentQuestionIndex].question}
+            </Typography>
+
           </div>
+
           <div class="allAnswers">
-          {questions[currentQuestionIndex].options.map((option, index) => (
-            <div key={index} className="answers">
-              <button
-                id={`option-${index}`}
-                name="quiz"
-                value={option}
-                onClick={() => checkAnswer(option)}
-                style={{backgroundColor: 'lightgrey'}}
-              >
-                {option}
-              </button>
-            </div>
-          )
-          )}
+            {questions[currentQuestionIndex].options.map((option, index) => (
+              <div key={index} >
+                <Button
+                  id={`option-${index}`}
+                  name="quiz"
+                  value={option}
+                  onClick={() => checkAnswer(option)}
+                  text={option}
+                />
+              </div>
+            )
+            )}
           </div>
-          <button
-                name="openStoredQuestions"
-                onClick={() => goBack()}
-                style={{backgroundColor: 'lightgrey'}}
-              >
-                Volver al menu
-              </button>
         </div>
 
         {/* Usar LinearProgress por defecto o ProgressBar creado ?? */}
         <Box sx={{ 
-                  width: '100%',
-                  padding: 3}}>
+            width: '100%',
+            padding: 3}}>
 
-          <LinearProgress color="secondary" variant={loading? "indeterminate" : "determinate"} value={remTime} />
+            <LinearProgress color="secondary" variant={loading? "indeterminate" : "determinate"} value={remTime} />
 
         </Box>
+
+        <GoBackButton/>
         
         {/* {isCorrect !== null && (
           <p>{isCorrect ? '¡Respuesta correcta!' : 'Respuesta incorrecta.'}</p>
