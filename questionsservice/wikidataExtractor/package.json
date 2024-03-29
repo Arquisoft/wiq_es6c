@@ -1,7 +1,7 @@
 {
   "name": "wikidataextractor",
   "version": "1.0.0",
-  "description": "Wikidata service, in charge of extracting, parsing and saving data from Wikidata into a BD",
+  "description": "Wikidata service, in charge of extracting, parsing and saving data from Wikidata into a DB",
   "main": "wikidataextractor-service.js",
   "scripts": {
     "devStart": "nodemon wikidataextractor-service.js",
