@@ -37,10 +37,8 @@ app.post('/login', async (req, res) => {
 app.post('/adduser', async (req, res) => {
   try {
     // Forward the add user request to the user service
-    const safeUsername = encodeURIComponent(req.params.username);
-    const url = `${userStatsServiceUrl}/history/games/${safeUsername}`;
-    const response = await axios.get(url);
-    res.json(response.data);
+    const userResponse = await axios.post(userServiceUrl+'/adduser', req.body);
+    res.json(userResponse.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });
   }
@@ -48,8 +46,9 @@ app.post('/adduser', async (req, res) => {
 
 app.get('/history/games/:username', async (req, res) => {
   try {
-    const username = req.params.username;
-    const response = await axios.get(`${userStatsServiceUrl}/history/games/${username}`);
+    const safeUsername = encodeURIComponent(req.params.username);
+    const url = `${userStatsServiceUrl}/history/games/${safeUsername}`;
+    const response = await axios.get(url);
     res.json(response.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });
