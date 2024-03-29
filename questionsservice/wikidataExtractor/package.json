@@ -1,0 +1,29 @@
+{
+  "name": "wikidataextractor",
+  "version": "1.0.0",
+  "description": "Wikidata service, in charge of extracting, parsing and saving data from Wikidata into a BD",
+  "main": "wikidataextractor-service.js",
+  "scripts": {
+    "devStart": "nodemon wikidataextractor-service.js",
+    "start": "node wikidataextractor-service.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arquisoft/wiq_es6c.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arquisoft/wiq_es6c/issues"
+  },
+  "homepage": "https://github.com/arquisoft/wiq_es6c#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.2.0",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
