@@ -9,7 +9,7 @@ const port = 8007;
 
 const questionHistoryServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004';
 
-const WikiQueries = require('./wikidataExtractor/wikidataQueries');
+const WikiQueries = require('../wikidataExtractor/wikidataQueries');
 // Connect to MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/questions';
 mongoose.connect(mongoUri);
@@ -30,17 +30,14 @@ var elementos;
 function shuffle(array) {
   let currentIndex = array.length;
   let randomIndex;
-
   // Mientras queden elementos para mezclar.
   while (currentIndex > 0) {
     // Escoge un elemento aleatorio.
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
-
     // Intercambia el elemento actual con el elemento aleatorio.
     [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
-
   return array;
 }
 
@@ -58,71 +55,12 @@ const generateQuestion = async () => {
   console.log(mockedQuestions);
 }
 
-
-// const mockedQuestions = [
-//   {
-//     pregunta: "¿Cómo me llamo?",
-//     respuesta_correcta: "Abel",
-//     respuestas_incorrectas: ["Federico", "Eusebio", "Gervasio"]
-//   },
-//   {
-//     pregunta: "¿Cuál es el río más largo del mundo?",
-//     respuesta_correcta: "Amazonas",
-//     respuestas_incorrectas: ["Nilo", "Misisipi", "Yangtsé"]
-//   },
-//   {
-//     pregunta: "¿En qué año comenzó la Segunda Guerra Mundial?",
-//     respuesta_correcta: "1939",
-//     respuestas_incorrectas: ["1941", "1942", "1945"]
-//   },
-//   {
-//     pregunta: "¿Quién escribió 'El Quijote'?",
-//     respuesta_correcta: "Miguel de Cervantes",
-//     respuestas_incorrectas: ["Garcilaso de la Vega", "Federico García Lorca", "Pablo Neruda"]
-//   },
-//   {
-//     pregunta: "¿Cuál es el símbolo químico del oro?",
-//     respuesta_correcta: "Au",
-//     respuestas_incorrectas: ["Ag", "Fe", "Cu"]
-//   },
-//   {
-//     pregunta: "¿Cuál es el planeta más grande del sistema solar?",
-//     respuesta_correcta: "Júpiter",
-//     respuestas_incorrectas: ["Saturno", "Marte", "Venus"]
-//   },
-//   {
-//     pregunta: "¿Quién pintó la 'Mona Lisa'?",
-//     respuesta_correcta: "Leonardo da Vinci",
-//     respuestas_incorrectas: ["Pablo Picasso", "Vincent van Gogh", "Rembrandt"]
-//   },
-//   {
-//     pregunta: "¿En qué país se encuentra la Torre Eiffel?",
-//     respuesta_correcta: "Francia",
-//     respuestas_incorrectas: ["Italia", "España", "Alemania"]
-//   },
-//   {
-//     pregunta: "¿Qué año marcó el fin de la Segunda Guerra Mundial?",
-//     respuesta_correcta: "1945",
-//     respuestas_incorrectas: ["1943", "1944", "1946"]
-//   },
-//   {
-//     pregunta: "¿Quién escribió 'Romeo y Julieta'?",
-//     respuesta_correcta: "William Shakespeare",
-//     respuestas_incorrectas: ["Jane Austen", "Charles Dickens", "F. Scott Fitzgerald"]
-//   },
-//   {
-//     pregunta: "¿Qué inventó Thomas Edison?",
-//     respuesta_correcta: "Bombilla eléctrica",
-//     respuestas_incorrectas: ["Teléfono", "Automóvil", "Avión"]
-//   }
-// ]
-
 // Function to generate the required number of questions
 async function getQuestions(req) {
   const { n_preguntas, n_respuestas, tema } = req.query;
   var preguntas = Number(n_preguntas);
   var respuestas = Number(n_respuestas);
-  var temad = String(tema);
+  var temas = String(tema);
 
   // if (isNaN(preguntas)) {
   //   generateQuestion()
