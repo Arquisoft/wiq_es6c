@@ -37,8 +37,10 @@ app.post('/login', async (req, res) => {
 app.post('/adduser', async (req, res) => {
   try {
     // Forward the add user request to the user service
-    const userResponse = await axios.post(userServiceUrl+'/adduser', req.body);
-    res.json(userResponse.data);
+    const safeUsername = encodeURIComponent(req.params.username);
+    const url = `${userStatsServiceUrl}/history/games/${safeUsername}`;
+    const response = await axios.get(url);
+    res.json(response.data);
   } catch (error) {
     res.status(error.response.status).json({ error: error.response.data.error });
   }
