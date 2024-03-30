@@ -5,8 +5,8 @@ import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
 import Button from './Button'
-import { Footer } from '../footer/Footer';
-import { Nav } from '../nav/Nav';
+import { Footer } from './footer/Footer';
+import { Nav } from './nav/Nav';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 

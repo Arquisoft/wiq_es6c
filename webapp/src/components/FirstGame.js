@@ -3,15 +3,17 @@ import { Container, Typography, LinearProgress} from '@mui/material';
 import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import GoBackButton from './GoBackButton';
-import { Footer } from '../footer/Footer';
-import { Nav } from '../nav/Nav';
+import { Footer } from './footer/Footer';
+import { Nav } from './nav/Nav';
 
 var storedInt = 0;
+var haveFailedQuestion = false; 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 const Quiz = () => {
+  const navigator = useNavigate();
   var questions = useLocation().state.questions;
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(storedInt);
@@ -66,15 +68,25 @@ const Quiz = () => {
     }
     console.log(questions)
 };
+  function changeButtons(param) {
+    for(var i = 0; i < questions[0].length; i++) {
+      var boton = document.getElementById('option-' + i)
+      boton.disabled = param
+    }
+  }
+
 
   const checkAnswer = async (option) => {
     getQuestions()
     setIsCorrect(option === questions[currentQuestionIndex].correctAnswer);
-
+    
+    changeButtons(true);
+    
     const botonIncorrecta = document.getElementById('option-' + questions[currentQuestionIndex].options.indexOf(option))
     const previousBackgroundColor = botonIncorrecta.style.backgroundColor
     if (!isCorrect) {
       botonIncorrecta.style.backgroundColor = 'red'
+      haveFailedQuestion = true;
     }
     
     const numberAnswer = questions[currentQuestionIndex].options.indexOf(questions[currentQuestionIndex].correctAnswer)
@@ -89,8 +101,15 @@ const Quiz = () => {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     }
     setIsCorrect(false)
+        
     
+    changeButtons(false);
     
+    if(haveFailedQuestion) {
+      haveFailedQuestion = false;
+      navigator('/menu')
+    }
+
   };
 
   return (

@@ -19,6 +19,16 @@ const file = fs.readFileSync('./openapi.yaml', 'utf8');
 // Parse the YAML content into a JavaScript object representing the Swagger document
 const swaggerDocument = YAML.parse(file);
 
+function generateAleatoryString() {
+  let characters = 'abcdefghijklmnopqrstuvwxyz0123456789'; // Caracteres alfanuméricos
+  let len = 24;
+  let result = '';
+  for (let i = 0; i < len; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
 // Serve the Swagger UI documentation at the '/api-doc' endpoint
 // This middleware serves the Swagger UI files and sets up the Swagger UI page
 // It takes the parsed Swagger document as input
@@ -32,17 +42,22 @@ app.use(cors());
 
 var gameId = 0;
 
+app.get('/generateGameUnlimitedQuestions', async (req, res) => {
+  try {
+    var gameId = generateAleatoryString()
+    res.json(gameId)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 
 // Route for getting questions
 app.get('/gameUnlimitedQuestions', async (req, res) => {
   try {
-    console.log("Llegamos al nuevo servicio")
     // TODO: Implement logic to fetch questions from MongoDB and send response 
     // const questions = await Question.find()
-    console.log("Antes de incrementar: ", gameId)
     const questionGenerated = await axios.get(`${questionService}/questions?n_preguntas=${1}`);
-    gameId = gameId + 1
-    console.log("Despues de incrementar: ", gameId)
     res.json(questionGenerated.data);
   } catch (error) {
     // res.status(500).json({ message: error.message })

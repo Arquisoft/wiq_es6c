@@ -62,6 +62,16 @@ app.get('/history/questions', async (req, res) => {
 //   }
 // })
 
+app.get('/generateGameUnlimitedQuestions', async (req, res) => {
+  try {
+    const response = await axios.get(gameService + '/generateGameUnlimitedQuestions')
+    res.json(response.data)
+  } catch (error) {
+    res.status(error.response.status).json({error: error.response.data.error})
+  }
+})
+
+
 app.get('/gameUnlimitedQuestions', async (req, res) => {
   try {
     console.log("Antes de la llamada")
