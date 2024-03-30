@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Box, Button, IconButton, Typography } from '@mui/material';
+import { AppBar, Toolbar, Box, Button, IconButton, Typography, SvgIcon } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 
 function HomeIcon(props) {
