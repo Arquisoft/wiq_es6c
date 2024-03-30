@@ -19,7 +19,7 @@ async function addGame(game){
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
-  const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/statsdb';
+  const mongoUri = mongoServer.getUri();
   process.env.MONGODB_URI = mongoUri;
   app = require('./user-stats-service'); 
 

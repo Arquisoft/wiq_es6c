@@ -3,12 +3,13 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 
 let mongoServer;
 let app;
-app = require('./store-q-service'); 
+
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
-  const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/storedquestion';
+  const mongoUri = mongoServer.getUri();
   process.env.MONGODB_URI = mongoUri;
+  app = require('./store-q-service'); 
 });
 
 afterAll(async () => {
@@ -144,7 +145,7 @@ describe('Store individual questions service', () => {
   it('should get all questions on GET /history/questions using first post /history/question', async () => {
     const newQuestion1 = {
       pregunta: '¿Cuál es la capital de la comunidad autónoma de Castilla y León?',
-      respuesta_correcta: 'Ninguna',
+      respuesta_correcta: 'Ninguna1',
       respuestas_incorrectas: ['Segovia','León','Valladolid'],
       createdAt: '2002-02-01T23:00:00.000Z'
     };
@@ -162,9 +163,9 @@ describe('Store individual questions service', () => {
     };
   
     // Mandamos las preguntas una a una
-    request(app).post('/history/question').send(newQuestion1);
-    request(app).post('/history/question').send(newQuestion2);
-    request(app).post('/history/question').send(newQuestion3);
+    await request(app).post('/history/question').send(newQuestion1);
+    await request(app).post('/history/question').send(newQuestion2);
+    await request(app).post('/history/question').send(newQuestion3);
 
     // Obtenemos las preguntas almacenadas
     const response = await request(app).get('/history/questions');
