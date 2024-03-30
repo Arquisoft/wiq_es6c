@@ -12,6 +12,7 @@ const app = express();
 const port = 8005;
 
 const questionService = process.env.QUESTIONS_GENERATOR_SERVICE_URL || 'http://localhost:8007';
+const userStatsService = process.env.STORE_STATS_SERVICE ||'http://localhost:8003';
 
 // Read the OpenAPI YAML file synchronously
 const file = fs.readFileSync('./openapi.yaml', 'utf8');

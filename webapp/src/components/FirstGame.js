@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box, LinearProgress} from '@mui/material';
 import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
@@ -9,18 +9,22 @@ import GoBackButton from './GoBackButton';
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
 
-var storedInt = 0;
+var currentQuestionIndex = 0;
+
 var haveFailedQuestion = false; 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
+var isCorrect = false
 
 const Quiz = () => {
 
   const navigator = useNavigate();
   var questions = useLocation().state.questions;
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(storedInt);
-  const [isCorrect, setIsCorrect] = React.useState(null);
-  const [remTime, setRemTime] = React.useState(0);
+  var gameId;
+
+  // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(storedInt);
+  // const [isCorrect, setIsCorrect] = useState(false);
+  const [remTime, setRemTime] = useState(0);
 
   useEffect(() => {
     const time = setInterval(() => {
@@ -72,7 +76,6 @@ const Quiz = () => {
   const getQuestions = async () => {
     try {
       const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`);
-      console.log(response.data.length)
       for (var i = 0; i < response.data.length; i++) {
         var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
         possibleAnswers = shuffleArray(possibleAnswers)
@@ -85,27 +88,35 @@ const Quiz = () => {
     } catch (error) {
       console.error(error);
     }
-    console.log(questions)
 };
   function changeButtons(param) {
-    for(var i = 0; i < questions[0].length; i++) {
-      var boton = document.getElementById('option-' + i)
-      boton.disabled = param
+    console.log("Entramos aqui")
+    var borders = document.getElementsByClassName("border");;
+    for(var i = 0; i < questions[0].options.length; i++) {
+      borders[i].setAttribute("data-disabled", param)
     }
   }
 
 
   const checkAnswer = async (option) => {
     getQuestions()
-    setIsCorrect(option === questions[currentQuestionIndex].correctAnswer);
-    
-    changeButtons(true);
+    // console.log(option === questions[currentQuestionIndex].correctAnswer)
+    isCorrect = (option === questions[currentQuestionIndex].correctAnswer);
+
+    changeButtons("true")
+    // changeButtons(true);
     
     const botonIncorrecta = document.getElementById('option-' + questions[currentQuestionIndex].options.indexOf(option))
     const previousBackgroundColor = botonIncorrecta.style.backgroundColor
+
+    // console.log(haveFailedQuestion)
+    // console.log(isCorrect)
     if (!isCorrect) {
+      // console.log(isCorrect)
       botonIncorrecta.style.backgroundColor = 'red'
+      // console.log("Entramos a cambiar")
       haveFailedQuestion = true;
+      // console.log("Despues de modificar los valores")
     }
     
     const numberAnswer = questions[currentQuestionIndex].options.indexOf(questions[currentQuestionIndex].correctAnswer)
@@ -116,15 +127,16 @@ const Quiz = () => {
     await esperar(2000); // Espera 2000 milisegundos (2 segundos)
     botonIncorrecta.style.backgroundColor = previousBackgroundColor
     botonCorrecta.style.backgroundColor = previousBackgroundColor
-    if (questions.length-1 !== currentQuestionIndex) {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    if (questions.length-1 != currentQuestionIndex) {
+      currentQuestionIndex = (currentQuestionIndex + 1);
     }
-    setIsCorrect(false)
+    isCorrect = (false)
         
     
-    changeButtons(false);
+    changeButtons("false")
     
     if(haveFailedQuestion) {
+
       haveFailedQuestion = false;
       navigator('/menu')
     }

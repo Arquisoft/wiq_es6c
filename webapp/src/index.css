@@ -134,6 +134,14 @@ code {
   box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
 }
 
+.border[data-disabled = "true"]:hover{
+  box-shadow: none;
+}
+
+.border[data-disabled = "true"] .inner{
+  pointer-events: none;
+}
+
 .inner{
   background-color: #1a1a1a;
   color: #F0F0F0;
