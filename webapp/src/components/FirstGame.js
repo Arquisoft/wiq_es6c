@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Typography, LinearProgress} from '@mui/material';
+import React, { useEffect } from 'react';
+import { Container, Typography, Box, LinearProgress} from '@mui/material';
 import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
@@ -12,12 +12,31 @@ import { Nav } from './nav/Nav';
 var storedInt = 0;
 var haveFailedQuestion = false; 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
+
 const Quiz = () => {
+
   const navigator = useNavigate();
   var questions = useLocation().state.questions;
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(storedInt);
   const [isCorrect, setIsCorrect] = React.useState(null);
+  const [remTime, setRemTime] = React.useState(0);
+
+  useEffect(() => {
+    const time = setInterval(() => {
+      setRemTime((progress) => {
+        if(progress == 100){
+          return 0; 
+        }
+        const diff = Math.random() * 10;
+        return Math.min(progress + diff, 100);
+      });
+    }, 500);
+
+    return () => {
+      clearInterval(time);
+    };
+  });
 
   const esperar = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -148,7 +167,8 @@ const Quiz = () => {
             width: '100%',
             padding: 3}}>
 
-            <LinearProgress color="secondary" variant={loading? "indeterminate" : "determinate"} value={remTime} />
+            {/*<LinearProgress color="secondary" variant={loading? "indeterminate" : "determinate"} value={remTime} />*/}
+            <LinearProgress color="secondary" variant={"determinate"} value={remTime} />
 
         </Box>
 

@@ -1,16 +1,21 @@
 import React from 'react';
-import { useContext } from 'react';
 import { AppBar, Toolbar, Box, Button, IconButton, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { context } from '../Context';
 
+function HomeIcon(props) {
+    return (
+      <SvgIcon {...props}>
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+      </SvgIcon>
+    );
+}
 
 export const Nav = () => {
 
     const navigate = useNavigate();
-    const { username, isLogged, destroySession } = useContext(context);
+    //const { username, isLogged, destroySession } = useContext(context);
 
-
+    /*
     const handleOpenUser = () => {
         navigate(" ... ");
     };
@@ -19,7 +24,7 @@ export const Nav = () => {
         destroySession();
         navigate("/login");
     };
-
+    */
 
     return (
         <AppBar position="static">
@@ -33,7 +38,7 @@ export const Nav = () => {
 
             <Typography variant="h6" component="div">WIQ</Typography>
 
-
+            {/*
             {isLogged ? (
             <Box>
                 <Button color="inherit" onClick={handleOpenUser}>
@@ -51,6 +56,7 @@ export const Nav = () => {
                 </Button>
             </Box>
             )}
+            */}
         </Toolbar>
         </AppBar>
     );
