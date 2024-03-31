@@ -45,6 +45,7 @@ var gameId = 0;
 
 app.get('/generateGameUnlimitedQuestions', async (req, res) => {
   try {
+    console.log("Llegamos a crear un id del juego")
     var gameId = generateAleatoryString()
     res.json(gameId)
   } catch (error) {
@@ -58,13 +59,25 @@ app.get('/gameUnlimitedQuestions', async (req, res) => {
   try {
     // TODO: Implement logic to fetch questions from MongoDB and send response 
     // const questions = await Question.find()
+    console.log("Llegamos a pedir preguntas")
     const questionGenerated = await axios.get(`${questionService}/questions?n_preguntas=${1}`);
+    console.log("Pedimos las preguntas")
     res.json(questionGenerated.data);
   } catch (error) {
     // res.status(500).json({ message: error.message })
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+app.post('/storeGame', async (req, res) => {
+  try {
+    //hay que preparar los datos para enviarlos al servicio
+    var data;
+    const store = await axios.post(`${userStatsService}/history/game`, data)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
 
 app.use((err, req, res, next) => {
   console.error(`An error occurred: ${err}`);

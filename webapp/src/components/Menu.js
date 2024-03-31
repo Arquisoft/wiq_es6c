@@ -10,7 +10,7 @@ import { Nav } from './nav/Nav';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
-
+var gameId;
 var isApiCalledRef = false;
 
 
@@ -53,16 +53,25 @@ const Menu = () => {
     */
 
     const initiateGame = async () => {
-        if (!isApiCalledRef) {
-            await getQuestions()
-        }
-        isApiCalledRef = true
-        navigation("/firstGame", {state: {questions}})
+      await generateGameId();  
+      await getQuestions()  
+      isApiCalledRef = true
+      navigation("/firstGame", {state: {questions, gameId}})
+    }
+
+    const generateGameId = async () => {
+      try {
+        const response = await axios.get(`${apiEndpoint}/generateGameUnlimitedQuestions`)
+        console.log(response.data)
+        gameId = response.data
+      } catch(error) {
+        console.error(error);
+      }
     }
 
     const getQuestions = async () => {
         try {
-          const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`);
+          const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`, {gameId});
           console.log(response.data.length)
           for (var i = 0; i < response.data.length; i++) {
             var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]

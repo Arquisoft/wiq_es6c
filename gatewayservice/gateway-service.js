@@ -75,11 +75,19 @@ app.get('/generateGameUnlimitedQuestions', async (req, res) => {
 app.get('/gameUnlimitedQuestions', async (req, res) => {
   try {
     console.log("Antes de la llamada")
-    const response = await axios.get(gameService + `/gameUnlimitedQuestions`)
+    const response = await axios.get(gameService + `/gameUnlimitedQuestions`, req.body)
     console.log(response.data)
     res.json(response.data)
   } catch (error) {
     res.status(error.response.status).json({error: error.response.data.error})
+  }
+})
+
+app.post('/storeGame', async (req, res) => {
+  try {
+    const post = await axios.post(gameService + `/storeGame`, req.body) 
+  } catch (error) {
+    res.status(error.response.status).json({error: error.response.data.error});
   }
 })
 

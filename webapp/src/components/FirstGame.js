@@ -20,8 +20,8 @@ const Quiz = () => {
   const navigator = useNavigate();
   var questions = useLocation().state.questions;
 
-  var gameId;
-
+  var gameId = useLocation().state.gameId;
+  console.log(gameId)
   // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(storedInt);
   // const [isCorrect, setIsCorrect] = useState(false);
   const [remTime, setRemTime] = useState(0);
@@ -75,7 +75,7 @@ const Quiz = () => {
 
   const getQuestions = async () => {
     try {
-      const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`);
+      const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`, { gameId });
       for (var i = 0; i < response.data.length; i++) {
         var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
         possibleAnswers = shuffleArray(possibleAnswers)
