@@ -92,24 +92,10 @@ const Menu = () => {
       navigation("/appQuestion")
     }
 
-    /*
-    const handleSelectecButtonCustomixe = () => {
-      isSelectedButtonCustomize(true);
+    const openHistory = async () => {
+      navigation("/history")
     }
 
-    const handleCategoryChange = (event) => {
-      setSelectedCategory(event.target.value);
-    };
-  
-    const handleValueChange = (event) => {
-      setSelectedValue(event.target.value);
-    };
-  
-    const handlePlayClick = () => {
-      console.log('Categoría seleccionada: ${selectedCategory}');
-      console.log('Valor seleccionado: ${selectedValue}');
-    };
-    */
     
 
     return (
@@ -145,11 +131,9 @@ const Menu = () => {
           <div className='modes'>
               <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
             </div>
-            
-          <h2>Esto irá en el nav(?)</h2>
-          
-          <Button text = "Álmacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
-        
+            <h2>Esto irá en el nav(?)</h2>
+            <Button text = "Álmacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
+            <Button text = "Historial" name="openHistory" onClick={() => openHistory()}/>
         </Container>
         <Footer />
       </>
