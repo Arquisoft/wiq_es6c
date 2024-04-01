@@ -1,39 +1,43 @@
+import Game from "./components/Game";
+import "./css/Game.css"
+import GoBackButton from "../components/GoBackButton";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/questions.css';
-import GoBackButton from '../components/GoBackButton';
-import Question from './components/Question';
-import Button from '../components/Button';
+import Button from "../components/Button";
 
 function App() {
-  const [preguntas, setPreguntas] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Número de preguntas por página
+  const itemsPerPage = 10; // Número de partidas por página
+
+  const [games, setGames] = useState([]);
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
+  const username = localStorage.getItem('username');
+
   useEffect(() => {
-    const obtenerPreguntas = async () => {
+
+    const getGames = async () => {
       try {
-        const response = await axios.get(`${apiEndpoint}/history/questions`);
-        setPreguntas(response.data);
+        const response = await axios.get(`${apiEndpoint}/history/games/${username}`)
+        setGames(response.data);
       } catch (error) {
-        console.error('Error al obtener las preguntas:', error.response.data.error);
+        console.error('Error al obtener los juegos:', error);
       }
     };
 
-    obtenerPreguntas();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getGames();
+    //eslint-disable-next-line
   }, []);
 
-  // Calcular el índice inicial y final de las preguntas a mostrar en la página actual
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentQuestions = preguntas.slice(startIndex, endIndex);
+  const currentGames = games.slice(startIndex, endIndex) || [];
+  console.log(currentGames)
 
   // Funciones para cambiar de página
   const nextPage = () => {
-    if(currentPage < Math.ceil(preguntas.length / itemsPerPage))
+    if(currentPage < Math.ceil(games.length / itemsPerPage))
       setCurrentPage(currentPage + 1);
   };
 
@@ -47,7 +51,7 @@ function App() {
   }
 
   const lastPage = () => {
-    setCurrentPage(Math.ceil(preguntas.length / itemsPerPage));
+    setCurrentPage(Math.ceil(games.length / itemsPerPage));
   }
 
   const refresh = () => {
@@ -55,15 +59,17 @@ function App() {
   }
 
   return (
-    <div id='storeQuestion'>
-      <h2>Almacén de preguntas</h2>
+    <div id="history">
+      <div className="header">
+        <h2>Historial de {username}</h2>
+      </div>
       <GoBackButton />
-      <main className='grid'>
-        {currentQuestions.map(question => (
-          <Question key={question._id} newQuestion={question} />
+      <main>
+        {currentGames.map(game => (
+          <Game key={game.id} game={game} />
         ))}
       </main>
-      <footer className='pagination'>
+      <footer className="pagination">
         <Button text='Primera' onClick={firstPage}/>
         <Button text='Anterior' onClick={prevPage}/>
         <Button text={currentPage} onClick={refresh} />

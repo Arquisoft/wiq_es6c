@@ -13,6 +13,7 @@ import {
 
 import FirstGame from './components/FirstGame';
 import Menu from './components/Menu';
+import History from './userStats/App';
 import Login from './components/Login';
 import AppQuestion from './storeQuestion/App'
 
@@ -26,6 +27,7 @@ root.render(
         <Route path="/firstGame" element={<FirstGame/>}></Route>
         <Route path="/appQuestion" element={<AppQuestion/>}></Route>
         <Route path="/menu" element={<Menu/>}></Route>
+        <Route path="/history" element={<History/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
       </Routes>
     </Router>
