@@ -16,9 +16,11 @@ describe("Nav component", () => {
     test("renders nav",async () => {
 
         render(
-            <MemoryRouter>
-                <Nav/>
-            </MemoryRouter>
+            <ContextFun>
+                <Router>
+                    <Nav/>
+                </Router>
+            </ContextFun>
         );
 
         const linkElement = screen.getByText(/WIQ/i);
