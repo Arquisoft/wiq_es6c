@@ -27,7 +27,7 @@ export const Nav = () => {
     */
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{ backgroundColor: "secondary", color: "white"}}>
         <Toolbar>
             <Link to='/home' >
                 <IconButton size="large" color="inherit" >
