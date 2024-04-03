@@ -72,8 +72,14 @@ app.get('/gameUnlimitedQuestions', async (req, res) => {
 app.post('/storeGame', async (req, res) => {
   try {
     //hay que preparar los datos para enviarlos al servicio
-    var data;
-    const store = await axios.post(`${userStatsService}/history/game`, data)
+    var id = req.body.id
+    var username = req.body.username
+    var points = req.body.points
+    var questions = req.body.questions
+    console.log("Vamos a guardar resultado")
+    const store = await axios.post(`${userStatsService}/history/game`, {id, username,  points, questions})
+    console.log("Guardamos resultado")
+    res.json(store.data)
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }

@@ -30,14 +30,12 @@ app.post('/history/game', async (req, res) => {
     try {
         // Check if required fields are present in the request body
         validateRequiredFields(req, ['id', 'points', 'username', 'questions']);
-
         const newGame = new Game({
             id: req.body.id,
             username: req.body.username,
             points: req.body.points,
             questions: req.body.questions,
         });
-
         await newGame.save();
         res.json(newGame);
 

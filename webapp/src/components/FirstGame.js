@@ -14,14 +14,16 @@ var currentQuestionIndex = 0;
 var haveFailedQuestion = false; 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 var isCorrect = false
+var questions = [];
+var points = 0;
 
 const Quiz = () => {
 
   const navigator = useNavigate();
-  var questions = useLocation().state.questions;
+  var allQuestions = useLocation().state.questions;
 
-  var gameId = useLocation().state.gameId;
-  console.log(gameId)
+  var id = useLocation().state.gameId;
+  console.log(id)
   // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(storedInt);
   // const [isCorrect, setIsCorrect] = useState(false);
   const [remTime, setRemTime] = useState(0);
@@ -75,11 +77,11 @@ const Quiz = () => {
 
   const getQuestions = async () => {
     try {
-      const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`, { gameId });
+      const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`, { id });
       for (var i = 0; i < response.data.length; i++) {
         var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
         possibleAnswers = shuffleArray(possibleAnswers)
-        questions.push({
+        allQuestions.push({
           question: response.data[i].pregunta,
           options: possibleAnswers,
           correctAnswer: response.data[i].respuesta_correcta
@@ -92,51 +94,74 @@ const Quiz = () => {
   function changeButtons(param) {
     console.log("Entramos aqui")
     var borders = document.getElementsByClassName("border");;
-    for(var i = 0; i < questions[0].options.length; i++) {
+    for(var i = 0; i < allQuestions[0].options.length; i++) {
       borders[i].setAttribute("data-disabled", param)
     }
   }
 
+  const gameStore = async () => {
+    try {
+      var username = localStorage.getItem("username")
+      console.log(username)
+      console.log(questions)
+      const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions});
+      console.log(response)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const checkAnswer = async (option) => {
     getQuestions()
     // console.log(option === questions[currentQuestionIndex].correctAnswer)
-    isCorrect = (option === questions[currentQuestionIndex].correctAnswer);
+    isCorrect = (option === allQuestions[currentQuestionIndex].correctAnswer);
 
     changeButtons("true")
     // changeButtons(true);
     
-    const botonIncorrecta = document.getElementById('option-' + questions[currentQuestionIndex].options.indexOf(option))
+    const botonIncorrecta = document.getElementById('option-' + allQuestions[currentQuestionIndex].options.indexOf(option))
     const previousBackgroundColor = botonIncorrecta.style.backgroundColor
 
     // console.log(haveFailedQuestion)
     // console.log(isCorrect)
     if (!isCorrect) {
+      console.log("Entramos en el correct")
       // console.log(isCorrect)
       botonIncorrecta.style.backgroundColor = 'red'
       // console.log("Entramos a cambiar")
       haveFailedQuestion = true;
       // console.log("Despues de modificar los valores")
+    } else {
+      points = points += 100;
     }
-    
-    const numberAnswer = questions[currentQuestionIndex].options.indexOf(questions[currentQuestionIndex].correctAnswer)
+    const numberAnswer = allQuestions[currentQuestionIndex].options.indexOf(allQuestions[currentQuestionIndex].correctAnswer)
     const botonCorrecta = document.getElementById('option-' + numberAnswer)
     botonCorrecta.style.backgroundColor = 'green' 
     // Pasar a la siguiente pregunta después de responder
+    
+    var indexAnswers = [numberAnswer, allQuestions[currentQuestionIndex].options.indexOf(option)]
+
+    questions.push({
+        title: allQuestions[currentQuestionIndex].question,
+        answers: allQuestions[currentQuestionIndex].options,
+        ansIndex: indexAnswers
+      }
+    )
 
     await esperar(2000); // Espera 2000 milisegundos (2 segundos)
     botonIncorrecta.style.backgroundColor = previousBackgroundColor
     botonCorrecta.style.backgroundColor = previousBackgroundColor
-    if (questions.length-1 != currentQuestionIndex) {
+    if (allQuestions.length-1 != currentQuestionIndex) {
       currentQuestionIndex = (currentQuestionIndex + 1);
     }
     isCorrect = (false)
         
     
     changeButtons("false")
-    
+    console.log(haveFailedQuestion)
     if(haveFailedQuestion) {
-
+      console.log("Entramos a guardar el juego")
+      await gameStore()
       haveFailedQuestion = false;
       navigator('/menu')
     }
@@ -153,13 +178,13 @@ const Quiz = () => {
           <div class="questionFirstGame">
 
             <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-              {questions[currentQuestionIndex].question}
+              {allQuestions[currentQuestionIndex].question}
             </Typography>
 
           </div>
 
           <div class="allAnswers">
-            {questions[currentQuestionIndex].options.map((option, index) => (
+            {allQuestions[currentQuestionIndex].options.map((option, index) => (
               <div key={index} >
                 <Button
                   id={`option-${index}`}

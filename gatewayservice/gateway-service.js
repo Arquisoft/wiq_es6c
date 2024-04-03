@@ -97,9 +97,17 @@ app.get('/gameUnlimitedQuestions', async (req, res) => {
 
 app.post('/storeGame', async (req, res) => {
   try {
-    const post = await axios.post(gameService + `/storeGame`, req.body) 
+    var id = req.body.id
+    var username = req.body.username
+    var points = req.body.points
+    var questions = req.body.questions
+    console.log(questions)
+    console.log("Hacemos la llamada al guardar preguntas")
+    const post = await axios.post(gameService + `/storeGame`, {id, username,  points, questions})
+    console.log("Devuelve la llamada")
+    res.json(post.data) 
   } catch (error) {
-    res.status(error.response.status).json({error: error.response.data.error});
+    console.error(error)
   }
 })
 
