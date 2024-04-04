@@ -189,7 +189,7 @@ describe('User Stats Service correct data is inserted', () => {
     const response = await request(app).get(`/history/games/${username}?limit=1`);
 
     expect(response.status).toBe(200);
-    expect(response.body[0]).toHaveProperty('id', 1);
+    expect(response.body[0]).toHaveProperty('id', "1");
     expect(response.body[0]).toHaveProperty('username', username);
     expect(response.body[0]).toHaveProperty('points', 100);
   });
