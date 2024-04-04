@@ -149,6 +149,11 @@ code {
   text-align: center;
 }
 
+button.inner {
+  border: none;
+  font-size: inherit;
+}
+
 a{
   text-decoration: underline;
   cursor: pointer;
