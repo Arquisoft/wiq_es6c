@@ -40,7 +40,7 @@ app.post('/history/question', async (req, res) => {
         await newQuestion.save();
         res.json(newQuestion);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: error.message || 'An error occurred'});
     }
 });
 
@@ -69,7 +69,7 @@ app.post('/history/questions', async (req, res) => {
 
         res.json(newQuestions);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: error.message || 'An error occurred'});
     }
 });
 
@@ -88,7 +88,7 @@ app.get('/history/questions', async (req, res) => {
             respuestas_incorrectas: ['Segovia','León','Valladolid']
           }]);*/
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message || 'An error occurred'});
     }
 });
 
