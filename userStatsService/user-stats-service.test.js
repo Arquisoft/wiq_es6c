@@ -154,7 +154,7 @@ describe('User Stats Service, fields are wrong in post(/game) method', () => {
 describe('User Stats Service correct data is inserted', () => {
   it('should add a new game on POST /game', async () => {
     const newGame = {
-      id: 1,
+      id: "1",
       username: 'testuser',
       points: 100,
       questions: [{
