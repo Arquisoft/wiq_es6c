@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import AddUser from './components/AddUser';
 import Login from './components/Login';
-import { Footer } from './components/footer/Footer';
 import { Nav } from './components/nav/Nav';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
