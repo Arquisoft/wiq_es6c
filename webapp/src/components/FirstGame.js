@@ -34,7 +34,10 @@ const Quiz = () => {
         if(progress == 100){
           return 0; 
         }
-        const diff = Math.random() * 10;
+        // const diff = Math.random() * 10;
+        // return Math.min(progress + diff, 100);
+
+        const diff = crypto.getRandomValues(new Uint32Array(1))[0] % 11; // Generate a random number between 0 and 10
         return Math.min(progress + diff, 100);
       });
     }, 500);
