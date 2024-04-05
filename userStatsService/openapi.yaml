@@ -1,0 +1,206 @@
+openapi: 3.0.0
+info:
+  title: Store API
+  description: Gateway OpenAPI specification.
+  version: 0.2.0
+servers:
+  - url: http://localhost:8003
+    description: Development server
+  - url: http://SOMEIP:8003
+    description: Production server
+paths:
+  /history/game:
+    post:
+      summary: Add a game from the database.
+      operationId: addGame
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Game ID.
+                      example: 123ww
+                    username:
+                      type: string
+                      description: User name who played the game.
+                      example: Jose
+                    points:
+                      type: integer
+                      description: Game points.
+                      example: 1232
+                    questions:
+                      type: array
+                      description: Array of questions which follow the same structure as how they are stored.
+                      items:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                            description: Question.
+                            example: Which is the capital of Leon
+                          answers:
+                            type: array
+                            items:
+                              type: string
+                              description: Possible answer.
+                              example: Valladolid
+                          ansIndex:
+                            type: array
+                            description: Two integers that represent the answer chose by the user and the correcto one.
+                            example: [1, 2]
+                            items:
+                              type: integer
+      responses:
+        '200':
+          description: A game was send succesfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    id:
+                      type: string
+                      description: Game ID.
+                      example: 123ww
+                    username:
+                      type: string
+                      description: User name who played the game.
+                      example: Jose
+                    points:
+                      type: integer
+                      description: Game points.
+                      example: 1232
+                    questions:
+                      type: array
+                      description: Array of questions which follow the same structure as how they are stored.
+                      items:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                            description: Question.
+                            example: Which is the capital of Leon
+                          answers:
+                            type: array
+                            items:
+                              type: string
+                              description: Possible answer.
+                              example: Valladolid
+                          ansIndex:
+                            type: array
+                            description: Two integers that represent the answer chose by the user and the correcto one.
+                            example: [1, 2]
+                            items:
+                              type: integer
+                  _id:
+                    type: string
+                    description: Identification
+                    example: 65f756db3fa22d227a4b7c7d
+                  createdAt:
+                    type: string
+                    description: Creation date.
+                    example: '2024-03-17T20:47:23.935Z'
+                  ___v:
+                    type: integer
+                    example: '0'                                        
+        '400':
+          description: Failed to add a new game.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: getaddrinfo EAI_AGAIN mongodb
+  /history/games/:username:
+    get:
+      summary: Get all games played by a user.
+      operationId: getGamesUser
+      requestBody:
+        required: true
+        content:
+              type: string
+              description: Username.
+              example: Jose
+      responses:
+        '200':
+          description: The user was found and all games played by them are send.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: string
+                      description: Game ID.
+                      example: 123ww
+                    username:
+                      type: string
+                      description: User name who played the game.
+                      example: Jose
+                    points:
+                      type: integer
+                      description: Game points.
+                      example: 1232
+                    questions:
+                      type: array
+                      description: Array of questions which follow the same structure as how they are stored.
+                      items:
+                        type: object
+                        properties:
+                          title:
+                            type: string
+                            description: Question.
+                            example: Which is the capital of Leon
+                          answers:
+                            type: array
+                            items:
+                              type: string
+                              description: Possible answer.
+                              example: Valladolid
+                          ansIndex:
+                            type: array
+                            description: Two integers that represent the answer chose by the user and the correcto one.
+                            example: [1, 2]
+                            items:
+                              type: integer
+                      _id:
+                        type: string
+                        description: Identification
+                        example: 65f756db3fa22d227a4b7c7d
+                      createdAt:
+                        type: string
+                        description: Creation date.
+                        example: '2024-03-17T20:47:23.935Z'
+                      ___v:
+                        type: integer
+                        example: '0' 
+        '404':
+          description: Element not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Shows the error info..
+                    example: Element not found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error
