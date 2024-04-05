@@ -11,7 +11,7 @@ function Button(props){
 
     return (
         <div className="border">
-            <div 
+            <button
                 className="inner" 
                 onClick={onClick} 
                 onKeyDown={handleKeyDown}
@@ -20,11 +20,10 @@ function Button(props){
                 id={id} 
                 value={value} 
                 hidden={hidden}
-                role="button" 
                 aria-label={text} 
                 >
                 {text}
-            </div>
+            </button>
         </div>
     );
 }

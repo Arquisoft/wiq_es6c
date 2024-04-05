@@ -149,6 +149,11 @@ code {
   text-align: center;
 }
 
+button.inner {
+  border: none;
+  font-size: inherit;
+}
+
 a{
   text-decoration: underline;
   cursor: pointer;
@@ -169,4 +174,15 @@ input, label{
 
 .addUser .inner{
   padding: 1em 4.25em;
+}
+
+main input:-internal-autofill-selected{
+  box-shadow: none;
+  -webkit-box-shadow: 0 0 0px 1000px #212121 inset;
+  -webkit-text-fill-color: #f0f0f0;
+  color: #F0F0F0 !important;
+}
+
+main .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root{
+  color: #F0F0F0 !important;
 }
