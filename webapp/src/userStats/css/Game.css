@@ -58,8 +58,7 @@
     color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
     background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
     border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
-    border-radius: 3%;
-
+    border-radius: 1em;
     height: max-content;
     margin-bottom: 1%;
 }
@@ -82,8 +81,7 @@
     color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
     background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
     border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
-    border-radius: 3%;
-
+    border-radius: 1em;
     padding: 1%;
 }
 
