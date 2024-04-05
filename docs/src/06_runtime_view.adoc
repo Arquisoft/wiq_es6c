@@ -102,7 +102,7 @@ end
 "Game Service" -> "Player Statistics Service" : Sends the  user's match data
 ----
 
-In cases where a lot of questions are needed, or wikidata querying has a great impact on performance, this alternative may prove to be convenient. By distributing the data fetching along the entire match, bottlenecks on performance will be reduced. Depending on the system load (or, optionally client device's specifications!) batch sizes may vary, adapting to maintain responsiveness.
+In cases where a lot of questions are needed, or wikidata querying has a great impact on performance, this alternative may prove to be convenient. By distributing the data fetching along the entire match, bottlenecks on performance will be reduced. Depending on the system load, or even on client device's specifications, batch sizes may vary adapting to maintain responsiveness.
 
 === User consults its game statistics.
 
