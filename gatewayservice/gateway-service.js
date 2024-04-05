@@ -21,7 +21,7 @@ const metricsMiddleware = promBundle({includeMethod: true});
 function catchAction(error, res) {
   if ('response' in error && 'status' in error.response && 'data' in error.response && 'error' in error.response.data)
     res.status(error.response.status).json({ error: error.response.data.error });
-  else if('response' in error && 'status'){
+  else if('response' in error && 'status' in error.response){
     res.status(error.response.status).json({ error: 'Unknown error' });
   } else {
     console.log("Unknown error: " + error);
