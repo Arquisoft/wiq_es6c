@@ -1,0 +1,210 @@
+openapi: 3.0.0
+info:
+  title: StoreQuestionAPI
+  description: Store Question OpenAPI specification.
+  version: 0.3.0
+servers:
+  - url: http://localhost:8004
+    description: Development server
+  - url: http://SOMEIP:8004
+    description: Production server
+paths:
+  /history/question:
+    post:
+      summary: Add a single new question to the database.
+      operationId: addQuestion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pregunta:
+                  type: string
+                  description: Question.
+                  example: Which is the capital of Extremadura
+                respuesta_correcta:
+                  type: string
+                    description: Merida
+                    example: Jose
+                  respuestas_incorrectas:
+                    type: array
+                    items:
+                      type: string
+                      description: Wrong answer to the question
+                      example: [Madrid, Sevilla, Valencia]
+                  createdAt:
+                    type: string
+                    description: Creation date.
+                    example: '2024-03-17T20:47:23.935Z'                      
+      responses:
+        '200':
+          description: A question was succesfully created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pregunta:
+                    type: string
+                    description: Question.
+                    example: Which is the capital of Extremadura
+                  respuesta_correcta:
+                    type: string
+                      description: Merida
+                      example: Jose
+                    respuestas_incorrectas:
+                      type: array
+                      items:
+                        type: string
+                        description: Wrong answer to the question
+                        example: [Madrid, Sevilla, Valencia]
+                    createdAt:
+                      type: string
+                      description: Creation date.
+                      example: '2024-03-17T20:47:23.935Z' 
+                    _id:
+                      type: string
+                      description: Identification
+                      example: 65f756db3fa22d227a4b7c7
+                    ___v:
+                      type: integer
+                      example: '0'                                        
+        '400':
+          description: Failed to add a new question.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: getaddrinfo EAI_AGAIN mongodb
+  /history/questions:
+    post:
+      summary: Add a list of new questions to the database.
+      operationId: addQuestions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  pregunta:
+                    type: string
+                    description: Question.
+                    example: Which is the capital of Extremadura
+                  respuesta_correcta:
+                    type: string
+                      description: Merida
+                      example: Jose
+                    respuestas_incorrectas:
+                      type: array
+                      items:
+                        type: string
+                        description: Wrong answer to the question
+                        example: [Madrid, Sevilla, Valencia]
+                    createdAt:
+                      type: string
+                      description: Creation date.
+                      example: '2024-03-17T20:47:23.935Z'                      
+      responses:
+        '200':
+          description: The questions were succesfully created.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    pregunta:
+                      type: string
+                      description: Question.
+                      example: Which is the capital of Extremadura
+                    respuesta_correcta:
+                      type: string
+                        description: Merida
+                        example: Jose
+                      respuestas_incorrectas:
+                        type: array
+                        items:
+                          type: string
+                          description: Wrong answer to the question
+                          example: [Madrid, Sevilla, Valencia]
+                      createdAt:
+                        type: string
+                        description: Creation date.
+                        example: '2024-03-17T20:47:23.935Z' 
+                      _id:
+                        type: string
+                        description: Identification
+                        example: 65f756db3fa22d227a4b7c7
+                      ___v:
+                        type: integer
+                        example: '0'                                        
+        '400':
+          description: Failed to add new questions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: getaddrinfo EAI_AGAIN mongodb
+    get:
+      summary: Get all questions stored at the moment.
+      operationId: getQuestions
+      responses:
+        '200':
+          description: The user was found and all games played by them are send.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    pregunta:
+                      type: string
+                      description: Question.
+                      example: Which is the capital of Extremadura
+                    respuesta_correcta:
+                      type: string
+                        description: Merida
+                        example: Jose
+                      respuestas_incorrectas:
+                        type: array
+                        items:
+                          type: string
+                          description: Wrong answer to the question
+                          example: [Madrid, Sevilla, Valencia]
+                      createdAt:
+                        type: string
+                        description: Creation date.
+                        example: '2024-03-17T20:47:23.935Z' 
+                      _id:
+                        type: string
+                        description: Identification
+                        example: 65f756db3fa22d227a4b7c7
+                      ___v:
+                        type: integer
+                        example: '0' 
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error
