@@ -32,6 +32,7 @@ const Quiz = () => {
     const time = setInterval(() => {
       setRemTime((progress) => {
         if(progress == 100){
+          checkAnswer("");
           return 0; 
         }
         // const diff = Math.random() * 10;
