@@ -88,9 +88,9 @@ class GameStats{
     + int: wrongAnswers;
 }
 
-History "1" -- "1" User: consulta
-History "1" -- "*" GameStats: componen
-Game "1" -- "*" Question: tiene
-User "1" -- "*" Game: juega
-Game "1" -- "1" GameStats: genera
+History "1" -- "1" User: queries
+History "1" -- "*" GameStats: compose
+Game "1" -- "*" Question: has
+User "1" -- "*" Game: plays
+Game "1" -- "1" GameStats: generates
 ----
