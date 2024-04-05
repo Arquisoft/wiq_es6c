@@ -25,15 +25,15 @@ We will use PlantUML and UMLet for creating the documentation's diagrams.
 |===
 | Quality Goal | Scenario | Solution Approach
 
-| Scalability
+| _Scalability_
 | The application's design must accommodate changes effortlessly throughout its lifecycle.
 | Employing a microservices approach to minimize code repetition and enhance understanding of application distribution, ensuring future scalability.
 
-| Usability
+| _Usability_
 | Seamless execution of all application functions is crucial for user satisfaction.
 | Optimizing usability through the utilization of React.
 
-| Maintainability
+| _Maintainability_
 | Application architecture must facilitate seamless addition or modification of functionalities with minimal code changes.
 | Implementing design patterns and adhering to code conventions to ensure clean and maintainable code. Additionally, prioritizing testing during development for long-term maintainability.
 

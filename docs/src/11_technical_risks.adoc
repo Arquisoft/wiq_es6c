@@ -28,6 +28,6 @@ See https://docs.arc42.org/section-11/[Risks and Technical Debt] in the arc42 do
 |===
 |Risk                       |Consequence
 
-|Knowledge of REACT         |It is a framework that no team member has used before. Therefore, we have all had to learn how to use it. 
-|Internal group conflicts   |Lack of free time for team members makes group work difficult. 
+|_Knowledge of REACT_         |It is a framework that no team member has used before. Therefore, we have all had to learn how to use it. 
+|_Internal group conflicts_   |Lack of free time for team members makes group work difficult. 
 |===

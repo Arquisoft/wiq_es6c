@@ -77,11 +77,11 @@ A table with quality goals and concrete scenarios, ordered by priorities
 [options="header",cols="1,3"]
 |===
 |Quality Goal|Description
-| *Learnability* | Any user must be able to use the app with ease. The interface must remind the user to the one in  Saber y Ganar quiz show.
-| *Satisfaction* | Users will not get repeated questions in at least a hundred questions.
-| *Modularity* | The application will be divided in modules so that a change on one component has minimal impact on other components.
-| *Testability* | The application should be able to go through different test and complete them successfully.
-| *Time behaviour* | Users will not have to wait more than 500ms to get a new question.
+| _Learnability_ | Any user must be able to use the app with ease. The interface must remind the user to the one in  Saber y Ganar quiz show.
+| _Satisfaction_ | Users will not get repeated questions in at least a hundred questions.
+| _Modularity_ | The application will be divided in modules so that a change on one component has minimal impact on other components.
+| _Testability_ | The application should be able to go through different test and complete them successfully.
+| _Time behaviour_ | Users will not have to wait more than 500ms to get a new question.
 |===
 
 
@@ -110,10 +110,10 @@ Table with role names, person names, and their expectations with respect to the 
 [options="header",cols="2,2,5"]
 |===
 |Role/Name|Contact|Expectations
-| *Professors* | ASW module professors | Get a great project which can be evaluated and shown in their github.
-| *Developers* | wiq_es6c team | Carrying out a full real project using all the knowledge obtained in the degree.
-| *Responsible company* | HappySw | Development of an experimental version of the Saber y Ganar quiz show.
-| *Client* | RTVE | Getting a Web App to promote its famous Saber y Ganar quiz show by letting their viewers enjoy a similar experience.
-| *Main beneficiaries* | Public users | Having a great time playing an interesting and easy to use quiz game.
-| *Side beneficiaries* | Wikidata | Obtain free promotion of their application and its ease to use in multiple projects.
+| _Professors_ | ASW module professors | Get a great project which can be evaluated and shown in their github.
+| _Developers_ | wiq_es6c team | Carrying out a full real project using all the knowledge obtained in the degree.
+| _Responsible company_ | HappySw | Development of an experimental version of the Saber y Ganar quiz show.
+| _Client_ | RTVE | Getting a Web App to promote its famous Saber y Ganar quiz show by letting their viewers enjoy a similar experience.
+| _Main beneficiaries_ | Public users | Having a great time playing an interesting and easy to use quiz game.
+| _Side beneficiaries_ | Wikidata | Obtain free promotion of their application and its ease to use in multiple projects.
 |===
