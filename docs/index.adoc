@@ -29,10 +29,10 @@ ifdef::backend-html5[]
 endif::backend-html5[]
 
 
-include::src/about-arc42.adoc[]
+// include::src/about-arc42.adoc[]
 
 // horizontal line
-***
+// ***
 
 [role="arc42help"]
 ****
