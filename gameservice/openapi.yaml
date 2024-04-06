@@ -10,53 +10,43 @@ servers:
     description: Production server
 paths:
   /generateGameUnlimitedQuestions:
-    summary: Generate the id for the unlimited game questions.
-      operationId: generateGameUnlimitedQuestions
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-      responses:
-        '200':
-          description: Create the id of the game and returned successfuly.
+    /get:
+      summary: Generate the id for the unlimited game questions.
+        operationId: generateGameUnlimitedQuestions
+        requestBody:
+          required: true
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  id:
-                    type: string
-                    description: The id of the game created.
-        '500':
-          description: Internal server error.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error information.
-                    example: Internal Server Error
+        responses:
+          '200':
+            description: Create the id of the game and returned successfuly.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The id of the game created.
+          '500':
+            description: Internal server error.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      description: Error information.
+                      example: Internal Server Error
   /gameUnlimitedQuestion:
-    summary: Generate questions for the unlimited game questions.
-      operationId: gameUnlimitedQuestions
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: string
-                  description: Game Id.
-                  example: sqeweg12er56yg46u89k
-      responses:
-        '200':
-          description: Question created and returned successfuly.
+    /get:
+      summary: Generate questions for the unlimited game questions.
+        operationId: gameUnlimitedQuestions
+        requestBody:
+          required: true
           content:
             application/json:
               schema:
@@ -64,49 +54,44 @@ paths:
                 properties:
                   id:
                     type: string
-                    description: The question that is going to bre realized.
-                    example: 
-                  answers:
-                    type: List<String>
-                    description: List with the possible answers.
-                    example: 
-                  
-        '500':
-          description: Internal server error.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error information.
-                    example: Internal Server Error
+                    description: Game Id.
+                    example: sqeweg12er56yg46u89k
+        responses:
+          '200':
+            description: Question created and returned successfuly.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    answers:
+                      type: List<String>
+                      description: List with the possible answers.
+                      example: 
+                    question:
+                      type: String
+                      description: The question that is going to be done
+                    correctAnswer:
+                      type: String
+                      description: The correct answer for the question
+                    
+          '500':
+            description: Internal server error.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      description: Error information.
+                      example: Internal Server Error
   /storeGame:
-    summary: Stores the actual game in the database.
-      operationId: storeGame
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: string
-                  description: Game Id.
-                  example: sqeweg12er56yg46u89k
-                username:
-                  type: string
-                  description: The name if the user.
-                points:
-                  type: integer
-                  description: The number of points that the user score.
-                questions:
-
-      responses:
-        '200':
-          description: Question created and returned successfuly.
+    /post:
+      summary: Stores the actual game in the database.
+        operationId: storeGame
+        requestBody:
+          required: true
           content:
             application/json:
               schema:
@@ -114,24 +99,49 @@ paths:
                 properties:
                   id:
                     type: string
-                    description: The question that is going to bre realized.
-                    example: 
-                  answers:
-                    type: List<String>
-                    description: List with the possible answers.
-                    example: 
-                  createdAt:
+                    description: Game Id.
+                    example: sqeweg12er56yg46u89k
+                  username:
                     type: string
-                    description: Creation date.
-                    example: '2024-03-17T20:47:23.935Z'
-        '500':
-          description: Internal server error.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error information.
-                    example: Internal Server Error
+                    description: The name if the user.
+                  points:
+                    type: integer
+                    description: The number of points that the user score.
+                  questions:
+                    answers:
+                      type: List<String>
+                      description: List with the possible answers.
+                      example: 
+                    question:
+                      type: String
+                      description: The question that is going to be done
+                    correctAnswer:
+                      type: String
+                      description: The correct answer for the question
+        responses:
+          '200':
+            description: Question created and returned successfuly.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The question that is going to bre realized.
+                      example: 
+                    answers:
+                      type: List<String>
+                      description: List with the possible answers.
+                      example: 
+          '500':
+            description: Internal server error.
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      description: Error information.
+                      example: Internal Server Error
