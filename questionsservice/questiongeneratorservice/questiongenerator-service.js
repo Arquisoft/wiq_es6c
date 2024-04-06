@@ -76,7 +76,11 @@ app.get('/questions', async (req, res) => {
     // const questions = await Question.find()
     const defaultQuestion = await getQuestions(req);
 
-    const questionsHistoryResponse = await axios.post(questionHistoryServiceUrl + '/history/questions', defaultQuestion);
+    try{
+      const questionsHistoryResponse = await axios.post(questionHistoryServiceUrl + '/history/questions', defaultQuestion);
+    } catch (error) {
+      console.error(`Error saving questions history: ${error}`);
+    }
     res.json(defaultQuestion);
   } catch (error) {
     // res.status(500).json({ message: error.message })

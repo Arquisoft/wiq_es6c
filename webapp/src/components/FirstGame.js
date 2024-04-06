@@ -24,17 +24,23 @@ const Quiz = () => {
 
   var id = useLocation().state.gameId;
   console.log(id)
+
   // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(storedInt);
   // const [isCorrect, setIsCorrect] = useState(false);
   const [remTime, setRemTime] = useState(0);
+  const [numErrors, setNumErrors] = useState(3);
 
   useEffect(() => {
     const time = setInterval(() => {
       setRemTime((progress) => {
         if(progress == 100){
+          checkAnswer("");
           return 0; 
         }
-        const diff = Math.random() * 10;
+        // const diff = Math.random() * 10;
+        // return Math.min(progress + diff, 100);
+
+        const diff = crypto.getRandomValues(new Uint32Array(1))[0] % 11; // Generate a random number between 0 and 10
         return Math.min(progress + diff, 100);
       });
     }, 500);
@@ -131,14 +137,24 @@ const Quiz = () => {
       // console.log("Entramos a cambiar")
       haveFailedQuestion = true;
       // console.log("Despues de modificar los valores")
+
+
+      /*
+      Si queremos que la partida se corte cuando tenemos 3 fallos, descomentar: 
+      
+      setNumErrors(numErrors--);
+      if(numErrors == 0){
+        haveFailedQuestion = true;
+      }
+      */
     } else {
       points = points += 100;
     }
     const numberAnswer = allQuestions[currentQuestionIndex].options.indexOf(allQuestions[currentQuestionIndex].correctAnswer)
     const botonCorrecta = document.getElementById('option-' + numberAnswer)
     botonCorrecta.style.backgroundColor = 'green' 
-    // Pasar a la siguiente pregunta después de responder
     
+    // Pasar a la siguiente pregunta después de responder
     var indexAnswers = [numberAnswer, allQuestions[currentQuestionIndex].options.indexOf(option)]
 
     questions.push({

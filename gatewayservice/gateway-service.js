@@ -18,6 +18,20 @@ app.use(express.json());
 
 //Prometheus configuration
 const metricsMiddleware = promBundle({includeMethod: true});
+
+function catchAction(error, res) {
+  if ('response' in error && 'status' in error.response && 'data' in error.response && 'error' in error.response.data)
+    res.status(error.response.status).json({ error: error.response.data.error });
+  else if('response' in error && 'status' in error.response){
+    res.status(error.response.status).json({ error: 'Unknown error' });
+  } else {
+    console.log("Unknown error: " + error);
+  }
+  // } else {
+  //   res.status(500).json({ error: 'Internal server error' });
+  // }
+}
+
 app.use(metricsMiddleware);
 
 // Health check endpoint
@@ -31,7 +45,7 @@ app.post('/login', async (req, res) => {
     const authResponse = await axios.post(authServiceUrl+'/login', req.body);
     res.json(authResponse.data);
   } catch (error) {
-    res.status(error.response.status).json({ error: error.response.data.error });
+    catchAction(error, res);
   }
 });
 
@@ -41,7 +55,7 @@ app.post('/adduser', async (req, res) => {
     const userResponse = await axios.post(userServiceUrl+'/adduser', req.body);
     res.json(userResponse.data);
   } catch (error) {
-    res.status(error.response.status).json({ error: error.response.data.error });
+    catchAction(error, res)
   }
 });
 
@@ -52,7 +66,7 @@ app.get('/history/games/:username', async (req, res) => {
     const response = await axios.get(url);
     res.json(response.data);
   } catch (error) {
-    res.status(error.response.status).json({ error: error.response.data.error });
+    catchAction(error, res)
   }
 })
 
@@ -61,7 +75,7 @@ app.get('/history/questions', async (req, res) => {
     const response = await axios.get(storeQuestionsServiceUrl+'/history/questions');
     res.json(response.data);
   } catch (error) {
-    res.status(error.response.status).json({ error: error.response.data.error });
+    catchAction(error, res)
   }
 })
 
@@ -79,10 +93,9 @@ app.get('/generateGameUnlimitedQuestions', async (req, res) => {
     const response = await axios.get(gameService + '/generateGameUnlimitedQuestions')
     res.json(response.data)
   } catch (error) {
-    res.status(error.response.status).json({error: error.response.data.error})
+    catchAction(error, res)
   }
 })
-
 
 app.get('/gameUnlimitedQuestions', async (req, res) => {
   try {
@@ -91,7 +104,7 @@ app.get('/gameUnlimitedQuestions', async (req, res) => {
     console.log(response.data)
     res.json(response.data)
   } catch (error) {
-    res.status(error.response.status).json({error: error.response.data.error})
+    catchAction(error, res)
   }
 })
 
@@ -107,7 +120,7 @@ app.post('/storeGame', async (req, res) => {
     console.log("Devuelve la llamada")
     res.json(post.data) 
   } catch (error) {
-    console.error(error)
+    catchAction(error, res)
   }
 })
 
