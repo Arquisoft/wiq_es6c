@@ -3,117 +3,42 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
-[role="arc42help"]
-****
-Describes the relevant requirements and the driving forces that software architects and development team must consider. 
-These include
-
-* underlying business goals, 
-* essential features, 
-* essential functional requirements, 
-* quality goals for the architecture and
-* relevant stakeholders and their expectations
-****
-
 === Requirements Overview
-
-[role="arc42help"]
-****
-.Contents
-Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).
-
-.Motivation
-From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.
-
-.Form
-Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.
-
-Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
-
-
-.Further Information
-
-See https://docs.arc42.org/section-1/[Introduction and Goals] in the arc42 documentation.
-
-****
 
 The WIQ web application allows users to play a game similar to the one of Saber y Ganar quiz show. This game consists on answering a number of questions with different types and subjects obtaining  a prize for each question well answered. Game´s questions are automatically generated from data available in Wikidata (https://www.wikidata.org/).
 
 * The system will have at least a web front-end which will be available and accessible through the web.
-* Users will be able to register to the system and obtain the historical data from their participation: number of games, questions passed and failed, times, etc ..
+* Users will be able to register with the system and obtain the historical data from their participation: number of games, questions passed and failed, times, etc.
 * Questions will be automatically generated from data available in Wikidata.
 * Questions have to be answered before some specific time.
-* Each question will have one right answer and several incorrect ones or distractors. Both the right answer and the distractors should be automatically generated.
+* Each question will have one right answer and several incorrect ones or "decoy answers". Both the right answer and the decoy ones should be automatically generated.
 * The system will give access to the information about the users through an API.
 * The system will give access to information about the generated questions through an API.
 
 
 === Quality Goals
 
-[role="arc42help"]
-****
-.Contents
-The top three (max five) quality goals for the architecture whose fulfillment is of highest importance to the major stakeholders. 
-We really mean quality goals for the architecture. Don't confuse them with project goals.
-They are not necessarily identical.
-
-Consider this overview of potential topics (based upon the ISO 25010 standard):
-
-image::01_2_iso-25010-topics-EN.drawio.png["Categories of Quality Requirements"]
-
-.Motivation
-You should know the quality goals of your most important stakeholders, since they will influence fundamental architectural decisions. 
-Make sure to be very concrete about these qualities, avoid buzzwords.
-If you as an architect do not know how the quality of your work will be judged...
-
-.Form
-A table with quality goals and concrete scenarios, ordered by priorities
-****
 .Quality goals ordered by priority (from most to least important)
 [options="header",cols="1,3"]
 |===
 |Quality Goal|Description
-| _Learnability_ | _Any user must be able to use the app with ease. The interface must remind the user to the one in  Saber y Ganar quiz show._
-| _Satisfaction_ | _Users will not get repeated questions in at least a hundred questions._
-| _Modularity_ | _The application will be divided in modules so that a change on one component has minimal impact on other components._
-| _Testability_ | _The application should be able to go through different test and complete them successfully._
-| _Time behaviour_ | _Users will not have to wait more than 500ms to get a new question._
+| _Learnability_ | Any user must be able to use the app with ease. The interface must remind the user to the one in  Saber y Ganar quiz show.
+| _Satisfaction_ | Users will not get repeated questions in at least a hundred questions.
+| _Modularity_ | The application will be divided in modules so that a change on one component has minimal impact on other components.
+| _Testability_ | The application should be able to go through different test and complete them successfully.
+| _Time behaviour_ | Users will not have to wait more than 500ms to get a new question.
 |===
 
 
 === Stakeholders
 
-[role="arc42help"]
-****
-.Contents
-Explicit overview of stakeholders of the system, i.e. all person, roles or organizations that
-
-* should know the architecture
-* have to be convinced of the architecture
-* have to work with the architecture or with code
-* need the documentation of the architecture for their work
-* have to come up with decisions about the system or its development
-
-.Motivation
-You should know all parties involved in development of the system or affected by the system.
-Otherwise, you may get nasty surprises later in the development process.
-These stakeholders determine the extent and the level of detail of your work and its results.
-
-.Form
-Table with role names, person names, and their expectations with respect to the architecture and its documentation.
-****
-
-[options="header",cols="1,2,2"]
+[options="header",cols="2,2,5"]
 |===
 |Role/Name|Contact|Expectations
-| _Professors_ | _ASW module professors_ | _Get a great project which can be evaluated and shown in their github._
-| _Developers_ | _wiq_es6c team_ | _Carrying out a full real project using all the knowledge obtained in the degree._
-| _Responsible company_ | _HappySw_ | _Development of an experimental version of the Saber y Ganar quiz show._
-| _Client_ | _RTVE_ | _Getting a Web App to promote its famous Saber y Ganar quiz show by letting their viewers enjoy a similar experience._
-| _Main beneficiaries_ | _Public users_ | _Having a great time playing an interesting and easy to use quiz game._
-| _Side beneficiaries_ | _Wikidata_ | _Obtain free promotion of their application and its ease to use in multiple projects._
+| _Professors_ | ASW module professors | Get a great project which can be evaluated and shown in their github.
+| _Developers_ | wiq_es6c team | Carrying out a full real project using all the knowledge obtained in the degree.
+| _Responsible company_ | HappySw | Development of an experimental version of the Saber y Ganar quiz show.
+| _Client_ | RTVE | Getting a Web App to promote its famous Saber y Ganar quiz show by letting their viewers enjoy a similar experience.
+| _Main beneficiaries_ | Public users | Having a great time playing an interesting and easy to use quiz game.
+| _Side beneficiaries_ | Wikidata | Obtain free promotion of their application and its ease to use in multiple projects.
 |===
