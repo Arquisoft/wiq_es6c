@@ -12,25 +12,177 @@ code {
     monospace;
 }
 
+.modes{
+  display: flex;
+  flex-wrap: wrap;
+}
 
-.questionStructure, button{
-  /* RGB & HSL params */
-  --label-r: 128;
-  --label-g: 128;
-  --label-b: 128;
-  --label-h: 0;
-  --label-s: 0;
-  --label-l: 50;
+#root > main > h1{
+  text-align: center;
+}
 
-  --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
-  --lightness-switch: max(0, min(calc((1/(var(--lightness-threshold) - var(--perceived-lightness)))), 1));
-  --lightness-threshold: 0.6;
-  --background-alpha: 0.18;
-  --border-alpha: 0.3;
-  --lighten-by: calc(((var(--lightness-threshold) - var(--perceived-lightness)) * 100) * var(--lightness-switch));
-  color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
-  background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
-  border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
-  border-radius: 3%;
-  border-style: dashed;
+/*
+.card_box {
+  width: 200px;
+  height: 250px;
+  border-radius: 10%;
+  /*Dull option
+  background: linear-gradient(170deg, rgba(255, 255, 255, 0.8) 0%, rgb(81, 81, 81) 100%);*//*
+  
+  background-image: url('../public/image.png');
+  background-size: cover;
+  background-position: center; /* Centrar la imagen dentro del div *//*
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.55);
+  cursor: pointer;
+  transition: all .3s;
+
+  margin: 3em;
+}
+
+.card_box:hover {
+  transform: scale(0.9);
+}
+
+.card_box span {
+  position: absolute;
+  overflow: hidden;
+  width: 75%;
+  height: 60%;
+  top: -4%;
+  left: -5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card_box span::before {
+  content: attr(data-text);
+  position: absolute;
+  width: 150%;
+  height: 27%;
+  background-image: linear-gradient(45deg, #ff6547 0%, #ffb144  51%, #ff7053  100%);
+  transform: rotate(-45deg) translateY(-20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.23);
+}
+
+.card_box span::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  bottom: 0;
+  left: 0;
+  height: 10px;
+  z-index: -1;
+  box-shadow: 140px -140px #cc3f47;
+  background-image: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);
+}*/
+/* Glowy CSS 
+.glowbutton {
+  --glow-color: rgb(176, 252, 255);
+  --glow-spread-color: rgba(123, 251, 255, 0.781);
+  --enhanced-glow-color: rgb(206, 255, 255);
+  --btn-color: rgb(61, 127, 136);
+  border: 0.25em solid var(--glow-color);
+  padding: 1em 3em;
+  color: var(--glow-color);
+  font-size: 15px;
+  font-weight: bold;
+  background-color: var(--btn-color);
+  border-radius: 1em;
+  outline: none;
+  box-shadow: 0 0 1em 0.25em var(--glow-color),
+    0 0 4em 1em var(--glow-spread-color),
+    inset 0 0 0.75em 0.25em var(--glow-color);
+  text-shadow: 0 0 0.5em var(--glow-color);
+  position: relative;
+  transition: all 60s;
+  margin: 3em;
+}
+
+.glowbutton:hover {
+  color: var(--btn-color);
+  background-color: var(--glow-color);
+  box-shadow: 0 0 1em 0.25em var(--glow-color),
+    0 0 4em 2em var(--glow-spread-color),
+    inset 0 0 0.75em 0.25em var(--glow-color);
+}
+
+.glowbutton:active {
+  box-shadow: 0 0 0.6em 0.25em var(--glow-color),
+    0 0 2.5em 2em var(--glow-spread-color),
+    inset 0 0 0.5em 0.25em var(--glow-color);
+}*/
+
+.border {
+  background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+  border-radius: 1em;
+  transition: all .3s;
+  margin: 2vh 2vw;
+  display: inline-block;
+}
+
+.inner:hover {
+  transform: scale(0.98);
+  border-radius: 1em;
+}
+
+.border:hover {
+  box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
+}
+
+.inner{
+  background-color: #1a1a1a;
+  color: #F0F0F0;
+  transition: all .2s;
+  border-radius: 1em;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 2.6vh 3.75vw;
+  text-align: center;
+}
+
+button.inner {
+  border: none;
+  font-size: inherit;
+}
+
+a{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+input, label{
+  color: #F0F0F0 !important;
+}
+
+.login .border, .addUser .border{
+  margin: 0;
+  text-wrap: nowrap;
+}
+
+.login .inner{
+  padding: 1em 5em;
+}
+
+.addUser .inner{
+  padding: 1em 4.25em;
+}
+
+main input:-internal-autofill-selected{
+  box-shadow: none;
+  -webkit-box-shadow: 0 0 0px 1000px #212121 inset;
+  -webkit-text-fill-color: #f0f0f0;
+  color: #F0F0F0 !important;
+}
+
+main .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root{
+  color: #F0F0F0 !important;
 }

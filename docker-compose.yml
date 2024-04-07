@@ -66,6 +66,20 @@ services:
       MONGODB_URI: mongodb://mongodb_wiki:27017/questions
       STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
 
+  wikidataextractorservice:
+    container_name: wikidataextractorservice-${teamname:-defaultASW}
+    image: ghcr.io/arquisoft/wiq_es6c/wikidataextractorservice:latest
+    profiles: ["dev", "prod"]
+    build: ./questionsservice/wikidataExtractor
+    depends_on:
+      - mongodb_wiki
+    ports:
+      - "8008:8008"
+    networks:
+      - mynetwork
+    environment:
+      MONGODB_URI: mongodb://mongodb_wiki:27017/questions
+
   gatewayservice:
     container_name: gatewayservice-${teamname:-defaultASW}
     image: ghcr.io/arquisoft/wiq_es6c/gatewayservice:latest
@@ -82,6 +96,7 @@ services:
     environment:
       AUTH_SERVICE_URL: http://authservice:8002
       USER_SERVICE_URL: http://userservice:8001
+      USER_STATS_SERVICE_URL: http://userstatsservice:8003 
       STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
       QUESTIONS_GENERATOR_SERVICE_URL: http://questiongeneratorservice:8007
 
@@ -141,6 +156,20 @@ services:
       - mynetwork
     environment:
       MONGODB_URI: mongodb://mongodb:27017/storedquestion
+
+  userstatsservice:
+    container_name: userstats-${teamname:-defaultASW}
+    image: ghcr.io/arquisoft/wiq_es6c/userstatsservice:latest
+    profiles: ["dev", "prod"]
+    build: ./userstatsservice
+    depends_on:
+      - mongodb
+    ports:
+      - "8003:8003"
+    networks:
+      - mynetwork
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/statsdb
 
 
 volumes:
