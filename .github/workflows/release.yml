@@ -64,6 +64,7 @@ jobs:
           registry: ghcr.io
           workdir: webapp
           buildargs: API_URI
+          platforms: linux/arm64
   docker-push-authservice:
     name: Push auth service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -81,6 +82,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
           workdir: users/authservice
+          platforms: linux/arm64
   docker-push-userservice:
     name: Push user service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -98,6 +100,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: users/userservice
+        platforms: linux/arm64
   docker-push-gatewayservice:
     name: Push gateway service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -115,6 +118,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: gatewayservice
+        platforms: linux/arm64
   docker-push-questiongeneratorservice:
     name: Push question generator service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -132,6 +136,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: questionsservice/questiongeneratorservice
+        platforms: linux/arm64
   docker-push-storequestionservice:
     name: Push questions store service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -149,6 +154,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: storeQuestionService
+        platforms: linux/arm64
   deploy:
     name: Deploy over SSH
     runs-on: ubuntu-latest
