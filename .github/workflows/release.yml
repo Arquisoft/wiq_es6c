@@ -147,6 +147,26 @@ jobs:
         registry: ghcr.io
         workdir: questionsservice/questiongeneratorservice
         platforms: linux/arm64
+  docker-push-wikidataextractorservice:
+    name: Push wikidata extractor service Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: [e2e-tests]
+    steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - uses: actions/checkout@v4
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        name: arquisoft/wiq_es6c/wikidataextractorservice
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        workdir: questionsservice/wikidataExtractor
+        platforms: linux/arm64
   docker-push-storequestionservice:
     name: Push questions store service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
