@@ -2,6 +2,26 @@ const wikidata = require("./wikidataConnexion");
 
 class WikiQueries {
 
+    /* CIENCIA */
+
+    static async obtenerSimboloQuimico() {
+        const query = 
+        `SELECT ?elementLabel ?symbol WHERE { 
+            ?element wdt:P31 wd:Q11344. 
+            ?element wdt:P246 ?symbol. 
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
+        }
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
+
+    /* GEOGRAFÍA */
+
     static async obtenerPaisYCapital() {
         const query = `
             SELECT ?countryLabel ?capitalLabel WHERE {
@@ -15,6 +35,90 @@ class WikiQueries {
         // console.log(results)
         return results;
     }
+
+    static async obtenerPaisYBandera() {
+        const query = `
+        SELECT ?flag ?flagLabel ?countryLabel WHERE {
+            ?country wdt:P31 wd:Q6256; 
+                wdt:P41 ?flag. 
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
+            }
+            LIMIT 200
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
+    static async obtenerUnPaisEuropeo(){
+        const query = `
+        SELECT ?countryLabel ?continentLabel
+        WHERE {
+        {
+            SELECT ?countryLabel ?continentLabel
+            WHERE {
+            ?country wdt:P31 wd:Q6256;  # Selecciona instancias de país
+                    wdt:P30 ?continent. # Obtiene el continente del país
+            FILTER(?continent = wd:Q46)  # Filtra para que el continente sea Europa
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
+            }
+            ORDER BY RAND()
+            LIMIT 1
+        }
+        UNION
+        {
+            SELECT ?countryLabel ?continentLabel
+            WHERE {
+            ?country wdt:P31 wd:Q6256;  # Selecciona instancias de país
+                wdt:P30 ?continent. # Obtiene el continente del país
+            FILTER(?continent != wd:Q46)  # Filtra para excluir Europa
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
+            }
+            ORDER BY RAND()
+            LIMIT 3
+        }}
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
+    static async obtenerUnPaisEuropeo2(){
+        const query = `
+        SELECT ?countryLabel
+        WHERE {
+        ?country wdt:P31 wd:Q6256;    
+                wdt:P30 wd:Q46.      # Filtra para que el país esté en Europa
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
+        }
+        `;
+        const europa = await wikidata.consulta(query);
+
+        query = ` 
+        SELECT ?countryLabel
+        WHERE {
+        ?country wdt:P31 wd:Q6256;     
+                wdt:P30 ?continent.    
+        FILTER(?continent != wd:Q46)    # Filtra para excluir Europa
+        ?continent wdt:P31 wd:Q5107.    # Asegura que el continente sea una instancia de continente
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
+        }
+        `;
+        const noEuropa = await wikidata.consulta(query);
+
+        // Contendrá un elemento aleatorio del array de europa y 3 que no lo sean
+        const results = [];
+        // console.log(results)
+        return results;
+
+    }
+
+
+    /* ENTRETENIMIENTO */ 
 
     static async obtenerPeliculasAñosYDirector() {
         const query = `
@@ -51,60 +155,6 @@ class WikiQueries {
         return results;
     }
 
-
-    static async obtenerMonumentoYAñoDescubOAñoConst() {
-        const query = `
-            SELECT ?monumento ?titulo ?anioConstruccion ?anioDescubrimiento
-            WHERE {
-            ?monumento wdt:P31 wd:Q4989906.  # Filtramos por instancias de "monumento"
-            ?monumento rdfs:label ?titulo.  # Obtenemos el título del monumento
-            OPTIONAL { ?monumento wdt:P571 ?anioConstruccion. }  # Obtenemos el año de construcción (si está disponible)
-            OPTIONAL { ?monumento wdt:P575 ?anioDescubrimiento. }  # Obtenemos el año de descubrimiento (si está disponible)
-            FILTER ((LANG(?titulo) = "es" || LANG(?titulo) = "en") && (BOUND(?anioConstruccion) || BOUND(?anioDescubrimiento)))  # Al menos uno de los valores de año debe ser distinto de nulo
-            }
-            LIMIT 1000
-        `;
-
-        const results = await wikidata.consulta(query);
-        // console.log(results)
-        return results;
-
-    }
-
-    //      REVISAR     //
-
-    static async obtenerPaisYLenguaje() {
-        const query = `
-        SELECT ?countryLabel ?languageLabel  WHERE {
-            ?country wdt:P31 wd:Q6256.
-            ?country wdt:P37 ?language.
-            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
-            }
-            LIMIT 500
-        `;
-
-        const results = await wikidata.consulta(query);
-        // console.log(results)
-        return results;
-
-    }
-
-    static async obtenerPaisYBandera() {
-        const query = `
-        SELECT ?flag ?flagLabel ?countryLabel WHERE {
-            ?country wdt:P31 wd:Q6256; 
-                wdt:P41 ?flag. 
-            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
-            }
-            LIMIT 200
-        `;
-
-        const results = await wikidata.consulta(query);
-        // console.log(results)
-        return results;
-
-    }
-
     static async obtenerCantanteYCancion() {
         const query = `
         SELECT ?song ?songLabel ?singer ?singerLabel
@@ -126,6 +176,53 @@ class WikiQueries {
         return results;
 
     }
+
+
+    /* ARTE */
+
+    static async obtenerMonumentoYAñoDescubOAñoConst() {
+        const query = `
+            SELECT ?monumento ?titulo ?anioConstruccion ?anioDescubrimiento
+            WHERE {
+            ?monumento wdt:P31 wd:Q4989906.  # Filtramos por instancias de "monumento"
+            ?monumento rdfs:label ?titulo.  # Obtenemos el título del monumento
+            OPTIONAL { ?monumento wdt:P571 ?anioConstruccion. }  # Obtenemos el año de construcción (si está disponible)
+            OPTIONAL { ?monumento wdt:P575 ?anioDescubrimiento. }  # Obtenemos el año de descubrimiento (si está disponible)
+            FILTER ((LANG(?titulo) = "es" || LANG(?titulo) = "en") && (BOUND(?anioConstruccion) || BOUND(?anioDescubrimiento)))  # Al menos uno de los valores de año debe ser distinto de nulo
+            }
+            LIMIT 1000
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
+
+
+
+
+
+
+
+
+    // static async obtenerPaisYLenguaje() {
+    //     const query = `
+    //     SELECT ?countryLabel ?languageLabel  WHERE {
+    //         ?country wdt:P31 wd:Q6256.
+    //         ?country wdt:P37 ?language.
+    //         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
+    //         }
+    //         LIMIT 500
+    //     `;
+
+    //     const results = await wikidata.consulta(query);
+    //     // console.log(results)
+    //     return results;
+
+    // }
+
 }
 
 
