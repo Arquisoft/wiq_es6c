@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: AuthServiceAPI
+  description: Authetification Service OpenAPI specification.
+  version: 0.3.0
+servers:
+  - url: http://localhost:8002
+    description: Development server
+  - url: http://SOMEIP:8002
+    description: Production server
+paths:
+  /login:
+    post:
+      summary: Send credentials to database to authentificate the user.
+      operationId: postLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Name of the user.
+                  example: Pepe
+                password:
+                  type: string
+                  description: Password send by the user to authentificate into the system.
+                  example: asd912eapsd
+      responses:
+        '200':
+          description: A game was send succesfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Authetificacion token used by the webapp.
+                    example: asd912eapsd
+                  username:
+                    type: string
+                    description: String with the name of the user.
+                    example: Pepe
+                  createdAt:
+                    type: string
+                    description: Creation date.
+                    example: '2024-03-17T20:47:23.935Z'                                     
+        '401':
+          description: Invalid Credentials are inserted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: getaddrinfo EAI_AGAIN mongodb
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: getaddrinfo EAI_AGAIN mongodb
+ 

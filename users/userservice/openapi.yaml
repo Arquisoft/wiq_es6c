@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: UserServiceAPI
+  description: Registration Service OpenAPI specification.
+  version: 0.3.0
+servers:
+  - url: http://localhost:8001
+    description: Development server
+  - url: http://SOMEIP:8001
+    description: Production server
+paths:
+  /adduser:
+    post:
+      summary: Add a new user to the database.
+      operationId: addUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Authetificacion token used by the webapp.
+                  example: asd912eapsd
+                password:
+                  type: string
+                  description: String with the name of the user.
+                  example: Pepe  
+      responses:
+        '200':
+          description: A game was send succesfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    description: Authetificacion token used by the webapp.
+                    example: asd912eapsd
+                  password:
+                    type: string
+                    description: String with the name of the user.
+                    example: Pepe  
+                  _id:
+                    type: string
+                    description: Identification
+                    example: 65f756db3fa22d227a4b7c7d
+                  createdAt:
+                    type: string
+                    description: Creation date.
+                    example: '2024-03-17T20:47:23.935Z'
+                  ___v:
+                    type: integer
+                    example: '0'                                   
+        '401':
+          description: Invalid Credentials are inserted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: getaddrinfo EAI_AGAIN mongodb
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: getaddrinfo EAI_AGAIN mongodb
+ 
