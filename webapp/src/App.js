@@ -14,27 +14,21 @@ function App() {
   };
 
   return (
-    <>
-      <Nav />
-
-      <Container component="main" maxWidth="xs">
-        <h1>Welcome to wiq_06c</h1>
-        {showLogin ? <Login /> : <AddUser />}
-        <Typography component="div" align="center" sx={{ marginTop: 2 }}>
-          {showLogin ? (
-            <a name="gotoregister"  onClick={handleToggleView}>
-              Don't have an account? Register here.
-            </a>
-          ) : (
-            <a onClick={handleToggleView}>
-              Already have an account? Login here.
-            </a>
-          )}
-        </Typography>
-      </Container>
-
-      <Footer />
-    </>
+    <Container component="main" maxWidth="xs">
+      <h1>Welcome to wiq_06c</h1>
+      {showLogin ? <Login /> : <AddUser />}
+      <Typography component="div" align="center" sx={{ marginTop: 2 }}>
+        {showLogin ? (
+          <p className='link' name="gotoregister"  onClick={handleToggleView}>
+            Don't have an account? Register here.
+          </p>
+        ) : (
+          <p className='link' onClick={handleToggleView}>
+            Already have an account? Login here.
+          </p>
+        )}
+      </Typography>
+    </Container>
   );
 }
 
