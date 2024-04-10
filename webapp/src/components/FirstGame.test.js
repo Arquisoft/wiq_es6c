@@ -27,7 +27,7 @@ describe("First game component", () => {
         });
 
         const gamesBT = document.getElementsByClassName('allAnswers');
-        expect(gamesBT).toHaveLength(4);
+        expect(gamesBT[0]).toHaveLength(4);
     });
 
 });
