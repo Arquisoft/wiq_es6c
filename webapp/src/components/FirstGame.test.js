@@ -26,7 +26,7 @@ describe("First game component", () => {
             fireEvent.click(classicGame);
         });
 
-        const gamesBT = document.getElementsByClass('allAnswers');
+        const gamesBT = document.getElementsByClassName('allAnswers');
         expect(gamesBT).toHaveLength(4);
     });
 
