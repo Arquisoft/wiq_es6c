@@ -34,7 +34,7 @@ const Quiz = () => {
     const time = setInterval(() => {
       setRemTime((progress) => {
         if(progress == 100){
-          checkAnswer("");
+          newQuestion();
           //getQuestions()
           //repetir checkAndswer
           return 0; 
@@ -119,6 +119,39 @@ const Quiz = () => {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  const newQuestion = async () => {
+    //Generamos las preguntas
+    getQuestions()
+
+    //Desactivamos botones
+    changeButtons("true")
+
+    //Marcamos la respuesta correcta
+    const numberAnswer = allQuestions[currentQuestionIndex].options.indexOf(allQuestions[currentQuestionIndex].correctAnswer)
+    const botonCorrecta = document.getElementById('option-' + numberAnswer)
+    botonCorrecta.style.backgroundColor = 'green' 
+    
+    // Pasar a la siguiente pregunta después de responder
+    var indexAnswers = [numberAnswer, allQuestions[currentQuestionIndex].options.indexOf(option)]
+
+    questions.push({
+        title: allQuestions[currentQuestionIndex].question,
+        answers: allQuestions[currentQuestionIndex].options,
+        ansIndex: indexAnswers
+      }
+    )
+
+    await esperar(2000); // Espera 2000 milisegundos (2 segundos)
+    botonCorrecta.style.backgroundColor = previousBackgroundColor
+    if (allQuestions.length-1 != currentQuestionIndex) {
+      currentQuestionIndex = (currentQuestionIndex + 1);
+    }
+    isCorrect = (false)
+        
+    //Habilitamos botones
+    changeButtons("false")
   }
 
   const checkAnswer = async (option) => {
