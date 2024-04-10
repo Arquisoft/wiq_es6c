@@ -97,7 +97,7 @@ const Quiz = () => {
   function changeButtons(param) {
     console.log("Entramos aqui")
     var borders = document.getElementsByClassName("border");;
-    for(var i = 0; i < allQuestions[0].options.length; i++) {
+    for(var i = 0; i < Math.min(borders.length, allQuestions[0].options.length); i++) {
       borders[i].setAttribute("data-disabled", param)
     }
   }
@@ -126,7 +126,7 @@ const Quiz = () => {
     //Marcamos la respuesta correcta
     const numberAnswer = allQuestions[currentQuestionIndex].options.indexOf(allQuestions[currentQuestionIndex].correctAnswer)
     const botonCorrecta = document.getElementById('option-' + numberAnswer)
-    const previousBackgroundColor = botonCorrecta.style.backgroundColor
+    const previousBackgroundColor = '#1a1a1a'
     botonCorrecta.style.backgroundColor = 'green' 
     
     // Pasar a la siguiente pregunta después de responder
