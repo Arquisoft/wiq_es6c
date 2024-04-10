@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
+import { ContextFun } from '../Context';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Menu } from './Menu';
 
 const mockAxios = new MockAdapter(axios);
@@ -12,7 +13,7 @@ describe("Menu component", () => {
         mockAxios.reset();
     });
 
-    /* test("renders menu",async () => {
+    test("renders menu",async () => {
 
         render(
             <ContextFun>
@@ -22,22 +23,9 @@ describe("Menu component", () => {
             </ContextFun>
         );
 
+        const linkElement = screen.getByText(/Cómo jugar/i);
+        expect(linkElement).toBeInTheDocument();
         
-    }); */
-
-    test("renders component",async () => {
-        render(
-            <MemoryRouter>
-                <Menu/>
-            </MemoryRouter>);
-        
-        await act(async () => {});
-
-        expect(screen.getByText(/Cómo jugar/i)).toBeInTheDocument();
-
-        // const linkElement = screen.getByText(/Cómo jugar/i);
-        // expect(linkElement).toBeInTheDocument();
-
     });
 
 });
