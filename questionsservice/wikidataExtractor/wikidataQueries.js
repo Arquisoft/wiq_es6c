@@ -54,41 +54,6 @@ class WikiQueries {
 
     static async obtenerUnPaisEuropeo(){
         const query = `
-        SELECT ?countryLabel ?continentLabel
-        WHERE {
-        {
-            SELECT ?countryLabel ?continentLabel
-            WHERE {
-            ?country wdt:P31 wd:Q6256;  # Selecciona instancias de país
-                    wdt:P30 ?continent. # Obtiene el continente del país
-            FILTER(?continent = wd:Q46)  # Filtra para que el continente sea Europa
-            SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
-            }
-            ORDER BY RAND()
-            LIMIT 1
-        }
-        UNION
-        {
-            SELECT ?countryLabel ?continentLabel
-            WHERE {
-            ?country wdt:P31 wd:Q6256;  # Selecciona instancias de país
-                wdt:P30 ?continent. # Obtiene el continente del país
-            FILTER(?continent != wd:Q46)  # Filtra para excluir Europa
-            SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
-            }
-            ORDER BY RAND()
-            LIMIT 3
-        }}
-        `;
-
-        const results = await wikidata.consulta(query);
-        // console.log(results)
-        return results;
-
-    }
-
-    static async obtenerUnPaisEuropeo2(){
-        const query = `
         SELECT ?countryLabel
         WHERE {
         ?country wdt:P31 wd:Q6256;    
