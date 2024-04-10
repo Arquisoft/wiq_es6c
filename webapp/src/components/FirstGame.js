@@ -131,10 +131,11 @@ const Quiz = () => {
     //Marcamos la respuesta correcta
     const numberAnswer = allQuestions[currentQuestionIndex].options.indexOf(allQuestions[currentQuestionIndex].correctAnswer)
     const botonCorrecta = document.getElementById('option-' + numberAnswer)
+    const previousBackgroundColor = botonCorrecta.style.backgroundColor
     botonCorrecta.style.backgroundColor = 'green' 
     
     // Pasar a la siguiente pregunta después de responder
-    var indexAnswers = [numberAnswer, allQuestions[currentQuestionIndex].options.indexOf(option)]
+    var indexAnswers = [numberAnswer, null]
 
     questions.push({
         title: allQuestions[currentQuestionIndex].question,
