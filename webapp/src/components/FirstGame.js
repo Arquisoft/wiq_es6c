@@ -248,7 +248,6 @@ const Quiz = () => {
           </div>
         </div>
 
-        {/* Usar LinearProgress por defecto o ProgressBar creado ?? */}
         <Box sx={{ 
             width: '100%',
             padding: 3}}>
