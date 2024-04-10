@@ -115,7 +115,7 @@ const Quiz = () => {
 
     await esperar(2000); // Espera 2000 milisegundos (2 segundos)
     botonCorrecta.style.backgroundColor = previousBackgroundColor
-    if (allQuestions.length-1 != currentQuestionIndex) {
+    if (allQuestions.length-1 !== currentQuestionIndex) {
       currentQuestionIndex = (currentQuestionIndex + 1);
     }
     isCorrect = (false)
@@ -175,7 +175,7 @@ const Quiz = () => {
     await esperar(2000); // Espera 2000 milisegundos (2 segundos)
     botonIncorrecta.style.backgroundColor = previousBackgroundColor
     botonCorrecta.style.backgroundColor = previousBackgroundColor
-    if (allQuestions.length-1 != currentQuestionIndex) {
+    if (allQuestions.length-1 !== currentQuestionIndex) {
       currentQuestionIndex = (currentQuestionIndex + 1);
     }
     isCorrect = (false)

@@ -1,6 +1,6 @@
 import React from 'react';
-import { AppBar, Toolbar, Box, Button, IconButton, Typography, SvgIcon } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { AppBar, Toolbar, IconButton, Typography, SvgIcon } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function HomeIcon(props) {
     return (
@@ -12,7 +12,7 @@ function HomeIcon(props) {
 
 export const Nav = () => {
 
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     //const { username, isLogged, destroySession } = useContext(context);
 
     /*

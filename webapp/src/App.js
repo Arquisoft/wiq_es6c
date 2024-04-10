@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import AddUser from './components/AddUser';
 import Login from './components/Login';
-import { Nav } from './components/nav/Nav';
+//import { Nav } from './components/nav/Nav';//ASK - is this necessary?
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { Footer } from './components/footer/Footer';
+//import { Footer } from './components/footer/Footer';
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
