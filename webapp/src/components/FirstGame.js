@@ -8,6 +8,7 @@ import Button from './Button';
 import GoBackButton from './GoBackButton';
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
+import {shuffleArray} from './Util'
 
 var currentQuestionIndex = 0;
 
@@ -28,12 +29,12 @@ const Quiz = () => {
   // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(storedInt);
   // const [isCorrect, setIsCorrect] = useState(false);
   const [remTime, setRemTime] = useState(0);
-  const [numErrors, setNumErrors] = useState(3);
+  //const [numErrors, setNumErrors] = useState(3);
 
   useEffect(() => {
     const time = setInterval(() => {
       setRemTime((progress) => {
-        if(progress == 100){
+        if(progress === 100){
           newQuestion();
           return 0; 
         }
@@ -50,33 +51,6 @@ const Quiz = () => {
   const esperar = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   };
-
-  function secureRandomNumber(max) {
-    const randomBytes = new Uint32Array(1);
-    window.crypto.getRandomValues(randomBytes);
-    return randomBytes[0] % max;
-  }
-
-  function shuffleArray(array) {
-    // Crea una copia del array original
-    const shuffledArray = [...array];
-  
-    // Recorre el array desde el último elemento hasta el primero
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      // Genera un índice aleatorio entre 0 y el índice actual
-      //const randomIndex = Math.floor(Math.random() * (i + 1));
-      const randomIndex = secureRandomNumber(i + 1);
-
-      // Intercambia el elemento actual con el elemento del índice aleatorio
-      const temp = shuffledArray[i];
-      shuffledArray[i] = shuffledArray[randomIndex];
-      shuffledArray[randomIndex] = temp;
-    }
-  
-    // Devuelve el array barajado
-    return shuffledArray;
-  }
-
 
   const getQuestions = async () => {
     try {
