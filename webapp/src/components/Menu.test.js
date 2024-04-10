@@ -16,11 +16,7 @@ describe("Menu component", () => {
     test("renders menu",async () => {
 
         render(
-            <ContextFun>
-                <Router>
-                    <Menu/>
-                </Router>
-            </ContextFun>
+            <Menu/>
         );
 
         const linkElement = screen.getByText(/Cómo jugar/i);
