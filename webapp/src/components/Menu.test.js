@@ -31,7 +31,7 @@ describe("Menu component", () => {
         );
 
         const gamesBT = document.getElementsByClassName('modes')
-        expect(gamesBT[0].text).toBeInTheDocument();
+        expect(gamesBT).toHaveLength(1);
     });
 
 });
