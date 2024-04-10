@@ -127,13 +127,14 @@ const Menu = () => {
           </div>
 
           <h2>Modos de juego:</h2>
-
           <div className='modes'>
               <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
-            </div>
-            <h2>Esto irá en el nav(?)</h2>
-            <Button text = "Álmacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
-            <Button text = "Historial" name="openHistory" onClick={() => openHistory()}/>
+          </div>
+
+          <h2>Esto irá en el nav(?)</h2>
+          <Button text = "Álmacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
+          <Button text = "Historial" name="openHistory" onClick={() => openHistory()}/>
+          
         </Container>
         <Footer />
       </>

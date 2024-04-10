@@ -23,4 +23,15 @@ describe("Menu component", () => {
         expect(linkElement).toBeInTheDocument();
     });
 
+    test("game modes",async () => {
+        render(
+            <MemoryRouter>
+                <Menu />
+            </MemoryRouter>
+        );
+
+        const gamesBT = document.getElementsByClassName('modes')
+        expect(gamesBT[0].text).toBeInTheDocument();
+    });
+
 });
