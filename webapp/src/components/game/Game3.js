@@ -15,6 +15,7 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000'
 var isCorrect = false
 var questions = [];
 var points = 0;
+var numErrors = 3;
 
 const Quiz = () => {
 
@@ -24,13 +25,12 @@ const Quiz = () => {
   var id = useLocation().state.gameId;
 
   const [remTime, setRemTime] = useState(0);
-  const [numErrors, setNumErrors] = useState(3);
 
 
   useEffect(() => {
     const time = setInterval(() => {
       setRemTime((progress) => {
-        if(progress == 100){
+        if(progress === 100){
           newQuestion();
           return 0; 
         }
@@ -104,8 +104,10 @@ const Quiz = () => {
     try {
       var username = localStorage.getItem("username")
       const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions});
+      console.log(response)
       questions = []
       points = 0
+      numErrors = 3
     } catch (error) {
       console.error(error)
     }
@@ -136,7 +138,7 @@ const Quiz = () => {
 
     await esperar(2000); // Espera 2000 milisegundos (2 segundos)
     botonCorrecta.style.backgroundColor = previousBackgroundColor
-    if (allQuestions.length-1 != currentQuestionIndex) {
+    if (allQuestions.length-1 !== currentQuestionIndex) {
       currentQuestionIndex = (currentQuestionIndex + 1);
     }
     isCorrect = (false)
@@ -158,8 +160,8 @@ const Quiz = () => {
     if (!isCorrect) {
       botonIncorrecta.style.backgroundColor = 'red'
       
-      setNumErrors(numErrors--);
-      if(numErrors == 0){
+      numErrors -= 1
+      if(numErrors === 0){
         haveFailedQuestion = true;
       }
     } else {
@@ -182,7 +184,7 @@ const Quiz = () => {
     await esperar(2000); // Espera 2000 milisegundos (2 segundos)
     botonIncorrecta.style.backgroundColor = previousBackgroundColor
     botonCorrecta.style.backgroundColor = previousBackgroundColor
-    if (allQuestions.length-1 != currentQuestionIndex) {
+    if (allQuestions.length-1 !== currentQuestionIndex) {
       currentQuestionIndex = (currentQuestionIndex + 1);
     }
     isCorrect = (false)
