@@ -194,3 +194,8 @@ main input:-internal-autofill-selected{
 main .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root{
   color: #F0F0F0 !important;
 }
+
+.link{
+  text-decoration: underline;
+  cursor: pointer
+}

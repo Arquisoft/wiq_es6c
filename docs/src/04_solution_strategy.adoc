@@ -9,7 +9,7 @@ In order to develop the application and adhere to the constraints, we selected t
 
 - ReactJS: JavaScript library that streamlines the development of graphical interfaces for web applications.
 - GitHub: Platform offering remote repository services for project development, task management, and version control.
-- MongoDB: A non-linear database selected to oversee storage of diverse application contents, with each microservice possessing its dedicated database.
+- MongoDB: A non-relational, document oriented database selected to oversee storage of diverse application contents, with each microservice possessing its dedicated database.
 - NodeJS: Facilitates efficient management of asynchronous events, notably beneficial for scalable network applications and database administration.
 - Docker: Employed for seamless deployment of the application environment.
 
@@ -25,15 +25,15 @@ We will use PlantUML and UMLet for creating the documentation's diagrams.
 |===
 | Quality Goal | Scenario | Solution Approach
 
-| Scalability
+| _Scalability_
 | The application's design must accommodate changes effortlessly throughout its lifecycle.
 | Employing a microservices approach to minimize code repetition and enhance understanding of application distribution, ensuring future scalability.
 
-| Usability
+| _Usability_
 | Seamless execution of all application functions is crucial for user satisfaction.
 | Optimizing usability through the utilization of React.
 
-| Maintainability
+| _Maintainability_
 | Application architecture must facilitate seamless addition or modification of functionalities with minimal code changes.
 | Implementing design patterns and adhering to code conventions to ensure clean and maintainable code. Additionally, prioritizing testing during development for long-term maintainability.
 

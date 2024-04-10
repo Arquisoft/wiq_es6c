@@ -72,7 +72,7 @@ function App() {
       <footer className="pagination">
         <Button text='Primera' onClick={firstPage}/>
         <Button text='Anterior' onClick={prevPage}/>
-        <Button text={currentPage} onClick={refresh} />
+        <Button text={''+currentPage} onClick={refresh} />
         <Button text='Siguiente' onClick={nextPage}/>
         <Button text='Última' onClick={lastPage} />
       </footer>

@@ -3,39 +3,17 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-architecture-constraints]]
 == Architecture Constraints
 
-[role="arc42help"]
-****
-.Contents
-Any requirement that constraints software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
-
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
-
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
-
-
-.Further Information
-
-See https://docs.arc42.org/section-2/[Architecture Constraints] in the arc42 documentation.
-
-****
-
 === Technical constraints
 
 [cols="2,4" options="header"]
 |===
 |Constraint           |Explanation
-|*OS/Browser Independence*        |The project must be available to the maximum amount of users feasible. That includes support for mainstream OSs (_Windows_, _Linux_, _MacOS_) and browsers. (_Chrome_, _Safari_, _Firefox_, _Edge_)
-|*Usage of _REACT_*      |The _REACT JS_ framework will be used to develop the front-end of the project.
-|*Docker*     | The application will operate within a Docker environment.
-|*Version Control*      |In order for the project to be graded adequately, it must use _GitHub_ as its version control system. The contributions of each team member and agreements reached must be easily traceable.
-|*Wikidata* | To generate questions, WikiData would be used as a knowledge base. Wikidata is a free and open knowledge base that can be read and edited by both humans and machines. Wikidata acts as central storage for the structured data of its sister Wikimedia projects, including Wikipedia, Wikivoyage, Wiktionary, Wikisource and others. 
-|*Continuous integration and delivery*      |The development must progress through frequent integration of small changes into the main branch. New features must be automatically deployed with ease. (In our case, using _Docker_)
+|_OS/Browser Independence_        |The project must be available to the maximum amount of users feasible. That includes support for mainstream OSs (_Windows_, _Linux_, _MacOS_) and browsers. (_Chrome_, _Safari_, _Firefox_, _Edge_)
+|_Usage of REACT_      |The _REACT JS_ framework will be used to develop the front-end of the project.
+|_Docker_     | The application will operate within a Docker environment.
+|_Version Control_      |In order for the project to be graded adequately, it must use _GitHub_ as its version control system. The contributions of each team member and agreements reached must be easily traceable.
+|_Wikidata_ | To generate questions, WikiData would be used as a knowledge base. Wikidata is a free and open knowledge base that can be read and edited by both humans and machines. Wikidata acts as central storage for the structured data of its sister Wikimedia projects, including Wikipedia, Wikivoyage, Wiktionary, Wikisource and others. 
+|_Continuous integration and delivery_      |The development must progress through frequent integration of small changes into the main branch. New features must be automatically deployed with ease. (In our case, using _Docker_)
 |===
 
 === Organizational constraints
@@ -43,13 +21,13 @@ See https://docs.arc42.org/section-2/[Architecture Constraints] in the arc42 doc
 [cols="2,7" options="header"]
 |===
 |Constraint           |Explanation
-|*Time*        |The team has to complete the project during the semester. 
-|*Team size*        |The development teams must be composed of 5-7 members. In our case, the final team is composed of 6 members.
-|*Budget*        |No budget is provided for the development, so any costs that may arise have to be covered by the development team.
-|*Deliverables*          |Along the development process, the team must prepare deliverables set for certain dates, consisting of documentation and/or application prototypes.
-|*Team meetings*          |In order to plan the development of the project, as well as to assign tasks and make design decisions, the team will participate in several meetings. These meetings can be done in and out of the classroom, as needed. A record must be created for every meeting, summarizing the progress made.
-|*Project testing*         |The development team must test acceptable coverage of the project using different methods (_unit testing_, _integration testing_, _acceptance testing_... etc.)
-|*Knowledge*        |There are many aspects of the development of this project that are foreign to some of us (usage of _REACT_, deployments, microsystems architecture... etc.) so some research is required to keep up.
+|_Time_        |The team has to complete the project during the semester. 
+|_Team size_        |The development teams must be composed of 5-7 members. In our case, the final team is composed of 6 members.
+|_Budget_        |No budget is provided for the development, so any costs that may arise have to be covered by the development team.
+|_Deliverables_          |Along the development process, the team must prepare deliverables set for certain dates, consisting of documentation and/or application prototypes.
+|_Team meetings_          |In order to plan the development of the project, as well as to assign tasks and make design decisions, the team will participate in several meetings. These meetings can be done in and out of the classroom, as needed. A record must be created for every meeting, summarizing the progress made.
+|_Project testing_         |The development team must test acceptable coverage of the project using different methods (_unit testing_, _integration testing_, _acceptance testing_... etc.)
+|_Knowledge_        |There are many aspects of the development of this project that are foreign to some of us (usage of _REACT_, deployments, microsystems architecture... etc.) so some research is required to keep up.
 |===
 
 === Conventions
@@ -57,10 +35,10 @@ See https://docs.arc42.org/section-2/[Architecture Constraints] in the arc42 doc
 [cols="2,4" options="header"]
 |===
 |Constraint           |Explanation
-|*Use of English*        |The totality of the project must be written in English, as to facilitate its understanding internationally. 
-|*Programming Language conventions*      | We ought to follow the conventions specific to the programming languages we're employing.
-|*Documentation format*          |The documentation must adhere to the Arc42 method, ensuring it is clear, simple, and effective.
-|*Clean code*      |In order to ease the understanding and maintenance of the project, all code written must be organized, descriptive and easy to read.
-|*Accesibility*      |The application should be user-friendly, allowing all individuals to navigate effortlessly, irrespective of any disabilities, ensuring inclusivity for all users.
-|*Microservices*      | The application will be divided into microservices to facilitate its development.
+|_Use of English_        |The totality of the project must be written in English, as to facilitate its understanding internationally. 
+|_Programming Language conventions_      | We ought to follow the conventions specific to the programming languages we're employing.
+|_Documentation format_          |The documentation must adhere to the Arc42 method, ensuring it is clear, simple, and effective.
+|_Clean code_      |In order to ease the understanding and maintenance of the project, all code written must be organized, descriptive and easy to read.
+|_Accesibility_      |The application should be user-friendly, allowing all individuals to navigate effortlessly, irrespective of any disabilities, ensuring inclusivity for all users.
+|_Microservices_      | The application will be divided into microservices to facilitate its development.
 |===

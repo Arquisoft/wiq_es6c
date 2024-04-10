@@ -18,7 +18,10 @@ function App() {
         const response = await axios.get(`${apiEndpoint}/history/questions`);
         setPreguntas(response.data);
       } catch (error) {
-        console.error('Error al obtener las preguntas:', error.response.data.error);
+        if('response' in error && 'data' in error.response && 'error' in error.response.data)
+          console.error('Error al obtener las preguntas:', error.response.data.error);
+        else
+          console.error('Error al obtener las preguntas:', error)
       }
     };
 
@@ -66,7 +69,7 @@ function App() {
       <footer className='pagination'>
         <Button text='Primera' onClick={firstPage}/>
         <Button text='Anterior' onClick={prevPage}/>
-        <Button text={currentPage} onClick={refresh} />
+        <Button text={''+currentPage} onClick={refresh} />
         <Button text='Siguiente' onClick={nextPage}/>
         <Button text='Última' onClick={lastPage} />
       </footer>
