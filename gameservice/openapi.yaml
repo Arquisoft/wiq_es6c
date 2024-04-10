@@ -10,7 +10,7 @@ servers:
     description: Production server
 paths:
   /generateGameUnlimitedQuestions:
-    /get:
+    get:
       summary: Generate the id for the unlimited game questions.
       operationId: generateGameUnlimitedQuestions
       requestBody:
@@ -42,7 +42,7 @@ paths:
                     description: Error information.
                     example: Internal Server Error
   /gameUnlimitedQuestion:
-    /get:
+    get:
       summary: Generate questions for the unlimited game questions.
       operationId: gameUnlimitedQuestions
       requestBody:
@@ -86,7 +86,7 @@ paths:
                     description: Error information.
                     example: Internal Server Error
   /storeGame:
-    /post:
+    post:
       summary: Stores the actual game in the database.
       operationId: storeGame
       requestBody:
