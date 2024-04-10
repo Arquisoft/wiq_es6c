@@ -17,6 +17,7 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000'
 var isCorrect = false
 var questions = [];
 var points = 0;
+var load = true;
 
 const Quiz = () => {
 
@@ -38,10 +39,10 @@ const Quiz = () => {
           newQuestion();
           return 0; 
         }
-        const diff = crypto.getRandomValues(new Uint32Array(1))[0] % 11; // Generate a random number between 0 and 10
-        return Math.min(progress + diff, 100);
+        const diff = 4;
+        return load? Math.min(progress + diff, 100) : progress;
       });
-    }, 500);
+    }, 400);
 
     return () => {
       clearInterval(time);
@@ -112,14 +113,15 @@ const Quiz = () => {
         ansIndex: indexAnswers
       }
     )
-
+    load=false;
     await esperar(2000); // Espera 2000 milisegundos (2 segundos)
     botonCorrecta.style.backgroundColor = previousBackgroundColor
     if (allQuestions.length-1 !== currentQuestionIndex) {
       currentQuestionIndex = (currentQuestionIndex + 1);
     }
     isCorrect = (false)
-    setRemTime(0)
+    //setRemTime(0)
+    load=true
         
     //Habilitamos botones
     changeButtons("false")
@@ -228,7 +230,7 @@ const Quiz = () => {
             padding: 3}}>
 
             {/*<LinearProgress color="secondary" variant={loading? "indeterminate" : "determinate"} value={remTime} />*/}
-            <LinearProgress color="secondary" variant={"determinate"} value={remTime} />
+            <LinearProgress id='progress'color="secondary" variant={"determinate"} value={remTime} />
 
         </Box>
 

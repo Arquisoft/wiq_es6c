@@ -199,3 +199,7 @@ main .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root{
   text-decoration: underline;
   cursor: pointer
 }
+
+div .MuiBox-root.css-1r4ai6y{
+  padding: 1.5em 0;
+}
