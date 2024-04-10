@@ -119,7 +119,6 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
- /history/questions:
     get:
       summary: Returns the the stored questions.
       operationId: gethistoryQuestions

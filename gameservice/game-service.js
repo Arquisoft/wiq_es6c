@@ -1,24 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const mongoose = require('mongoose');
-
-//libraries required for OpenAPI-Swagger
-const swaggerUi = require('swagger-ui-express'); 
-const fs = require("fs")
-const YAML = require('yaml')
 
 const app = express();
 const port = 8005;
 
 const questionService = process.env.QUESTIONS_GENERATOR_SERVICE_URL || 'http://localhost:8007';
 const userStatsService = process.env.STORE_STATS_SERVICE ||'http://localhost:8003';
-
-// Read the OpenAPI YAML file synchronously
-const file = fs.readFileSync('./openapi.yaml', 'utf8');
-
-// Parse the YAML content into a JavaScript object representing the Swagger document
-const swaggerDocument = YAML.parse(file);
 
 function generateAleatoryString() {
   let characters = 'abcdefghijklmnopqrstuvwxyz0123456789'; // Caracteres alfanuméricos
@@ -30,10 +18,6 @@ function generateAleatoryString() {
   return result;
 }
 
-// Serve the Swagger UI documentation at the '/api-doc' endpoint
-// This middleware serves the Swagger UI files and sets up the Swagger UI page
-// It takes the parsed Swagger document as input
-app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Middleware to parse JSON in request body
 app.use(express.json());
@@ -91,11 +75,11 @@ app.use((err, req, res, next) => {
 });
 
 
+
 //libraries required for OpenAPI-Swagger
 const swaggerUi = require('swagger-ui-express'); 
 const fs = require("fs")
 const YAML = require('yaml')
-
 
 // Read the OpenAPI YAML file synchronously
 openapiPath='./openapi.yaml'

@@ -49,7 +49,7 @@ paths:
               schema:
                 type: object
                 properties:
-                token:
+                  token:
                     type: string
                     description: User token.
                     example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
@@ -76,7 +76,6 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
-
   /history/games/:username:
     get:
       summary: Access to de history of games of the user.

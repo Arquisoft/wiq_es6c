@@ -50,10 +50,7 @@ paths:
                   createdAt:
                     type: string
                     description: Creation date.
-                    example: '2024-03-17T20:47:23.935Z'
-                  ___v:
-                    type: integer
-                    example: '0'                                        
+                    example: '2024-03-17T20:47:23.935Z'                                   
         '400':
           description: Failed to add user.
           content:

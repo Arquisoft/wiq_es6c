@@ -111,6 +111,8 @@ const Quiz = () => {
       console.log(username)
       console.log(questions)
       const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions});
+      questions = []
+      points = 0
       console.log(response)
     } catch (error) {
       console.error(error)
