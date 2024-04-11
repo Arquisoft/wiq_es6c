@@ -7,6 +7,7 @@ import Button from '../Button';
 import GoBackButton from '../GoBackButton';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
+import {shuffleArray} from '../Util'
 
 var currentQuestionIndex = 0;
 
@@ -43,27 +44,6 @@ const Quiz = () => {
       clearInterval(time);
     };
   });
-
-
-  function secureRandomNumber(max) {
-    const randomBytes = new Uint32Array(1);
-    window.crypto.getRandomValues(randomBytes);
-    return randomBytes[0] % max;
-  }
-
-  function shuffleArray(array) {
-    const shuffledArray = [...array];
-  
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const randomIndex = secureRandomNumber(i + 1);
-
-      const temp = shuffledArray[i];
-      shuffledArray[i] = shuffledArray[randomIndex];
-      shuffledArray[randomIndex] = temp;
-    }
-  
-    return shuffledArray;
-  }
 
   function changeButtons(param) {
     var borders = document.getElementsByClassName("border");;
