@@ -1,0 +1,211 @@
+/* Right Answers */
+/*{
+    /* RGB & HSL params *//*
+    --label-r: 0;
+    --label-g: 255;
+    --label-b: 0;
+    --label-h: 120;
+    --label-s: 100;
+    --label-l: 50;
+
+    --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
+    --lightness-switch: max(0, min(calc((1/(var(--lightness-threshold) - var(--perceived-lightness)))), 1));
+    --lightness-threshold: 0.6;
+    --background-alpha: 0.18;
+    --border-alpha: 0.3;
+    --lighten-by: calc(((var(--lightness-threshold) - var(--perceived-lightness)) * 100) * var(--lightness-switch));
+    color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
+    background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
+    border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
+}*/
+
+/* Wrong Answers */
+/*{
+    /* RGB & HSL params *//*
+    --label-r: 255;
+    --label-g: 0;
+    --label-b: 0;
+    --label-h: 0;
+    --label-s: 100;
+    --label-l: 50;
+
+    --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
+    --lightness-switch: max(0, min(calc((1/(var(--lightness-threshold) - var(--perceived-lightness)))), 1));
+    --lightness-threshold: 0.6;
+    --background-alpha: 0.18;
+    --border-alpha: 0.3;
+    --lighten-by: calc(((var(--lightness-threshold) - var(--perceived-lightness)) * 100) * var(--lightness-switch));
+    color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
+    background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
+    border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
+}*/
+
+#history .question{
+    /* RGB & HSL params */
+    --label-r: 128;
+    --label-g: 128;
+    --label-b: 128;
+    --label-h: 0;
+    --label-s: 0;
+    --label-l: 50;
+
+    --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
+    --lightness-switch: max(0, min(calc((1/(var(--lightness-threshold) - var(--perceived-lightness)))), 1));
+    --lightness-threshold: 0.6;
+    --background-alpha: 0.18;
+    --border-alpha: 0.3;
+    --lighten-by: calc(((var(--lightness-threshold) - var(--perceived-lightness)) * 100) * var(--lightness-switch));
+    color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
+    background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
+    border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
+    border-radius: 1em;
+    height: max-content;
+    margin-bottom: 1%;
+}
+
+#history .dropdown{
+    /* RGB & HSL params */
+    --label-r: 128;
+    --label-g: 128;
+    --label-b: 128;
+    --label-h: 0;
+    --label-s: 0;
+    --label-l: 50;
+
+    --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
+    --lightness-switch: max(0, min(calc((1/(var(--lightness-threshold) - var(--perceived-lightness)))), 1));
+    --lightness-threshold: 0.6;
+    --background-alpha: 0.18;
+    --border-alpha: 0.3;
+    --lighten-by: calc(((var(--lightness-threshold) - var(--perceived-lightness)) * 100) * var(--lightness-switch));
+    color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
+    background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
+    border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
+    border-radius: 1em;
+    padding: 1%;
+}
+
+#history .header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#history .grid p{
+    border-style: dashed;
+    border-radius: 1em;
+    border-width: 1px;
+    padding: 1vw;
+
+    /* RGB & HSL params */
+    --label-r: 128;
+    --label-g: 128;
+    --label-b: 128;
+    --label-h: 0;
+    --label-s: 0;
+    --label-l: 50;
+
+    --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
+    --lightness-switch: max(0, min(calc((1/(var(--lightness-threshold) - var(--perceived-lightness)))), 1));
+    --lightness-threshold: 0.6;
+    --background-alpha: 0.18;
+    --border-alpha: 0.3;
+    --lighten-by: calc(((var(--lightness-threshold) - var(--perceived-lightness)) * 100) * var(--lightness-switch));
+    color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
+    background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
+    border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
+}
+
+#history .grid{
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 1%;
+    column-gap: 1vw;
+}
+
+#history  main{
+    display: grid;
+    /* Option 1 */
+    /*grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));*/
+    /* Option 2 */
+    
+    grid-template-columns: repeat(auto-fit, minmax(80%, 1fr));
+    /*width: 60%;
+    margin-left: 20%;*/
+    
+    padding: 1%;
+    grid-gap: 2vh;
+}
+
+#history .grid .right{
+    --label-r: 0;
+    --label-g: 255;
+    --label-b: 0;
+    --label-h: 120;
+    --label-s: 50;
+    --label-l: 50;
+
+    --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
+    --lightness-switch: max(0, min(calc((1/(var(--lightness-threshold) - var(--perceived-lightness)))), 1));
+    --lightness-threshold: 0.6;
+    --background-alpha: 0.18;
+    --border-alpha: 0.3;
+    --lighten-by: calc(((var(--lightness-threshold) - var(--perceived-lightness)) * 100) * var(--lightness-switch));
+    color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
+    background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
+    border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
+}
+
+#history .grid .choice{
+    --label-r: 255;
+    --label-g: 128;
+    --label-b: 0;
+    --label-h: 30;
+    --label-s: 100;
+    --label-l: 50;
+
+    --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
+    --lightness-switch: max(0, min(calc((1/(var(--lightness-threshold) - var(--perceived-lightness)))), 1));
+    --lightness-threshold: 0.6;
+    --background-alpha: 0.18;
+    --border-alpha: 0.3;
+    --lighten-by: calc(((var(--lightness-threshold) - var(--perceived-lightness)) * 100) * var(--lightness-switch));
+    color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%));
+    background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
+    border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
+}
+
+#history .dropdown-button{
+    width: auto;
+    height: auto;
+    margin-left: 1em;
+    background-color: #212121;
+    color: #F0F0F0;
+}
+
+#history .dropdown-content{
+    position: flex;
+    flex-direction: column;
+    /*Quiero meter un gap*/
+}
+
+#history .game{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(40%, 1fr));
+    gap: 1%;
+}
+
+@media (max-width: 720px) {
+    #history .game{
+        display: grid;
+        grid-template-columns: repeat(1, minmax(40%, 1fr));
+    }
+}
+
+@media (max-width: 375px) {
+    #history .grid{
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+    }
+}

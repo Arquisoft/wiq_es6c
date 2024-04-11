@@ -3,6 +3,10 @@ import { render, fireEvent, screen, waitFor, act } from '@testing-library/react'
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Login from './Login';
+import { ContextFun } from './Context';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+
 
 const mockAxios = new MockAdapter(axios);
 
@@ -12,21 +16,26 @@ describe('Login component', () => {
   });
 
   it('should log in successfully', async () => {
-    render(<Login />);
+    render(
+      <ContextFun>
+        <Router>
+          <Login />
+        </Router>
+      </ContextFun>);
 
     const usernameInput = screen.getByLabelText(/Username/i);
     const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
+    const loginButton = document.getElementsByClassName('inner')[0]
 
     // Mock the axios.post request to simulate a successful response
     mockAxios.onPost('http://localhost:8000/login').reply(200, { createdAt: '2024-01-01T12:34:56Z' });
 
     // Simulate user input
     await act(async () => {
-        fireEvent.change(usernameInput, { target: { value: 'testUser' } });
-        fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
-        fireEvent.click(loginButton);
-      });
+      fireEvent.change(usernameInput, { target: { value: 'testUser' } });
+      fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+      fireEvent.click(loginButton);
+    });
 
     // Verify that the user information is displayed
     expect(screen.getByText(/Hello testUser!/i)).toBeInTheDocument();
@@ -34,11 +43,18 @@ describe('Login component', () => {
   });
 
   it('should handle error when logging in', async () => {
-    render(<Login />);
+
+    render(
+      <ContextFun>
+        <Router>
+          <Login />
+        </Router>
+      </ContextFun>
+    );
 
     const usernameInput = screen.getByLabelText(/Username/i);
     const passwordInput = screen.getByLabelText(/Password/i);
-    const loginButton = screen.getByRole('button', { name: /Login/i });
+    const loginButton = document.getElementsByClassName('inner')[0]
 
     // Mock the axios.post request to simulate an error response
     mockAxios.onPost('http://localhost:8000/login').reply(401, { error: 'Unauthorized' });

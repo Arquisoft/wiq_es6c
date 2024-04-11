@@ -3,52 +3,21 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-design-decisions]]
 == Architecture Decisions
 
-
-[role="arc42help"]
-****
-.Contents
-Important, expensive, large scale or risky architecture decisions including rationales.
-With "decisions" we mean selecting one alternative based on given criteria.
-
-Please use your judgement to decide whether an architectural decision should be documented
-here in this central section or whether you better document it locally
-(e.g. within the white box template of one building block).
-
-Avoid redundancy. 
-Refer to section 4, where you already captured the most important decisions of your architecture.
-
-.Motivation
-Stakeholders of your system should be able to comprehend and retrace your decisions.
-
-.Form
-Various options:
-
-* ADR (https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions[Documenting Architecture Decisions]) for every important decision
-* List or table, ordered by importance and consequences or:
-* more detailed in form of separate sections per decision
-
-.Further Information
-
-See https://docs.arc42.org/section-9/[Architecture Decisions] in the arc42 documentation.
-There you will find links and examples about ADR.
-
-****
-
 [options="header",cols="1,3,3"]
 |===
 |Architecture decisions
 |Advantages
 |Disagvantanges
 
-|Use of React
-|It is the most used javascript framework and there is a lot of documentation about it. 
-|All of us in the team will have to learn how to use it because we have never worked with it.
-
-|Use of JavaScript
+|_Use of JavaScript_
 |It is a language we have all used. 
 |It is a complex language that can cause us problems while other simpler languages could make our work easier. 
 
-|Use of MongoDB
+|_Use of React_
+|It is the most used JavaScript framework and there is a lot of documentation about it. 
+|All of us in the team will have to learn how to use it because we have never worked with it.
+
+|_Use of MongoDB_
 |Being a non-relational database, it is easier to use. In addition, it is used by large telecommunications companies.
 |Non-relational databases are the ones with which we have the least experience.
 |===

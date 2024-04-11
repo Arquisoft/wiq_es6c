@@ -15,11 +15,18 @@ jobs:
     - run: npm --prefix users/authservice ci
     - run: npm --prefix users/userservice ci
     - run: npm --prefix gatewayservice ci
+    - run: npm --prefix questionsservice/questiongeneratorservice ci
+    - run: npm --prefix storeQuestionService ci
+    - run: npm --prefix userStatsService ci
     - run: npm --prefix webapp ci
+    - run: npm --prefix gameservice ci
     - run: npm --prefix users/authservice test -- --coverage
     - run: npm --prefix users/userservice test -- --coverage
     - run: npm --prefix gatewayservice test -- --coverage
     - run: npm --prefix webapp test -- --coverage
+    - run: npm --prefix storeQuestionService test -- --coverage
+    - run: npm --prefix userStatsService test -- --coverage
+    #- run: npm --prefix gameservice test -- --coverage
     - name: Analyze with SonarCloud
       uses: sonarsource/sonarcloud-github-action@master
       env:
@@ -47,6 +54,8 @@ jobs:
       packages: write
     needs: [e2e-tests]
     steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
     - uses: actions/checkout@v4
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
@@ -59,6 +68,7 @@ jobs:
           registry: ghcr.io
           workdir: webapp
           buildargs: API_URI
+          platforms: linux/arm64
   docker-push-authservice:
     name: Push auth service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -67,6 +77,8 @@ jobs:
       packages: write
     needs: [e2e-tests]
     steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
     - uses: actions/checkout@v4
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
@@ -76,6 +88,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
           workdir: users/authservice
+          platforms: linux/arm64
   docker-push-userservice:
     name: Push user service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -84,6 +97,8 @@ jobs:
       packages: write
     needs: [e2e-tests]
     steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
     - uses: actions/checkout@v4
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
@@ -93,6 +108,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: users/userservice
+        platforms: linux/arm64
   docker-push-gatewayservice:
     name: Push gateway service Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -101,6 +117,8 @@ jobs:
       packages: write
     needs: [e2e-tests]
     steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
     - uses: actions/checkout@v4
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
@@ -110,10 +128,111 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: gatewayservice
+        platforms: linux/arm64
+  docker-push-questiongeneratorservice:
+    name: Push question generator service Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: [e2e-tests]
+    steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - uses: actions/checkout@v4
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        name: arquisoft/wiq_es6c/questiongeneratorservice
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        workdir: questionsservice/questiongeneratorservice
+        platforms: linux/arm64
+  docker-push-wikidataextractorservice:
+    name: Push wikidata extractor service Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: [e2e-tests]
+    steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - uses: actions/checkout@v4
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        name: arquisoft/wiq_es6c/wikidataextractorservice
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        workdir: questionsservice/wikidataExtractor
+        platforms: linux/arm64
+  docker-push-storequestionservice:
+    name: Push questions store service Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: [e2e-tests]
+    steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - uses: actions/checkout@v4
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        name: arquisoft/wiq_es6c/storequestionservice
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        workdir: storeQuestionService
+        platforms: linux/arm64
+  docker-push-userstatsservice:
+    name: Push user stats service Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: [e2e-tests]
+    steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - uses: actions/checkout@v4
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        name: arquisoft/wiq_es6c/userstatsservice
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        workdir: userStatsService
+        platforms: linux/arm64
+  docker-push-gameservice:
+    name: Push game service Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: [e2e-tests]
+    steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - uses: actions/checkout@v4
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        name: arquisoft/wiq_es6c/gameservice
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        workdir: gameservice
+        platforms: linux/arm64
   deploy:
     name: Deploy over SSH
     runs-on: ubuntu-latest
-    needs: [docker-push-userservice,docker-push-authservice,docker-push-gatewayservice,docker-push-webapp]
+    needs: [docker-push-userservice,docker-push-authservice,docker-push-gatewayservice,docker-push-webapp, docker-push-questiongeneratorservice, docker-push-storequestionservice, docker-push-userstatsservice, docker-push-wikidataextractorservice]
     steps:
     - name: Deploy over SSH
       uses: fifsky/ssh-action@master
@@ -124,5 +243,5 @@ jobs:
         command: |
           wget https://raw.githubusercontent.com/arquisoft/wiq_es6c/master/docker-compose.yml -O docker-compose.yml
           wget https://raw.githubusercontent.com/arquisoft/wiq_es6c/master/.env -O .env
-          docker compose down
-          docker compose --profile prod up -d
+          docker compose --profile prod down
+          docker compose --profile prod up -d --pull always

@@ -1,7 +1,9 @@
 // src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Container, Typography, TextField, Button, Snackbar } from '@mui/material';
+import { Container, Typography, TextField, Snackbar } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // Importa useHistory
+import Button from './Button';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -13,6 +15,8 @@ const Login = () => {
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
+  const navigation = useNavigate(); // Añade esto
+
   const loginUser = async () => {
     try {
       const response = await axios.post(`${apiEndpoint}/login`, { username, password });
@@ -22,8 +26,11 @@ const Login = () => {
 
       setCreatedAt(userCreatedAt);
       setLoginSuccess(true);
+      localStorage.setItem('username', username)
 
       setOpenSnackbar(true);
+      navigation("/menu")
+
     } catch (error) {
       setError(error.response.data.error);
     }
@@ -33,6 +40,7 @@ const Login = () => {
     setOpenSnackbar(false);
   };
 
+  
   return (
     <Container component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       {loginSuccess ? (
@@ -45,7 +53,7 @@ const Login = () => {
           </Typography>
         </div>
       ) : (
-        <div>
+        <div className='login'>
           <Typography component="h1" variant="h5">
             Login
           </Typography>
@@ -64,9 +72,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={loginUser}>
-            Login
-          </Button>
+          <Button text="Login" onClick={loginUser} name="Login"/>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
           {error && (
             <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
