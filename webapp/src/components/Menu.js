@@ -63,16 +63,6 @@ const Menu = () => {
         console.log(questions)
     };
 
-    const openStoredQuestions = async () => {
-      navigation("/appQuestion")
-    }
-
-    const openHistory = async () => {
-      navigation("/history")
-    }
-
-    
-
     return (
       <>
         <Nav />
