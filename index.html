@@ -972,7 +972,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_level_2">5.2. Level 2</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Level%202%20Diagram.png" alt="Level 2 Diagram" width="867" height="313">
+<img src="./images/Level%202%20Diagram.png" alt="Level 2 Diagram" width="860" height="313">
 </div>
 </div>
 <div class="sect3">
@@ -1031,7 +1031,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_level_3">5.3. Level 3</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Level%203%20Diagram.png" alt="Level 3 Diagram" width="795" height="894">
+<img src="./images/Level%203%20Diagram.png" alt="Level 3 Diagram" width="839" height="860">
 </div>
 </div>
 <div class="sect3">
@@ -1140,7 +1140,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_infrastructure_level_1">7.1. Infrastructure Level 1</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Deployment%20View.png" alt="Deployment View" width="842" height="655">
+<img src="./images/Deployment%20View.png" alt="Deployment View" width="833" height="725">
 </div>
 </div>
 <div class="paragraph">
@@ -1150,15 +1150,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <dl>
 <dt class="hdlist1">Motivation</dt>
 <dd>
-<p>Our goal is to run the application with Docker in a Azure VM.
+<p>Despite our initial goal being to run the application with Docker in an Azure VM, as we were running out of Azure Credits, we decided to switch to an Oracle VM.
 However, during the production stage, each contributor will deploy the project locally.
-Final product will be deployed in <a href="http://wiq.sytes.net/" class="bare">http://wiq.sytes.net/</a> (if that does not work, try <a href="http://20.77.37.219:3000/" class="bare">http://20.77.37.219:3000/</a>).</p>
+Final product will be deployed in <a href="http://wiq.sytes.net/" class="bare">http://wiq.sytes.net/</a> (if that does not work, try <a href="http://158.179.212.42:3000/" class="bare">http://158.179.212.42:3000/</a>).</p>
 </dd>
 <dt class="hdlist1">Quality and/or Performance Features</dt>
 <dd>
-<p>As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
-If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
-Each microservice has its own container as well as its own database in case of needing one.</p>
+<p>Previously, we had an Azure VM with 2 GiB RAM and 1vCPU. When we decided to change to the Oracle VM, we also improve our resources, as it was free.
+Finally, our Oracle VM has 24 GiB RAM and 4vCPU.
+Each microservice has its own container. There are also two databases, one for the Question Generator and Wikidata Extractor services, and another one for the rest of the containers which may need it.</p>
 </dd>
 </dl>
 </div>
@@ -1366,7 +1366,7 @@ occurs.</p>
 <div id="footer">
 <div id="footer-text">
 Version 8.2 EN<br>
-Last updated 2024-04-06 17:13:46 +0200
+Last updated 2024-04-11 12:53:26 +0200
 </div>
 </div>
 </body>
