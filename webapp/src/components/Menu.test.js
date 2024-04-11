@@ -19,7 +19,7 @@ describe("Menu component", () => {
             </MemoryRouter>
         );
 
-        const linkElement = screen.getByText(/Cómo jugar/i);
+        const linkElement = screen.getByText(/Modos de juego:/i);
         expect(linkElement).toBeInTheDocument();
     });
 
