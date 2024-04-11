@@ -25,7 +25,7 @@ describe('App', () => {
 
   test('renders the app title', async() => {
     await waitFor( () => render(<MemoryRouter><App /></MemoryRouter>));
-    expect(screen.getByText('Almacén de preguntas')).toBeInTheDocument();
+    expect(screen.getAllByText('Almacén de preguntas')).toHaveLength(2);
   });
 
   test('fetches and displays questions', async () => {

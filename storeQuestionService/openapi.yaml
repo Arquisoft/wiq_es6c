@@ -1,0 +1,160 @@
+openapi: 3.0.0
+info:
+  title: StoreQuestionService API
+  description: Store question service OpenAPI specification.
+  version: 0.2.0
+servers:
+  - url: http://localhost:8004
+    description: Development server
+  - url: http://storequestionservice:8004
+    description: Production server
+paths:
+ /history/question:
+    post:
+      summary: Stores the generated question.
+      operationId: historyQuestion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pregunta:
+                  type: string
+                  description: The question.
+                  example: 
+                respuesta_correcta:
+                  type: string
+                  description: The correct answer.
+                  example: 
+                respuestas_incorrectas:
+                  type: List<string>
+                  description: The other possible answers.
+                createdAt:
+                  type: string
+                  description: Creation date.               
+      responses:
+        '200':
+          description: Question stored correctly and returns it.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: User token.
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
+                  question:
+                    type: Question
+                    description: Question.
+                  createdAt:
+                    type: string
+                    description: Creation date.
+                    example: '2024-03-17T20:47:23.935Z'
+        '400':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error
+ /history/questions:
+    post:
+      summary: Stores the generated questions.
+      operationId: historyQuestions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                preguntas:
+                  type: string
+                  description: The question.
+                  example: 
+                respuesta_correcta:
+                  type: string
+                  description: The correct answer.
+                  example: 
+                respuestas_incorrectas:
+                  type: List<string>
+                  description: The other possible answers.
+                createdAt:
+                  type: string
+                  description: Creation date.               
+      responses:
+        '200':
+          description: Questions stored correctly and returns its.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: User token.
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
+                  questions:
+                    type: List<Question>
+                    description: Question.
+                  createdAt:
+                    type: string
+                    description: Creation date.
+                    example: '2024-03-17T20:47:23.935Z'
+        '400':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error
+    get:
+      summary: Returns the the stored questions.
+      operationId: gethistoryQuestions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Question stored correctly and returns it.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: User token.
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
+                  questions:
+                    type: List<Question>
+                    description: Question.
+                  createdAt:
+                    type: string
+                    description: Creation date.
+                    example: '2024-03-17T20:47:23.935Z'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error

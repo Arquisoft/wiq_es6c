@@ -1,0 +1,124 @@
+openapi: 3.0.0
+info:
+  title: User Stats API
+  description: UserStats OpenAPI specification.
+  version: 0.2.0
+servers:
+  - url: http://localhost:8003
+    description: Development server
+  - url: http://userstatsservice:8003
+    description: Production server
+paths:
+  /history/game:
+    /post:
+      summary: Stores the actual game in the database.
+      operationId: historyGame
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Game Id.
+                  example: sqeweg12er56yg46u89k
+                username:
+                  type: string
+                  description: The name if the user.
+                points:
+                  type: integer
+                  description: The number of points that the user score.
+                questions:
+                  answers:
+                    type: List<String>
+                    description: List with the possible answers.
+                    example: 
+                  question:
+                    type: String
+                    description: The question that is going to be done
+                  correctAnswer:
+                    type: String
+                    description: The correct answer for the question
+      responses:
+        '200':
+          description: Question created and returned successfuly.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: User token.
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
+                  createdAt:
+                    type: string
+                    description: Creation date.
+                    example: '2024-03-17T20:47:23.935Z'
+                  id:
+                    type: string
+                    description: The question that is going to bre realized.
+                    example: 
+                  answers:
+                    type: List<String>
+                    description: List with the possible answers.
+                    example: 
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error
+  /history/games/:username:
+    get:
+      summary: Access to de history of games of the user.
+      operationId: historyGames
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: User ID.
+                  example: student
+      responses:
+        '200':
+          description: Information of games returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: User token.
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
+                  username:
+                    type: string
+                    description: Username.
+                    example: student
+                  createdAt:
+                    type: string
+                    description: Creation date.
+                    example: '2024-03-17T20:47:23.935Z'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error

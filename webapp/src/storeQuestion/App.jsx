@@ -4,6 +4,8 @@ import './css/questions.css';
 import GoBackButton from '../components/GoBackButton';
 import Question from './components/Question';
 import Button from '../components/Button';
+import { Nav } from "../components/nav/Nav";
+import { Footer } from "../components/footer/Footer";
 
 function App() {
   const [preguntas, setPreguntas] = useState([]);
@@ -57,7 +59,9 @@ function App() {
     setCurrentPage(currentPage);
   }
 
-  return (
+  return (<>
+    <Nav />
+
     <div id='storeQuestion'>
       <h2>Almacén de preguntas</h2>
       <GoBackButton />
@@ -74,6 +78,9 @@ function App() {
         <Button text='Última' onClick={lastPage} />
       </footer>
     </div>
+
+    <Footer />
+    </>
   );
 }
 
