@@ -73,6 +73,31 @@ app.get('/history/games/:username', async (req, res) => {
     }
 });
 
+app.get('/history/games', async (req, res) => {
+    try {
+        // Find all games in the database
+        const allGames = await Game.find();
+
+        // Check if any games were found
+        if (allGames.length > 0) {
+            // Respond with the games' information
+            const gameInformation = allGames.map(game => ({
+                id: game.id,
+                username: game.username,
+                points: game.points,
+                questions: game.questions,
+                createdAt: game.createdAt
+            }));
+            res.json(gameInformation.slice(0, req.query.limit || gameInformation.length));
+        } else {
+            res.status(404).json({ error: 'No games were found!' });
+        }
+    } catch (error) {
+        // Handle errors during database query
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 const server = app.listen(port, () => {
     console.log(`User Stats Service listening at http://localhost:${port}`);
