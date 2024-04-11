@@ -36,8 +36,13 @@ class QuestionGenerator {
 
         const randomDocs = await Pais.aggregate([
             { $match: plantilla.filtro },
-            { $sample: { size: Number(respuestas) } }
+            { $sample: { size: respuestas } }
         ]);
+        if (randomDocs.length < respuestas) {
+            console.error(`Not enought data found to generate a question`);
+            throw new Error(`Not enought data found to generate a question`);
+        }
+
         console.log("\nFind:");
         console.log(randomDocs);
 
@@ -75,7 +80,15 @@ class QuestionGenerator {
                 templates = templates.concat(this.temas.get(tema));
                 console.log(this.temas.get(tema));
             }
+            else {
+                console.error(`The topic \'${tema}\' is not currently defined`);
+                throw new Error(`The topic \'${tema}\' is not currently defined`);
+            }
         });
+        if (templates.length == 0) {
+            console.error(`No correct topics were passed`);
+            throw new Error(`No correct topics were passed`);
+        }
         console.log(templates);
         console.log([...new Set(templates)]);
         return [...new Set(templates)];

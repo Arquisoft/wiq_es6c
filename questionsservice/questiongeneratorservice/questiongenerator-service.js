@@ -25,31 +25,44 @@ app.use(cors());
 // Only parse query parameters into strings, not objects (adds security)
 app.set('query parser', 'simple');
 
-// Function to generate the required number of questions
-async function getQuestions(req) {
-  const preguntas = req.query.n_preguntas || 1;
-  const respuestas = req.query.n_respuestas || 4;
-  var temas = req.query.tema || [];
+function validateNumberInQuery(number, minValue, paramName, defValue) {
+  if (!(paramName in number)) return defValue;
+  n = Number(number[paramName]);
+  if (isNaN(n)) throw new Error(`A number was expected in param \'${paramName}\'`);
+  if (n < minValue) throw new Error(`\'${paramName}\' must be at least \'${minValue}\'`);
+  return n;
+}
+
+// Function to validate required fields in the request body
+function validateFields(query) {
+  const preguntas = validateNumberInQuery(query, 1, 'n_preguntas', 1);
+  const respuestas = validateNumberInQuery(query, 1, 'n_respuestas', 4);
+  var temas = query.tema || [];
   if (!Array.isArray(temas)) {
     temas = Array.of(temas);
-  } 
-
-  return await QuestionGenerator.generateQuestions(preguntas, respuestas, temas);
+  }
+  return { preguntas, respuestas, temas };
 }
 
 // Route for getting questions
 app.get('/questions', async (req, res) => {
   try {
-    const retQuestions = await getQuestions(req);
-    try{
-      const questionsHistoryResponse = await axios.post(questionHistoryServiceUrl + '/history/questions', retQuestions);
+    const { preguntas, respuestas, temas } = validateFields(req.query);
+    try {
+      const retQuestions = await QuestionGenerator.generateQuestions(preguntas, respuestas, temas);
+      try {
+        await axios.post(questionHistoryServiceUrl + '/history/questions', retQuestions);
+      } catch (error) {
+        console.error(`Error saving questions history: ${error}`);
+      }
+      res.json(retQuestions);
     } catch (error) {
-      console.error(`Error saving questions history: ${error}`);
+      console.error(`An error occurred: ${error.message}`);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-    res.json(retQuestions);
   } catch (error) {
-    console.error(`An error occurred: ${error.message}`)
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error(`Bad Request: ${error.message}`);
+    res.status(400).json({ message: error.message });
   }
 });
 
