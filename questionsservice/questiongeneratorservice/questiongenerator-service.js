@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const mongoose = require('mongoose');
-const { Pais } = require('./questiongenerator-model')
+const { QuestionGenerator } = require('./questiongenerator')
 
 const app = express();
 const port = 8007;
@@ -22,69 +22,47 @@ app.use(express.json());
 // Middleware to enable CORS (cross-origin resource sharing). In order for the API to be accessible by other origins (domains).
 app.use(cors());
 
-function shuffle(array) {
-  let currentIndex = array.length;
-  let randomIndex;
-  // Mientras queden elementos para mezclar.
-  while (currentIndex > 0) {
-    // Escoge un elemento aleatorio.
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    // Intercambia el elemento actual con el elemento aleatorio.
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+// Only parse query parameters into strings, not objects (adds security)
+app.set('query parser', 'simple');
+
+function validateNumberInQuery(number, minValue, paramName, defValue) {
+  if (!(paramName in number)) return defValue;
+  n = Number(number[paramName]);
+  if (isNaN(n)) throw new Error(`A number was expected in param \'${paramName}\'`);
+  if (n < minValue) throw new Error(`\'${paramName}\' must be at least \'${minValue}\'`);
+  return n;
+}
+
+// Function to validate required fields in the request body
+function validateFields(query) {
+  const preguntas = validateNumberInQuery(query, 1, 'n_preguntas', 1);
+  const respuestas = validateNumberInQuery(query, 1, 'n_respuestas', 4);
+  var temas = query.tema || [];
+  if (!Array.isArray(temas)) {
+    temas = Array.of(temas);
   }
-  return array;
-}
-
-async function generateQuestion() {
-  var elementos = await Pais.find({ capital: { $exists: true } }).exec();
-  console.log("Find:\n" + elementos)
-  elementos = shuffle(elementos);
-  var mockedQuestions = [{
-    pregunta: "¿Cual es la capital de " + elementos[0].pais + "?",
-    respuesta_correcta: elementos[0].capital,
-    respuestas_incorrectas: [elementos[1].capital, elementos[2].capital, elementos[3].capital]
-  }];
-  console.log(mockedQuestions);
-  return mockedQuestions
-}
-
-// Function to generate the required number of questions
-async function getQuestions(req) {
-  const { n_preguntas, n_respuestas, tema } = req.query;
-  var preguntas = Number(n_preguntas);
-  var respuestas = Number(n_respuestas);
-  var temas = String(tema);
-
-  // if (isNaN(preguntas)) {
-  //   generateQuestion()
-  //   console.log("merda", mockedQuestions)
-  //   return mockedQuestions.slice(0, 4);
-  // }
-  // const response = [];
-  //  generateQuestion();
-  // for (let i = 0; i < preguntas; i++) {
-  //   response.push(mockedQuestions[i % 11]);
-  // }
-  return await generateQuestion();
+  return { preguntas, respuestas, temas };
 }
 
 // Route for getting questions
 app.get('/questions', async (req, res) => {
   try {
-    // TODO: Implement logic to fetch questions from MongoDB and send response 
-    // const questions = await Question.find()
-    const defaultQuestion = await getQuestions(req);
-
-    try{
-      const questionsHistoryResponse = await axios.post(questionHistoryServiceUrl + '/history/questions', defaultQuestion);
+    const { preguntas, respuestas, temas } = validateFields(req.query);
+    try {
+      const retQuestions = await QuestionGenerator.generateQuestions(preguntas, respuestas, temas);
+      try {
+        await axios.post(questionHistoryServiceUrl + '/history/questions', retQuestions);
+      } catch (error) {
+        console.error(`Error saving questions history: ${error}`);
+      }
+      res.json(retQuestions);
     } catch (error) {
-      console.error(`Error saving questions history: ${error}`);
+      console.error(`An error occurred: ${error.message}`);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-    res.json(defaultQuestion);
   } catch (error) {
-    // res.status(500).json({ message: error.message })
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error(`Bad Request: ${error.message}`);
+    res.status(400).json({ message: error.message });
   }
 });
 
