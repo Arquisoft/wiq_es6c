@@ -71,11 +71,11 @@ In addition to what is shown in the diagram, we will also use Graphana and Prome
 
 Motivation::
 
-Our goal is to run the application with Docker in a Azure VM.
+Despite our initial goal being to run the application with Docker in an Azure VM, as we were running out of Azure Credits, we decided to switch to an Oracle VM.
 However, during the production stage, each contributor will deploy the project locally.
-Final product will be deployed in http://wiq.sytes.net/ (if that does not work, try http://20.77.37.219:3000/).
+Final product will be deployed in http://wiq.sytes.net/ (if that does not work, try http://158.179.212.42:3000/).
 
 Quality and/or Performance Features::
-As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
-If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
-Each microservice has its own container as well as its own database in case of needing one.
+Previously, we had an Azure VM with 2 GiB RAM and 1vCPU. When we decided to change to the Oracle VM, we also improve our resources, as it was free.
+Finally, our Oracle VM has 24 GiB RAM and 4vCPU.
+Each microservice has its own container. There are also two databases, one for the Question Generator and Wikidata Extractor services, and another one for the rest of the containers which may need it.
