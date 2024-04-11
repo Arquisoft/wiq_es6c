@@ -44,7 +44,7 @@
 
 body {
     background-color: #212121;
-    color: #F0F0F0
+    color: hsl(0, 0%, 94%)
 }
 
 #storeQuestion .question .grid {
@@ -176,6 +176,7 @@ body {
 @media (max-width: 680px) {
     .pagination{
         display: ruby;
+        padding: 0 0 100px 0
     }
 }
 

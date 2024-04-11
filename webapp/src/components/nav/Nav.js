@@ -1,5 +1,6 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, SvgIcon } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, SvgIcon, Container } from '@mui/material';
+import HelpIcon from '@mui/icons-material/Help';
 import { Link } from 'react-router-dom';
 
 function HomeIcon(props) {
@@ -27,16 +28,33 @@ export const Nav = () => {
     */
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: "secondary", color: "white"}}>
-        <Toolbar>
-            <Link to='/home' >
-                <IconButton size="large" color="inherit" >
-                    <HomeIcon />
-                </IconButton>
-            </Link>
-            
+        <AppBar position="static" sx={{ background: "linear-gradient(163deg, #00ff75 33%, #3700ff 100%)", color: "white"}}>
+        <Toolbar sx={{alignItems: 'center', justifyContent:'space-between'}}>
+            <Container sx={{alignItems:'left', textAlign:'left', display:'flex', justifyContent:'flex-start' }}>
+                <Link to='/menu' >
+                    <IconButton size="large" color="inherit" >
+                        <HomeIcon sx={{ color: "#212121" }}/>
+                    </IconButton>
+                </Link>
+                <Typography variant="h6" component="div" sx={{marginTop: '8px'}}>WIQ</Typography>
+            </Container>
 
-            <Typography variant="h6" component="div">WIQ</Typography>
+            <Container sx={{alignItems:'center', textAlign:'center'}}>
+                <Link to='/history' style={{color:'white', textDecoration: 'none', marginRight: '2vw'}}>
+                    Historial
+                </Link>
+                <Link to='/appQuestion' style={{color:'white', textDecoration: 'none'}}>
+                    Almacén de preguntas
+                </Link>
+            </Container>
+
+            <Container sx={{alignItems:'right', textAlign:'right'}}>
+                <Link to='/help' style={{color:'white', textDecoration: 'none'}}>
+                    <IconButton size="large" color="inherit" >
+                        <HelpIcon sx={{ color: "white" }}/>
+                    </IconButton>
+                </Link>
+            </Container>
 
             {/*
             {isLogged ? (

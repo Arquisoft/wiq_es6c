@@ -77,38 +77,10 @@ const Menu = () => {
       <>
         <Nav />
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
-          <div className="instructions">
-            <h2>
-              Cómo jugar
-            </h2>
-            <pre>
-              Cuando inicies una parte en cualquier modo de juego, se irán mostrando preguntas junto 
-              con 4 posibles respuestas. Para cada pregunta: 
-            </pre>
-            <ul>
-              <li>Únicamente habrá una respuesta correcta.</li>
-              <li>Tendrás un tiempo máximo para contestar. </li>
-              <li>Si la respuesta seleccionada es correcta, se mostrará en verde. </li>
-              <li>Si la respuesta seleccionada es incorrecta, se mostrará en rojo y en verde la correcta. </li>
-            </ul>
-            <pre>
-              Cada vez que se muestre una pregunta habrá una barra que represente el tiempo restante 
-              para contestarla. Si el tiempo se termina, la pregunta contará como fallada y se pasará 
-              a la siguiente.
-            </pre>
-            <pre>
-              ¡Demuestra tus conocimientos!
-            </pre>
-          </div>
-
           <h2>Modos de juego:</h2>
           <div className='modes'>
               <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
           </div>
-
-          <h2>Esto irá en el nav(?)</h2>
-          <Button text = "Álmacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
-          <Button text = "Historial" name="openHistory" onClick={() => openHistory()}/>
           
         </Container>
         <Footer />
