@@ -186,7 +186,7 @@ input, label{
 
 main input:-internal-autofill-selected{
   box-shadow: none;
-  -webkit-box-shadow: 0 0 0px 1000px #212121 inset;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset;
   -webkit-text-fill-color: #f0f0f0;
   color: #F0F0F0 !important;
 }
