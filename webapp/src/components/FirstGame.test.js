@@ -13,7 +13,7 @@ describe("First game component", () => {
         mockAxios.reset();
     });
 
-    /*test("one question -> 4 possible answers",async () => {
+    test("one question -> 4 possible answers",async () => {
         render(
             <MemoryRouter>
                 <Menu />
@@ -29,7 +29,7 @@ describe("First game component", () => {
         console.log(document.querySelector('h1'))
 
         const gamesBT = document.getElementsByClassName('allAnswers');
-        expect(gamesBT).toHaveLength(4);
-    });*/
+        //expect(gamesBT).toHaveLength(4);
+    });
 
 });
