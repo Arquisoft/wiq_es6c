@@ -45,12 +45,12 @@ package "WIQ App" {
 :User: -> [WebApp] : " Interacts    "
 [WebApp] <-> [Gateway Service] : Redirects Requests
 [Gateway Service] <--down-> [Game Service] : Plays
-[Gateway Service] <-- [Question Historic Service] : Loads data
-[Gateway Service] <-- [User Statistics Service] : Loads data
+[Gateway Service] <-- [Store Question Service] : Loads data
+[Gateway Service] <-- [User Stats Service] : Loads data
 [Gateway Service] <-> [UserAuth Service] : Logs in / Registers
-[Game Service] -> [User Statistics Service] : Stores data
+[Game Service] -> [User Stats Service] : Stores data
 [Game Service] <-left-> [Questions Service] : Gets questions
-[Questions Service] -up-> [Question Historic Service] : Stores data
+[Questions Service] -up-> [Store Question Service] : Stores data
 }
 [Questions Service] <.left.> [WikiData] : "  Gets data  "
 ----
@@ -87,28 +87,25 @@ package "WIQ App"{
     component "WebApp"
     component "Gateway Service" as GatewayS
 
-    package "Game Service" {
-        component "Game Controller"
+    component "Game Service" 
+        package "Store Question Service" as QHS{
+        component "Store-Q Service" as QHController
+        database "storedquestion" as QhDB
     }
-
-    package "User Statistics Service" as USS {
-        component "Statistics Controller"
-        database "Database" as USDB
-    }
-
-    package "Questions Historic Service" as QHS{
-        component "Question Historic Controller" as QHController
-        database "Database" as QhDB
-    }
-    package "Questions Service"{
-        component "Wikidata Extractor"
-        component "Questions Generator"
-        database "Database" as QSDB
+    package "User Stats Service" as USS {
+        component "User Stats Service"
+        database " statsdb " as USDB
     }
     package "UserAuth Service" {
         component "Auth Service"
         component "User Service"
-        database "Database" as UADB
+        database "userdb" as UADB
+    }
+
+    package "Questions Service"{
+        component "Wikidata Extractor"
+        component "Questions Generator Service"
+        database "questions" as QSDB
     }
 }
 
@@ -116,25 +113,25 @@ User -right-> WebApp : Uses
 WebApp <-right-> GatewayS: Redirects requests
 
 GatewayS <--up--> "UserAuth Service" : "Handles user\nlogin/registry"
-GatewayS <-down-> "Game Service" : "Handles user current game\n"
+GatewayS <-down-> "Game Service" : "Handles user current game"
 GatewayS <--up-- "QHS" : "\nReceives generated\nquestions"
 GatewayS <--- "USS" : "Receives\t\t\t\nuser statistics\t\t\t"
 
 "Game Service" <---> "Questions Service" : "Receives question petitions,\nsends questions\n\n"
 "Game Service" ---> "USS" : "Sends user\t\nstatistics\t\t"
-"Questions Service" -up-> "QHS" : "Sends\ngenerated\nquestions"
+"Questions Service" -up-> "QHS" : " Sends\n  generated\n  questions"
 
 "Wikidata" .up.> "Wikidata Extractor" : "Returns data"
 "Wikidata" <.up. "Wikidata Extractor" : "Queries"
 "Wikidata Extractor" --> QSDB
-"Questions Generator" <-- QSDB
-"Questions Generator" --> QSDB
+"Questions Generator Service" <-- QSDB
+"Questions Generator Service" --> QSDB
 
 "QHController" --> QhDB
 "QHController" <-- QhDB
 
-"Statistics Controller" --> USDB
-"Statistics Controller" <-- USDB
+"User Stats Service" --> USDB
+"User Stats Service" <-- USDB
 
 "Auth Service" --> UADB
 "Auth Service" <-- UADB

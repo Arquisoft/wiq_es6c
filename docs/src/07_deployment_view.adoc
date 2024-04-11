@@ -19,23 +19,26 @@ cloud "Azure Cloud\n" {
             node "Gateway Container"{
                 node "Gateway Service"
             }
-            node "  User Container  "{
+            node "User Container"{
                 node "User Service"
             }
-            node "  Auth Container  "{
+            node "Auth Container"{
                 node "Auth Service"
             }
-            node "\tGame Container\t"{
-                node "Game Generator Service"
+            node "Game Container"{
+                node "Game Service"
             }
-            node "Questions History Container"{
-                node "Questions History Service"
+            node "Store Question Container"{
+                node "Store Question Service"
             }
             node "User Stats Container\t"{
                 node "User Stats Service"
             }
-            node "Questions Generator Container"{
-                node "Questions Generator Service"
+            node "Question Generator Container"{
+                node "Question Generator Service"
+            }
+            node "Wikidata Extractor Container"{
+                node "Wikidata Extractor Service"
             }
         }
     }
@@ -49,28 +52,30 @@ actor "User"
 
 "Web App" -- "Gateway Service" : "port: 8000"
 
-"Gateway Service" -- "Questions History Service" : "port: 8004             "
+"Gateway Service" -- "Store Question Service" : "port: 8004"
 "Gateway Service" -- "User Stats Service" : "port: 8003"
 "Gateway Service" -up- "Auth Service" : "port: 8002         "
 "Gateway Service" -up- "User Service" : "port: 8001"
-"Gateway Service" -right- "Game Generator Service"  : "           port: 8005     "
+"Gateway Service" -right- "Game Service"  : "           port: 8005     "
 
-"Game Generator Service" -- "User Stats Service" : "port: 8003"
-"Game Generator Service" -- "Questions Generator Service" : " port: 8006"
+"Game Service" -- "User Stats Service" : "port: 8003"
+"Game Service" -- "Question Generator Service" : " port: 8007"
 
-"Questions Generator Service" -- "Questions History Service" : "port: 8004"
-"Questions Generator Service" -- "Wikidata" : "HTTPS"
+"Question Generator Service" -- "Store Question Service" : "port: 8004"
+"Question Generator Service" -- "Wikidata Extractor Service" : "port: 8008"
+
+"Wikidata Extractor Service" -- "Wikidata" : "HTTPS"
 ----
 
 In addition to what is shown in the diagram, we will also use Graphana and Prometheus during the production stage as code monitoring systems.
 
 Motivation::
 
-Our goal is to run the application with Docker in a Azure VM.
+Despite our initial goal being to run the application with Docker in an Azure VM, as we were running out of Azure Credits, we decided to switch to an Oracle VM.
 However, during the production stage, each contributor will deploy the project locally.
-Final product will be deployed in http://wiq.sytes.net/ (if that does not work, try http://20.77.37.219:3000/).
+Final product will be deployed in http://wiq.sytes.net/ (if that does not work, try http://158.179.212.42:3000/).
 
 Quality and/or Performance Features::
-As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
-If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
-Each microservice has its own container as well as its own database in case of needing one.
+Previously, we had an Azure VM with 2 GiB RAM and 1vCPU. When we decided to change to the Oracle VM, we also improve our resources, as it was free.
+Finally, our Oracle VM has 24 GiB RAM and 4vCPU.
+Each microservice has its own container. There are also two databases, one for the Question Generator and Wikidata Extractor services, and another one for the rest of the containers which may need it.
