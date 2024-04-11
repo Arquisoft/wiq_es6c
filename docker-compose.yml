@@ -10,6 +10,7 @@ services:
       - "27017:27017"
     networks:
       - mynetwork
+    restart: always
 
   mongodb_wiki:
     container_name: mongodb-wiki-${teamname:-defaultASW}
@@ -21,6 +22,7 @@ services:
       - "27018:27017"
     networks:
       - mynetwork
+    restart: always
 
   authservice:
     container_name: authservice-${teamname:-defaultASW}
@@ -35,6 +37,7 @@ services:
       - mynetwork
     environment:
       MONGODB_URI: mongodb://mongodb:27017/userdb
+    restart: always
 
   userservice:
     container_name: userservice-${teamname:-defaultASW}
@@ -49,6 +52,7 @@ services:
       - mynetwork
     environment:
       MONGODB_URI: mongodb://mongodb:27017/userdb
+    restart: always
 
   gameservice:
     container_name: gameservice-${teamname:-defaultASW}
@@ -64,6 +68,7 @@ services:
     environment:
       QUESTIONS_GENERATOR_SERVICE_URL: http://questiongeneratorservice:8007
       STORE_STATS_SERVICE: http://userstatsservice:8003
+    restart: always
 
   questiongeneratorservice:
     container_name: questiongeneratorservice-${teamname:-defaultASW}
@@ -80,6 +85,7 @@ services:
     environment:
       MONGODB_URI: mongodb://mongodb_wiki:27017/questions
       STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
+    restart: always
 
   wikidataextractorservice:
     container_name: wikidataextractorservice-${teamname:-defaultASW}
@@ -94,6 +100,7 @@ services:
       - mynetwork
     environment:
       MONGODB_URI: mongodb://mongodb_wiki:27017/questions
+    restart: always
 
   gatewayservice:
     container_name: gatewayservice-${teamname:-defaultASW}
@@ -115,6 +122,7 @@ services:
       STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
       QUESTIONS_GENERATOR_SERVICE_URL: http://questiongeneratorservice:8007
       GAME_SERVICE_URL: http://gameservice:8005
+    restart: always
 
 
   webapp:
@@ -126,6 +134,7 @@ services:
       - gatewayservice
     ports:
       - "3000:3000" 
+    restart: always
 
   prometheus:
     image: prom/prometheus
@@ -173,6 +182,7 @@ services:
       - mynetwork
     environment:
       MONGODB_URI: mongodb://mongodb:27017/storedquestion
+    restart: always
 
   userstatsservice:
     container_name: userstats-${teamname:-defaultASW}
@@ -187,6 +197,7 @@ services:
       - mynetwork
     environment:
       MONGODB_URI: mongodb://mongodb:27017/statsdb
+    restart: always
 
 
 volumes:
