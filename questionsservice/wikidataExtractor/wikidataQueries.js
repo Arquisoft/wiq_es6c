@@ -52,36 +52,21 @@ class WikiQueries {
 
     }
 
-    static async obtenerUnPaisEuropeo(){
+    static async obtenerMonumentoYPais(){
         const query = `
-        SELECT ?countryLabel
-        WHERE {
-        ?country wdt:P31 wd:Q6256;    
-                wdt:P30 wd:Q46.      # Filtra para que el país esté en Europa
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
-        }
+        SELECT ?preguntaLabel ?respuestaLabel WHERE {
+            ?pregunta wdt:P31 wd:Q570116; wdt:P17 ?respuesta.
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+        } 
+        LIMIT 200
         `;
-        const europa = await wikidata.consulta(query);
 
-        query = ` 
-        SELECT ?countryLabel
-        WHERE {
-        ?country wdt:P31 wd:Q6256;     
-                wdt:P30 ?continent.    
-        FILTER(?continent != wd:Q46)    # Filtra para excluir Europa
-        ?continent wdt:P31 wd:Q5107.    # Asegura que el continente sea una instancia de continente
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
-        }
-        `;
-        const noEuropa = await wikidata.consulta(query);
-
-        // Contendrá un elemento aleatorio del array de europa y 3 que no lo sean
-        const results = [];
+        const results = await wikidata.consulta(query);
         // console.log(results)
         return results;
 
     }
-
+    
 
     /* ENTRETENIMIENTO */ 
 
@@ -163,30 +148,6 @@ class WikiQueries {
         return results;
 
     }
-
-
-
-
-
-
-
-
-
-    // static async obtenerPaisYLenguaje() {
-    //     const query = `
-    //     SELECT ?countryLabel ?languageLabel  WHERE {
-    //         ?country wdt:P31 wd:Q6256.
-    //         ?country wdt:P37 ?language.
-    //         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
-    //         }
-    //         LIMIT 500
-    //     `;
-
-    //     const results = await wikidata.consulta(query);
-    //     // console.log(results)
-    //     return results;
-
-    // }
 
 }
 
