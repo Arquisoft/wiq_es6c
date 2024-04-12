@@ -4,21 +4,27 @@ class QuestionGenerator {
 
     static temas = new Map([
         ["paises", [0, 1, 2]],
-        ['capital', [0]],
-        ["lenguaje", [1]]
+        ['capital', [0, 1]],
+        ["lenguaje", [2]]
     ]);
     ;
 
     static plantillas = [
         {
-            pregunta: (param) => `¿Cual es la capital de ${param}?`,
-            filtro: { capital: { $exists: true } },
+            pregunta: (param) => `¿Cuál es la capital de ${param}?`,
+            filtro: { pais: { $exists: true }, capital: { $exists: true } },
             campo_pregunta: 'pais',
             campo_respuesta: 'capital'
         },
         {
+            pregunta: (param) => `¿De qué país es capital ${param}?`,
+            filtro: { capital: { $exists: true }, pais: { $exists: true } },
+            campo_pregunta: 'capital',
+            campo_respuesta: 'pais'
+        },
+        {
             pregunta: (param) => `¿Qué lengua se habla en ${param}?`,
-            filtro: { lenguaje: { $exists: true } },
+            filtro: { pais: { $exists: true }, lenguaje: { $exists: true } },
             campo_pregunta: 'pais',
             campo_respuesta: 'lenguaje'
         }
