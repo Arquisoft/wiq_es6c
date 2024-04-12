@@ -71,6 +71,28 @@ app.get('/history/games/:username', async (req, res) => {
     }
 });
 
+app.get('/history/games', async (req, res) => {
+    try {
+        // Find users by username in the database
+        const games = await Game.find();
+
+        // Respond with the users' information
+        const gamesInformation = games.map(game => ({
+            id: game.id,
+            username: game.username,
+            points: game.points,
+            questions: game.questions,
+            createdAt: game.createdAt
+        }));
+
+        res.json(gamesInformation);
+
+    } catch (error) {
+        // Handle errors during database query
+        res.status(500).json({ error: error.message });
+    }
+});
+
 //libraries required for OpenAPI-Swagger
 const swaggerUi = require('swagger-ui-express'); 
 const fs = require("fs")
