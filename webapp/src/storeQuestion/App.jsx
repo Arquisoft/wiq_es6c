@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/questions.css';
-import GoBackButton from '../components/GoBackButton';
 import Question from './components/Question';
 import Button from '../components/Button';
+import { Nav } from "../components/nav/Nav";
+import { Footer } from "../components/footer/Footer";
 
 function App() {
   const [preguntas, setPreguntas] = useState([]);
@@ -18,7 +19,10 @@ function App() {
         const response = await axios.get(`${apiEndpoint}/history/questions`);
         setPreguntas(response.data);
       } catch (error) {
-        console.error('Error al obtener las preguntas:', error.response.data.error);
+        if('response' in error && 'data' in error.response && 'error' in error.response.data)
+          console.error('Error al obtener las preguntas:', error.response.data.error);
+        else
+          console.error('Error al obtener las preguntas:', error)
       }
     };
 
@@ -54,10 +58,11 @@ function App() {
     setCurrentPage(currentPage);
   }
 
-  return (
+  return (<>
+    <Nav />
+
     <div id='storeQuestion'>
       <h2>Almacén de preguntas</h2>
-      <GoBackButton />
       <main className='grid'>
         {currentQuestions.map(question => (
           <Question key={question._id} newQuestion={question} />
@@ -66,11 +71,14 @@ function App() {
       <footer className='pagination'>
         <Button text='Primera' onClick={firstPage}/>
         <Button text='Anterior' onClick={prevPage}/>
-        <Button text={currentPage} onClick={refresh} />
+        <Button text={''+currentPage} onClick={refresh} />
         <Button text='Siguiente' onClick={nextPage}/>
         <Button text='Última' onClick={lastPage} />
       </footer>
     </div>
+
+    <Footer />
+    </>
   );
 }
 

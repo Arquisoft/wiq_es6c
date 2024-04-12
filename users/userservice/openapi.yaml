@@ -1,12 +1,12 @@
 openapi: 3.0.0
 info:
-  title: UserServiceAPI
-  description: Registration Service OpenAPI specification.
-  version: 0.3.0
+  title: UserService API
+  description: User service OpenAPI specification.
+  version: 0.2.0
 servers:
   - url: http://localhost:8001
     description: Development server
-  - url: http://SOMEIP:8001
+  - url: http://userservice:8001
     description: Production server
 paths:
   /adduser:
@@ -22,15 +22,15 @@ paths:
               properties:
                 username:
                   type: string
-                  description: Authetificacion token used by the webapp.
-                  example: asd912eapsd
+                  description: User ID.
+                  example: student
                 password:
                   type: string
-                  description: String with the name of the user.
-                  example: Pepe  
+                  description: User password.
+                  example: pass
       responses:
         '200':
-          description: A game was send succesfully.
+          description: User added successfully.
           content:
             application/json:
               schema:
@@ -38,12 +38,11 @@ paths:
                 properties:
                   username:
                     type: string
-                    description: Authetificacion token used by the webapp.
-                    example: asd912eapsd
+                    description: User ID
                   password:
                     type: string
-                    description: String with the name of the user.
-                    example: Pepe  
+                    description: Hashed password
+                    example: $2b$10$ZKdNYLWFQxzt5Rei/YTc/OsZNi12YiWz30JeUFHNdAt7MyfmkTuvC
                   _id:
                     type: string
                     description: Identification
@@ -51,12 +50,9 @@ paths:
                   createdAt:
                     type: string
                     description: Creation date.
-                    example: '2024-03-17T20:47:23.935Z'
-                  ___v:
-                    type: integer
-                    example: '0'                                   
-        '401':
-          description: Invalid Credentials are inserted.
+                    example: '2024-03-17T20:47:23.935Z'                                   
+        '400':
+          description: Failed to add user.
           content:
             application/json:
               schema:
@@ -66,15 +62,3 @@ paths:
                     type: string
                     description: Error information.
                     example: getaddrinfo EAI_AGAIN mongodb
-        '500':
-          description: Internal Server Error.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error information.
-                    example: getaddrinfo EAI_AGAIN mongodb
- 

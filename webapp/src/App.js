@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import AddUser from './components/AddUser';
 import Login from './components/Login';
+//import { Nav } from './components/nav/Nav';//ASK - is this necessary?
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+//import { Footer } from './components/footer/Footer';
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
@@ -17,13 +19,13 @@ function App() {
       {showLogin ? <Login /> : <AddUser />}
       <Typography component="div" align="center" sx={{ marginTop: 2 }}>
         {showLogin ? (
-          <a name="gotoregister"  onClick={handleToggleView}>
+          <p className='link' name="gotoregister"  onClick={handleToggleView}>
             Don't have an account? Register here.
-          </a>
+          </p>
         ) : (
-          <a onClick={handleToggleView}>
+          <p className='link' onClick={handleToggleView}>
             Already have an account? Login here.
-          </a>
+          </p>
         )}
       </Typography>
     </Container>

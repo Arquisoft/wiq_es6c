@@ -30,14 +30,12 @@ app.post('/history/game', async (req, res) => {
     try {
         // Check if required fields are present in the request body
         validateRequiredFields(req, ['id', 'points', 'username', 'questions']);
-
         const newGame = new Game({
             id: req.body.id,
             username: req.body.username,
             points: req.body.points,
             questions: req.body.questions,
         });
-
         await newGame.save();
         res.json(newGame);
 
@@ -63,7 +61,7 @@ app.get('/history/games/:username', async (req, res) => {
                 questions: user.questions,
                 createdAt: user.createdAt
             }));
-            res.json(userInformation.slice(0, req.query.limit || userInformation.length));
+            res.json(userInformation.slice(0, req.query.limit || userInformation.length).reverse());
         } else {
             res.status(404).json({ error: 'User not found!' });
         }
@@ -73,30 +71,27 @@ app.get('/history/games/:username', async (req, res) => {
     }
 });
 
-app.get('/history/games', async (req, res) => {
-    try {
-        // Find all games in the database
-        const allGames = await Game.find();
+//libraries required for OpenAPI-Swagger
+const swaggerUi = require('swagger-ui-express'); 
+const fs = require("fs")
+const YAML = require('yaml')
 
-        // Check if any games were found
-        if (allGames.length > 0) {
-            // Respond with the games' information
-            const gameInformation = allGames.map(game => ({
-                id: game.id,
-                username: game.username,
-                points: game.points,
-                questions: game.questions,
-                createdAt: game.createdAt
-            }));
-            res.json(gameInformation.slice(0, req.query.limit || gameInformation.length));
-        } else {
-            res.status(404).json({ error: 'No games were found!' });
-        }
-    } catch (error) {
-        // Handle errors during database query
-        res.status(500).json({ error: error.message });
-    }
-});
+
+// Read the OpenAPI YAML file synchronously
+openapiPath='./openapi.yaml'
+if (fs.existsSync(openapiPath)) {
+  const file = fs.readFileSync(openapiPath, 'utf8');
+
+  // Parse the YAML content into a JavaScript object representing the Swagger document
+  const swaggerDocument = YAML.parse(file);
+
+  // Serve the Swagger UI documentation at the '/api-doc' endpoint
+  // This middleware serves the Swagger UI files and sets up the Swagger UI page
+  // It takes the parsed Swagger document as input
+  app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+} else {
+  console.log("Not configuring OpenAPI. Configuration file not present.")
+}
 
 
 const server = app.listen(port, () => {

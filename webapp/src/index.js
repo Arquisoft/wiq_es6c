@@ -16,6 +16,7 @@ import Menu from './components/Menu';
 import History from './userStats/App';
 import Login from './components/Login';
 import AppQuestion from './storeQuestion/App'
+import Help from './help/Help';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -29,6 +30,7 @@ root.render(
         <Route path="/menu" element={<Menu/>}></Route>
         <Route path="/history" element={<History/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
+        <Route path="/help" element={<Help/>}></Route>
       </Routes>
     </Router>
   </React.StrictMode>
