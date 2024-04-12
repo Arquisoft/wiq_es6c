@@ -5,7 +5,6 @@ import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Button from './Button';
-import GoBackButton from './GoBackButton';
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
 import {shuffleArray} from './Util'
@@ -18,12 +17,14 @@ var isCorrect = false
 var questions = [];
 var points = 0;
 var load = true;
+const previousBackgroundColor = '#1a1a1a'
+
 
 const Quiz = () => {
 
   const navigator = useNavigate();
   var allQuestions = useLocation().state.questions;
-
+  var haveEnter = false
   var id = useLocation().state.gameId;
   console.log(id)
 
@@ -35,7 +36,7 @@ const Quiz = () => {
     const time = setInterval(() => {
       setRemTime((progress) => {
         if(progress === 100){
-          newQuestion();
+          checkAnswer(-1);
           return 0; 
         }
         const diff = 4;
@@ -90,52 +91,47 @@ const Quiz = () => {
     }
   }
 
-  const newQuestion = async () => {
-    //Generamos las preguntas
-    getQuestions()
-
-    //Desactivamos botones
-    changeButtons("true")
-
-    //Marcamos la respuesta correcta
-    const numberAnswer = allQuestions[currentQuestionIndex].options.indexOf(allQuestions[currentQuestionIndex].correctAnswer)
-    const botonCorrecta = document.getElementById('option-' + numberAnswer)
-    const previousBackgroundColor = '#1a1a1a'
-    botonCorrecta.style.backgroundColor = 'green' 
-    
-    // Pasar a la siguiente pregunta después de responder
-    var indexAnswers = [numberAnswer, null]
-
-    questions.push({
-        title: allQuestions[currentQuestionIndex].question,
-        answers: allQuestions[currentQuestionIndex].options,
-        ansIndex: indexAnswers
-      }
-    )
-    load=false;
-    await esperar(2000); // Espera 2000 milisegundos (2 segundos)
-    botonCorrecta.style.backgroundColor = previousBackgroundColor
-    if (allQuestions.length-1 !== currentQuestionIndex) {
-      currentQuestionIndex = (currentQuestionIndex + 1);
-    }
-    isCorrect = (false)
-    //setRemTime(0)
-    load=true
-        
-    //Habilitamos botones
-    changeButtons("false")
-  }
-
   const checkAnswer = async (option) => {
-    getQuestions()
+    if (haveEnter) {
+      return
+    }
+    load = false
+    
+
+    console.log("Todas las preguntas", allQuestions)
     // console.log(option === questions[currentQuestionIndex].correctAnswer)
     isCorrect = (option === allQuestions[currentQuestionIndex].correctAnswer);
 
     changeButtons("true")
     // changeButtons(true);
     
+    const numberAnswer = allQuestions[currentQuestionIndex].options.indexOf(allQuestions[currentQuestionIndex].correctAnswer)
+    const botonCorrecta = document.getElementById('option-' + numberAnswer)
+    botonCorrecta.style.backgroundColor = 'green' 
+    console.log("Antes de entrar al if", option)
+    if (option < 0 && !haveEnter) {
+      haveEnter = true
+      console.log("Me va a dar un telele")
+      questions.push({
+        title: allQuestions[currentQuestionIndex].question,
+        answers: allQuestions[currentQuestionIndex].options,
+        ansIndex: [-1, numberAnswer]
+      })
+      
+      await esperar(2000)
+      console.log(option)
+      currentQuestionIndex = (currentQuestionIndex + 1);
+      botonCorrecta.style.backgroundColor = previousBackgroundColor
+      changeButtons("false")
+      await gameStore()
+      haveFailedQuestion = false;
+      load = true
+      navigator('/menu')
+      return
+    }
+
+   
     const botonIncorrecta = document.getElementById('option-' + allQuestions[currentQuestionIndex].options.indexOf(option))
-    const previousBackgroundColor = botonIncorrecta.style.backgroundColor
 
     // console.log(haveFailedQuestion)
     // console.log(isCorrect)
@@ -145,16 +141,16 @@ const Quiz = () => {
       botonIncorrecta.style.backgroundColor = 'red'
       // console.log("Entramos a cambiar")
       haveFailedQuestion = true;
+      
       // console.log("Despues de modificar los valores")
     } else {
+      getQuestions()
       points = points += 100;
     }
-    const numberAnswer = allQuestions[currentQuestionIndex].options.indexOf(allQuestions[currentQuestionIndex].correctAnswer)
-    const botonCorrecta = document.getElementById('option-' + numberAnswer)
-    botonCorrecta.style.backgroundColor = 'green' 
+    
     
     // Pasar a la siguiente pregunta después de responder
-    var indexAnswers = [numberAnswer, allQuestions[currentQuestionIndex].options.indexOf(option)]
+    var indexAnswers = [allQuestions[currentQuestionIndex].options.indexOf(option), numberAnswer]
 
     questions.push({
         title: allQuestions[currentQuestionIndex].question,
@@ -169,16 +165,18 @@ const Quiz = () => {
     if (allQuestions.length-1 !== currentQuestionIndex) {
       currentQuestionIndex = (currentQuestionIndex + 1);
     }
+
     isCorrect = (false)
     setRemTime(0)
         
-    
+    load = true
     changeButtons("false")
     console.log(haveFailedQuestion)
     if(haveFailedQuestion) {
       console.log("Entramos a guardar el juego")
       await gameStore()
       haveFailedQuestion = false;
+      currentQuestionIndex += 1
       navigator('/menu')
     }
   };
@@ -223,7 +221,6 @@ const Quiz = () => {
 
         </Box>
 
-        <GoBackButton/>
         
         {/* {isCorrect !== null && (
           <p>{isCorrect ? '¡Respuesta correcta!' : 'Respuesta incorrecta.'}</p>
