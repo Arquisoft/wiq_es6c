@@ -61,7 +61,7 @@ app.get('/history/games/:username', async (req, res) => {
                 questions: user.questions,
                 createdAt: user.createdAt
             }));
-            res.json(userInformation.slice(0, req.query.limit || userInformation.length));
+            res.json(userInformation.slice(0, req.query.limit || userInformation.length).reverse());
         } else {
             res.status(404).json({ error: 'User not found!' });
         }
