@@ -8,36 +8,35 @@ afterAll(async () => {
 
 jest.mock('axios');
 
-describe('Gateway Service', () => {
-    describe('/history/games', () => {
-        it('should return all games', async () => {
-            const mockData = [{
-                id: 1,
-                username: 'test',
-                points: 10,
-                questions: [{
-                    title: 'Question 1',
-                    answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
-                    ansIndex: [1,2]
-                }],
-                createdAt: new Date()
-            }];
-            axios.get.mockResolvedValue({ data: mockData });
+describe('User Service', () => {
+    describe('/users', () => {
+      it('should return user information', async () => {
+        const mockUsers = [
+          { username: 'user1', createdAt: new Date() },
+          { username: 'user2', createdAt: new Date() }
+        ];
+        User.find = jest.fn().mockResolvedValue(mockUsers);
+  
+        const res = await request(app).get('/users');
 
-            const res = await request(app).get('/history/games');
-            expect(res.statusCode).toEqual(200);
-            expect(res.body).toEqual(mockData);
-        });
+        expect(res.statusCode).toEqual(200);
+  
+        expect(res.body).toEqual(mockUsers);
+      });
+  
+      it('should handle errors', async () => {
 
-        it('should handle errors', async () => {
-            axios.get.mockRejectedValue(new Error('Error'));
-
-            const res = await request(app).get('/history/games');
-            expect(res.statusCode).toEqual(500);
-            expect(res.body).toEqual({ error: 'Error' });
-        });
+        User.find = jest.fn().mockRejectedValue(new Error('Database error'));
+  
+        const res = await request(app).get('/users');
+  
+        expect(res.statusCode).toEqual(500);
+  
+        expect(res.body).toEqual({ error: 'Database error' });
+      });
     });
-});
+  });
+  
 
 describe('Gateway Service', () => {
   describe('/history/questions', () => {

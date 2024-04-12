@@ -8,6 +8,7 @@ const port = 8010;
 
 const storeQuestionsServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004'
 const userStatsServiceUrl = process.env.USER_STATS_SERVICE_URL || 'http://localhost:8003';
+const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
 
 app.use(cors());
 app.use(express.json());
@@ -30,9 +31,9 @@ function catchAction(error, res) {
 
 app.use(metricsMiddleware);
 
-app.get('/history/games', async (req, res) => {
+app.get('/users', async (req, res) => {
   try {
-    const response = await axios.get(`${userStatsServiceUrl}/history/games`);
+    const response = await axios.get(`${userServiceUrl}/users`);
     res.json(response.data);
   } catch (error) {
     catchAction(error, res)
