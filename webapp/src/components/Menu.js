@@ -5,65 +5,48 @@ import 'react-circular-progressbar/dist/styles.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
 import Button from './Button'
+import { Footer } from './footer/Footer';
+import { Nav } from './nav/Nav';
+import {shuffleArray} from './Util'
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
-
-var isApiCalledRef = false;
+var gameId;
+//var isApiCalledRef = false;//ASK - is this necessary?
 
 
 var questions = []
 
-function secureRandomNumber(max) {
-  const randomBytes = new Uint32Array(1);
-  window.crypto.getRandomValues(randomBytes);
-  return randomBytes[0] % max;
-}
-
-function shuffleArray(array) {
-  // Crea una copia del array original
-  const shuffledArray = [...array];
-
-  // Recorre el array desde el último elemento hasta el primero
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    // Genera un índice aleatorio entre 0 y el índice actual
-    //const randomIndex = Math.floor(Math.random() * (i + 1));
-    const randomIndex = secureRandomNumber(i + 1);
-
-    // Intercambia el elemento actual con el elemento del índice aleatorio
-    const temp = shuffledArray[i];
-    shuffledArray[i] = shuffledArray[randomIndex];
-    shuffledArray[randomIndex] = temp;
-  }
-
-  // Devuelve el array barajado
-  return shuffledArray;
-}
-
-// useEffect (() => {
-//     if (!isApiCalledRef) {
-//       getQuestions();
-//       isApiCalledRef = true;
-//     }
-//   }, []);
-
-
-
-
 const Menu = () => {
-    const navigation = useNavigate(); // Añade esto
+
+    const navigation = useNavigate(); 
+
+    /*
+    const [selectedButtonCustomize, isSelectedButtonCustomize] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedValue, setSelectedValue] = useState('');
+    */
 
     const initiateGame = async () => {
-        if (!isApiCalledRef) {
-            await getQuestions()
-        }
-        isApiCalledRef = true
-        navigation("/firstGame", {state: {questions}})
+      await generateGameId();  
+      await getQuestions()  
+      //isApiCalledRef = true//ASK - is this necessary?
+      navigation("/firstGame", {state: {questions, gameId}})
+    }
+
+    const generateGameId = async () => {
+      try {
+        const response = await axios.get(`${apiEndpoint}/generateGameUnlimitedQuestions`)
+        console.log(response.data)
+        gameId = response.data
+      } catch(error) {
+        console.error(error);
+      }
     }
 
     const getQuestions = async () => {
         try {
-          const response = await axios.get(`${apiEndpoint}/questions`);
+          const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`, {gameId});
           console.log(response.data.length)
           for (var i = 0; i < response.data.length; i++) {
             var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
@@ -80,27 +63,19 @@ const Menu = () => {
         console.log(questions)
     };
 
-    const openStoredQuestions = async () => {
-      navigation("/appQuestion")
-    }
-
-    const openHistory = async () => {
-      navigation("/history")
-    }
-
     return (
+      <>
+        <Nav />
         <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
-            <h2>Modos de juego:</h2>
-            <div className='modes'>
+          <h2>Modos de juego:</h2>
+          <div className='modes'>
               <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
-            </div>
-            <h2>Esto irá en el nav(?)</h2>
-            <Button text = "Almacén de preguntas" name="openStoredQuestions" onClick={() => openStoredQuestions()}/>
-            <Button text = "Historial" name="openHistory" onClick={() => openHistory()}/>
+          </div>
+          
         </Container>
+        <Footer />
+      </>
     );
-
 }
-
 
 export default Menu;

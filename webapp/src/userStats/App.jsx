@@ -1,9 +1,10 @@
 import Game from "./components/Game";
 import "./css/Game.css"
-import GoBackButton from "../components/GoBackButton";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from "../components/Button";
+import { Nav } from "../components/nav/Nav";
+import { Footer } from "../components/footer/Footer";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,24 +60,30 @@ function App() {
   }
 
   return (
-    <div id="history">
-      <div className="header">
-        <h2>Historial de {username}</h2>
+
+    <>
+      <Nav />
+
+      <div id="history">
+        <div className="header">
+          <h2>Historial de {username}</h2>
+        </div>
+        <main>
+          {currentGames.map(game => (
+            <Game key={game.id} game={game} />
+          ))}
+        </main>
+        <footer className="pagination">
+          <Button text='Primera' onClick={firstPage}/>
+          <Button text='Anterior' onClick={prevPage}/>
+          <Button text={''+currentPage} onClick={refresh} />
+          <Button text='Siguiente' onClick={nextPage}/>
+          <Button text='Última' onClick={lastPage} />
+        </footer>
       </div>
-      <GoBackButton />
-      <main>
-        {currentGames.map(game => (
-          <Game key={game.id} game={game} />
-        ))}
-      </main>
-      <footer className="pagination">
-        <Button text='Primera' onClick={firstPage}/>
-        <Button text='Anterior' onClick={prevPage}/>
-        <Button text={currentPage} onClick={refresh} />
-        <Button text='Siguiente' onClick={nextPage}/>
-        <Button text='Última' onClick={lastPage} />
-      </footer>
-    </div>
+
+      <Footer />
+      </>
   );
 }
 

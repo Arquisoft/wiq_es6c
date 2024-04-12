@@ -138,6 +138,14 @@ code {
   box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
 }
 
+.border[data-disabled = "true"]:hover{
+  box-shadow: none;
+}
+
+.border[data-disabled = "true"] .inner{
+  pointer-events: none;
+}
+
 .inner{
   background-color: #1a1a1a;
   color: #F0F0F0;
@@ -147,6 +155,11 @@ code {
   height: 100%;
   padding: 2.6vh 3.75vw;
   text-align: center;
+}
+
+button.inner {
+  border: none;
+  font-size: inherit;
 }
 
 a{
@@ -169,4 +182,47 @@ input, label{
 
 .addUser .inner{
   padding: 1em 4.25em;
+}
+
+main input:-internal-autofill-selected{
+  box-shadow: none;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset;
+  -webkit-text-fill-color: #f0f0f0;
+  color: #F0F0F0 !important;
+}
+
+main .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root{
+  color: #F0F0F0 !important;
+}
+
+.link{
+  text-decoration: underline;
+  cursor: pointer
+}
+
+div .MuiBox-root.css-1r4ai6y{
+  padding: 1.5em 0;
+}
+
+.pagination{
+  margin-bottom: 70px;
+}
+
+body{
+  background-image: url('../public/background.png');
+  background-size: cover;
+  background-repeat: repeat;
+  margin: 0;
+  padding: 0;
+  overflow:auto;
+}
+
+.overlay{
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0, 0, 0, 0.5); 
+  overflow:auto;
 }

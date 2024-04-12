@@ -4,56 +4,7 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 == Deployment View
 
-[role="arc42help"]
-****
-.Content
-The deployment view describes:
-
- 1. technical infrastructure used to execute your system, with infrastructure elements like geographical locations, environments, computers, processors, channels and net topologies as well as other infrastructure elements and
-
-2. mapping of (software) building blocks to that infrastructure elements.
-
-Often systems are executed in different environments, e.g. development environment, test environment, production environment. In such cases you should document all relevant environments.
-
-Especially document a deployment view if your software is executed as distributed system with more than one computer, processor, server or container or when you design and construct your own hardware processors and chips.
-
-From a software perspective it is sufficient to capture only those elements of an infrastructure that are needed to show a deployment of your building blocks. Hardware architects can go beyond that and describe an infrastructure to any level of detail they need to capture.
-
-.Motivation
-Software does not run without hardware.
-This underlying infrastructure can and will influence a system and/or some
-cross-cutting concepts. Therefore, there is a need to know the infrastructure.
-
-.Form
-
-Maybe a highest level deployment diagram is already contained in section 3.2. as
-technical context with your own infrastructure as ONE black box. In this section one can
-zoom into this black box using additional deployment diagrams:
-
-* UML offers deployment diagrams to express that view. Use it, probably with nested diagrams,
-when your infrastructure is more complex.
-* When your (hardware) stakeholders prefer other kinds of diagrams rather than a deployment diagram, let them use any kind that is able to show nodes and channels of the infrastructure.
-
-
-.Further Information
-
-See https://docs.arc42.org/section-7/[Deployment View] in the arc42 documentation.
-
-****
-
 === Infrastructure Level 1
-
-[role="arc42help"]
-****
-Describe (usually in a combination of diagrams, tables, and text):
-
-* distribution of a system to multiple locations, environments, computers, processors, .., as well as physical connections between them
-* important justifications or motivations for this deployment structure
-* quality and/or performance features of this infrastructure
-* mapping of software artifacts to elements of this infrastructure
-
-For multiple environments or alternative deployments please copy and adapt this section of arc42 for all relevant environments.
-****
 
 [plantuml,"Deployment View",png]
 ----
@@ -68,23 +19,26 @@ cloud "Azure Cloud\n" {
             node "Gateway Container"{
                 node "Gateway Service"
             }
-            node "  User Container  "{
+            node "User Container"{
                 node "User Service"
             }
-            node "  Auth Container  "{
+            node "Auth Container"{
                 node "Auth Service"
             }
-            node "\tGame Container\t"{
-                node "Game Generator Service"
+            node "Game Container"{
+                node "Game Service"
             }
-            node "Questions History Container"{
-                node "Questions History Service"
+            node "Store Question Container"{
+                node "Store Question Service"
             }
             node "User Stats Container\t"{
                 node "User Stats Service"
             }
-            node "Questions Generator Container"{
-                node "Questions Generator Service"
+            node "Question Generator Container"{
+                node "Question Generator Service"
+            }
+            node "Wikidata Extractor Container"{
+                node "Wikidata Extractor Service"
             }
         }
     }
@@ -98,28 +52,30 @@ actor "User"
 
 "Web App" -- "Gateway Service" : "port: 8000"
 
-"Gateway Service" -- "Questions History Service" : "port: 8004             "
+"Gateway Service" -- "Store Question Service" : "port: 8004"
 "Gateway Service" -- "User Stats Service" : "port: 8003"
 "Gateway Service" -up- "Auth Service" : "port: 8002         "
 "Gateway Service" -up- "User Service" : "port: 8001"
-"Gateway Service" -right- "Game Generator Service"  : "           port: 8005     "
+"Gateway Service" -right- "Game Service"  : "           port: 8005     "
 
-"Game Generator Service" -- "User Stats Service" : "port: 8003"
-"Game Generator Service" -- "Questions Generator Service" : " port: 8006"
+"Game Service" -- "User Stats Service" : "port: 8003"
+"Game Service" -- "Question Generator Service" : " port: 8007"
 
-"Questions Generator Service" -- "Questions History Service" : "port: 8004"
-"Questions Generator Service" -- "Wikidata" : "HTTPS"
+"Question Generator Service" -- "Store Question Service" : "port: 8004"
+"Question Generator Service" -- "Wikidata Extractor Service" : "port: 8008"
+
+"Wikidata Extractor Service" -- "Wikidata" : "HTTPS"
 ----
 
 In addition to what is shown in the diagram, we will also use Graphana and Prometheus during the production stage as code monitoring systems.
 
 Motivation::
 
-Our goal is to run the application with Docker in a Azure VM.
+Despite our initial goal being to run the application with Docker in an Azure VM, as we were running out of Azure Credits, we decided to switch to an Oracle VM.
 However, during the production stage, each contributor will deploy the project locally.
-Final product will be deployed in http://wiq.sytes.net/ (if that does not work, try http://20.77.37.219:3000/).
+Final product will be deployed in http://wiq.sytes.net/ (if that does not work, try http://158.179.212.42:3000/).
 
 Quality and/or Performance Features::
-As for performance features, our current Azure MV has 2 GiB RAM and 1vCPU.
-If that was not enough, we can always switch to an Oracle VM, which has better resources for free.
-Each microservice has its own container as well as its own database in case of needing one.
+Previously, we had an Azure VM with 2 GiB RAM and 1vCPU. When we decided to change to the Oracle VM, we also improve our resources, as it was free.
+Finally, our Oracle VM has 24 GiB RAM and 4vCPU.
+Each microservice has its own container. There are also two databases, one for the Question Generator and Wikidata Extractor services, and another one for the rest of the containers which may need it.
