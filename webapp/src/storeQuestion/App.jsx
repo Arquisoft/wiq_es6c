@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/questions.css';
-import GoBackButton from '../components/GoBackButton';
 import Question from './components/Question';
 import Button from '../components/Button';
 import { Nav } from "../components/nav/Nav";
@@ -64,7 +63,6 @@ function App() {
 
     <div id='storeQuestion'>
       <h2>Almacén de preguntas</h2>
-      <GoBackButton />
       <main className='grid'>
         {currentQuestions.map(question => (
           <Question key={question._id} newQuestion={question} />

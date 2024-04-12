@@ -1,6 +1,5 @@
 import Game from "./components/Game";
 import "./css/Game.css"
-import GoBackButton from "../components/GoBackButton";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from "../components/Button";
@@ -69,7 +68,6 @@ function App() {
         <div className="header">
           <h2>Historial de {username}</h2>
         </div>
-        <GoBackButton />
         <main>
           {currentGames.map(game => (
             <Game key={game.id} game={game} />
