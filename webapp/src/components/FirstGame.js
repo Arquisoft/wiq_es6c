@@ -108,10 +108,8 @@ const Quiz = () => {
     const numberAnswer = allQuestions[currentQuestionIndex].options.indexOf(allQuestions[currentQuestionIndex].correctAnswer)
     const botonCorrecta = document.getElementById('option-' + numberAnswer)
     botonCorrecta.style.backgroundColor = 'green' 
-    console.log("Antes de entrar al if", option)
     if (option < 0 && !haveEnter) {
       haveEnter = true
-      console.log("Me va a dar un telele")
       questions.push({
         title: allQuestions[currentQuestionIndex].question,
         answers: allQuestions[currentQuestionIndex].options,
