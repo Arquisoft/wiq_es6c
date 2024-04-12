@@ -55,7 +55,7 @@ cron.schedule(`*/${minutes} * * * *`, () => {
 // Route for extracting countries
 app.get('/extract', async (req, res) => {
     try {
-        res.json(extractData());
+        res.json(await extractData());
     } catch (error) {
         res.status(500).json({ message: error.message })
         // res.status(500).json({ error: 'Internal Server Error' });
