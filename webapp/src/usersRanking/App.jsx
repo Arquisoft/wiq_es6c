@@ -1,43 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/questions.css';
-import Question from './components/Question';
+import './css/users.css';
+import User from './components/Users';
 import Button from '../components/Button';
 import { Nav } from "../components/nav/Nav";
 import { Footer } from "../components/footer/Footer";
 
 function App() {
-  const [preguntas, setPreguntas] = useState([]);
+
+  const [usuarios, setUsuarios] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Número de preguntas por página
+  const itemsPerPage = 10; // Número de usuarios
 
   const apiEndpoint = process.env.REACT_APIS_ENDPOINT || 'http://localhost:8100';
 
   useEffect(() => {
-    const obtenerPreguntas = async () => {
+    const obtenerUsuarios = async () => {
       try {
-        const response = await axios.get(`${apiEndpoint}/history/questions`);
-        setPreguntas(response.data);
+        const response = await axios.get(`${apiEndpoint}/users`);
+        setUsuarios(response.data);
       } catch (error) {
         if('response' in error && 'data' in error.response && 'error' in error.response.data)
-          console.error('Error al obtener las preguntas:', error.response.data.error);
+          console.error('Error al obtener las usuarios:', error.response.data.error);
         else
-          console.error('Error al obtener las preguntas:', error)
+          console.error('Error al obtener las usuarios:', error)
       }
     };
 
-    obtenerPreguntas();
+    obtenerUsuarios();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Calcular el índice inicial y final de las preguntas a mostrar en la página actual
+  // Calcular el índice inicial y final de las usuarios a mostrar en la página actual
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentQuestions = preguntas.slice(startIndex, endIndex);
+  const currentUsers = usuarios.slice(startIndex, endIndex);
 
   // Funciones para cambiar de página
   const nextPage = () => {
-    if(currentPage < Math.ceil(preguntas.length / itemsPerPage))
+    if(currentPage < Math.ceil(usuarios.length / itemsPerPage))
       setCurrentPage(currentPage + 1);
   };
 
@@ -51,7 +52,7 @@ function App() {
   }
 
   const lastPage = () => {
-    setCurrentPage(Math.ceil(preguntas.length / itemsPerPage));
+    setCurrentPage(Math.ceil(usuarios.length / itemsPerPage));
   }
 
   const refresh = () => {
@@ -61,11 +62,11 @@ function App() {
   return (<>
     <Nav />
 
-    <div id='storeQuestion'>
-      <h2>Almacén de preguntas</h2>
+    <div id='storeUser'>
+      <h2>Almacén de usuarios</h2>
       <main className='grid'>
-        {currentQuestions.map(question => (
-          <Question key={question._id} newQuestion={question} />
+        {currentUsers.map(user => (
+          <User key={user._id} newUser={user} />
         ))}
       </main>
       <footer className='pagination'>
