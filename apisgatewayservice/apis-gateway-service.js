@@ -4,7 +4,7 @@ const cors = require('cors');
 const promBundle = require('express-prom-bundle');
 
 const app = express();
-const port = 8010;
+const port = 8100;
 
 const storeQuestionsServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004'
 const userStatsServiceUrl = process.env.USER_STATS_SERVICE_URL || 'http://localhost:8003';
