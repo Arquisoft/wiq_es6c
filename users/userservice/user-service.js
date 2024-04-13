@@ -74,6 +74,7 @@ app.get('/users', async (req, res) => {
 
       // Respond with the users' information
       const usersInformation = users.map(user => ({
+          _id: user._id,
           username: user.username,
           createdAt: user.createdAt
       }));
