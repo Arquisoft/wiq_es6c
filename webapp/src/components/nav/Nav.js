@@ -46,6 +46,9 @@ export const Nav = () => {
                 <Link to='/appQuestion' style={{color:'white', textDecoration: 'none'}}>
                     Almacén de preguntas
                 </Link>
+                <Link to='/users' style={{color:'white', textDecoration: 'none'}}>
+                    Usuarios
+                </Link>
             </Container>
 
             <Container sx={{alignItems:'right', textAlign:'right'}}>
