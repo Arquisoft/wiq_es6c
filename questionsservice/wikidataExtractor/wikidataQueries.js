@@ -127,6 +127,46 @@ class WikiQueries {
 
     }
 
+    static async obtenerAñoYGanadorF1(){
+        const query = `
+        SELECT ?year ?winnerLabel
+        WHERE {
+            wd:Q1968 wdt:P793 ?event.
+            ?event wdt:P585 ?date.
+            ?event wdt:P1346 ?winner.
+            ?winner wdt:P31 wd:Q5.
+            BIND(YEAR(?date) AS ?year)
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
+        }
+        ORDER BY ?year
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
+    static async obtenerAñoYEquipoGanadorF1(){
+        const query = `
+        SELECT ?year ?winnerLabel
+        WHERE {
+            wd:Q1968 wdt:P793 ?event.
+            ?event wdt:P585 ?date.
+            ?event wdt:P1346 ?winner.
+            ?winner wdt:P31 wd:Q10497835.
+            BIND(YEAR(?date) AS ?year)
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
+        }
+        ORDER BY ?year
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
 
     /* ARTE */
 
