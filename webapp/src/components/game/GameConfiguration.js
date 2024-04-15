@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import GoBackButton from '../GoBackButton';
 import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
@@ -8,16 +9,32 @@ const GameConfiguration = () => {
 
   // Almacen de temáticas 
   const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
+  // Almacen para el número de preguntas
+  const [numPreguntas, setNumPreguntas] = useState(1); 
+  // Almacen de mensaje de error para el spinner
+  const [error, setError] = useState(null); 
 
 
   const handleTematicaChange = (event) => {
     const tematicaSeleccionada = event.target.value;
+
     if (tematicasSeleccionadas.includes(tematicaSeleccionada)) {
       // Si está seleccionada -> la eliminamos
       setTematicasSeleccionadas(
         tematicasSeleccionadas.filter(tema => tema !== tematicaSeleccionada));
     } else {
       setTematicasSeleccionadas([...tematicasSeleccionadas, tematicaSeleccionada]);
+    }
+  };
+
+  const handleNumPreguntasChange = (event) => {
+    const nuevoValor = parseInt(event.target.value, 10);
+
+    if (!isNaN(nuevoValor) && nuevoValor > 0) {
+      setNumPreguntas(nuevoValor);
+      setError(null); // Reseteamos el error si el valor es válido
+    } else {
+      setError('El número de preguntas debe ser mayor que 0');
     }
   };
 
@@ -31,7 +48,7 @@ const GameConfiguration = () => {
     
         <div className="configureTopic">
 
-          <h3>Selecciona las temáticas:</h3>
+          <h3>Selecciona las temáticas</h3>
 
           <div>
             <input
@@ -78,6 +95,27 @@ const GameConfiguration = () => {
           </div>
     
         </div>
+
+
+        <div className="configureNumberOfQuestions">
+
+          <h3>Selecciona el número de preguntas</h3>
+
+          <div>
+            <label htmlFor="numPreguntas">Número de preguntas:</label>
+            <input
+              type="number"
+              id="numPreguntas"
+              value={numPreguntas}
+              onChange={handleNumPreguntasChange}
+            />
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+          </div>
+
+        </div>
+
+
+        <button>Comenzar Juego</button>
     
     
         <GoBackButton/>
