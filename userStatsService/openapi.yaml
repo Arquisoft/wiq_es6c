@@ -102,7 +102,8 @@ paths:
                     example: 65f756db3fa22d227a4b7c7d
                   createdAt:
                     type: string
-                    description: Creation date.
+                    format: date-time
+                    description: Creation date and time of the game.
                     example: '2024-03-17T20:47:23.935Z'
                   ___v:
                     type: integer
