@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: User Stats API
   description: UserStats OpenAPI specification.
-  version: 0.2.0
+  version: 0.3.1
 servers:
   - url: http://localhost:8003
     description: Development server
@@ -10,7 +10,7 @@ servers:
     description: Production server
 paths:
   /history/game:
-    /post:
+    post:
       summary: Stores the actual game in the database.
       operationId: historyGame
       requestBody:
@@ -31,40 +31,77 @@ paths:
                   type: integer
                   description: The number of points that the user score.
                 questions:
-                  answers:
-                    type: List<String>
-                    description: List with the possible answers.
-                    example: 
-                  question:
-                    type: String
-                    description: The question that is going to be done
-                  correctAnswer:
-                    type: String
-                    description: The correct answer for the question
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      question:
+                        type: string
+                        description: The question that is going to be done.
+                      correctAnswer:
+                        type: string
+                        description: The correct answer for the question.
+                      answers:
+                        type: array
+                        items:
+                          type: string
+                          description: List with the possible answers.
+                avgtime:
+                  type: integer
+                  description: The average time taken to answer questions in seconds.
       responses:
         '200':
-          description: Question created and returned successfuly.
+          description: Game created and returned successfully.
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  token:
-                    type: string
-                    description: User token.
-                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
-                  createdAt:
-                    type: string
-                    description: Creation date.
-                    example: '2024-03-17T20:47:23.935Z'
                   id:
                     type: string
-                    description: The question that is going to bre realized.
-                    example: 
-                  answers:
-                    type: List<String>
-                    description: List with the possible answers.
-                    example: 
+                    description: Game Id.
+                    example: sqeweg12er56yg46u89k
+                  username:
+                    type: string
+                    description: The name if the user.
+                  points:
+                    type: integer
+                    description: The number of points that the user scored.
+                  avgtime:
+                    type: integer
+                    description: The average time taken to answer questions in seconds.
+                  questions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        question:
+                          type: string
+                          description: The question that was done.
+                        correctAnswer:
+                          type: string
+                          description: The correct answer for the question.
+                        answers:
+                          type: array
+                          items:
+                            type: string
+                            description: List with the possible answers.
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: Creation date and time of the game.
+                    example: '2024-03-17T20:47:23.935Z'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Bad Request
         '500':
           description: Internal server error.
           content:
@@ -76,41 +113,175 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
-  /history/games/:username:
+  /history/games/{username}:
     get:
-      summary: Access to de history of games of the user.
+      summary: Access to the history of games of the user.
       operationId: historyGames
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  description: User ID.
-                  example: student
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: Username of the user.
+          schema:
+            type: string
       responses:
         '200':
           description: Information of games returned successfully.
           content:
             application/json:
               schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Game Id.
+                      example: sqeweg12er56yg46u89k
+                    username:
+                      type: string
+                      description: Username of the user.
+                      example: student
+                    points:
+                      type: integer
+                      description: The number of points that the user scored.
+                    avgtime:
+                      type: integer
+                      description: The average time taken to answer questions in seconds.
+                    questions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          question:
+                            type: string
+                            description: The question that was done.
+                          correctAnswer:
+                            type: string
+                            description: The correct answer for the question.
+                          answers:
+                            type: array
+                            items:
+                              type: string
+                              description: List with the possible answers.
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Creation date and time of the game.
+                      example: '2024-03-17T20:47:23.935Z'
+        '404':
+          description: User not found.
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
-                  token:
+                  error:
                     type: string
-                    description: User token.
-                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
-                  username:
+                    description: Error information.
+                    example: User not found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
                     type: string
-                    description: Username.
-                    example: student
-                  createdAt:
+                    description: Error information.
+                    example: Internal Server Error
+  /history/games:
+    get:
+      summary: Get the history of all games.
+      operationId: historyAllGames
+      responses:
+        '200':
+          description: Information of games returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Game Id.
+                      example: sqeweg12er56yg46u89k
+                    username:
+                      type: string
+                      description: Username of the user.
+                      example: student
+                    points:
+                      type: integer
+                      description: The number of points that the user scored.
+                    avgtime:
+                      type: integer
+                      description: The average time taken to answer questions in seconds.
+                    questions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          question:
+                            type: string
+                            description: The question that was done.
+                          correctAnswer:
+                            type: string
+                            description: The correct answer for the question.
+                          answers:
+                            type: array
+                            items:
+                              type: string
+                              description: List with the possible answers.
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Creation date and time of the game.
+                      example: '2024-03-17T20:47:23.935Z'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
                     type: string
-                    description: Creation date.
-                    example: '2024-03-17T20:47:23.935Z'
+                    description: Error information.
+                    example: Internal Server Error
+  /history/users:
+    get:
+      summary: Get the history of all users.
+      operationId: historyAllUsers
+      responses:
+        '200':
+          description: Information of users returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: Username of the user.
+                    tpoints:
+                      type: integer
+                      description: Total points earned by the user.
+                    ttime:
+                      type: integer
+                      description: Total time spent by the user (in seconds).
+                    ngames:
+                      type: integer
+                      description: Number of games played by the user.
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Creation date and time of the user.
+                      example: '2024-03-17T20:47:23.935Z'
         '500':
           description: Internal server error.
           content:
