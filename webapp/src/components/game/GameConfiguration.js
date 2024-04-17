@@ -34,7 +34,7 @@ const GameConfiguration = () => {
       setNumPreguntas(nuevoValor);
       setError(null); // Reseteamos el error si el valor es válido
     } else {
-      setError('El número de preguntas debe ser mayor que 0');
+      setError("El número de preguntas debe ser mayor que 0");
     }
   };
 
