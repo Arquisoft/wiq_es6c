@@ -131,7 +131,7 @@ app.get('/history/users', async (req, res) => {
         // Respond with the users' information
         const usersInformation = users.map(user => ({
             username: user.username,
-            tpoints: user.points,
+            tpoints: user.tpoints,
             ttime: user.ttime,
             ngames: user.ngames,
             createdAt: user.createdAt
