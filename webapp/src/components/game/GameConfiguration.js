@@ -5,7 +5,7 @@ import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 
 
-const GameConfiguration = () => {
+const GameConfiguration = (configureNumErrors) => {
 
   // Almacen de temáticas 
   const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
@@ -13,6 +13,8 @@ const GameConfiguration = () => {
   const [numPreguntas, setNumPreguntas] = useState(1); 
   // Almacen de mensaje de error para el spinner
   const [error, setError] = useState(null); 
+  // Almacen del número de errores
+  const [numeroErrores, setNumeroErrores] = useState("ninguno");
 
 
   const handleTematicaChange = (event) => {
@@ -36,6 +38,10 @@ const GameConfiguration = () => {
     } else {
       setError("El número de preguntas debe ser mayor que 0");
     }
+  };
+
+  const handleChange = (event) => {
+    setNumeroErrores(event.target.value);
   };
 
 
@@ -87,6 +93,17 @@ const GameConfiguration = () => {
             <input
               type="checkbox"
               id="t4"
+              value="Deporte"
+              checked={tematicasSeleccionadas.includes('Deporte')}                
+              onChange={handleTematicaChange}
+              />
+            <label htmlFor="tematica4">Deporte</label>
+          </div>
+
+          <div>
+            <input
+              type="checkbox"
+              id="t5"
               value="Entretenimiento"
               checked={tematicasSeleccionadas.includes('Entretenimiento')}                
               onChange={handleTematicaChange}
@@ -113,6 +130,27 @@ const GameConfiguration = () => {
           </div>
 
         </div>
+        
+        
+        {{configureNumErrors} ? (
+          <div className="configureNumberOfErrors">
+
+            <h3>Selecciona el número de errores permitidos</h3>
+
+            <div>
+              <label htmlFor="numErrores">Número de errores permitidos:</label>
+              <select id="numErrores" value={numeroErrores} onChange={handleChange}>
+                <option value="ninguno">Ninguno</option>
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+
+          </div>
+        ) : (
+          <div></div>
+        )}
 
 
         <button>Comenzar Juego</button>
