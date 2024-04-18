@@ -228,6 +228,25 @@ class WikiQueries {
 
     }
 
+    static async obtenerEstadioYAñoFund() {
+        const query = `
+            SELECT DISTINCT ?estadioLabel ?fundacion
+            WHERE {
+            ?estadio wdt:P31 wd:Q483110 ;    # Instancia de estadio deportivo
+                    wdt:P17 wd:Q29 ;         # Ubicado en España
+                    wdt:P571 ?fechaInicio . # Fecha de inicio de la construcción
+            BIND(YEAR(?fechaInicio) AS ?fundacion)
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+            }
+            ORDER BY ?fundacion
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
 }
 
 
