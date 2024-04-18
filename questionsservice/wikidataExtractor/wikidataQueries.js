@@ -189,6 +189,45 @@ class WikiQueries {
 
     }
 
+
+    /* DEPORTE */
+
+    static async obtenerJugadorYPais() { //País en el que juega
+        const query = `
+            SELECT ?playerLabel ?countryLabel
+            WHERE {
+            ?player wdt:P106 wd:Q3665646;
+                    wdt:P54 ?team.
+            ?team wdt:P31 wd:Q13393265;
+                    wdt:P17 ?country.
+            SERVICE wikibase:label {bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+            }
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
+    static async obtenerJugadorYDeporte() {
+        const query = `
+            SELECT ?personLabel ?sportLabel
+            WHERE {
+            ?person wdt:P101 ?trabajo.
+            ?trabajo wdt:P31/wdt:P279* wd:Q31629.
+            ?person wdt:P106 ?sport.
+            
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+            }
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results;
+
+    }
+
 }
 
 
