@@ -33,7 +33,7 @@ app.use(metricsMiddleware);
 
 app.get('/users', async (req, res) => {
   try {
-    const response = await axios.get(`${userServiceUrl}/users`);
+    const response = await axios.get(userServiceUrl+`/users`);
     res.json(response.data);
   } catch (error) {
     catchAction(error, res)
