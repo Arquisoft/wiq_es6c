@@ -15,4 +15,4 @@ function User(props) {
   );
 }
 
-export default Question;
+export default User;
