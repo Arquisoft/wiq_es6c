@@ -10,7 +10,8 @@ const authServiceUrl = process.env.AUTH_SERVICE_URL || 'http://localhost:8002';
 const userServiceUrl = process.env.USER_SERVICE_URL || 'http://localhost:8001';
 const userStatsServiceUrl = process.env.USER_STATS_SERVICE_URL || 'http://localhost:8003';
 const storeQuestionsServiceUrl = process.env.STORE_QUESTION_SERVICE_URL || 'http://localhost:8004'
-const questionsGeneratorServiceUrl = process.env.QUESTIONS_GENERATOR_SERVICE_URL || 'http://localhost:8007'
+// const questionsGeneratorServiceUrl = process.env.QUESTIONS_GENERATOR_SERVICE_URL || 'http://localhost:8007'
+const gameService = process.env.GAME_SERVICE_URL || 'http://localhost:8005'
 
 app.use(cors());
 app.use(express.json());
@@ -78,14 +79,73 @@ app.get('/history/questions', async (req, res) => {
   }
 })
 
-app.get(`/questions`, async (req, res) => {
+// app.get(`/questions`, async (req, res) => {
+//   try {
+//     const response = await axios.get(questionsGeneratorServiceUrl+`/questions`);
+//     res.json(response.data);
+//   } catch (error) {
+//     res.status(error.response.status).json({ error: error.response.data.error });
+//   }
+// })
+
+app.get('/generateGameUnlimitedQuestions', async (req, res) => {
   try {
-    const response = await axios.get(questionsGeneratorServiceUrl+`/questions`);
-    res.json(response.data);
+    const response = await axios.get(gameService + '/generateGameUnlimitedQuestions')
+    res.json(response.data)
   } catch (error) {
     catchAction(error, res)
   }
 })
+
+app.get('/gameUnlimitedQuestions', async (req, res) => {
+  try {
+    console.log("Antes de la llamada")
+    const response = await axios.get(gameService + `/gameUnlimitedQuestions`, req.body)
+    console.log(response.data)
+    res.json(response.data)
+  } catch (error) {
+    catchAction(error, res)
+  }
+})
+
+app.post('/storeGame', async (req, res) => {
+  try {
+    var id = req.body.id
+    var username = req.body.username
+    var points = req.body.points
+    var questions = req.body.questions
+    console.log(questions)
+    console.log("Hacemos la llamada al guardar preguntas")
+    const post = await axios.post(gameService + `/storeGame`, {id, username,  points, questions})
+    console.log("Devuelve la llamada")
+    res.json(post.data) 
+  } catch (error) {
+    catchAction(error, res)
+  }
+})
+
+//libraries required for OpenAPI-Swagger
+const swaggerUi = require('swagger-ui-express'); 
+const fs = require("fs")
+const YAML = require('yaml')
+
+
+// Read the OpenAPI YAML file synchronously
+openapiPath='./openapi.yaml'
+if (fs.existsSync(openapiPath)) {
+  const file = fs.readFileSync(openapiPath, 'utf8');
+
+  // Parse the YAML content into a JavaScript object representing the Swagger document
+  const swaggerDocument = YAML.parse(file);
+
+  // Serve the Swagger UI documentation at the '/api-doc' endpoint
+  // This middleware serves the Swagger UI files and sets up the Swagger UI page
+  // It takes the parsed Swagger document as input
+  app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+} else {
+  console.log("Not configuring OpenAPI. Configuration file not present.")
+}
+
 
 // Start the gateway service
 const server = app.listen(port, () => {
