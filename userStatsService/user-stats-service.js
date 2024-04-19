@@ -32,8 +32,10 @@ app.post('/history/game', async (req, res) => {
         // Check if required fields are present in the request body
         validateRequiredFields(req, ['id', 'points', 'username', 'questions', 'avgtime']);
 
+        const query = { username: req.body.username.toString() }
+
         // Find user by username in the database
-        let user = await User.findOne({ username: req.body.username });
+        let user = await User.findOne(query);
 
         if (!user) {
             // If the user doesn't exist, create a new user entry
