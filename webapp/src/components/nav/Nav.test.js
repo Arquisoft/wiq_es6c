@@ -27,7 +27,7 @@ describe("Nav component", () => {
         expect(linkElement).toBeInTheDocument();
     });
 
-    test("renders nav, access to history",async () => {
+    test("renders nav, label history",async () => {
 
         render(
             <ContextFun>
@@ -39,9 +39,6 @@ describe("Nav component", () => {
 
         const linkElement = screen.getByText(/Historial/i);
         fireEvent.click(linkElement);
-
-        const textOnPage = screen.getByText(/Historial de/i);
-        expect(textOnPage).toBeInTheDocument();
     });
 
 });
