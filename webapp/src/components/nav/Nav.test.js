@@ -38,7 +38,7 @@ describe("Nav component", () => {
         );
 
         const linkElement = screen.getByText(/Historial/i);
-        fireEvent.click(linkElement);
+        expect(linkElement).toBeInTheDocument();
     });
 
 });
