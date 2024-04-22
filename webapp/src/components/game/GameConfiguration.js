@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import GoBackButton from '../GoBackButton';
 import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
@@ -154,9 +153,7 @@ const GameConfiguration = (configureNumErrors) => {
 
 
         <button>Comenzar Juego</button>
-    
-    
-        <GoBackButton/>
+  
             
       </Container>
       <Footer />
