@@ -41,5 +41,19 @@ describe("Nav component", () => {
         expect(linkElement).toBeInTheDocument();
     });
 
+    test("renders nav, label appQuestion",async () => {
+
+        render(
+            <ContextFun>
+                <Router>
+                    <Nav/>
+                </Router>
+            </ContextFun>
+        );
+
+        const linkElement = screen.getByText(/Almacén de preguntas/i);
+        expect(linkElement).toBeInTheDocument();
+    });
+
 });
 
