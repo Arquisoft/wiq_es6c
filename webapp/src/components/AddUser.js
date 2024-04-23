@@ -19,7 +19,7 @@ const AddUser = () => {
 
   const addUser = async () => {
     if (name.trim() === '' || surname.trim() === '') {
-      setError('Por favor, introduce tanto el nombre como los apellidos.');
+      setError('Por favor, introduzca tanto el nombre como los apellidos.');
     } else {
       if(password !== confirmPassword){
         setError('Las contraseñas no coinciden.');
