@@ -14,10 +14,10 @@ describe('AddUser component', () => {
   it('should add user successfully', async () => {
     render(<AddUser />);
 
-    const nameInput = screen.getByLabelText(/Name/i);
-    const surnameInput = screen.getByLabelText(/Surname/i);
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
+    const nameInput = screen.getByLabelText(/Nombre/);
+    const surnameInput = screen.getByLabelText(/Apellidos/i);
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
     const addUserButton = document.getElementsByClassName('inner')[0]
 
     // Mock the axios.post request to simulate a successful response
@@ -34,7 +34,7 @@ describe('AddUser component', () => {
 
     // Wait for the Snackbar to be open
     await waitFor(() => {
-      expect(screen.getByText(/User added successfully/i)).toBeInTheDocument();
+      expect(screen.getByText(/Usuario añadido correctamente/i)).toBeInTheDocument();
     });
   });
 
