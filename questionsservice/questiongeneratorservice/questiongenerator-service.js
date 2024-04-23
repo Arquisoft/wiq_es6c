@@ -66,6 +66,17 @@ app.get('/questions', async (req, res) => {
   }
 });
 
+// Route for getting topics for questions
+app.get('/topics', async (req, res) => {
+  try {
+    const topics = QuestionGenerator.getAvailableTopics();
+    res.send(topics);
+  } catch (error) {
+    console.error(`An error occurred: ${error.message}`);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(`An error occurred: ${err}`);
   res.status(500).send(`An error occurred: ${err.message}`);
