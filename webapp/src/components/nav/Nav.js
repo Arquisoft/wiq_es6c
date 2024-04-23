@@ -14,7 +14,7 @@ function HomeIcon(props) {
 export const Nav = () => {
 
     return (
-        <AppBar position="static" sx={{ background: "linear-gradient(163deg, #00ff75 33%, #3700ff 100%)", color: "white"}}>
+        <AppBar position="fixed" sx={{ background: "linear-gradient(163deg, #00ff75 33%, #3700ff 100%)", color: "white"}}>
         <Toolbar sx={{alignItems: 'center', justifyContent:'space-between'}}>
             <Container sx={{alignItems:'left', textAlign:'left', display:'flex', justifyContent:'flex-start' }}>
                 <Link to='/menu' >
