@@ -16,7 +16,7 @@ const AddUser = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const addUser = async () => {
-    if (name.trim() === '' || lastName.trim() === '') {
+    if (name.trim() === '' || surname.trim() === '') {
       setError('Por favor, introduce tanto el nombre como los apellidos.');
     } else {
       try {
