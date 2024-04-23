@@ -14,6 +14,8 @@ describe('AddUser component', () => {
   it('should add user successfully', async () => {
     render(<AddUser />);
 
+    const nameInput = screen.getByLabelText(/Name/i);
+    const surnameInput = screen.getByLabelText(/Surname/i);
     const usernameInput = screen.getByLabelText(/Username/i);
     const passwordInput = screen.getByLabelText(/Password/i);
     const addUserButton = document.getElementsByClassName('inner')[0]
@@ -22,6 +24,8 @@ describe('AddUser component', () => {
     mockAxios.onPost('http://localhost:8000/adduser').reply(200);
 
     // Simulate user input
+    fireEvent.change(nameInput, { target: { value: 'testUser' } });
+    fireEvent.change(surnameInput, { target: { value: 'testUser' } });
     fireEvent.change(usernameInput, { target: { value: 'testUser' } });
     fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
 
