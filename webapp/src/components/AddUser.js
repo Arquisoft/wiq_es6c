@@ -76,7 +76,7 @@ const AddUser = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <Button text="Añadir usuario" onClick={addUser} name = "Add user"/>
+      <Button text="Añadir" onClick={addUser} name = "Add user"/>
 
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Usuario añadido correctamente" />
       {error && (
