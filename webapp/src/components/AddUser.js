@@ -36,14 +36,14 @@ const AddUser = () => {
     <Container className='addUser' component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       
       <Typography component="h1" variant="h5">
-        Add User
+        Añadir Usuario
       </Typography>
 
       <TextField
         name="name"
         margin="normal"
         fullWidth
-        label="Name"
+        label="Nombre"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
@@ -52,7 +52,7 @@ const AddUser = () => {
         name="surname"
         margin="normal"
         fullWidth
-        label="Surname"
+        label="Apellidos"
         value={surname}
         onChange={(e) => setSurname(e.target.value)}
       />
@@ -61,7 +61,7 @@ const AddUser = () => {
         name="username"
         margin="normal"
         fullWidth
-        label="Username"
+        label="Usuario"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
@@ -70,15 +70,15 @@ const AddUser = () => {
         name="password"
         margin="normal"
         fullWidth
-        label="Password"
+        label="Contraseña"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <Button text="Add user" onClick={addUser} name = "Add user"/>
+      <Button text="Añadir usuario" onClick={addUser} name = "Add user"/>
 
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="User added successfully" />
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Usuario añadido correctamente" />
       {error && (
         <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
       )}
