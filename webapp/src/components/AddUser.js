@@ -12,6 +12,8 @@ const AddUser = () => {
   const [surname, setSurname] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const [error, setError] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -19,11 +21,15 @@ const AddUser = () => {
     if (name.trim() === '' || surname.trim() === '') {
       setError('Por favor, introduce tanto el nombre como los apellidos.');
     } else {
-      try {
-        await axios.post(`${apiEndpoint}/adduser`, { username, password });
-        setOpenSnackbar(true);
-      } catch (error) {
-        setError(error.response.data.error);
+      if(password !== confirmPassword){
+        setError('Las contraseñas no coinciden.');
+      }else{
+        try {
+          await axios.post(`${apiEndpoint}/adduser`, { username, password });
+          setOpenSnackbar(true);
+        } catch (error) {
+          setError(error.response.data.error);
+        }
       }
     }
   };
@@ -74,6 +80,16 @@ const AddUser = () => {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <TextField
+        name="confirmPassword"
+        margin="normal"
+        fullWidth
+        label="Repetir contraseña"
+        type="password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
       />
 
       <Button text="Añadir" onClick={addUser} name = "Add user"/>

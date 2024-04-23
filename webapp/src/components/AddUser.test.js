@@ -17,7 +17,8 @@ describe('AddUser component', () => {
     const nameInput = screen.getByLabelText(/Nombre/);
     const surnameInput = screen.getByLabelText(/Apellidos/i);
     const usernameInput = screen.getByLabelText(/Usuario/i);
-    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
+    const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
     const addUserButton = document.getElementsByClassName('inner')[0]
 
     // Mock the axios.post request to simulate a successful response
@@ -28,6 +29,7 @@ describe('AddUser component', () => {
     fireEvent.change(surnameInput, { target: { value: 'testUser' } });
     fireEvent.change(usernameInput, { target: { value: 'testUser' } });
     fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassword' } });
 
     // Trigger the add user button click
     fireEvent.click(addUserButton);
@@ -44,7 +46,8 @@ describe('AddUser component', () => {
     const nameInput = screen.getByLabelText(/Nombre/);
     const surnameInput = screen.getByLabelText(/Apellidos/i);
     const usernameInput = screen.getByLabelText(/Usuario/i);
-    const passwordInput = screen.getByLabelText(/Contraseña/i);
+    const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
+    const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
     const addUserButton = document.getElementsByClassName('inner')[0]
 
     // Mock the axios.post request to simulate an error response
@@ -55,6 +58,7 @@ describe('AddUser component', () => {
     fireEvent.change(surnameInput, { target: { value: 'testUser' } });
     fireEvent.change(usernameInput, { target: { value: 'testUser' } });
     fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassword' } });
 
     // Trigger the add user button click
     fireEvent.click(addUserButton);
