@@ -40,6 +40,35 @@ describe('AddUser component', () => {
     });
   });
 
+  it('try to add user but different passwords', async () => {
+    render(<AddUser />);
+
+    const nameInput = screen.getByLabelText(/Nombre/);
+    const surnameInput = screen.getByLabelText(/Apellidos/i);
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
+    const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
+    const addUserButton = document.getElementsByClassName('inner')[0]
+
+    // Mock the axios.post request to simulate a successful response
+    mockAxios.onPost('http://localhost:8000/adduser').reply(200);
+
+    // Simulate user input
+    fireEvent.change(nameInput, { target: { value: 'testUser' } });
+    fireEvent.change(surnameInput, { target: { value: 'testUser' } });
+    fireEvent.change(usernameInput, { target: { value: 'testUser' } });
+    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'password' } });
+
+    // Trigger the add user button click
+    fireEvent.click(addUserButton);
+
+    // Wait for the Snackbar to be open
+    await waitFor(() => {
+      expect(screen.getByText(/Las contraseñas no coinciden./i)).toBeInTheDocument();
+    });
+  });
+
   it('should handle error when adding user', async () => {
     render(<AddUser />);
 
