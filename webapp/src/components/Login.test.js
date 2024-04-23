@@ -23,8 +23,8 @@ describe('Login component', () => {
         </Router>
       </ContextFun>);
 
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
     const loginButton = document.getElementsByClassName('inner')[0]
 
     // Mock the axios.post request to simulate a successful response
@@ -52,8 +52,8 @@ describe('Login component', () => {
       </ContextFun>
     );
 
-    const usernameInput = screen.getByLabelText(/Username/i);
-    const passwordInput = screen.getByLabelText(/Password/i);
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getByLabelText(/Contraseña/i);
     const loginButton = document.getElementsByClassName('inner')[0]
 
     // Mock the axios.post request to simulate an error response

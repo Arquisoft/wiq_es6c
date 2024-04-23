@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import GoBackButton from '../GoBackButton';
 import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 
-
-const GameConfiguration = (configureNumErrors) => {
+// (configureNumErrors)
+const GameConfiguration = () => {
 
   // Almacen de temáticas 
   const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
@@ -131,7 +130,7 @@ const GameConfiguration = (configureNumErrors) => {
 
         </div>
         
-        
+        {/*
         {{configureNumErrors} ? (
           <div className="configureNumberOfErrors">
 
@@ -151,12 +150,10 @@ const GameConfiguration = (configureNumErrors) => {
         ) : (
           <div></div>
         )}
-
+        */}
 
         <button>Comenzar Juego</button>
-    
-    
-        <GoBackButton/>
+  
             
       </Container>
       <Footer />
