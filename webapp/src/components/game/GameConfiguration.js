@@ -134,59 +134,16 @@ const GameConfiguration = () => {
             <div>
                 <input
                 type="checkbox"
-                id="t1"
-                value="Arte"
-                checked={tematicasSeleccionadas.includes('Arte')}
+                id={`t${index}`}
+                value={option}
+                // checked={tematicasSeleccionadas.includes({option})}
                 onChange={handleTematicaChange}
-                />
-                <label htmlFor="tematica1">Arte</label>
-            </div>
-
-            <div>
-                <input
-                type="checkbox"
-                id="t2"
-                value="Ciencia"
-                checked={tematicasSeleccionadas.includes('Ciencia')}
-                onChange={handleTematicaChange}
-                />
-                <label htmlFor="tematica2">Ciencia</label>
-            </div>
-
-            <div>
-                <input
-                type="checkbox"
-                id="t3"
-                value="Geografía"
-                checked={tematicasSeleccionadas.includes('Geografía')}
-                onChange={handleTematicaChange}
-                />
-                <label htmlFor="tematica3">Geografía</label>
-            </div>
-
-            <div>
-                <input
-                type="checkbox"
-                id="t4"
-                value="Deporte"
-                checked={tematicasSeleccionadas.includes('Deporte')}                
-                onChange={handleTematicaChange}
-                />
-                <label htmlFor="tematica4">Deporte</label>
-            </div>
-
-            <div>
-                <input
-                type="checkbox"
-                id="t5"
-                value="Entretenimiento"
-                checked={tematicasSeleccionadas.includes('Entretenimiento')}                
-                onChange={handleTematicaChange}
-                />
-                <label htmlFor="tematica4">Entretenimiento</label>
-            </div>
-        
-            </div>
+              />
+              <label htmlFor={`t${index}`}>{option}</label>
+              </div>
+            )
+            )}
+        </div>
 
 
             <div className="configureNumberOfQuestions">
