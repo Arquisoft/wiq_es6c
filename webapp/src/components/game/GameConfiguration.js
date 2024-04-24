@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
-import { Button } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom'; // Importa useHistory
+import Button from '../Button';
+import { useLocation } from 'react-router-dom'; // Importa useHistory
 import axios from 'axios'
 import { shuffleArray } from '../Util';
+import './GameConfiguration.css';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
-var gameId;
-var questions = []
+let gameId;
+let questions = []
 const previousBackgroundColor = '#1a1a1a'
-// (configureNumErrors)
 
 const GameConfiguration = () => {
 
-    var tematicas = useLocation().state.topics;
+    let tematicas
+    let state = useLocation().state
+    if( state !== null)
+      tematicas = state.topics;
+    else
+      tematicas = []
     console.log(tematicas)
 
 
-    const navigation = useNavigate(); 
     // Almacen de temáticas 
     const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
     // Almacen para el número de preguntas
     const [numPreguntas, setNumPreguntas] = useState(1); 
     // Almacen de mensaje de error para el spinner
     const [error, setError] = useState(null); 
-    // Almacen del número de errores
-    const [numeroErrores, setNumeroErrores] = useState("ninguno");
 
     const [numRes, setNumRes] = useState(2);
 
@@ -67,9 +69,9 @@ const GameConfiguration = () => {
         }
     }
 
-    const handleChange = (event) => {
-        setNumeroErrores(event.target.value);
-    };
+    // const handleChange = (event) => {
+    //     setNumeroErrores(event.target.value);
+    // };
 
   const initiateGame = async () => {
     console.log(tematicasSeleccionadas)
@@ -130,9 +132,9 @@ const GameConfiguration = () => {
       <Nav />
       <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
 
-            <h2>Configuración de la partida</h2>
+        <h2>Configuración de la partida</h2>
         
-            <div className="configureTopic">
+        <div className="configureTopic">
 
             <h3>Selecciona las temáticas</h3>
 
@@ -142,6 +144,7 @@ const GameConfiguration = () => {
                 type="checkbox"
                 id={`t${index}`}
                 value={option}
+                className='option-input'
                 // checked={tematicasSeleccionadas.includes({option})}
                 onChange={handleTematicaChange}
               />
@@ -186,15 +189,16 @@ const GameConfiguration = () => {
 
         </div>
 
-        <div className="comenzarJuego">
+        {/* <div className="comenzarJuego">
           <button onClick={initiateGame}>Comenzar Juego</button>
-        </div>
+        </div> */}
+        <Button onClick={initiateGame} text="Comenzar Juego"/>
             
       </Container>
       <Footer />
     </>
   );
 
- }
+}
 
 export default GameConfiguration;
