@@ -69,6 +69,15 @@ app.post('/storeGame', async (req, res) => {
   }
 })
 
+app.get('/topics', async (req, res) => {
+  try {
+    const topics = await axios.get(`${questionService}/topics`)
+    res.json(topics.data)
+  } catch (error) { 
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
 app.use((err, req, res, next) => {
   console.error(`An error occurred: ${err}`);
   res.status(500).send(`An error occurred: ${err.message}`);
