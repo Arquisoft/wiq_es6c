@@ -27,7 +27,7 @@ app.use(cors());
 
 var gameId = 0;
 
-app.get('/generateGameUnlimitedQuestions', async (req, res) => {
+app.get('/generateGame', async (req, res) => {
   try {
     console.log("Llegamos a crear un id del juego")
     var gameId = generateAleatoryString()
@@ -39,7 +39,7 @@ app.get('/generateGameUnlimitedQuestions', async (req, res) => {
 
 
 // Route for getting questions
-app.get('/gameUnlimitedQuestions', async (req, res) => {
+app.get('/gameQuestions', async (req, res) => {
   try {
     // TODO: Implement logic to fetch questions from MongoDB and send response 
     // const questions = await Question.find()

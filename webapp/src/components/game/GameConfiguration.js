@@ -5,6 +5,7 @@ import { Nav } from '../nav/Nav';
 import { Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom'; // Importa useHistory
 import axios from 'axios'
+import { shuffleArray } from '../Util';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
@@ -15,8 +16,6 @@ const previousBackgroundColor = '#1a1a1a'
 const GameConfiguration = () => {
 
   var tematicas = useLocation().state.topics;
-  console.log(tematicas)
-
 
   const navigation = useNavigate(); 
   // Almacen de temáticas 
@@ -31,13 +30,16 @@ const GameConfiguration = () => {
 
   const handleTematicaChange = (event) => {
     const tematicaSeleccionada = event.target.value;
-
+    console.log(tematicaSeleccionada)
+    console.log(tematicasSeleccionadas.includes(tematicaSeleccionada))
     if (tematicasSeleccionadas.includes(tematicaSeleccionada)) {
       // Si está seleccionada -> la eliminamos
       setTematicasSeleccionadas(
         tematicasSeleccionadas.filter(tema => tema !== tematicaSeleccionada));
+        console.log(tematicasSeleccionadas)
     } else {
       setTematicasSeleccionadas([...tematicasSeleccionadas, tematicaSeleccionada]);
+      console.log(tematicasSeleccionadas)
     }
   };
 
@@ -57,15 +59,17 @@ const GameConfiguration = () => {
   };
 
   const initiateGame = async () => {
+    console.log(tematicasSeleccionadas)
+    console.log(numPreguntas)
     await generateGameId();  
     await getQuestions()  
     //isApiCalledRef = true//ASK - is this necessary?
-    navigation("/firstGame", {state: {questions, gameId}})
+    // navigation("/firstGame", {state: {questions, gameId}})
   }
 
   const generateGameId = async () => {
     try {
-      const response = await axios.get(`${apiEndpoint}/generateGameUnlimitedQuestions`)
+      const response = await axios.get(`${apiEndpoint}/generateGame`)
       console.log(response.data)
       gameId = response.data
     } catch(error) {
@@ -75,7 +79,7 @@ const GameConfiguration = () => {
 
   const getQuestions = async () => {
     try {
-      const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`, {gameId});
+      const response = await axios.get(`${apiEndpoint}/gameQuestions`, {gameId, tematicasSeleccionadas});
       console.log(response.data.length)
       for (var i = 0; i < response.data.length; i++) {
         var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
@@ -90,16 +94,7 @@ const GameConfiguration = () => {
       console.error(error);
     }
     console.log(questions)
-
-  const addTopic = (option) => {
-    const topicToAdd = document.getElementById('topic-' + option)
-    if (topicToAdd.style.backgroundColor === previousBackgroundColor) {
-      topicToAdd.style.backgroundColor = 'green'
-    } else {
-      topicToAdd.style.backgroundColor = previousBackgroundColor
-    }
   }
-
 
   return (
     <>
@@ -112,76 +107,31 @@ const GameConfiguration = () => {
 
           <h3>Selecciona las temáticas</h3>
 
-          <div className="allTopics">
-          {tematicas.map((option, index) => (
-              <div key={index} >
-                <Button
-                  id={`topic-${option}`}
-                  name="topic"
-                  value={option}
-                  onClick={() => addTopic(option)}
-                />
+           {tematicas.map((option, index) => (
+              <div>
+                <input
+                type="checkbox"
+                id={`t${index}`}
+                value={option}
+                checked={tematicasSeleccionadas.includes({option})}
+                onChange={handleTematicaChange}
+              />
+              <label htmlFor={`tematica-${index}`}>{option}</label>
               </div>
             )
             )}
 
-          </div>
-
-          <div>
-            <input
-              type="checkbox"
-              id="t1"
-              value="Arte"
-              checked={tematicasSeleccionadas.includes('Arte')}
-              onChange={handleTematicaChange}
-            />
-            <label htmlFor="tematica1">Arte</label>
-          </div>
-
-          <div>
-            <input
-              type="checkbox"
-              id="t2"
-              value="Ciencia"
-              checked={tematicasSeleccionadas.includes('Ciencia')}
-              onChange={handleTematicaChange}
-            />
-            <label htmlFor="tematica2">Ciencia</label>
-          </div>
-
-          <div>
-            <input
-              type="checkbox"
-              id="t3"
-              value="Geografía"
-              checked={tematicasSeleccionadas.includes('Geografía')}
-              onChange={handleTematicaChange}
-            />
-            <label htmlFor="tematica3">Geografía</label>
-          </div>
-
-          <div>
-            <input
-              type="checkbox"
-              id="t4"
-              value="Deporte"
-              checked={tematicasSeleccionadas.includes('Deporte')}                
-              onChange={handleTematicaChange}
-              />
-            <label htmlFor="tematica4">Deporte</label>
-          </div>
 
           <div>
             <input
               type="checkbox"
               id="t5"
-              value="Entretenimiento"
-              checked={tematicasSeleccionadas.includes('Entretenimiento')}                
+              value="Ciencia"
+              checked={tematicasSeleccionadas.includes('Ciencia')}
               onChange={handleTematicaChange}
-              />
-            <label htmlFor="tematica4">Entretenimiento</label>
-          </div>
-    
+            />
+            <label htmlFor="tematica2">Ciencia</label>
+          </div>    
         </div>
 
 
@@ -203,13 +153,7 @@ const GameConfiguration = () => {
         </div>
 
         <div className="comenzarJuego">
-          <Button
-            id='comenzarJuego'
-            name="comenzarJuego"
-            value="Comenzar juego"
-            text="Comenzar juego"
-            onClick={() => initiateGame()}
-          />
+          <button onClick={initiateGame}>Comenzar Juego</button>
         </div>
             
       </Container>
@@ -217,6 +161,6 @@ const GameConfiguration = () => {
     </>
   );
 
-};
+ }
 
 export default GameConfiguration;
