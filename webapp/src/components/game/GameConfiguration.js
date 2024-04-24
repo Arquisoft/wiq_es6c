@@ -90,6 +90,7 @@ const GameConfiguration = () => {
       console.error(error);
     }
     console.log(questions)
+  }
 
   const addTopic = (option) => {
     const topicToAdd = document.getElementById('topic-' + option)
@@ -215,8 +216,8 @@ const GameConfiguration = () => {
       </Container>
       <Footer />
     </>
-  );};
-  
+  );
+
 };
 
 export default GameConfiguration;
