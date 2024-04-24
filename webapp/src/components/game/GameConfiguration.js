@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
-import { Button } from '@mui/material';
+import Button from '../Button';
 import { useLocation, useNavigate } from 'react-router-dom'; // Importa useHistory
 import axios from 'axios'
 import { shuffleArray } from '../Util';
+import './GameConfiguration.css';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
@@ -161,6 +162,7 @@ const GameConfiguration = () => {
                 type="checkbox"
                 id={`t${index}`}
                 value={option}
+                className='option-input'
                 // checked={tematicasSeleccionadas.includes({option})}
                 onChange={handleTematicaChange}
               />
@@ -188,37 +190,14 @@ const GameConfiguration = () => {
 
         </div>
 
-        <div className="configureNumberOfAnswers">
-
-          <h3>Selecciona el número de respuestas(mínimo 2)</h3>
-
-          <div>
-            <label htmlFor="numRes">Número de respuestas:</label>
-            <input
-              type="number"
-              id="numRes"
-              value={numRes}
-              onChange={handleNumResChange}
-            />
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-          </div>
-
-        </div>
-
-            <div className="comenzarJuego">
-            <Button
-                id='comenzarJuego'
-                name="comenzarJuego"
-                value="Comenzar juego"
-                text="Comenzar juego"
-                onClick={() => initiateGame()}
-            />
-            </div>
-                
-        </Container>
-        <Footer />
-        </>
-    );
+        
+          <Button onClick={initiateGame} text='Comenzar Juego'/>
+        
+            
+      </Container>
+      <Footer />
+    </>
+  );
 
 };
 
