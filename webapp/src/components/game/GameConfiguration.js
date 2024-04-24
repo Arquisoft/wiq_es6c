@@ -113,25 +113,13 @@ const GameConfiguration = () => {
                 type="checkbox"
                 id={`t${index}`}
                 value={option}
-                checked={tematicasSeleccionadas.includes({option})}
+                // checked={tematicasSeleccionadas.includes({option})}
                 onChange={handleTematicaChange}
               />
-              <label htmlFor={`tematica-${index}`}>{option}</label>
+              <label htmlFor={`t${index}`}>{option}</label>
               </div>
             )
             )}
-
-
-          <div>
-            <input
-              type="checkbox"
-              id="t5"
-              value="Ciencia"
-              checked={tematicasSeleccionadas.includes('Ciencia')}
-              onChange={handleTematicaChange}
-            />
-            <label htmlFor="tematica2">Ciencia</label>
-          </div>    
         </div>
 
 
