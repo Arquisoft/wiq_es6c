@@ -25,7 +25,6 @@ const GameConfiguration = () => {
     console.log(tematicas)
 
 
-    const navigation = useNavigate(); 
     // Almacen de temáticas 
     const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
     // Almacen para el número de preguntas
@@ -93,18 +92,19 @@ const GameConfiguration = () => {
       console.log(topicsFormated)
       const response = await axios.get(`${apiEndpoint}/questions?n_preguntas=${numPreguntas}&n_respuestas=${numRes}${topicsFormated}`);
       console.log(response.data.length)
-      for (var i = 0; i < response.data.length; i++) {
-        var possibleAnswers = [response.data[i].respuesta_correcta]
-        for (var j = 0; j < response.data[i].respuestas_incorrectas.length; j++) {
-          possibleAnswers.push(response.data[i].respuestas_incorrectas[j])
-        }
-        possibleAnswers = shuffleArray(possibleAnswers)
-        questions.push({
-          question: response.data[i].pregunta,
-          options: possibleAnswers,
-          correctAnswer: response.data[i].respuesta_correcta
-        })
-      }      
+
+        for(const data of response.data){
+            let possibleAnswers = [data.respuesta_correcta, 
+                                    data.respuestas_incorrectas[0], 
+                                    data.respuestas_incorrectas[1], 
+                                    data.respuestas_incorrectas[2]];
+            possibleAnswers = shuffleArray(possibleAnswers)
+            questions.push({
+              question: data.pregunta,
+              options: possibleAnswers,
+              correctAnswer: data.respuesta_correcta
+            })
+        }      
     } catch (error) {
       console.error(error);
     }

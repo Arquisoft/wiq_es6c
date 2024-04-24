@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ContextFun } from '../Context';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
