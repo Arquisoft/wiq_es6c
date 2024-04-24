@@ -13,50 +13,50 @@ var gameId;
 var questions = []
 const previousBackgroundColor = '#1a1a1a'
 // (configureNumErrors)
+
 const GameConfiguration = () => {
 
-  var tematicas = useLocation().state.topics;
-
-  const navigation = useNavigate(); 
-  // Almacen de temáticas 
-  const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
-  // Almacen para el número de preguntas
-  const [numPreguntas, setNumPreguntas] = useState(1); 
-  // Almacen de mensaje de error para el spinner
-  const [error, setError] = useState(null); 
-  // Almacen del número de errores
-  const [numeroErrores, setNumeroErrores] = useState("ninguno");
+    var tematicas = useLocation().state.topics;
+    console.log(tematicas)
 
 
-  const handleTematicaChange = (event) => {
-    const tematicaSeleccionada = event.target.value;
-    console.log(tematicaSeleccionada)
-    console.log(tematicasSeleccionadas.includes(tematicaSeleccionada))
-    if (tematicasSeleccionadas.includes(tematicaSeleccionada)) {
-      // Si está seleccionada -> la eliminamos
-      setTematicasSeleccionadas(
-        tematicasSeleccionadas.filter(tema => tema !== tematicaSeleccionada));
-        console.log(tematicasSeleccionadas)
-    } else {
-      setTematicasSeleccionadas([...tematicasSeleccionadas, tematicaSeleccionada]);
-      console.log(tematicasSeleccionadas)
-    }
-  };
+    const navigation = useNavigate(); 
+    // Almacen de temáticas 
+    const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
+    // Almacen para el número de preguntas
+    const [numPreguntas, setNumPreguntas] = useState(1); 
+    // Almacen de mensaje de error para el spinner
+    const [error, setError] = useState(null); 
+    // Almacen del número de errores
+    const [numeroErrores, setNumeroErrores] = useState("ninguno");
 
-  const handleNumPreguntasChange = (event) => {
-    const nuevoValor = parseInt(event.target.value, 10);
 
-    if (!isNaN(nuevoValor) && nuevoValor > 0) {
-      setNumPreguntas(nuevoValor);
-      setError(null); // Reseteamos el error si el valor es válido
-    } else {
-      setError("El número de preguntas debe ser mayor que 0");
-    }
-  };
+    const handleTematicaChange = (event) => {
+        const tematicaSeleccionada = event.target.value;
 
-  const handleChange = (event) => {
-    setNumeroErrores(event.target.value);
-  };
+        if (tematicasSeleccionadas.includes(tematicaSeleccionada)) {
+        // Si está seleccionada -> la eliminamos
+        setTematicasSeleccionadas(
+            tematicasSeleccionadas.filter(tema => tema !== tematicaSeleccionada));
+        } else {
+        setTematicasSeleccionadas([...tematicasSeleccionadas, tematicaSeleccionada]);
+        }
+    };
+
+    const handleNumPreguntasChange = (event) => {
+        const nuevoValor = parseInt(event.target.value, 10);
+
+        if (!isNaN(nuevoValor) && nuevoValor > 0) {
+        setNumPreguntas(nuevoValor);
+        setError(null); // Reseteamos el error si el valor es válido
+        } else {
+        setError("El número de preguntas debe ser mayor que 0");
+        }
+    };
+
+    const handleChange = (event) => {
+        setNumeroErrores(event.target.value);
+    };
 
   const initiateGame = async () => {
     console.log(tematicasSeleccionadas)
@@ -101,11 +101,11 @@ const GameConfiguration = () => {
       <Nav />
       <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
 
-        <h2>Configuración de la partida</h2>
-    
-        <div className="configureTopic">
+            <h2>Configuración de la partida</h2>
+        
+            <div className="configureTopic">
 
-          <h3>Selecciona las temáticas</h3>
+            <h3>Selecciona las temáticas</h3>
 
            {tematicas.map((option, index) => (
               <div>
