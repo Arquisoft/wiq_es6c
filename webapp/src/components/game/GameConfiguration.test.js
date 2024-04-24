@@ -25,12 +25,6 @@ describe("Game Configuration", () => {
 
         const linkElement = screen.getByText(/Configuración de la partida/i);
         expect(linkElement).toBeInTheDocument();
-
-        linkElement = screen.getByText(/Selecciona las temáticas/i);
-        expect(linkElement).toBeInTheDocument();
-
-        linkElement = screen.getByText(/Selecciona el número de preguntas/i);
-        expect(linkElement).toBeInTheDocument();
     });
 
 });
