@@ -23,11 +23,13 @@ describe("Game Configuration", () => {
             </ContextFun>
         );
 
-        let linkElement = screen.getByText(/Selecciona las temáticas/i);
+        let linkElement = screen.getByText(/Configuración de la partida/i);
         expect(linkElement).toBeInTheDocument();
-    
-
+        linkElement = screen.getByText(/Selecciona las temáticas/i);
+        expect(linkElement).toBeInTheDocument();
         linkElement = screen.getByText(/Selecciona el número de preguntas/i);
+        expect(linkElement).toBeInTheDocument();
+        linkElement = screen.getByText(/Comenzar Juego/i);
         expect(linkElement).toBeInTheDocument();
     });
 
