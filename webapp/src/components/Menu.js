@@ -13,7 +13,7 @@ import axios from 'axios';
 //var isApiCalledRef = false;//ASK - is this necessary?
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
-var topics
+let topics
 
 const Menu = () => {
 

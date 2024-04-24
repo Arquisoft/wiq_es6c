@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
@@ -10,10 +10,9 @@ import './GameConfiguration.css';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
-var gameId;
-var questions = []
+let gameId;
+let questions = []
 const previousBackgroundColor = '#1a1a1a'
-// (configureNumErrors)
 
 const GameConfiguration = () => {
 
@@ -33,8 +32,6 @@ const GameConfiguration = () => {
     const [numPreguntas, setNumPreguntas] = useState(1); 
     // Almacen de mensaje de error para el spinner
     const [error, setError] = useState(null); 
-    // Almacen del número de errores
-    const [numeroErrores, setNumeroErrores] = useState("ninguno");
 
 
     const handleTematicaChange = (event) => {
@@ -58,10 +55,6 @@ const GameConfiguration = () => {
         } else {
         setError("El número de preguntas debe ser mayor que 0");
         }
-    };
-
-    const handleChange = (event) => {
-        setNumeroErrores(event.target.value);
     };
 
   const initiateGame = async () => {
