@@ -68,7 +68,8 @@ const Quiz = () => {
     } catch (error) {
       console.error(error);
     }
-};
+  };
+  
   function changeButtons(param) {
     console.log("Entramos aqui")
     var borders = document.getElementsByClassName("border");;
@@ -142,7 +143,7 @@ const Quiz = () => {
       
       // console.log("Despues de modificar los valores")
     } else {
-      getQuestions()
+      // getQuestions()
       points = points += 100;
     }
     
@@ -162,6 +163,8 @@ const Quiz = () => {
     botonCorrecta.style.backgroundColor = previousBackgroundColor
     if (allQuestions.length-1 !== currentQuestionIndex) {
       currentQuestionIndex = (currentQuestionIndex + 1);
+    } else {
+      haveFailedQuestion = true
     }
 
     isCorrect = (false)

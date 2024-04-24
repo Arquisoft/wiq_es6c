@@ -97,10 +97,12 @@ app.get('/generateGame', async (req, res) => {
   }
 })
 
-app.get('/gameQuestions', async (req, res) => {
+app.get('/questions', async (req, res) => {
   try {
     console.log("Antes de la llamada")
-    const response = await axios.get(gameService + `/gameQuestions`, req.body)
+    console.log(req.query)
+
+    const response = await axios.get(gameService + req.url)
     console.log(response.data)
     res.json(response.data)
   } catch (error) {

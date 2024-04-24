@@ -39,12 +39,14 @@ app.get('/generateGame', async (req, res) => {
 
 
 // Route for getting questions
-app.get('/gameQuestions', async (req, res) => {
+app.get('/questions', async (req, res) => {
   try {
     // TODO: Implement logic to fetch questions from MongoDB and send response 
     // const questions = await Question.find()
     console.log("Llegamos a pedir preguntas")
-    const questionGenerated = await axios.get(`${questionService}/questions?n_preguntas=${1}`);
+    console.log(req.body.n_preg)
+    console.log(req.body.topics)
+    const questionGenerated = await axios.get(questionService + req.url);
     console.log("Pedimos las preguntas")
     res.json(questionGenerated.data);
   } catch (error) {
