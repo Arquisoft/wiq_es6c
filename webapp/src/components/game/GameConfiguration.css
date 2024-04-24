@@ -52,7 +52,6 @@
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
-    position: relative;
     top: 13.33333px;
     right: 0;
     bottom: 0;
@@ -87,7 +86,7 @@
     position: absolute;
     align-items:center;
     justify-content:center;
-    font-family:'Font Awesome 5 Free';
+    font-family:'Font Awesome 5 Free', Arial, sans-serif;
   }
   .option-input:checked::after {
     -webkit-animation: click-wave 0.65s;
