@@ -47,7 +47,7 @@ describe("Game Configuration", () => {
         expect(tematics).toHaveLength(1);
 
         let numPreguntas = document.getElementsByClassName('configureNumberOfQuestions');
-        expect(tematics).toHaveLength(2);
+        expect(numPreguntas).toHaveLength(1);
     });
 
 });
