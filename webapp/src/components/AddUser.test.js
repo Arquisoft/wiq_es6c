@@ -6,13 +6,6 @@ import AddUser from './AddUser';
 
 const mockAxios = new MockAdapter(axios);
 
-const nameInput = screen.getByLabelText(/Nombre/);
-const surnameInput = screen.getByLabelText(/Apellidos/i);
-const usernameInput = screen.getByLabelText(/Usuario/i);
-const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
-const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
-const addUserButton = document.getElementsByClassName('inner')[0]
-
 describe('AddUser component', () => {
   beforeEach(() => {
     mockAxios.reset();
@@ -20,6 +13,13 @@ describe('AddUser component', () => {
 
   it('should add user successfully', async () => {
     render(<AddUser />);
+
+    const nameInput = screen.getByLabelText(/Nombre/);
+    const surnameInput = screen.getByLabelText(/Apellidos/i);
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
+    const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
+    const addUserButton = document.getElementsByClassName('inner')[0]
 
     // Mock the axios.post request to simulate a successful response
     mockAxios.onPost('http://localhost:8000/adduser').reply(200);
@@ -43,11 +43,7 @@ describe('AddUser component', () => {
   it('try to add user but not introduce name', async () => {
     render(<AddUser />);
 
-    // Simulate user input
-    fireEvent.change(surnameInput, { target: { value: 'testUser' } });
-    fireEvent.change(usernameInput, { target: { value: 'testUser' } });
-    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
-    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassword' } });
+    const addUserButton = document.getElementsByClassName('inner')[0];
 
     // Trigger the add user button click
     fireEvent.click(addUserButton);
@@ -60,6 +56,15 @@ describe('AddUser component', () => {
 
   it('try to add user but not introduce surname', async () => {
     render(<AddUser />);
+
+    const nameInput = screen.getByLabelText(/Nombre/);
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
+    const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
+    const addUserButton = document.getElementsByClassName('inner')[0]
+
+    // Mock the axios.post request to simulate a successful response
+    mockAxios.onPost('http://localhost:8000/adduser').reply(200);
 
     // Simulate user input
     fireEvent.change(nameInput, { target: { value: 'testUser' } });
@@ -79,6 +84,16 @@ describe('AddUser component', () => {
   it('try to add user but different passwords', async () => {
     render(<AddUser />);
 
+    const nameInput = screen.getByLabelText(/Nombre/);
+    const surnameInput = screen.getByLabelText(/Apellidos/i);
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
+    const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
+    const addUserButton = document.getElementsByClassName('inner')[0]
+
+    // Mock the axios.post request to simulate a successful response
+    mockAxios.onPost('http://localhost:8000/adduser').reply(200);
+
     // Simulate user input
     fireEvent.change(nameInput, { target: { value: 'testUser' } });
     fireEvent.change(surnameInput, { target: { value: 'testUser' } });
@@ -97,6 +112,13 @@ describe('AddUser component', () => {
 
   it('should handle error when adding user', async () => {
     render(<AddUser />);
+
+    const nameInput = screen.getByLabelText(/Nombre/);
+    const surnameInput = screen.getByLabelText(/Apellidos/i);
+    const usernameInput = screen.getByLabelText(/Usuario/i);
+    const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
+    const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
+    const addUserButton = document.getElementsByClassName('inner')[0]
 
     // Mock the axios.post request to simulate an error response
     mockAxios.onPost('http://localhost:8000/adduser').reply(500, { error: 'Internal Server Error' });
