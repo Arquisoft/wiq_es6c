@@ -88,19 +88,19 @@ app.get('/history/questions', async (req, res) => {
 //   }
 // })
 
-app.get('/generateGameUnlimitedQuestions', async (req, res) => {
+app.get('/generateGame', async (req, res) => {
   try {
-    const response = await axios.get(gameService + '/generateGameUnlimitedQuestions')
+    const response = await axios.get(gameService + '/generateGame')
     res.json(response.data)
   } catch (error) {
     catchAction(error, res)
   }
 })
 
-app.get('/gameUnlimitedQuestions', async (req, res) => {
+app.get('/gameQuestions', async (req, res) => {
   try {
     console.log("Antes de la llamada")
-    const response = await axios.get(gameService + `/gameUnlimitedQuestions`, req.body)
+    const response = await axios.get(gameService + `/gameQuestions`, req.body)
     console.log(response.data)
     res.json(response.data)
   } catch (error) {
