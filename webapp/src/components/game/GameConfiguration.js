@@ -96,6 +96,15 @@ const GameConfiguration = () => {
     console.log(questions)
   }
 
+  const addTopic = (option) => {
+    const topicToAdd = document.getElementById('topic-' + option)
+    if (topicToAdd.style.backgroundColor === previousBackgroundColor) {
+      topicToAdd.style.backgroundColor = 'green'
+    } else {
+      topicToAdd.style.backgroundColor = previousBackgroundColor
+    }
+  }
+
   return (
     <>
       <Nav />
@@ -159,8 +168,8 @@ const GameConfiguration = () => {
       </Container>
       <Footer />
     </>
-  );};
-  
+  );
+
 };
 
 export default GameConfiguration;
