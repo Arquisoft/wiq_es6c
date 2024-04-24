@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography, SvgIcon, Container } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 
 function HomeIcon(props) {
@@ -22,14 +23,14 @@ export const Nav = () => {
                         <HomeIcon sx={{ color: "#212121" }}/>
                     </IconButton>
                 </Link>
-                <Typography variant="h6" component="div" sx={{marginTop: '8px'}}>WIQ</Typography>
+                <Typography variant="h6" component="div" sx={{marginTop: '8px', color: '#0F0F0F'}}>WIQ</Typography>
             </Container>
 
             <Container sx={{alignItems:'center', textAlign:'center'}}>
-                <Link to='/history' style={{color:'white', textDecoration: 'none', marginRight: '2vw'}}>
+                <Link to='/history' style={{color:'#0F0F0F', textDecoration: 'none', marginRight: '2vw', fontSize: '1.25rem'}}>
                     Historial
                 </Link>
-                <Link to='/appQuestion' style={{color:'white', textDecoration: 'none'}}>
+                <Link to='/appQuestion' style={{color:'#0F0F0F', textDecoration: 'none', fontSize: '1.25rem'}}>
                     Almacén de preguntas
                 </Link>
             </Container>
@@ -37,7 +38,12 @@ export const Nav = () => {
             <Container sx={{alignItems:'right', textAlign:'right'}}>
                 <Link to='/help' style={{color:'white', textDecoration: 'none'}}>
                     <IconButton size="large" color="inherit" >
-                        <HelpIcon sx={{ color: "white" }}/>
+                        <HelpIcon sx={{ color: "#0F0F0F" }}/>
+                    </IconButton>
+                </Link>
+                <Link to='/login' style={{color:'white', textDecoration: 'none'}}>
+                    <IconButton size="large" color="inherit" >
+                        <LogoutIcon sx={{ color: "#0F0F0F" }}/>
                     </IconButton>
                 </Link>
             </Container>
