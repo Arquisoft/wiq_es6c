@@ -13,6 +13,11 @@ describe("Game Configuration", () => {
         mockAxios.reset();
     });
 
+    test('debe renderizar correctamente', () => {
+        const wrapper = shallow(<GameConfiguration />);
+        expect(wrapper.exists()).toBe(true);
+    });
+
     test("renders GameConfig",async () => {
 
         render(
