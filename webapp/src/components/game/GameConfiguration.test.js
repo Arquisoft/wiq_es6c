@@ -12,11 +12,6 @@ describe("Game Configuration", () => {
     beforeEach(() => {
         mockAxios.reset();
     });
-    
-    test('debe renderizar correctamente', () => {
-        const { container } = render(<GameConfiguration />);
-        expect(container.firstChild).toBeInTheDocument();
-    });
 
     test("renders GameConfig",async () => {
         render(
