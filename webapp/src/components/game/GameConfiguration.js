@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
-import { Button } from '@mui/material';
+import Button from '../Button';
 import { useLocation, useNavigate } from 'react-router-dom'; // Importa useHistory
 import axios from 'axios'
 import { shuffleArray } from '../Util';
+import './GameConfiguration.css';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
@@ -118,6 +119,7 @@ const GameConfiguration = () => {
                 type="checkbox"
                 id={`t${index}`}
                 value={option}
+                className='option-input'
                 // checked={tematicasSeleccionadas.includes({option})}
                 onChange={handleTematicaChange}
               />
@@ -145,9 +147,9 @@ const GameConfiguration = () => {
 
         </div>
 
-        <div className="comenzarJuego">
-          <button onClick={initiateGame}>Comenzar Juego</button>
-        </div>
+        
+          <Button onClick={initiateGame} text='Comenzar Juego'/>
+        
             
       </Container>
       <Footer />
