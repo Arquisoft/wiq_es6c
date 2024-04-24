@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import { ContextFun } from '../Context';
-import { shallow } from 'enzyme';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -13,14 +12,13 @@ describe("Game Configuration", () => {
     beforeEach(() => {
         mockAxios.reset();
     });
-
+    
     test('debe renderizar correctamente', () => {
-        const wrapper = shallow(<GameConfiguration />);
-        expect(wrapper.exists()).toBe(true);
+        const { container } = render(<GameConfiguration />);
+        expect(container.firstChild).toBeInTheDocument();
     });
 
     test("renders GameConfig",async () => {
-
         render(
             <ContextFun>
                 <Router>
