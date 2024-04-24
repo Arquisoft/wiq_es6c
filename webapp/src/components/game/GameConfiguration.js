@@ -3,7 +3,7 @@ import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 import Button from '../Button';
-import { useLocation, useNavigate } from 'react-router-dom'; // Importa useHistory
+import { useLocation } from 'react-router-dom'; // Importa useHistory
 import axios from 'axios'
 import { shuffleArray } from '../Util';
 import './GameConfiguration.css';
