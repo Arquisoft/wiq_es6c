@@ -20,16 +20,14 @@ const AddUser = () => {
   const addUser = async () => {
     if (name.trim() === '' || surname.trim() === '') {
       setError('Por favor, introduzca tanto el nombre como los apellidos.');
+    } else if(password !== confirmPassword){
+      setError('Las contraseñas no coinciden.');
     } else {
-      if(password !== confirmPassword){
-        setError('Las contraseñas no coinciden.');
-      }else{
-        try {
-          await axios.post(`${apiEndpoint}/adduser`, { username, password });
-          setOpenSnackbar(true);
-        } catch (error) {
-          setError(error.response.data.error);
-        }
+      try {
+        await axios.post(`${apiEndpoint}/adduser`, { username, password });
+        setOpenSnackbar(true);
+      } catch (error) {
+        setError(error.response.data.error);
       }
     }
   };
