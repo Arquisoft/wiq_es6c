@@ -33,4 +33,18 @@ describe("Game Configuration", () => {
         expect(linkElement).toBeInTheDocument();
     });
 
+    test("check number of elements",async () => {
+
+        render(
+            <ContextFun>
+                <Router>
+                    <GameConfiguration />
+                </Router>
+            </ContextFun>
+        );
+
+        let tematics = document.getElementsByClassName('configureTopic');
+        expect(tematics).toHaveLength(2);
+    });
+
 });
