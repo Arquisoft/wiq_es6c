@@ -33,7 +33,7 @@ describe("Game Configuration", () => {
         expect(linkElement).toBeInTheDocument();
     });
 
-    test("check number of elements",async () => {
+    test("check number of elements on topics section and configure number of questions",async () => {
 
         render(
             <ContextFun>
@@ -44,7 +44,11 @@ describe("Game Configuration", () => {
         );
 
         let tematics = document.getElementsByClassName('configureTopic');
+        expect(tematics).toHaveLength(1);
+
+        let numPreguntas = document.getElementsByClassName('configureNumberOfQuestions');
         expect(tematics).toHaveLength(2);
     });
 
 });
+
