@@ -38,8 +38,8 @@ describe('Login component', () => {
     });
 
     // Verify that the user information is displayed
-    expect(screen.getByText(/Hello testUser!/i)).toBeInTheDocument();
-    expect(screen.getByText(/Your account was created on 1\/1\/2024/i)).toBeInTheDocument();
+    expect(screen.getByText(/Hola testUser!/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tu cuenta ha sido creada en 1\/1\/2024/i)).toBeInTheDocument();
   });
 
   it('should handle error when logging in', async () => {
@@ -72,7 +72,7 @@ describe('Login component', () => {
     });
 
     // Verify that the user information is not displayed
-    expect(screen.queryByText(/Hello testUser!/i)).toBeNull();
-    expect(screen.queryByText(/Your account was created on/i)).toBeNull();
+    expect(screen.queryByText(/Hola testUser!/i)).toBeNull();
+    expect(screen.queryByText(/Tu cuenta ha sido creada en/i)).toBeNull();
   });
 });

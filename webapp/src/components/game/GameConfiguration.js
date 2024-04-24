@@ -215,8 +215,8 @@ const GameConfiguration = () => {
       </Container>
       <Footer />
     </>
-  );
-
+  );};
+  
 };
 
 export default GameConfiguration;
