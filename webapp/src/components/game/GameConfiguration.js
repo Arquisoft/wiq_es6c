@@ -156,6 +156,6 @@ const GameConfiguration = () => {
     </>
   );
 
- }
+}
 
 export default GameConfiguration;
