@@ -2,10 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
+import { Button } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom'; // Importa useHistory
+import axios from 'axios'
 
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
+
+var gameId;
+var questions = []
+const previousBackgroundColor = '#1a1a1a'
 // (configureNumErrors)
 const GameConfiguration = () => {
 
+  var tematicas = useLocation().state.topics;
+  console.log(tematicas)
+
+
+  const navigation = useNavigate(); 
   // Almacen de temáticas 
   const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
   // Almacen para el número de preguntas
@@ -43,6 +56,50 @@ const GameConfiguration = () => {
     setNumeroErrores(event.target.value);
   };
 
+  const initiateGame = async () => {
+    await generateGameId();  
+    await getQuestions()  
+    //isApiCalledRef = true//ASK - is this necessary?
+    navigation("/firstGame", {state: {questions, gameId}})
+  }
+
+  const generateGameId = async () => {
+    try {
+      const response = await axios.get(`${apiEndpoint}/generateGameUnlimitedQuestions`)
+      console.log(response.data)
+      gameId = response.data
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  const getQuestions = async () => {
+    try {
+      const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`, {gameId});
+      console.log(response.data.length)
+      for (var i = 0; i < response.data.length; i++) {
+        var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
+        possibleAnswers = shuffleArray(possibleAnswers)
+        questions.push({
+          question: response.data[i].pregunta,
+          options: possibleAnswers,
+          correctAnswer: response.data[i].respuesta_correcta
+        })
+      }      
+    } catch (error) {
+      console.error(error);
+    }
+    console.log(questions)
+
+  const addTopic = (option) => {
+    const topicToAdd = document.getElementById('topic-' + option)
+    if (topicToAdd.style.backgroundColor === previousBackgroundColor) {
+      topicToAdd.style.backgroundColor = 'green'
+    } else {
+      topicToAdd.style.backgroundColor = previousBackgroundColor
+    }
+  }
+
 
   return (
     <>
@@ -54,6 +111,21 @@ const GameConfiguration = () => {
         <div className="configureTopic">
 
           <h3>Selecciona las temáticas</h3>
+
+          <div className="allTopics">
+          {tematicas.map((option, index) => (
+              <div key={index} >
+                <Button
+                  id={`topic-${option}`}
+                  name="topic"
+                  value={option}
+                  onClick={() => addTopic(option)}
+                />
+              </div>
+            )
+            )}
+
+          </div>
 
           <div>
             <input
@@ -129,31 +201,16 @@ const GameConfiguration = () => {
           </div>
 
         </div>
-        
-        {/*
-        {{configureNumErrors} ? (
-          <div className="configureNumberOfErrors">
 
-            <h3>Selecciona el número de errores permitidos</h3>
-
-            <div>
-              <label htmlFor="numErrores">Número de errores permitidos:</label>
-              <select id="numErrores" value={numeroErrores} onChange={handleChange}>
-                <option value="ninguno">Ninguno</option>
-                <option value="1">1</option>
-                <option value="3">3</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-
-          </div>
-        ) : (
-          <div></div>
-        )}
-        */}
-
-        <button>Comenzar Juego</button>
-  
+        <div className="comenzarJuego">
+          <Button
+            id='comenzarJuego'
+            name="comenzarJuego"
+            value="Comenzar juego"
+            text="Comenzar juego"
+            onClick={() => initiateGame()}
+          />
+        </div>
             
       </Container>
       <Footer />

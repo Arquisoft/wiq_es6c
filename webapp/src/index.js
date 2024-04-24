@@ -17,6 +17,7 @@ import History from './userStats/App';
 import Login from './components/Login';
 import AppQuestion from './storeQuestion/App'
 import Help from './help/Help';
+import GameConfiguration from './components/game/GameConfiguration';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,6 +32,7 @@ root.render(
         <Route path="/history" element={<History/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/help" element={<Help/>}></Route>
+        <Route path="/gameConfiguration" element={<GameConfiguration/>}></Route>
       </Routes>
     </Router>
   </React.StrictMode>

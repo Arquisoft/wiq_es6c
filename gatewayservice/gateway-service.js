@@ -124,6 +124,15 @@ app.post('/storeGame', async (req, res) => {
   }
 })
 
+app.get('/topics', async (req, res) => {
+  try {
+    const response = await axios.get(`${gameService}/topics`)
+    res.json(response.data)
+  } catch (error) {
+    catchAction(error, res)
+  }
+})
+
 //libraries required for OpenAPI-Swagger
 const swaggerUi = require('swagger-ui-express'); 
 const fs = require("fs")
