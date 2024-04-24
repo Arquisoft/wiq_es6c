@@ -16,7 +16,11 @@ const previousBackgroundColor = '#1a1a1a'
 
 const GameConfiguration = () => {
 
-    var tematicas = useLocation().state.topics;
+    let tematicas
+    if(useLocation().state !== null)
+      tematicas = useLocation().state.topics;
+    else
+      tematicas = []
     console.log(tematicas)
 
 

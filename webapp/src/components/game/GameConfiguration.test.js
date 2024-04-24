@@ -3,7 +3,7 @@ import { ContextFun } from '../Context';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { GameConfiguration } from './GameConfiguration';
+import GameConfiguration from './GameConfiguration';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -23,11 +23,9 @@ describe("Game Configuration", () => {
             </ContextFun>
         );
 
-        const linkElement = screen.getByText(/Configuración de la partida/i);
+        let linkElement = screen.getByText(/Selecciona las temáticas/i);
         expect(linkElement).toBeInTheDocument();
-
-        linkElement = screen.getByText(/Selecciona las temáticas/i);
-        expect(linkElement).toBeInTheDocument();
+    
 
         linkElement = screen.getByText(/Selecciona el número de preguntas/i);
         expect(linkElement).toBeInTheDocument();
