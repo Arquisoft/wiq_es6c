@@ -2,6 +2,8 @@ const wikidata = require("./wikidataConnexion");
 
 class WikiQueries {
 
+    static regExp = /^Q\d+$/; // Expresión regular para filtrar las etiquetas del tipo "Q1234"
+
     /* CIENCIA */
 
     static async obtenerSimboloQuimico() {
@@ -33,7 +35,11 @@ class WikiQueries {
 
         const results = await wikidata.consulta(query);
         // console.log(results)
-        return results;
+        return results.filter(function(element) {
+            const countryOk = !WikiQueries.regExp.test(element.countryLabel);
+            const capitalOk = !WikiQueries.regExp.test(element.capitalLabel);
+            return countryOk && capitalOk;
+        });
     }
 
     static async obtenerPaisYBandera() {
