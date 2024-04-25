@@ -82,7 +82,7 @@ app.get('/extract', async (req, res) => {
     }
 });
 
-// Route for geting countries
+// // Route for geting countries
 app.get('/countries', async (req, res) => {
     try {
         const paises = await Pais.find({})
@@ -93,7 +93,7 @@ app.get('/countries', async (req, res) => {
     }
 });
 
-// Route for deleting countries
+// // Route for deleting countries
 app.delete('/countries', async (req, res) => {
     try {
         const paises = await Pais.deleteMany({})
