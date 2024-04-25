@@ -19,19 +19,19 @@ app.use(express.json());
 
 const templates = [
     {
-        extractMethod: WikiQueries.obtenerPaisYCapital(),
+        extractMethod: () => WikiQueries.obtenerPaisYCapital(),
         filtro: (element) => { return { pais: String(element.countryLabel) }},
         campo_actualizar: (element) => { return { capital: element.capitalLabel }},
         saveMethod: (transactions) => Pais.bulkWrite(transactions)
     },
     {
-        extractMethod: WikiQueries.obtenerPaisYLenguaje(),
+        extractMethod: () => WikiQueries.obtenerPaisYLenguaje(),
         filtro: (element) => { return { pais: String(element.countryLabel) }},
         campo_actualizar: (element) => { return { lenguaje: element.languageLabel }},
         saveMethod: (transactions) => Pais.bulkWrite(transactions)
     },
     {
-        extractMethod: WikiQueries.obtenerPaisYBandera(),
+        extractMethod: () => WikiQueries.obtenerPaisYBandera(),
         filtro: (element) => { return { pais: String(element.countryLabel) }},
         campo_actualizar: (element) => { return { bandera: element.flagLabel }},
         saveMethod: (transactions) => Pais.bulkWrite(transactions)
@@ -39,7 +39,7 @@ const templates = [
 ];
 
 async function extractData(template) {
-    var data = await template.extractMethod;
+    var data = await template.extractMethod();
     console.log(data);
     var transactions = data.map(function (element) {
         var transaction = {
