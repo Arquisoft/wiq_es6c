@@ -17,34 +17,53 @@ db.once('open', () => console.log("Connected to MongoDB: %s", mongoUri));
 // Middleware to parse JSON in request body
 app.use(express.json());
 
-async function extractData() {
-    var data = await WikiQueries.obtenerPaisYLenguaje();
+const templates = [
+    {
+        extractMethod: WikiQueries.obtenerPaisYCapital(),
+        filtro: (element) => { return { pais: String(element.countryLabel) }},
+        campo_actualizar: (element) => { return { capital: element.capitalLabel }},
+        saveMethod: (transactions) => Pais.bulkWrite(transactions)
+    },
+    {
+        extractMethod: WikiQueries.obtenerPaisYLenguaje(),
+        filtro: (element) => { return { pais: String(element.countryLabel) }},
+        campo_actualizar: (element) => { return { lenguaje: element.languageLabel }},
+        saveMethod: (transactions) => Pais.bulkWrite(transactions)
+    },
+    {
+        extractMethod: WikiQueries.obtenerPaisYBandera(),
+        filtro: (element) => { return { pais: String(element.countryLabel) }},
+        campo_actualizar: (element) => { return { bandera: element.flagLabel }},
+        saveMethod: (transactions) => Pais.bulkWrite(transactions)
+    }
+];
+
+async function extractData(template) {
+    var data = await template.extractMethod;
     console.log(data);
-    var paises = data.map(function (element) {
-        var p = {
+    var transactions = data.map(function (element) {
+        var transaction = {
             updateOne: {
-                filter: { pais: String(element.countryLabel) },
-                update: {
-                    capital: element.capitalLabel,
-                    lenguaje: element.languageLabel,
-                    bandera: element.flagLabel
-                },
+                filter: template.filtro(element),
+                update: template.campo_actualizar(element),
                 upsert: true
             }
         };
-        console.log(p);
-        return p;
+        console.log(transaction);
+        return transaction;
     });
-    await Pais.bulkWrite(paises);
+    await template.saveMethod(transactions);
 
-    return paises;
+    return transactions;
 }
-
-var minutes = 30;
+const minutes = 30;
+const totalQueries = templates.length;
+var query = 0;
 cron.schedule(`*/${minutes} * * * *`, () => {
     console.log(`Running a task every ${minutes} minutes: ${Date()}`);
     // Call function here
-    extractData();
+    extractData(templates[query]);
+    query = (query+1)%totalQueries;
 });
 
  /* 
@@ -53,14 +72,15 @@ cron.schedule(`*/${minutes} * * * *`, () => {
  */
 
 // Route for extracting countries
-// app.get('/extract', async (req, res) => {
-//     try {
-//         res.json(await extractData());
-//     } catch (error) {
-//         res.status(500).json({ message: error.message })
-//         // res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// });
+app.get('/extract', async (req, res) => {
+    try {
+        res.json(await extractData(templates[1]));
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: error.message })
+        // res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 // // Route for geting countries
 // app.get('/countries', async (req, res) => {
@@ -92,7 +112,7 @@ app.use((err, req, res, next) => {
 
 // Start the server
 const server = app.listen(port, () => {
-    console.log(`Questions Service listening at http://localhost:${port}`);
+    console.log(`Wikidata Extractor listening at http://localhost:${port}`);
 });
 
 server.on('close', () => {
