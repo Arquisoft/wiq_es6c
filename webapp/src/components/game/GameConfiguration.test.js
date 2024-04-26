@@ -5,6 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { BrowserRouter as Router } from 'react-router-dom';
 import GameConfiguration from './GameConfiguration';
 
+const request = require('supertest');
 const mockAxios = new MockAdapter(axios);
 
 describe("Game Configuration", () => {
@@ -38,7 +39,7 @@ describe("Game Configuration", () => {
         expect(numPreguntas).toHaveLength(1);
     });
 
-    test("modify number of questions for game",async () => {
+    test("modify number of questions and number of answers for game",async () => {
 
         const { getByLabelText } = 
         render(
@@ -48,7 +49,8 @@ describe("Game Configuration", () => {
                 </Router>
             </ContextFun>
         );
-
+        
+        //NUMBER OF QUESTIONS
         const input = getByLabelText('Número de preguntas:');
         fireEvent.change(input, { target: { value: '5' } });
         expect(input.value).toBe('5');
@@ -56,20 +58,9 @@ describe("Game Configuration", () => {
         fireEvent.change(input, { target: { value: '0' } });
         expect(input.value).toBe('5');
         expect(screen.getAllByText(/El número de preguntas debe ser mayor que 0/i)[0]).toBeInTheDocument();
-    });
 
-    test("modify number of answers for game",async () => {
-
-        const { getByLabelText } = 
-        render(
-            <ContextFun>
-                <Router>
-                    <GameConfiguration />
-                </Router>
-            </ContextFun>
-        );
-
-        const input = getByLabelText('Número de respuestas:');
+        //NUMBER OF ANSWRES
+        input = getByLabelText('Número de respuestas:');
         fireEvent.change(input, { target: { value: '5' } });
         expect(input.value).toBe('5');
         //try to put number of answers < 2
@@ -77,6 +68,30 @@ describe("Game Configuration", () => {
         expect(input.value).toBe('5');
         expect(screen.getAllByText(/El número de respuestas debe ser mayor que 2/i)[0]).toBeInTheDocument();
     });
+
+    /*
+    test('test por topics of questions', async () => {
+        const topics = ['Tema 1', 'Tema 2', 'Tema 3'];
+
+        const response = await request(GameConfiguration).post('/gameConfiguration').send(topics);
+        expect(response.status).toBe(200);
+
+        // opciones de temáticas y que los checkboxes desmarcados 
+        topics.forEach((t, index) => {
+            const checkbox = getByLabelText(t);
+            expect(checkbox).toBeInTheDocument();
+            expect(checkbox).toHaveAttribute('type', 'checkbox');
+            expect(checkbox).not.toBeChecked();
+        });
+
+        // Simula cambios de temáticas marcando y desmarcando
+        topics.forEach((t, index) => {
+            const checkbox = getByLabelText(t);
+            fireEvent.click(checkbox); //marcar
+            fireEvent.click(checkbox); //desmarcar
+        });
+    });
+    */
 
 });
 
