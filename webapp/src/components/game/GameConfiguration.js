@@ -16,15 +16,11 @@ const previousBackgroundColor = '#1a1a1a'
 
 const GameConfiguration = () => {
 
-  const navigation = useNavigate();
-    let tematicas
-    let state = useLocation().state
+    let tematicas = [];
+    let state = useLocation().state;
     if( state !== null)
       tematicas = state.topics;
-    else
-      tematicas = []
     console.log(tematicas)
-
 
     // Almacen de temáticas 
     const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
@@ -33,6 +29,7 @@ const GameConfiguration = () => {
     // Almacen de mensaje de error para el spinner
     const [error, setError] = useState(null); 
 
+    const [numRes, setNumRes] = useState(2);
 
     const handleTematicaChange = (event) => {
         const tematicaSeleccionada = event.target.value;
