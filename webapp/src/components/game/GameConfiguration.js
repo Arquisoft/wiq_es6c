@@ -185,9 +185,6 @@ const GameConfiguration = () => {
 
         </div>
 
-        {/* <div className="comenzarJuego">
-          <button onClick={initiateGame}>Comenzar Juego</button>
-        </div> */}
         <Button onClick={initiateGame} text="Comenzar Juego"/>
             
       </Container>

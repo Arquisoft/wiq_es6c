@@ -60,6 +60,39 @@ describe("Game Configuration", () => {
             </ContextFun>
         );
 
+        const input = getByLabelText('Número de preguntas:');
+        fireEvent.change(input, { target: { value: '5' } });
+        expect(input.value).toBe('5');
+    });
+
+    test("try to put number of questions: 0",async () => {
+
+        const { getByLabelText } = 
+        render(
+            <ContextFun>
+                <Router>
+                    <GameConfiguration />
+                </Router>
+            </ContextFun>
+        );
+
+        const input = getByLabelText('Número de preguntas:');
+        fireEvent.change(input, { target: { value: '0' } });
+        expect(input.value).toBe('0');
+        expect(screen.getByText(/El número de preguntas debe ser mayor que 0/i)).toBeInTheDocument();
+    });
+
+    test("modify number of answers for game",async () => {
+
+        const { getByLabelText } = 
+        render(
+            <ContextFun>
+                <Router>
+                    <GameConfiguration />
+                </Router>
+            </ContextFun>
+        );
+
         const input = getByLabelText('Número de respuestas:');
         fireEvent.change(input, { target: { value: '5' } });
         expect(input.value).toBe('5');
