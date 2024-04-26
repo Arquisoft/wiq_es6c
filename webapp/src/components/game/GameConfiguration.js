@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom'; // Importa useHistory
 import axios from 'axios'
 import { shuffleArray } from '../Util';
 import './GameConfiguration.css';
+import Spinner from '../spinner/Spinner';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
@@ -186,6 +187,8 @@ const GameConfiguration = () => {
             />
             {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
+
+          <Spinner min={2} value={2}/>
 
         </div>
 
