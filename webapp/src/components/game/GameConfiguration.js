@@ -12,7 +12,6 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000'
 
 let gameId;
 let questions = []
-const previousBackgroundColor = '#1a1a1a'
 
 const GameConfiguration = () => {
 
