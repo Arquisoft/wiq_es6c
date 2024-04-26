@@ -30,17 +30,6 @@ describe("Game Configuration", () => {
         expect(linkElement).toBeInTheDocument();
         linkElement = screen.getByText(/Comenzar Juego/i);
         expect(linkElement).toBeInTheDocument();
-    });
-
-    test("check number of elements on topics section and configure number of questions",async () => {
-
-        render(
-            <ContextFun>
-                <Router>
-                    <GameConfiguration />
-                </Router>
-            </ContextFun>
-        );
 
         let tematics = document.getElementsByClassName('configureTopic');
         expect(tematics).toHaveLength(1);
@@ -63,20 +52,7 @@ describe("Game Configuration", () => {
         const input = getByLabelText('Número de preguntas:');
         fireEvent.change(input, { target: { value: '5' } });
         expect(input.value).toBe('5');
-    });
-
-    test("try to put number of questions: 0",async () => {
-
-        const { getByLabelText } = 
-        render(
-            <ContextFun>
-                <Router>
-                    <GameConfiguration />
-                </Router>
-            </ContextFun>
-        );
-
-        const input = getByLabelText('Número de preguntas:');
+        // try to put number of questions = 0
         fireEvent.change(input, { target: { value: '0' } });
         expect(input.value).toBe('1');
         expect(screen.getAllByText(/El número de preguntas debe ser mayor que 0/i)[0]).toBeInTheDocument();
@@ -96,20 +72,7 @@ describe("Game Configuration", () => {
         const input = getByLabelText('Número de respuestas:');
         fireEvent.change(input, { target: { value: '5' } });
         expect(input.value).toBe('5');
-    });
-
-    test("try to put number of answers < 2",async () => {
-
-        const { getByLabelText } = 
-        render(
-            <ContextFun>
-                <Router>
-                    <GameConfiguration />
-                </Router>
-            </ContextFun>
-        );
-
-        const input = getByLabelText('Número de respuestas:');
+        //try to put number of answers < 2
         fireEvent.change(input, { target: { value: '1' } });
         expect(input.value).toBe('2');
         expect(screen.getAllByText(/El número de respuestas debe ser mayor que 2/i)[0]).toBeInTheDocument();
