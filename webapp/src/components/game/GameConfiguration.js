@@ -54,12 +54,20 @@ const GameConfiguration = () => {
         }
     };
 
+    const handleNumResChange = (event) => {
+      const nuevoValor = parseInt(event.target.value, 10);
+
+      if (!isNaN(nuevoValor) && nuevoValor > 1) {
+        setNumRes(nuevoValor);
+        setError(null); // Reseteamos el error si el valor es válido
+        } else {
+        setError("El número de respuestas debe ser mayor que 2");
+        }
+    }
+
   const initiateGame = async () => {
-    console.log(tematicasSeleccionadas)
-    console.log(numPreguntas)
     await generateGameId();  
-    await getQuestions()
-    console.log(questions)  
+    await getQuestions();
     //isApiCalledRef = true//ASK - is this necessary?
     navigation("/firstGame", {state: {questions, gameId}})
   }
@@ -67,7 +75,6 @@ const GameConfiguration = () => {
   const generateGameId = async () => {
     try {
       const response = await axios.get(`${apiEndpoint}/generateGame`)
-      console.log(response.data)
       gameId = response.data
     } catch(error) {
       console.error(error);
@@ -87,22 +94,19 @@ const GameConfiguration = () => {
   const getQuestions = async () => {
     try {
       const topicsFormated = formatearTopics()
-      console.log(topicsFormated)
       const response = await axios.get(`${apiEndpoint}/questions?n_preguntas=${numPreguntas}&n_respuestas=${numRes}${topicsFormated}`);
-      console.log(response.data.length)
-
-        for(const data of response.data){
-            let possibleAnswers = [data.respuesta_correcta, 
-                                    data.respuestas_incorrectas[0], 
-                                    data.respuestas_incorrectas[1], 
-                                    data.respuestas_incorrectas[2]];
-            possibleAnswers = shuffleArray(possibleAnswers)
-            questions.push({
-              question: data.pregunta,
-              options: possibleAnswers,
-              correctAnswer: data.respuesta_correcta
-            })
-        }      
+      for (var i = 0; i < response.data.length; i++) {
+        var possibleAnswers = [response.data[i].respuesta_correcta]
+        for (var j = 0; j < response.data[i].respuestas_incorrectas.length; j++) {
+          possibleAnswers.push(response.data[i].respuestas_incorrectas[j])
+        }
+        possibleAnswers = shuffleArray(possibleAnswers)
+        questions.push({
+          question: response.data[i].pregunta,
+          options: possibleAnswers,
+          correctAnswer: response.data[i].respuesta_correcta
+        })
+      }      
     } catch (error) {
       console.error(error);
     }
