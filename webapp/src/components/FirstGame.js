@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
-import {shuffleArray} from './Util'
 
 var currentQuestionIndex = 0;
 
@@ -36,7 +35,7 @@ const Quiz = () => {
     const time = setInterval(() => {
       setRemTime((progress) => {
         if(progress === 100){
-          checkAnswer(-1);
+          // checkAnswer(-1);
           return 0; 
         }
         const diff = 4;
@@ -51,23 +50,6 @@ const Quiz = () => {
 
   const esperar = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
-  };
-
-  const getQuestions = async () => {
-    try {
-      const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`, { id });
-      for (var i = 0; i < response.data.length; i++) {
-        var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
-        possibleAnswers = shuffleArray(possibleAnswers)
-        allQuestions.push({
-          question: response.data[i].pregunta,
-          options: possibleAnswers,
-          correctAnswer: response.data[i].respuesta_correcta
-        })
-      }      
-    } catch (error) {
-      console.error(error);
-    }
   };
   
   function changeButtons(param) {
@@ -139,7 +121,7 @@ const Quiz = () => {
       // console.log(isCorrect)
       botonIncorrecta.style.backgroundColor = 'red'
       // console.log("Entramos a cambiar")
-      haveFailedQuestion = true;
+      // haveFailedQuestion = true;
       
       // console.log("Despues de modificar los valores")
     } else {
@@ -217,15 +199,10 @@ const Quiz = () => {
             width: '100%',
             padding: 3}}>
 
-            {/*<LinearProgress color="secondary" variant={loading? "indeterminate" : "determinate"} value={remTime} />*/}
             <LinearProgress id='progress'color="secondary" variant={"determinate"} value={remTime} />
 
         </Box>
 
-        
-        {/* {isCorrect !== null && (
-          <p>{isCorrect ? '¡Respuesta correcta!' : 'Respuesta incorrecta.'}</p>
-        )} */}
       </Container>
       <Footer />
     </>

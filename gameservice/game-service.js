@@ -43,11 +43,7 @@ app.get('/questions', async (req, res) => {
   try {
     // TODO: Implement logic to fetch questions from MongoDB and send response 
     // const questions = await Question.find()
-    console.log("Llegamos a pedir preguntas")
-    console.log(req.body.n_preg)
-    console.log(req.body.topics)
     const questionGenerated = await axios.get(questionService + req.url);
-    console.log("Pedimos las preguntas")
     res.json(questionGenerated.data);
   } catch (error) {
     // res.status(500).json({ message: error.message })
