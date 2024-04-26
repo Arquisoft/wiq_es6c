@@ -2,7 +2,7 @@ const express = require('express');
 const cron = require('node-cron');
 const mongoose = require('mongoose');
 const WikiQueries = require('./wikidataQueries');
-const { Pais, Elemento } = require('./wikidataextractor-model');
+const { Pais, Monumento, Elemento, Pelicula, Cancion } = require('./wikidataextractor-model');
 
 const app = express();
 const port = 8008;
@@ -25,22 +25,46 @@ const templates = [
         saveMethod: (transactions) => Pais.bulkWrite(transactions)
     },
     {
-        extractMethod: () => WikiQueries.obtenerPaisYLenguaje(),
+        extractMethod: () => WikiQueries.obtenerPaisYContinente(),
         filtro: (element) => { return { pais: String(element.countryLabel) }},
-        campo_actualizar: (element) => { return { lenguaje: element.languageLabel }},
+        campo_actualizar: (element) => { return { continente: element.continentLabel }},
         saveMethod: (transactions) => Pais.bulkWrite(transactions)
     },
     {
-        extractMethod: () => WikiQueries.obtenerPaisYBandera(),
-        filtro: (element) => { return { pais: String(element.countryLabel) }},
-        campo_actualizar: (element) => { return { bandera: element.flagLabel }},
-        saveMethod: (transactions) => Pais.bulkWrite(transactions)
+        extractMethod: () => WikiQueries.obtenerMonumentoYPais(),
+        filtro: (element) => { return { monumento: String(element.monumentLabel) }},
+        campo_actualizar: (element) => { return { pais: element.countryLabel }},
+        saveMethod: (transactions) => Monumento.bulkWrite(transactions)
     },
+    // {
+    //     extractMethod: () => WikiQueries.obtenerPaisYLenguaje(),
+    //     filtro: (element) => { return { pais: String(element.countryLabel) }},
+    //     campo_actualizar: (element) => { return { lenguaje: element.languageLabel }},
+    //     saveMethod: (transactions) => Pais.bulkWrite(transactions)
+    // },
+    // {
+    //     extractMethod: () => WikiQueries.obtenerPaisYBandera(),
+    //     filtro: (element) => { return { pais: String(element.countryLabel) }},
+    //     campo_actualizar: (element) => { return { bandera: element.flagLabel }},
+    //     saveMethod: (transactions) => Pais.bulkWrite(transactions)
+    // },
     {
         extractMethod: () => WikiQueries.obtenerSimboloQuimico(),
         filtro: (element) => { return { elemento: String(element.elementLabel) }},
         campo_actualizar: (element) => { return { simbolo: element.symbol }},
         saveMethod: (transactions) => Elemento.bulkWrite(transactions)
+    },
+    {
+        extractMethod: () => WikiQueries.obtenerPeliculaYDirector(),
+        filtro: (element) => { return { pelicula: String(element.peliculaLabel) }},
+        campo_actualizar: (element) => { return { director: element.directorLabel }},
+        saveMethod: (transactions) => Pelicula.bulkWrite(transactions)
+    },
+    {
+        extractMethod: () => WikiQueries.obtenerCancionYArtista(),
+        filtro: (element) => { return { cancion: String(element.songLabel) }},
+        campo_actualizar: (element) => { return { artista: element.artistLabel }},
+        saveMethod: (transactions) => Cancion.bulkWrite(transactions)
     }
 ];
 
@@ -62,6 +86,7 @@ async function extractData(template) {
 
     return transactions;
 }
+
 const minutes = 30;
 const totalQueries = templates.length;
 var query = 0;
