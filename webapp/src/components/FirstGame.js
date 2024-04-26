@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
-import {shuffleArray} from './Util'
 
 var currentQuestionIndex = 0;
 
@@ -200,15 +199,10 @@ const Quiz = () => {
             width: '100%',
             padding: 3}}>
 
-            {/*<LinearProgress color="secondary" variant={loading? "indeterminate" : "determinate"} value={remTime} />*/}
             <LinearProgress id='progress'color="secondary" variant={"determinate"} value={remTime} />
 
         </Box>
 
-        
-        {/* {isCorrect !== null && (
-          <p>{isCorrect ? '¡Respuesta correcta!' : 'Respuesta incorrecta.'}</p>
-        )} */}
       </Container>
       <Footer />
     </>
