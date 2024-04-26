@@ -98,5 +98,22 @@ describe("Game Configuration", () => {
         expect(input.value).toBe('5');
     });
 
+    test("try to put number of answers < 2",async () => {
+
+        const { getByLabelText } = 
+        render(
+            <ContextFun>
+                <Router>
+                    <GameConfiguration />
+                </Router>
+            </ContextFun>
+        );
+
+        const input = getByLabelText('Número de respuestas:');
+        fireEvent.change(input, { target: { value: '1' } });
+        expect(input.value).toBe('2');
+        expect(screen.getAllByText(/El número de respuestas debe ser mayor que 2/i)[0]).toBeInTheDocument();
+    });
+
 });
 
