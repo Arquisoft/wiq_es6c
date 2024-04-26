@@ -37,4 +37,20 @@ describe('Gateway Service', () => {
     expect(response.statusCode).toBe(200);
     expect(response.body.userId).toBe('mockedUserId');
   });
+
+  // Test /history/games/:username
+
+
+  // Test /history/questions
+  it('should forward add user request to user service', async () => {
+    await request(app).post('/login')
+      .send({ username: 'testuser', password: 'testpassword' });
+
+    const response = await request(app)
+      .get('/history/questions');
+
+    expect(response.statusCode).toBe(200);
+  });
+
+
 });
