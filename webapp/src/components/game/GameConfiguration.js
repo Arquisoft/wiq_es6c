@@ -3,7 +3,7 @@ import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 import Button from '../Button';
-import { useLocation } from 'react-router-dom'; // Importa useHistory
+import { useLocation, useNavigate } from 'react-router-dom'; // Importa useHistory
 import axios from 'axios'
 import { shuffleArray } from '../Util';
 import './GameConfiguration.css';
@@ -16,6 +16,7 @@ const previousBackgroundColor = '#1a1a1a'
 
 const GameConfiguration = () => {
 
+  const navigation = useNavigate();
     let tematicas
     let state = useLocation().state
     if( state !== null)
@@ -80,7 +81,7 @@ const GameConfiguration = () => {
     await getQuestions()
     console.log(questions)  
     //isApiCalledRef = true//ASK - is this necessary?
-    // navigation("/firstGame", {state: {questions, gameId}})
+    navigation("/firstGame", {state: {questions, gameId}})
   }
 
   const generateGameId = async () => {
