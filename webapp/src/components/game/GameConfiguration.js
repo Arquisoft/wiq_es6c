@@ -16,14 +16,11 @@ const previousBackgroundColor = '#1a1a1a'
 
 const GameConfiguration = () => {
 
-    let tematicas
-    let state = useLocation().state
+    let tematicas = [];
+    let state = useLocation().state;
     if( state !== null)
       tematicas = state.topics;
-    else
-      tematicas = []
     console.log(tematicas)
-
 
     // Almacen de temáticas 
     const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
@@ -33,7 +30,6 @@ const GameConfiguration = () => {
     const [error, setError] = useState(null); 
 
     const [numRes, setNumRes] = useState(2);
-
 
     const handleTematicaChange = (event) => {
         const tematicaSeleccionada = event.target.value;
