@@ -6,7 +6,7 @@ class WikiQueries {
 
     /* CIENCIA */
 
-    static async obtenerSimboloQuimico() {
+    static async obtenerSimboloQuimico() { // En uso
         const query = 
         `SELECT ?elementLabel ?symbol WHERE { 
             ?element wdt:P31 wd:Q11344. 
@@ -28,7 +28,7 @@ class WikiQueries {
 
     /* GEOGRAFÍA */
 
-    static async obtenerPaisYCapital() {
+    static async obtenerPaisYCapital() { // En uso
         const query = `
             SELECT ?countryLabel ?capitalLabel WHERE {
                 ?country wdt:P31 wd:Q6256.
@@ -43,6 +43,24 @@ class WikiQueries {
             const countryOk = !WikiQueries.regExp.test(element.countryLabel);
             const capitalOk = !WikiQueries.regExp.test(element.capitalLabel);
             return countryOk && capitalOk;
+        });
+    }
+
+    static async obtenerPaisYContinente() { // En uso
+        const query = `
+            SELECT ?countryLabel ?continentLabel WHERE {
+                ?country wdt:P31 wd:Q6256.
+                ?country wdt:P30 ?continent.
+                SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
+            }
+        `;
+
+        const results = await wikidata.consulta(query);
+        // console.log(results)
+        return results.filter(function(element) {
+            const countryOk = !WikiQueries.regExp.test(element.countryLabel);
+            const continentOk = !WikiQueries.regExp.test(element.continentLabel);
+            return countryOk && continentOk;
         });
     }
 
@@ -78,40 +96,45 @@ class WikiQueries {
 
     }
 
-    static async obtenerMonumentoYPais(){
+    static async obtenerMonumentoYPais(){ // En uso
         const query = `
-        SELECT ?preguntaLabel ?respuestaLabel WHERE {
-            ?pregunta wdt:P31 wd:Q570116; wdt:P17 ?respuesta.
+        SELECT ?monumentLabel ?countryLabel WHERE {
+            ?monument wdt:P31 wd:Q570116; wdt:P17 ?country.
             SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
         } 
-        LIMIT 200
+        LIMIT 2500
         `;
 
         const results = await wikidata.consulta(query);
         // console.log(results)
-        return results;
+        return results.filter(function(element) {
+            const monumentOk = !WikiQueries.regExp.test(element.monumentLabel);
+            const countryOk = !WikiQueries.regExp.test(element.countryLabel);
+            return countryOk && monumentOk;
+        });
 
     }
     
 
     /* ENTRETENIMIENTO */ 
 
-    static async obtenerPeliculasAñosYDirector() {
+    static async obtenerPeliculaYDirector() { // En uso
         const query = `
-        SELECT ?peliculaLabel ?directorLabel ?fecha
-            WHERE {
+        SELECT ?peliculaLabel ?directorLabel WHERE {
             ?pelicula wdt:P31 wd:Q11424.  # Filtramos por instancias de películas
-            ?pelicula wdt:P577 ?fecha.    # Obtenemos la fecha de publicación
             ?pelicula wdt:P57 ?director.  # Obtenemos el director de la película
-            FILTER (YEAR(?fecha) > 2000). # Filtramos por películas posteriores al 2000
             SERVICE wikibase:label { bd:serviceParam wikibase:language "es". }
-            }
-            LIMIT 2000
-            `;
+        }
+        LIMIT 2500
+        `;
 
         const results = await wikidata.consulta(query);
         // console.log(results)
-        return results;
+        return results.filter(function(element) {
+            const peliculaOk = !WikiQueries.regExp.test(element.peliculaLabel);
+            const directorOk = !WikiQueries.regExp.test(element.directorLabel);
+            return peliculaOk && directorOk;
+        });
     }
 
     static async obtenerMangaYFecha() {
@@ -131,25 +154,29 @@ class WikiQueries {
         return results;
     }
 
-    static async obtenerCantanteYCancion() {
+    static async obtenerCancionYArtista() { // En uso
         const query = `
-        SELECT ?song ?songLabel ?singer ?singerLabel
-            WHERE {
-                ?song wdt:P31 wd:Q7366; # Canción
-                        wdt:P175 ?singer. # Cantante
-                ?singer wdt:P27 wd:Q29. # Español
-                MINUS {
-                    ?song wdt:P175 ?anotherSinger.  # Quitamos canciones con más de un cantante
-                    FILTER (?anotherSinger != ?singer)
-                }
-                SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-            }
-            LIMIT 200
+        SELECT DISTINCT ?songLabel ?artistLabel WHERE {
+            ?song wdt:P31 wd:Q7366;                   # Instances of songs
+                  wdt:P175 ?artist.                  # With property "performer" (artist)
+          
+            ?song wdt:P136 ?genre.                   # Filter by genre
+            VALUES ?genre { wd:Q202930 wd:Q188450 wd:Q11401 wd:Q20502 wd:Q58339 wd:Q211756 wd:Q474027 wd:Q484641 wd:Q547137 } # Specify genres
+            
+            OPTIONAL { ?song wdt:P175 ?secondArtist FILTER (?artist != ?secondArtist) }  # Optional second performer
+            FILTER(!bound(?secondArtist))            # Filter out songs with a second performer
+            
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
+          }
         `;
 
         const results = await wikidata.consulta(query);
         // console.log(results)
-        return results;
+        return results.filter(function(element) {
+            const songOk = !WikiQueries.regExp.test(element.songLabel);
+            const artistOk = !WikiQueries.regExp.test(element.artistLabel);
+            return songOk && artistOk;
+        });
 
     }
 
