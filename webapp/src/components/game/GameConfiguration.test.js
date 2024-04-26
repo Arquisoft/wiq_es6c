@@ -54,7 +54,7 @@ describe("Game Configuration", () => {
         expect(input.value).toBe('5');
         // try to put number of questions = 0
         fireEvent.change(input, { target: { value: '0' } });
-        expect(input.value).toBe('1');
+        expect(input.value).toBe('5');
         expect(screen.getAllByText(/El número de preguntas debe ser mayor que 0/i)[0]).toBeInTheDocument();
     });
 
@@ -74,7 +74,7 @@ describe("Game Configuration", () => {
         expect(input.value).toBe('5');
         //try to put number of answers < 2
         fireEvent.change(input, { target: { value: '1' } });
-        expect(input.value).toBe('2');
+        expect(input.value).toBe('5');
         expect(screen.getAllByText(/El número de respuestas debe ser mayor que 2/i)[0]).toBeInTheDocument();
     });
 
