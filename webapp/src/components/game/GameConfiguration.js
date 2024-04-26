@@ -168,9 +168,24 @@ const GameConfiguration = () => {
 
         </div>
 
-        
-        <Button onClick={initiateGame} text='Comenzar Juego'/>
-        
+        <div className="configureNumberOfAnswers">
+
+          <h3>Selecciona el número de respuestas(mínimo 2)</h3>
+
+          <div>
+            <label htmlFor="numRes">Número de respuestas:</label>
+            <input
+              type="number"
+              id="numRes"
+              value={numRes}
+              onChange={handleNumResChange}
+            />
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+          </div>
+
+        </div>
+
+        <Button onClick={initiateGame} text="Comenzar Juego"/>
             
       </Container>
       <Footer />
