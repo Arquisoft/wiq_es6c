@@ -52,23 +52,6 @@ const Quiz = () => {
   const esperar = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   };
-
-  const getQuestions = async () => {
-    try {
-      const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`, { id });
-      for (var i = 0; i < response.data.length; i++) {
-        var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
-        possibleAnswers = shuffleArray(possibleAnswers)
-        allQuestions.push({
-          question: response.data[i].pregunta,
-          options: possibleAnswers,
-          correctAnswer: response.data[i].respuesta_correcta
-        })
-      }      
-    } catch (error) {
-      console.error(error);
-    }
-  };
   
   function changeButtons(param) {
     console.log("Entramos aqui")
