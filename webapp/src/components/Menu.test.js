@@ -5,6 +5,7 @@ import {MemoryRouter} from 'react-router-dom';
 import Menu from './Menu';
 
 const mockAxios = new MockAdapter(axios);
+jest.mock('axios');
 
 describe("Menu component", () => {
 

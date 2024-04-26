@@ -41,10 +41,6 @@ const Menu = () => {
       navigation("/gameConfiguration", {state: {topics}})
     }
 
-    
-
-    
-
     return (
       <>
         <Nav />
