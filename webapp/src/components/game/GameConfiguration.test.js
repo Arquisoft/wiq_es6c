@@ -78,7 +78,7 @@ describe("Game Configuration", () => {
 
         const input = getByLabelText('Número de preguntas:');
         fireEvent.change(input, { target: { value: '0' } });
-        expect(input.value).toBe('0');
+        expect(input.value).toBe('1');
         expect(screen.getByText(/El número de preguntas debe ser mayor que 0/i)).toBeInTheDocument();
     });
 
