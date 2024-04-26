@@ -6,9 +6,7 @@ import { useNavigate } from 'react-router-dom'; // Importa useHistory
 import Button from './Button'
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
-import {shuffleArray} from './Util'
 import axios from 'axios';
-
 
 //var isApiCalledRef = false;//ASK - is this necessary?
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
@@ -29,7 +27,6 @@ const Menu = () => {
       try {
         topics = await axios.get(`${apiEndpoint}/topics`)
         topics = topics.data
-        console.log("Topics", topics)
       } catch(error) {
         console.error(error)
       }
