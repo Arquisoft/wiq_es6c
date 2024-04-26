@@ -2,7 +2,7 @@ const express = require('express');
 const cron = require('node-cron');
 const mongoose = require('mongoose');
 const WikiQueries = require('./wikidataQueries');
-const { Pais } = require('./wikidataextractor-model');
+const { Pais, Elemento } = require('./wikidataextractor-model');
 
 const app = express();
 const port = 8008;
@@ -35,6 +35,12 @@ const templates = [
         filtro: (element) => { return { pais: String(element.countryLabel) }},
         campo_actualizar: (element) => { return { bandera: element.flagLabel }},
         saveMethod: (transactions) => Pais.bulkWrite(transactions)
+    },
+    {
+        extractMethod: () => WikiQueries.obtenerSimboloQuimico(),
+        filtro: (element) => { return { elemento: String(element.elementLabel) }},
+        campo_actualizar: (element) => { return { simbolo: element.symbol }},
+        saveMethod: (transactions) => Elemento.bulkWrite(transactions)
     }
 ];
 

@@ -17,7 +17,11 @@ class WikiQueries {
 
         const results = await wikidata.consulta(query);
         // console.log(results)
-        return results;
+        return results.filter(function(element) {
+            const elementOk = !WikiQueries.regExp.test(element.elementLabel);
+            const symbolOk = !WikiQueries.regExp.test(element.symbol);
+            return elementOk && symbolOk;
+        });
 
     }
 
