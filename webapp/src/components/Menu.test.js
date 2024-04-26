@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {MemoryRouter} from 'react-router-dom';
@@ -32,6 +32,26 @@ describe("Menu component", () => {
 
         const gamesBT = document.getElementsByClassName('modes')
         expect(gamesBT).toHaveLength(1);
+    });
+
+    test('fetches topics and navigates to game configuration', async () => {
+        render(
+            <MemoryRouter>
+                <Menu />
+            </MemoryRouter>
+        );
+
+        const topicsData = [{ id: 1, name: 'Topic 1' }, { id: 2, name: 'Topic 2' }];
+        axios.get.mockResolvedValueOnce({ data: topicsData });
+        const mockNavigation = jest.fn();
+        const location = { state: { topics: topicsData } };
+        
+        fireEvent.click(screen.getByText('Clásico'));
+
+        await waitFor(() => {
+            expect(axios.get).toHaveBeenCalledWith(`${apiEndpoint}/topics`);
+            expect(mockNavigation).toHaveBeenCalledWith('/gameConfiguration', location);
+        });
     });
 
 });
