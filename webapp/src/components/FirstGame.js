@@ -36,7 +36,7 @@ const Quiz = () => {
     const time = setInterval(() => {
       setRemTime((progress) => {
         if(progress === 100){
-          checkAnswer(-1);
+          // checkAnswer(-1);
           return 0; 
         }
         const diff = 4;
@@ -139,7 +139,7 @@ const Quiz = () => {
       // console.log(isCorrect)
       botonIncorrecta.style.backgroundColor = 'red'
       // console.log("Entramos a cambiar")
-      haveFailedQuestion = true;
+      // haveFailedQuestion = true;
       
       // console.log("Despues de modificar los valores")
     } else {
