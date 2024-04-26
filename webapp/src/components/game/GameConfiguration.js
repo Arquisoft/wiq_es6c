@@ -12,19 +12,15 @@ const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000'
 
 let gameId;
 let questions = []
-const previousBackgroundColor = '#1a1a1a'
 
 const GameConfiguration = () => {
 
   const navigation = useNavigate();
-    let tematicas
-    let state = useLocation().state
+    let tematicas = [];
+    let state = useLocation().state;
     if( state !== null)
       tematicas = state.topics;
-    else
-      tematicas = []
     console.log(tematicas)
-
 
     // Almacen de temáticas 
     const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
@@ -34,7 +30,6 @@ const GameConfiguration = () => {
     const [error, setError] = useState(null); 
 
     const [numRes, setNumRes] = useState(2);
-
 
     const handleTematicaChange = (event) => {
         const tematicaSeleccionada = event.target.value;
@@ -70,16 +65,9 @@ const GameConfiguration = () => {
         }
     }
 
-    // const handleChange = (event) => {
-    //     setNumeroErrores(event.target.value);
-    // };
-
   const initiateGame = async () => {
-    console.log(tematicasSeleccionadas)
-    console.log(numPreguntas)
     await generateGameId();  
-    await getQuestions()
-    console.log(questions)  
+    await getQuestions();
     //isApiCalledRef = true//ASK - is this necessary?
     navigation("/firstGame", {state: {questions, gameId}})
   }
@@ -87,7 +75,6 @@ const GameConfiguration = () => {
   const generateGameId = async () => {
     try {
       const response = await axios.get(`${apiEndpoint}/generateGame`)
-      console.log(response.data)
       gameId = response.data
     } catch(error) {
       console.error(error);
@@ -107,9 +94,7 @@ const GameConfiguration = () => {
   const getQuestions = async () => {
     try {
       const topicsFormated = formatearTopics()
-      console.log(topicsFormated)
       const response = await axios.get(`${apiEndpoint}/questions?n_preguntas=${numPreguntas}&n_respuestas=${numRes}${topicsFormated}`);
-      console.log(response.data.length)
       for (var i = 0; i < response.data.length; i++) {
         var possibleAnswers = [response.data[i].respuesta_correcta]
         for (var j = 0; j < response.data[i].respuestas_incorrectas.length; j++) {
@@ -190,9 +175,6 @@ const GameConfiguration = () => {
 
         </div>
 
-        {/* <div className="comenzarJuego">
-          <button onClick={initiateGame}>Comenzar Juego</button>
-        </div> */}
         <Button onClick={initiateGame} text="Comenzar Juego"/>
             
       </Container>
