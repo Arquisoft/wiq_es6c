@@ -28,13 +28,9 @@ app.use(cors());
 var gameId = 0;
 
 app.get('/generateGame', async (req, res) => {
-  try {
     console.log("Llegamos a crear un id del juego")
     var gameId = generateAleatoryString()
     res.json(gameId)
-  } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' })
-  }
 })
 
 

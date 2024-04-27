@@ -9,22 +9,7 @@ afterAll(async () => {
 jest.mock('axios');
 
 describe('Game Service', () => {
-    axios.post.mockImplementation((url, data) => {
-        if (url.endsWith('/storeGame')) {
-            return Promise.resolve("status ok")
-        }
-    })
-    axios.get.mockImplementation((url, data) => {
-        if (url.endsWith('/questions?n_preguntas=1&n_respuestas=4&tema=capital')) {
-            return Promise.resolve({data: {
-                pregunta: '¿Cuál es la capital Italia?',
-                respuesta_correcta: 'Roma',
-                respuestas_incorrectas: ['Nápoles', 'Florencia', 'Milán'],
-            }})
-        } 
-    })
-
-
+    
     it('should return a game id', async () => {
         const response = await request(app)
             .get('/generateGame');
@@ -36,6 +21,27 @@ describe('Game Service', () => {
         const response = await request(app)
             .get('/questions?n_preguntas=2&n_respuestas=5&tema=capital&tema=lenguaje')
         expect(response.statusCode).toBe(500)
+    })    
+})
+
+describe('Test the geting topics', () => {
+    axios.get.mockImplementation((url, data) => {
+        if (url.endsWith('/topics')) {
+            return Promise.resolve(["paises", "capitales"])
+        } else if (url.endsWith('/questions?n_preguntas=1&n_respuestas=4&tema=capital')) {
+            return Promise.resolve({data: {
+                pregunta: '¿Cuál es la capital Italia?',
+                respuesta_correcta: 'Roma',
+                respuestas_incorrectas: ['Nápoles', 'Florencia', 'Milán'],
+            }})
+        } 
+    })
+    
+    it('should return the topics paises, capitales', async () => {
+        
+        const response = await request(app)
+            .get('/topics')
+        expect(response.statusCode).toBe(200)
     })
 
     it('should return a number o questions of a diferent types of topics', async () => {
@@ -49,35 +55,38 @@ describe('Game Service', () => {
         expect(response.body.respuestas_incorrectas[2]).toBe("Milán")
         
     })
+
+    
 })
 
-//Revisar este test por algun motivo no lo está mockeando bien la llamada
-// describe('Test the store game', () => {
-//     axios.post.mockImplementation((url, data) => {
-//         if (url.endsWith('/storeGame')) {
-//             return Promise.resolve(200)
-//         }
-//     })
 
-//     it('should store the data of a game', async () => {
-//         const newGame = {
-//             id: "1",
-//             username: 'testuser',
-//             points: 100,
-//             questions: [{
-//               title: 'Question 1',
-//               answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
-//               ansIndex: [1, 2]
-//             }, {
-//               title: 'Question 2',
-//               answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
-//               ansIndex: [1, 1]
-//             }]
-//           };
-//         const response = await request(app)
-//             .post('/storeGame')
-//             .send(newGame)
-//         console.log(response)
-//         expect(response.statusCode).toBe(200)
-//     })
-// })
+
+//Revisar este test por algun motivo no lo está mockeando bien la llamada
+describe('Test the store game', () => {
+    axios.post.mockImplementation((url, data) => {
+        if (url.endsWith('/history/game')) {
+            return Promise.resolve("Example string")
+        }
+    })
+
+    it('should store the data of a game', async () => {
+        const newGame = {
+            id: "1",
+            username: 'testuser',
+            points: 100,
+            questions: [{
+              title: 'Question 1',
+              answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+              ansIndex: [1, 2]
+            }, {
+              title: 'Question 2',
+              answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+              ansIndex: [1, 1]
+            }]
+          };
+        const response = await request(app)
+            .post('/storeGame')
+            .send(newGame)
+        expect(response.statusCode).toBe(200)
+    })
+})

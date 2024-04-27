@@ -38,6 +38,10 @@ const Menu = () => {
       navigation("/gameConfiguration", {state: {topics}})
     }
 
+    const initiateCalculator = async () => {
+      navigation("/calculator")
+    }
+
     return (
       <>
         <Nav />
@@ -45,6 +49,7 @@ const Menu = () => {
           <h2>Modos de juego:</h2>
           <div className='modes'>
               <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
+              <Button text = "Calculadora Humana" name="calc" onClick={() => initiateCalculator()}/>
           </div>
           
         </Container>

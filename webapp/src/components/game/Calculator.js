@@ -3,16 +3,12 @@ import { shuffleArray, secureRandomNumber } from '../Util';
 import { Container, Typography, Box, LinearProgress} from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
+import Button from '../Button';
+
+var questions = []
+var questionIndex = -1
 
 const Calculator = () => {
-
-    const [question, setQuestion] = useState(null);
-
-    useEffect(() => {
-        const newQuestion = generateQuestion();
-        setQuestion(newQuestion);
-    }, []);
-
 
     function generateQuestion() {
         const num1 = secureRandomNumber(10) + 1;
@@ -20,6 +16,7 @@ const Calculator = () => {
         const operator = ['+', '-', 'x', '÷'][secureRandomNumber(3)];
         let correctAnswer;
     
+        // eslint-disable-next-line default-case
         switch (operator) {
             case '+':
                 correctAnswer = num1 + num2;
@@ -54,13 +51,13 @@ const Calculator = () => {
 
     //CAMBIAR ESTO EN FUNCIÓN DE CÓMO QUERAMOS QUE SEA EL JUEGO
     const handleOptionClick = (selectedAnswer) => {
-        if (selectedAnswer === question.correctAnswer) {
+        if (selectedAnswer === questions.correctAnswer) {
             alert('¡Respuesta correcta!');
         } else {
             alert('Respuesta incorrecta. ¡Inténtalo de nuevo!');
         }
-        const newQuestion = generateQuestion();
-        setQuestion(newQuestion);
+        generateQuestion();
+
     };
     
   
@@ -74,14 +71,14 @@ const Calculator = () => {
                 <div class="questionCalculator">
     
                 <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-                    {setQuestion(generateQuestion())}
-                    {question.q}
+                    {generateQuestion()}
+                    {questions.q}
                 </Typography>
     
                 </div>
     
                 <div class="allAnswers">
-                    {question.options.map((option, index) => (
+                    {questions.options.map((option, index) => (
                         <div key={index} >
                         <Button
                             id={`option-${index}`}
