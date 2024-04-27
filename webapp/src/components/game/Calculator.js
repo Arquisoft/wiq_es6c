@@ -74,7 +74,7 @@ const Calculator = () => {
                 <div class="questionCalculator">
     
                 <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-                    {generateQuestion()}
+                    {setQuestion(generateQuestion())}
                     {question.q}
                 </Typography>
     
