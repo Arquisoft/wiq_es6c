@@ -17,10 +17,6 @@ code {
   flex-wrap: wrap;
 }
 
-#root{
-  
-}
-
 #root > main > h1{
   text-align: center;
 }

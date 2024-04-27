@@ -82,10 +82,10 @@ const GameConfiguration = () => {
   }
 
   function formatearTopics() {
-    var topicsFormated = ''
+    let topicsFormated = '';
 
-    for (var i = 0; i < tematicasSeleccionadas.length; i++) {
-      topicsFormated += ("&tema=" + tematicasSeleccionadas[i]) 
+    for (const tema of tematicasSeleccionadas) {
+      topicsFormated += `&tema=${tema}`;
     }
 
     return topicsFormated
@@ -95,18 +95,18 @@ const GameConfiguration = () => {
     try {
       const topicsFormated = formatearTopics()
       const response = await axios.get(`${apiEndpoint}/questions?n_preguntas=${numPreguntas}&n_respuestas=${numRes}${topicsFormated}`);
-      for (var i = 0; i < response.data.length; i++) {
-        var possibleAnswers = [response.data[i].respuesta_correcta]
-        for (var j = 0; j < response.data[i].respuestas_incorrectas.length; j++) {
-          possibleAnswers.push(response.data[i].respuestas_incorrectas[j])
+      for (const pregunta of response.data) {
+        let possibleAnswers = [pregunta.respuesta_correcta]
+        for (const respuestaIncorrecta of pregunta.respuestas_incorrectas) {
+          possibleAnswers.push(respuestaIncorrecta)
         }
         possibleAnswers = shuffleArray(possibleAnswers)
         questions.push({
-          question: response.data[i].pregunta,
+          question: pregunta.pregunta,
           options: possibleAnswers,
-          correctAnswer: response.data[i].respuesta_correcta
+          correctAnswer: pregunta.respuesta_correcta
         })
-      }      
+      }   
     } catch (error) {
       console.error(error);
     }

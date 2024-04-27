@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { BrowserRouter as Router } from 'react-router-dom';
 import GameConfiguration from './GameConfiguration';
 
-const request = require('supertest');
+//const request = require('supertest');
 const mockAxios = new MockAdapter(axios);
 
 describe("Game Configuration", () => {
@@ -51,7 +51,7 @@ describe("Game Configuration", () => {
         );
         
         //NUMBER OF QUESTIONS
-        const input = getByLabelText('Número de preguntas:');
+        let input = getByLabelText('Número de preguntas:');
         fireEvent.change(input, { target: { value: '5' } });
         expect(input.value).toBe('5');
         // try to put number of questions = 0
