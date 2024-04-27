@@ -24,4 +24,4 @@ function secureRandomNumber(max) {
     return randomBytes[0] % max;
 }
 
-export {shuffleArray}
+export {shuffleArray, secureRandomNumber}

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { shuffleArray, secureRandomNumber } from '../Util';
+import { Container, Typography, Box, LinearProgress} from '@mui/material';
+import { Footer } from '../footer/Footer';
+import { Nav } from '../nav/Nav';
 
 const Calculator = () => {
 
@@ -41,6 +44,11 @@ const Calculator = () => {
         }
     
         shuffleArray(options);
+        return {
+            q: `${num1} ${operator} ${num2}`,
+            options: options,
+            correctAnswer: correctAnswer
+        };
     }
 
 
@@ -66,7 +74,8 @@ const Calculator = () => {
                 <div class="questionCalculator">
     
                 <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-                    {question.question}
+                    {generateQuestion()}
+                    {question.q}
                 </Typography>
     
                 </div>
