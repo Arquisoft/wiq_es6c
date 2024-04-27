@@ -82,11 +82,9 @@ const Quiz = () => {
     
 
     console.log("Todas las preguntas", allQuestions)
-    // console.log(option === questions[currentQuestionIndex].correctAnswer)
     isCorrect = (option === allQuestions[currentQuestionIndex].correctAnswer);
 
     changeButtons("true")
-    // changeButtons(true);
     
     const numberAnswer = allQuestions[currentQuestionIndex].options.indexOf(allQuestions[currentQuestionIndex].correctAnswer)
     const botonCorrecta = document.getElementById('option-' + numberAnswer)
@@ -114,18 +112,10 @@ const Quiz = () => {
    
     const botonIncorrecta = document.getElementById('option-' + allQuestions[currentQuestionIndex].options.indexOf(option))
 
-    // console.log(haveFailedQuestion)
-    // console.log(isCorrect)
     if (!isCorrect) {
       console.log("Entramos en el correct")
-      // console.log(isCorrect)
       botonIncorrecta.style.backgroundColor = 'red'
-      // console.log("Entramos a cambiar")
-      // haveFailedQuestion = true;
-      
-      // console.log("Despues de modificar los valores")
     } else {
-      // getQuestions()
       points = points += 100;
     }
     
