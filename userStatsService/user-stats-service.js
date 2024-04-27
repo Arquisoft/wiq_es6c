@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const Game = require('./game-stats-model');
+const User = require('./user-stats-model');
 
 const app = express();
 const port = 8003;
@@ -29,20 +30,49 @@ function validateRequiredFields(req, requiredFields) {
 app.post('/history/game', async (req, res) => {
     try {
         // Check if required fields are present in the request body
-        validateRequiredFields(req, ['id', 'points', 'username', 'questions']);
+        validateRequiredFields(req, ['id', 'points', 'username', 'questions', 'avgtime']);
+
+        const query = { username: req.body.username.toString() }
+
+        // Find user by username in the database
+        let user = await User.findOne(query);
+
+        if (!user) {
+            // If the user doesn't exist, create a new user entry
+            user = new User({
+                username: req.body.username,
+                tpoints: req.body.points,
+                ttime: req.body.avgtime,
+                ngames: 1,
+                createdAt: new Date()
+            });
+        } else {
+            // If the user exists, update the user's information
+            user.tpoints += req.body.points;
+            user.ttime += req.body.avgtime;
+            user.ngames += 1;
+        }
+
+        // Save the updated user information
+        await user.save();
+
+        // Create new game entry
         const newGame = new Game({
             id: req.body.id,
             username: req.body.username,
             points: req.body.points,
+            avgtime: req.body.avgtime,
             questions: req.body.questions,
         });
         await newGame.save();
+
         res.json(newGame);
 
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
+
 
 app.get('/history/games/:username', async (req, res) => {
     try {
@@ -58,6 +88,7 @@ app.get('/history/games/:username', async (req, res) => {
                 id: user.id,
                 username: user.username,
                 points: user.points,
+                avgtime: user.avgtime,
                 questions: user.questions,
                 createdAt: user.createdAt
             }));
@@ -65,6 +96,51 @@ app.get('/history/games/:username', async (req, res) => {
         } else {
             res.status(404).json({ error: 'User not found!' });
         }
+    } catch (error) {
+        // Handle errors during database query
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/history/games', async (req, res) => {
+    try {
+        // Find users' games in the database
+        const games = await Game.find();
+
+        // Respond with the users' games information
+        const gamesInformation = games.map(game => ({
+            id: user.id,
+            username: user.username,
+            points: user.points,
+            avgtime: user.avgtime,
+            questions: user.questions,
+            createdAt: user.createdAt
+        }));
+
+        res.json(gamesInformation);
+
+    } catch (error) {
+        // Handle errors during database query
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/history/users', async (req, res) => {
+    try {
+        // Find users in the database
+        const users = await User.find();
+
+        // Respond with the users' information
+        const usersInformation = users.map(user => ({
+            username: user.username,
+            tpoints: user.tpoints,
+            ttime: user.ttime,
+            ngames: user.ngames,
+            createdAt: user.createdAt
+        }));
+
+        res.json(usersInformation);
+
     } catch (error) {
         // Handle errors during database query
         res.status(500).json({ error: error.message });
