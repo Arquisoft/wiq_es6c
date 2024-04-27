@@ -33,6 +33,9 @@ export const Nav = () => {
                 <Link to='/appQuestion' style={{color:'#0F0F0F', textDecoration: 'none', fontSize: '1.25rem'}}>
                     Almacén de preguntas
                 </Link>
+                <Link to='/users' style={{color:'white', textDecoration: 'none'}}>
+                    Usuarios
+                </Link>
             </Container>
 
             <Container sx={{alignItems:'right', textAlign:'right'}}>
