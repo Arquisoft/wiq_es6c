@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { BrowserRouter as Router } from 'react-router-dom';
 import GameConfiguration from './GameConfiguration';
 
-const request = require('supertest');
+//const request = require('supertest');
 const mockAxios = new MockAdapter(axios);
 
 describe("Game Configuration", () => {
