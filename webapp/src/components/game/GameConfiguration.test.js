@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ContextFun } from '../Context';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import GameConfiguration from './GameConfiguration';
 
 //const request = require('supertest');
@@ -69,12 +69,30 @@ describe("Game Configuration", () => {
         expect(screen.getAllByText(/El número de respuestas debe ser mayor que 2/i)[0]).toBeInTheDocument();
     });
 
-    /*
-    test('test por topics of questions', async () => {
+    
+   /* test('test por topics of questions', async () => {
         const topics = ['Tema 1', 'Tema 2', 'Tema 3'];
 
-        const response = await request(GameConfiguration).post('/gameConfiguration').send(topics);
-        expect(response.status).toBe(200);
+        const mockedNavigate = jest.fn();
+
+        await jest.mock('react-router-dom', () => ({
+            ...jest.requireActual('react-router-dom'),
+            useNavigate: () => mockedNavigate,
+            useLocation: () => ({
+                state: { topics: topics}
+            })
+        }));
+
+        const { getByLabelText } = render(
+            <ContextFun>
+                <Router>
+                    <GameConfiguration />
+                </Router>
+            </ContextFun>
+        );
+
+        //const response = await request(GameConfiguration).post('/gameConfiguration').send(topics);
+        //expect(response.status).toBe(200);
 
         // opciones de temáticas y que los checkboxes desmarcados 
         topics.forEach((t, index) => {
@@ -90,8 +108,8 @@ describe("Game Configuration", () => {
             fireEvent.click(checkbox); //marcar
             fireEvent.click(checkbox); //desmarcar
         });
-    });
-    */
+    });*/
+    
 
 });
 

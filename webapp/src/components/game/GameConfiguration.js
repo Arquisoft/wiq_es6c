@@ -18,6 +18,9 @@ const GameConfiguration = () => {
 
     let tematicas = [];
     let state = useLocation().state;
+
+    console.log(state)
+
     if( state !== null)
       tematicas = state.topics;
     console.log(tematicas)
