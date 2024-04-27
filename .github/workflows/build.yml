@@ -22,13 +22,15 @@ jobs:
     - run: npm --prefix storeQuestionService ci
     - run: npm --prefix userStatsService ci
     - run: npm --prefix gameservice ci
+    - run: npm --prefix gameservice ci
+    - run: npm --prefix apisgatewayservice ci
     - run: npm --prefix users/authservice test -- --coverage
     - run: npm --prefix users/userservice test -- --coverage
     - run: npm --prefix gatewayservice test -- --coverage
     - run: npm --prefix webapp test -- --coverage
     - run: npm --prefix storeQuestionService test -- --coverage
     - run: npm --prefix userStatsService test -- --coverage
-    - run: npm --prefix gameservice test -- --coverage
+    - run: npm --prefix apisgatewayservice test -- --coverage
    # - run: npm --prefix gameservice test -- --coverage
     - name: Analyze with SonarCloud
       uses: sonarsource/sonarcloud-github-action@master
