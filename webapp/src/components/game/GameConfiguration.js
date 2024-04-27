@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Importa useHisto
 import axios from 'axios'
 import { shuffleArray } from '../Util';
 import './GameConfiguration.css';
+import Spinner from '../spinner/Spinner';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
@@ -18,18 +19,19 @@ const GameConfiguration = () => {
   const navigation = useNavigate();
     let tematicas = [];
     let state = useLocation().state;
+
+    console.log(state)
+
     if( state !== null)
       tematicas = state.topics;
     console.log(tematicas)
 
     // Almacen de temáticas 
     const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
-    // Almacen para el número de preguntas
-    const [numPreguntas, setNumPreguntas] = useState(1); 
-    // Almacen de mensaje de error para el spinner
-    const [error, setError] = useState(null); 
+    
+    let numPreguntas = 10;
 
-    const [numRes, setNumRes] = useState(2);
+    let numRes = 2
 
     const handleTematicaChange = (event) => {
         const tematicaSeleccionada = event.target.value;
@@ -43,29 +45,18 @@ const GameConfiguration = () => {
         }
     };
 
-    const handleNumPreguntasChange = (event) => {
-        const nuevoValor = parseInt(event.target.value, 10);
-
-        if (!isNaN(nuevoValor) && nuevoValor > 0) {
-        setNumPreguntas(nuevoValor);
-        setError(null); // Reseteamos el error si el valor es válido
-        } else {
-        setError("El número de preguntas debe ser mayor que 0");
-        }
-    };
-
-    const handleNumResChange = (event) => {
-      const nuevoValor = parseInt(event.target.value, 10);
-
-      if (!isNaN(nuevoValor) && nuevoValor > 1) {
-        setNumRes(nuevoValor);
-        setError(null); // Reseteamos el error si el valor es válido
-        } else {
-        setError("El número de respuestas debe ser mayor que 2");
-        }
-    }
 
   const initiateGame = async () => {
+    //Sacar número de preguntas y respuestas
+    const numQuestions =  parseInt(document.getElementById("questionsSpinner").innerText);
+    const numRespuestas = parseInt(document.getElementById("answersSpinner").innerText);
+
+    numPreguntas = numQuestions;
+    numRes = numRespuestas;
+
+    console.log(numPreguntas);
+    console.log(numRes);
+
     await generateGameId();  
     await getQuestions();
     //isApiCalledRef = true//ASK - is this necessary?
@@ -147,13 +138,7 @@ const GameConfiguration = () => {
 
           <div>
             <label htmlFor="numPreguntas">Número de preguntas:</label>
-            <input
-              type="number"
-              id="numPreguntas"
-              value={numPreguntas}
-              onChange={handleNumPreguntasChange}
-            />
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <Spinner min={1} value={10} max={50} id="questionsSpinner"/>
           </div>
 
         </div>
@@ -164,14 +149,10 @@ const GameConfiguration = () => {
 
           <div>
             <label htmlFor="numRes">Número de respuestas:</label>
-            <input
-              type="number"
-              id="numRes"
-              value={numRes}
-              onChange={handleNumResChange}
-            />
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <Spinner min={2} value={2} max={10} id="answersSpinner"/>
           </div>
+
+          
 
         </div>
 
