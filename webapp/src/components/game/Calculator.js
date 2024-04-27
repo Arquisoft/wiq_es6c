@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { shuffleArray, secureRandomNumber } from '../Util';
 
 const Calculator = () => {
 
@@ -10,22 +11,10 @@ const Calculator = () => {
     }, []);
 
 
-    function getRandomNumber(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
     function generateQuestion() {
-        const num1 = getRandomNumber(1, 10);
-        const num2 = getRandomNumber(1, 10);
-        const operator = ['+', '-', 'x', '÷'][getRandomNumber(0, 3)];
+        const num1 = secureRandomNumber(10) + 1;
+        const num2 = secureRandomNumber(10) + 1;
+        const operator = ['+', '-', 'x', '÷'][secureRandomNumber(3)];
         let correctAnswer;
     
         switch (operator) {
@@ -45,7 +34,7 @@ const Calculator = () => {
     
         const options = [correctAnswer];
         while (options.length < 4) {
-            const option = getRandomNumber(1, 100);
+            const option = secureRandomNumber(100) + 1;
             if (!options.includes(option)) {
                 options.push(option);
             }
