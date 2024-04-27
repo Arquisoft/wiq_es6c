@@ -51,7 +51,7 @@ describe("Game Configuration", () => {
         );
         
         //NUMBER OF QUESTIONS
-        const input = getByLabelText('Número de preguntas:');
+        let input = getByLabelText('Número de preguntas:');
         fireEvent.change(input, { target: { value: '5' } });
         expect(input.value).toBe('5');
         // try to put number of questions = 0
