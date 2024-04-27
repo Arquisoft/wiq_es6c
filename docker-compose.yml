@@ -54,6 +54,23 @@ services:
       MONGODB_URI: mongodb://mongodb:27017/userdb
     restart: always
 
+  apisgatewayservice:
+    container_name: apisgatewayservice-${teamname:-defaultASW}
+    image: ghcr.io/arquisoft/wiq_es6c/apisgatewayservice:latest
+    profiles: ["dev", "prod"]
+    build: ./apisgatewayservice
+    depends_on:
+      - mongodb
+    ports:
+      - "8100:8100"
+    networks:
+      - mynetwork
+    environment:
+      STORE_QUESTION_SERVICE_URL: http://localhost:8004
+      USER_STATS_SERVICE_URL: http://localhost:8003
+      USER_SERVICE_URL: http://localhost:8001
+    restart: always
+
   gameservice:
     container_name: gameservice-${teamname:-defaultASW}
     image: ghcr.io/arquisoft/wiq_es6c/gameservice:latest
