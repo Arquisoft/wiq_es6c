@@ -13,6 +13,10 @@ const gameSchema = new mongoose.Schema({
       type: Number,
       required: true,
   },
+  avgtime: {
+    type: Number,
+    required: true,
+  },
   questions: [{
       title: {
           type: String,

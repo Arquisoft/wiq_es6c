@@ -38,7 +38,7 @@ describe('App', () => {
     });
 
     // Verifica que se haya llamado axios.get con el endpoint correcto
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:8000/history/questions');
+    expect(axios.get).toHaveBeenCalledWith('http://localhost:8100/history/questions');
   });
 
   test('navigates to the next page', async () => {
@@ -87,7 +87,7 @@ test('handles unknown error when fetching questions', async () => {
 
   render(<MemoryRouter><App /></MemoryRouter>);
 
-  expect(axios.get).toHaveBeenCalledWith('http://localhost:8000/history/questions');
+  expect(axios.get).toHaveBeenCalledWith('http://localhost:8100/history/questions');
 });
 
 test('handles error with response.data.error when fetching questions', async () => {
@@ -96,5 +96,5 @@ test('handles error with response.data.error when fetching questions', async () 
 
   render(<MemoryRouter><App /></MemoryRouter>);
 
-  expect(axios.get).toHaveBeenCalledWith('http://localhost:8000/history/questions');
+  expect(axios.get).toHaveBeenCalledWith('http://localhost:8100/history/questions');
 });

@@ -67,6 +67,26 @@ if (fs.existsSync(openapiPath)) {
   console.log("Not configuring OpenAPI. Configuration file not present.")
 }
 
+app.get('/users', async (req, res) => {
+  try {
+      // Find users
+      const users = await User.find();
+
+      // Respond with the users' information
+      const usersInformation = users.map(user => ({
+          _id: user._id,
+          username: user.username,
+          createdAt: user.createdAt
+      }));
+
+      res.json(usersInformation);
+
+  } catch (error) {
+      // Handle errors during database query
+      res.status(500).json({ error: error.message });
+  }
+});
+
 const server = app.listen(port, () => {
   console.log(`User Service listening at http://localhost:${port}`);
 });

@@ -1,6 +1,7 @@
 const request = require('supertest');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const Game = require('./game-stats-model');
+const User = require('./user-stats-model');
 
 let mongoServer;
 let app;
@@ -10,11 +11,24 @@ async function addGame(game){
   const newGame = new Game({
     id: game.id,
     username: game.username,
+    avgtime: game.avgtime,
     points: game.points,
     questions: game.questions,
   });
 
   await newGame.save();
+}
+
+async function addUser(user) {
+  const newUser = new User({
+      username: user.username,
+      tpoints: user.tpoints,
+      ttime: user.ttime,
+      ngames: user.ngames,
+      createdAt: new Date(),
+  });
+
+  await newUser.save();
 }
 
 beforeAll(async () => {
@@ -23,15 +37,16 @@ beforeAll(async () => {
   process.env.MONGODB_URI = mongoUri;
   app = require('./user-stats-service'); 
 
-  await addGame({ id: 1, username: 'user1', points: 100, questions: [{ title: 'Question 1', answers: ['Answer 1', 'Answer 2', 'Answer 3'], ansIndex: [1,1] }] });
-  await addGame({ id: 2, username: 'user1', points: 0, questions: [{ title: 'Question 1', answers: ['Answer 1', 'Answer 2', 'Answer 3'], ansIndex: [0,1] }] });
-
+  await addGame({ id: 1, username: 'user1', points: 100, avgtime:100, questions: [{ title: 'Question 1', answers: ['Answer 1', 'Answer 2', 'Answer 3'], ansIndex: [1,1] }] });
+  await addGame({ id: 2, username: 'user1', points: 0, avgtime:100, questions: [{ title: 'Question 1', answers: ['Answer 1', 'Answer 2', 'Answer 3'], ansIndex: [0,1] }] });
+  await addUser({ username: 'user1', tpoints: 100, ttime: 10, ngames: 1 });
 });
 
 afterAll(async () => {
-    await Game.deleteMany({});  
-    app.close();
-    await mongoServer.stop();
+  await Game.deleteMany({});
+  await User.deleteMany({});
+  app.close();
+  await mongoServer.stop();
 });
 
 describe('User Stats Service, fields are wrong in post(/game) method', () => {
@@ -50,6 +65,7 @@ describe('User Stats Service, fields are wrong in post(/game) method', () => {
     const newGame = {
       username: 'testuser',
       points: 100,
+      avgtime: 100,
       questions: [{
         title: 'Question 1',
         answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
@@ -69,6 +85,7 @@ describe('User Stats Service, fields are wrong in post(/game) method', () => {
     const newGame = {
       id: 1,
       username: 'testuser',
+      avgtime:100,
       questions: [{
         title: 'Question 1',
         answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
@@ -88,6 +105,7 @@ describe('User Stats Service, fields are wrong in post(/game) method', () => {
     const newGame = {
       id: 1,
       points: 100,
+      avgtime:100,
       questions: [{
         title: 'Question 1',
         answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
@@ -108,6 +126,7 @@ describe('User Stats Service, fields are wrong in post(/game) method', () => {
       id: 1,
       username: 'testuser',
       points: 100,
+      avgtime:100,
     };
 
     const response = await request(app).post('/history/game').send(newGame);
@@ -117,12 +136,33 @@ describe('User Stats Service, fields are wrong in post(/game) method', () => {
     expect(response.body.error).toBe('Missing required field: questions');
   });
 
-  // Case 6: Some fields are missing
+    // Case 6: Field avgtime is missing
+    it('should return 400 if avgtime field is missing on POST /game', async () => {
+      const newGame = {
+        id: 1,
+        username: 'testuser',
+        points: 100,
+        questions: [{
+          title: 'Question 1',
+          answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+          ansIndex: [1, 2]
+        }]
+      };
+  
+      const response = await request(app).post('/history/game').send(newGame);
+  
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty('error');
+      expect(response.body.error).toBe('Missing required field: avgtime');
+    });
+
+  // Case 7: Some fields are missing
   it('should return 400 if some required fields are empty on POST /game', async () => {
     const newGame = {
       id: '',
       username: '',
       points: '',
+      avgtime: '',
       questions: [],
     };
 
@@ -133,12 +173,13 @@ describe('User Stats Service, fields are wrong in post(/game) method', () => {
     expect(response.body.error).toBe('Missing required field: id');
   });
 
-  // Case 7: All fields are nulls
+  // Case 8: All fields are nulls
   it('should return 400 if all required fields are null on POST /game', async () => {
     const newGame = {
       id: null,
       username: null,
       points: null,
+      avgtime: null,
       questions: null,
     };
 
@@ -157,6 +198,7 @@ describe('User Stats Service correct data is inserted', () => {
       id: "1",
       username: 'testuser',
       points: 100,
+      avgtime: 100,
       questions: [{
         title: 'Question 1',
         answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
@@ -219,4 +261,29 @@ describe('User Stats Service correct data is inserted', () => {
   });
 
 });
+
+describe('User Stats Service get all users', () => {
+  it('should return all users on GET /history/users', async () => {
+      const response = await request(app).get('/history/users');
+      console.log(response.body);
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveLength(2); 
+      expect(response.body[0]).toHaveProperty('username', 'user1');
+      expect(response.body[0]).toHaveProperty('tpoints', 100);
+      expect(response.body[0]).toHaveProperty('ttime', 10);
+      expect(response.body[0]).toHaveProperty('ngames', 1);
+      expect(response.body[0]).toHaveProperty('createdAt'); 
+  });
+
+  it('should return 500 if an error occurs during database query', async () => {
+     
+      jest.spyOn(User, 'find').mockImplementationOnce(() => { throw new Error('Database error'); });
+
+      const response = await request(app).get('/history/users');
+
+      expect(response.status).toBe(500);
+      expect(response.body).toHaveProperty('error', 'Database error');
+  });
+});
+
 
