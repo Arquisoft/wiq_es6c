@@ -69,6 +69,7 @@ const templates = [
 ];
 
 async function extractData(template) {
+    console.log("Actualizando los datos sobre:")
     var data = await template.extractMethod();
     console.log(data);
     var transactions = data.map(function (element) {
@@ -79,7 +80,7 @@ async function extractData(template) {
                 upsert: true
             }
         };
-        console.log(transaction);
+        // console.log(transaction);
         return transaction;
     });
     await template.saveMethod(transactions);
@@ -91,10 +92,14 @@ const minutes = 30;
 const totalQueries = templates.length;
 var query = 0;
 cron.schedule(`*/${minutes} * * * *`, () => {
-    console.log(`Running a task every ${minutes} minutes: ${Date()}`);
-    // Call function here
-    extractData(templates[query]);
-    query = (query+1)%totalQueries;
+    try {
+        console.log(`Running a task every ${minutes} minutes: ${Date()}`);
+        extractData(templates[query]);
+        query = (query+1)%totalQueries;
+    } catch (error) {
+        console.error(error.message)
+    }
+    
 });
 
  /* 
