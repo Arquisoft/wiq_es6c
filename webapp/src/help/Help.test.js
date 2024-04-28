@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import Help from './Help';
@@ -14,7 +14,7 @@ describe("Help for game", () => {
         mockAxios.reset();
     });
 
-    test("renders GameConfig",async () => {
+    test("renders Help",async () => {
         render(
             <ContextFun>
                 <Router>
