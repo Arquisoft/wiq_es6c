@@ -141,9 +141,8 @@ class QuestionGenerator {
 
 
     static async generateQuestionNonDuplicatedAnswers(plantilla, respuestas) {
-        console.log("\nPlantilla:");
-        console.log(plantilla);
-
+        // console.log("\nPlantilla:");
+        // console.log(plantilla);
         const randomAnswer = await plantilla.modelo.aggregate([
             { $match: plantilla.filtro },
             { $sample: { size: 1 } }
@@ -163,25 +162,19 @@ class QuestionGenerator {
             console.error(`Not enought data found to generate a question`);
             throw new Error(`Not enought data found to generate a question`);
         }
-        
-        console.log("\nFind:");
-        console.log(randomDecoys);
-
+        // console.log("\nFind:");
+        // console.log(randomDecoys);
         var retQuestion = {
             pregunta: plantilla.pregunta(randomAnswer[0][plantilla.campo_pregunta]),
             respuesta_correcta: randomAnswer[0][plantilla.campo_respuesta],
             respuestas_incorrectas: Array.from({ length: respuestas-1 }, (_, i) => randomDecoys[i][plantilla.campo_respuesta])
         };
-        console.log("\nPregunta generada:");
-        console.log(retQuestion);
-
         return retQuestion;
     }
 
     static async generateQuestion1to1Relation(plantilla, respuestas) {
-        console.log("\nPlantilla:");
-        console.log(plantilla);
-
+        // console.log("\nPlantilla:");
+        // console.log(plantilla);
         const randomDocs = await plantilla.modelo.aggregate([
             { $match: plantilla.filtro },
             { $sample: { size: respuestas } }
@@ -190,31 +183,26 @@ class QuestionGenerator {
             console.error(`Not enought data found to generate a question`);
             throw new Error(`Not enought data found to generate a question`);
         }
-
-        console.log("\nFind:");
-        console.log(randomDocs);
-
+        // console.log("\nFind:");
+        // console.log(randomDocs);
         var retQuestion = {
             pregunta: plantilla.pregunta(randomDocs[0][plantilla.campo_pregunta]),
             respuesta_correcta: randomDocs[0][plantilla.campo_respuesta],
             respuestas_incorrectas: Array.from({ length: respuestas-1 }, (_, i) => randomDocs[i+1][plantilla.campo_respuesta])
         };
-        console.log("\nPregunta generada:");
-        console.log(retQuestion);
-
         return retQuestion;
     }
 
     static async generateQuestions(preguntas, respuestas, temas) {
-        console.log(temas);
         const plantillasDisponibles = this.getAvailableTemplates(temas);
-        console.log(plantillasDisponibles);
         var retQuestions = [];
         for (let i = 0; i < preguntas; i++) {
             let index = Math.floor(Math.random() * plantillasDisponibles.length);
             let plantilla = this.plantillas[plantillasDisponibles[index]];
             retQuestions.push(await plantilla.generateMethod(plantilla, respuestas));
         }
+        console.log("\nPreguntas generadas:");
+        console.log(retQuestions);
         return retQuestions;
     }
 
@@ -223,23 +211,22 @@ class QuestionGenerator {
             return Array.from({ length: this.plantillas.length }, (_, i) => i);
         }
         var templates = [];
+        console.log("Temas a utilizar:")
         temas.forEach(tema => {
-            console.log(tema);
             if (this.temas.has(tema)) {
                 templates = templates.concat(this.temas.get(tema));
-                console.log(this.temas.get(tema));
+                console.log(`\t${tema}`);
             }
             else {
-                console.error(`The topic \'${tema}\' is not currently defined`);
-                throw new Error(`The topic \'${tema}\' is not currently defined`);
+                console.error(`\tThe topic \'${tema}\' is not currently defined`);
             }
         });
         if (templates.length == 0) {
             console.error(`No correct topics were passed`);
             throw new Error(`No correct topics were passed`);
         }
-        console.log(templates);
-        console.log([...new Set(templates)]);
+        console.log("Plantillas a utilizar:");
+        console.log(`\t${[...new Set(templates)]}`);
         return [...new Set(templates)];
     }
 
