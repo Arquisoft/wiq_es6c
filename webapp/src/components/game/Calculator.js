@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { shuffleArray, secureRandomNumber } from '../Util';
-import { Container, Typography, Box, LinearProgress} from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 import Button from '../Button';
 
-var questions = []
-var questionIndex = -1
+let questions = []
+let questionIndex = -1
 
 const Calculator = () => {
 

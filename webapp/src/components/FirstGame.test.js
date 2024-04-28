@@ -1,9 +1,10 @@
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { ContextFun } from './Context';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import {MemoryRouter} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import FirstGame from './FirstGame';
-import Menu from './Menu';
+import GameConfiguration from './game/GameConfiguration';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -15,21 +16,23 @@ describe("First game component", () => {
 
     test("one question -> 4 possible answers",async () => {
         render(
-            <MemoryRouter>
-                <Menu />
-            </MemoryRouter>
+            <ContextFun>
+                <Router>
+                    <GameConfiguration />
+                </Router>
+            </ContextFun>
         );
 
-        const classicGame = document.querySelector('.modes > div > button');
-        // Simulate new Classic Game
-        await act(async () => {
-            fireEvent.click(classicGame);
-        });
-
-        console.log(document.querySelector('h1'))
-
+        //Marcar la primera temática
+        let topic1 = document.getElementById('t0');
+        fireEvent.click(topic1);
+        expect(topic1).toBeChecked();
+        //Iniciamos el juego 
+        let bt = screen.getByText('Comenzar Juego');
+        fireEvent.click(bt);  
+        //comprobamos que haya 2 botones para responder
         const gamesBT = document.getElementsByClassName('allAnswers');
-        //expect(gamesBT).toHaveLength(4);
+        //expect(gamesBT).toHaveLength(2);
     });
 
 });
