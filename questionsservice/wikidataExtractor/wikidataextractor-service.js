@@ -108,17 +108,17 @@ cron.schedule(`*/${minutes} * * * *`, () => {
  */
 
 // Route for extracting countries
-app.get('/extract', async (req, res) => {
-    try {
-        res.json(await extractData(templates[1]));
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).json({ message: error.message })
-        // res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+// app.get('/extract', async (req, res) => {
+//     try {
+//         res.json(await extractData(templates[1]));
+//     } catch (error) {
+//         console.error(error.message);
+//         res.status(500).json({ message: error.message })
+//         // res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// });
 
-// // Route for geting countries
+// // // Route for geting countries
 // app.get('/countries', async (req, res) => {
 //     try {
 //         const paises = await Pais.find({})
@@ -129,7 +129,7 @@ app.get('/extract', async (req, res) => {
 //     }
 // });
 
-// // Route for deleting countries
+// // // Route for deleting countries
 // app.delete('/countries', async (req, res) => {
 //     try {
 //         const paises = await Pais.deleteMany({})
