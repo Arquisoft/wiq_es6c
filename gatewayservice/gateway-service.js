@@ -25,11 +25,8 @@ function catchAction(error, res) {
   else if('response' in error && 'status' in error.response){
     res.status(error.response.status).json({ error: 'Unknown error' });
   } else {
-    console.log("Unknown error: " + error);
-  }
-  // } else {
-  //   res.status(500).json({ error: 'Internal server error' });
-  // }
+    res.status(500).json({ error: 'Internal server error' });
+  } 
 }
 
 app.use(metricsMiddleware);
