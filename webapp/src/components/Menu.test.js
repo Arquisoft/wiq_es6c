@@ -20,19 +20,16 @@ describe("Menu component", () => {
             </MemoryRouter>
         );
 
-        const linkElement = screen.getByText(/Modos de juego:/i);
+        //Comprobamos que esten todos los elementos 
+        let linkElement = screen.getByText(/Modos de juego:/i);
         expect(linkElement).toBeInTheDocument();
-    });
-
-    test("game modes",async () => {
-        render(
-            <MemoryRouter>
-                <Menu />
-            </MemoryRouter>
-        );
-
-        const gamesBT = document.getElementsByClassName('modes')
-        expect(gamesBT).toHaveLength(1);
+        const gamesBT = document.getElementsByClassName('modes')[0].childNodes;
+        expect(gamesBT).toHaveLength(2);
+        linkElement = screen.getByText(/Clásico/i);
+        expect(linkElement).toBeInTheDocument();
+        linkElement = screen.getByText(/Calculadora Humana/i);
+        expect(linkElement).toBeInTheDocument();
+        
     });
 
 });
