@@ -1,17 +1,17 @@
 import { shuffleArray, secureRandomNumber } from './Util';
-import axios from 'axios';
 
 jest.mock('axios');
 
 describe('shuffleArray function', () => {
     // Mocking window.crypto.getRandomValues
     beforeEach(() => {
+        const max = 100;
         global.crypto = {
-        getRandomValues: jest.fn().mockImplementation((array) => {
-            for (let i = 0; i < array.length; i++) {
-            array[i] = Math.floor(Math.random() * 100); // Mocking random values
-            }
-        }),
+            getRandomValues: jest.fn().mockImplementation((array) => {
+                for (let i = 0; i < array.length; i++) {
+                    array[i] = i; 
+                }
+            }),
         };
     });
 
