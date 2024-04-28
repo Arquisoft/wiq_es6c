@@ -7,12 +7,13 @@ class WikiQueries {
     /* CIENCIA */
 
     static async obtenerSimboloQuimico() { // En uso
-        const query = 
-        `SELECT ?elementLabel ?symbol WHERE { 
-            ?element wdt:P31 wd:Q11344. 
-            ?element wdt:P246 ?symbol. 
-            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
-        }
+        console.log("Símbolos químicos");
+        const query = `
+            SELECT ?elementLabel ?symbol WHERE { 
+                ?element wdt:P31 wd:Q11344. 
+                ?element wdt:P246 ?symbol. 
+                SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
+            }
         `;
 
         const results = await wikidata.consulta(query);
@@ -29,6 +30,7 @@ class WikiQueries {
     /* GEOGRAFÍA */
 
     static async obtenerPaisYCapital() { // En uso
+        console.log("Países y Capitales");
         const query = `
             SELECT ?countryLabel ?capitalLabel WHERE {
                 ?country wdt:P31 wd:Q6256.
@@ -47,6 +49,7 @@ class WikiQueries {
     }
 
     static async obtenerPaisYContinente() { // En uso
+        console.log("Países y Continentes");
         const query = `
             SELECT ?countryLabel ?continentLabel WHERE {
                 ?country wdt:P31 wd:Q6256.
@@ -70,8 +73,8 @@ class WikiQueries {
             ?country wdt:P31 wd:Q6256; 
                 wdt:P41 ?flag. 
             SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
-            }
-            LIMIT 200
+        }
+        LIMIT 200
         `;
 
         const results = await wikidata.consulta(query);
@@ -86,8 +89,8 @@ class WikiQueries {
             ?country wdt:P31 wd:Q6256.
             ?country wdt:P37 ?language.
             SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
-            }
-            LIMIT 500
+        }
+        LIMIT 500
         `;
 
         const results = await wikidata.consulta(query);
@@ -97,6 +100,7 @@ class WikiQueries {
     }
 
     static async obtenerMonumentoYPais(){ // En uso
+        console.log("Países y Monumentos");
         const query = `
         SELECT ?monumentLabel ?countryLabel WHERE {
             ?monument wdt:P31 wd:Q570116; wdt:P17 ?country.
@@ -119,6 +123,7 @@ class WikiQueries {
     /* ENTRETENIMIENTO */ 
 
     static async obtenerPeliculaYDirector() { // En uso
+        console.log("Películas y Directores");
         const query = `
         SELECT ?peliculaLabel ?directorLabel WHERE {
             ?pelicula wdt:P31 wd:Q11424.  # Filtramos por instancias de películas
@@ -155,6 +160,7 @@ class WikiQueries {
     }
 
     static async obtenerCancionYArtista() { // En uso
+        console.log("Canciones y Artistas");
         const query = `
         SELECT DISTINCT ?songLabel ?artistLabel WHERE {
             ?song wdt:P31 wd:Q7366;                   # Instances of songs
