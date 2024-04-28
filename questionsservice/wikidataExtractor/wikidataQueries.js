@@ -100,7 +100,7 @@ class WikiQueries {
         const query = `
         SELECT ?monumentLabel ?countryLabel WHERE {
             ?monument wdt:P31 wd:Q570116; wdt:P17 ?country.
-            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],es". }
         } 
         LIMIT 2500
         `;
