@@ -30,12 +30,13 @@ const Quiz = () => {
   // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(storedInt);
   // const [isCorrect, setIsCorrect] = useState(false);
   const [remTime, setRemTime] = useState(0);
+  const [totalTime, setTotalTime] = useState(0);
 
   useEffect(() => {
     const time = setInterval(() => {
       setRemTime((progress) => {
         if(progress === 100){
-          // checkAnswer(-1);
+          checkAnswer(-1);
           return 0; 
         }
         const diff = 4;
@@ -102,10 +103,15 @@ const Quiz = () => {
       currentQuestionIndex = (currentQuestionIndex + 1);
       botonCorrecta.style.backgroundColor = previousBackgroundColor
       changeButtons("false")
-      await gameStore()
+      
       haveFailedQuestion = false;
       load = true
-      navigator('/menu')
+      haveEnter = false
+
+      if (currentQuestionIndex === allQuestions.length ) {
+        await gameStore()
+        navigator('/menu')
+      }
       return
     }
 
