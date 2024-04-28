@@ -16,7 +16,8 @@ let questions = []
 
 const GameConfiguration = () => {
 
-    let tematicas = [];
+  const navigation = useNavigate();
+    let tematicas = ['Paises', 'Capitales'];
     let state = useLocation().state;
 
     console.log(state)

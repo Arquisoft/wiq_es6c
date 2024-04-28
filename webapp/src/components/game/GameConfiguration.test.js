@@ -40,8 +40,6 @@ describe("Game Configuration", () => {
     });
 
     test("modify number of questions and number of answers for game",async () => {
-
-        const { getByLabelText } = 
         render(
             <ContextFun>
                 <Router>
@@ -51,39 +49,22 @@ describe("Game Configuration", () => {
         );
         
         //NUMBER OF QUESTIONS
-        let input = getByLabelText('Número de preguntas:');
-        fireEvent.change(input, { target: { value: '5' } });
-        expect(input.value).toBe('5');
-        // try to put number of questions = 0
-        fireEvent.change(input, { target: { value: '0' } });
-        expect(input.value).toBe('5');
-        expect(screen.getAllByText(/El número de preguntas debe ser mayor que 0/i)[0]).toBeInTheDocument();
+        let input = document.getElementById('questionsSpinner');
+        expect(input).toBeInTheDocument(); 
+        expect(input.textContent).toBe("10");
+        fireEvent.change(input, { target: { textContent: "1" } });
+        expect(input.textContent).toBe("1");
 
         //NUMBER OF ANSWRES
-        input = getByLabelText('Número de respuestas:');
-        fireEvent.change(input, { target: { value: '5' } });
-        expect(input.value).toBe('5');
-        //try to put number of answers < 2
-        fireEvent.change(input, { target: { value: '1' } });
-        expect(input.value).toBe('5');
-        expect(screen.getAllByText(/El número de respuestas debe ser mayor que 2/i)[0]).toBeInTheDocument();
+        input = document.getElementById('answersSpinner');;
+        expect(input).toBeInTheDocument(); 
+        expect(input.textContent).toBe("2");
+        fireEvent.change(input, { target: { textContent: "4" } });
+        expect(input.textContent).toBe("4");
     });
 
-    
-   /* test('test por topics of questions', async () => {
-        const topics = ['Tema 1', 'Tema 2', 'Tema 3'];
-
-        const mockedNavigate = jest.fn();
-
-        await jest.mock('react-router-dom', () => ({
-            ...jest.requireActual('react-router-dom'),
-            useNavigate: () => mockedNavigate,
-            useLocation: () => ({
-                state: { topics: topics}
-            })
-        }));
-
-        const { getByLabelText } = render(
+    test('test por topics of questions', async () => {
+        render(
             <ContextFun>
                 <Router>
                     <GameConfiguration />
@@ -91,25 +72,46 @@ describe("Game Configuration", () => {
             </ContextFun>
         );
 
-        //const response = await request(GameConfiguration).post('/gameConfiguration').send(topics);
-        //expect(response.status).toBe(200);
-
-        // opciones de temáticas y que los checkboxes desmarcados 
-        topics.forEach((t, index) => {
-            const checkbox = getByLabelText(t);
-            expect(checkbox).toBeInTheDocument();
-            expect(checkbox).toHaveAttribute('type', 'checkbox');
-            expect(checkbox).not.toBeChecked();
-        });
-
-        // Simula cambios de temáticas marcando y desmarcando
-        topics.forEach((t, index) => {
-            const checkbox = getByLabelText(t);
-            fireEvent.click(checkbox); //marcar
-            fireEvent.click(checkbox); //desmarcar
-        });
-    });*/
+        //comprobamos que los elementos están correctamente 
+        let div = document.getElementsByClassName('configureTopic')[0];
+        let divChild = div.childNodes;
+        expect(divChild).toHaveLength(3);
+        //Probamos a marcar la primera temática
+        let topic1 = document.getElementById('t0');
+        expect(topic1).toHaveAttribute('type', 'checkbox');
+        expect(topic1).not.toBeChecked();
+        fireEvent.click(topic1);
+        expect(topic1).toBeChecked();
+        //Probamos a marcar la segunda temática
+        let topic2 = document.getElementById('t1');
+        expect(topic2).toHaveAttribute('type', 'checkbox');
+        expect(topic2).not.toBeChecked();
+        fireEvent.click(topic2);
+        expect(topic2).toBeChecked();
+        //Desmarcamos ambas 
+        fireEvent.click(topic1);
+        expect(topic1).not.toBeChecked();
+        fireEvent.click(topic2);
+        expect(topic2).not.toBeChecked();
+    });
     
+    test('init game', async () => {
+        render(
+            <ContextFun>
+                <Router>
+                    <GameConfiguration />
+                </Router>
+            </ContextFun>
+        );
+
+        //Marcar la primera temática
+        let topic1 = document.getElementById('t0');
+        fireEvent.click(topic1);
+        expect(topic1).toBeChecked();
+        //Iniciamos el juego 
+        let bt = screen.getByText('Comenzar Juego');
+        fireEvent.click(bt);     
+    });
 
 });
 
