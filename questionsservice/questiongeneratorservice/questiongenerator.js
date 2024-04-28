@@ -1,33 +1,132 @@
-const { Pais } = require('./questiongenerator-model')
+const { Pais, Monumento, Elemento, Pelicula, Cancion } = require('./questiongenerator-model')
 
 class QuestionGenerator {
 
     static temas = new Map([
-        ["paises", [0, 1, 2]],
-        ['capital', [0, 1]],
-        ["lenguaje", [2]]
+        ["Paises", [0, 1, 2, 3, 4, 5]],
+        ['Capitales', [0, 1]],
+        ['Continentes', [2, 3]],
+        ['Monumentos', [4, 5]],
+        ['Quimica', [6, 7]],
+        ['Peliculas', [8, 9]],
+        ['Canciones', [10, 11]]
+        // ["Lenguajes", []]
     ]);
-    ;
 
     static plantillas = [
-        {
+        {   // 0: Paises, Capitales
+            modelo: Pais,
+            generateMethod: (plantilla, respuestas) => this.generateQuestion1to1Relation(plantilla, respuestas),
             pregunta: (param) => `¿Cuál es la capital de ${param}?`,
             filtro: { pais: { $exists: true }, capital: { $exists: true } },
             campo_pregunta: 'pais',
             campo_respuesta: 'capital'
         },
-        {
+        {   // 1: Paises, Capitales
+            modelo: Pais,
+            generateMethod: (plantilla, respuestas) => this.generateQuestion1to1Relation(plantilla, respuestas),
             pregunta: (param) => `¿De qué país es capital ${param}?`,
             filtro: { capital: { $exists: true }, pais: { $exists: true } },
             campo_pregunta: 'capital',
             campo_respuesta: 'pais'
         },
-        {
-            pregunta: (param) => `¿Qué lengua se habla en ${param}?`,
-            filtro: { pais: { $exists: true }, lenguaje: { $exists: true } },
+        {   // 2: Paises, Continentes     -   Meh, repite mucho los continentes
+            modelo: Pais,
+            generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
+            pregunta: (param) => `¿En qué continente se situa ${param}?`,
+            filtro: { pais: { $exists: true }, continente: { $exists: true } },
+            filtro_decoys: (answer) => { return { pais: { $exists: true }, continente: { $exists: true, $ne: answer.continente} }},
             campo_pregunta: 'pais',
-            campo_respuesta: 'lenguaje'
+            campo_respuesta: 'continente'
+        },
+        {   // 3: Paises, Continentes
+            modelo: Pais,
+            generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
+            pregunta: (param) => `¿Cual de los siguientes paises se situa en ${param}?`,
+            filtro: { pais: { $exists: true }, continente: { $exists: true } },
+            filtro_decoys: (answer) => { return { pais: { $exists: true }, continente: { $exists: true, $ne: answer.continente} }},
+            campo_pregunta: 'continente',
+            campo_respuesta: 'pais'
+        },
+        {   // 4: Paises, Monumentos
+            modelo: Monumento,
+            generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
+            pregunta: (param) => `¿En qué país se situa la atracción turística "${param}"?`,
+            filtro: { pais: { $exists: true }, monumento: { $exists: true } },
+            filtro_decoys: (answer) => { return { monumento: { $exists: true }, pais: { $exists: true, $ne: answer.pais} }},
+            campo_pregunta: 'monumento',
+            campo_respuesta: 'pais'
+        },
+        {   // 5: Paises, Monumentos
+            modelo: Monumento,
+            generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
+            pregunta: (param) => `¿Cuál de las siguientes atraccioones turísticas se encuentra en ${param}?`,
+            filtro: { pais: { $exists: true }, monumento: { $exists: true } },
+            filtro_decoys: (answer) => { return { monumento: { $exists: true }, pais: { $exists: true, $ne: answer.pais} }},
+            campo_pregunta: 'pais',
+            campo_respuesta: 'monumento'
+        },
+        {   // 6: Quimica
+            modelo: Elemento,
+            generateMethod: (plantilla, respuestas) => this.generateQuestion1to1Relation(plantilla, respuestas),
+            pregunta: (param) => `¿Cuál es el símbolo químico del ${param}?`,
+            filtro: { elemento: { $exists: true }, simbolo: { $exists: true } },
+            campo_pregunta: 'elemento',
+            campo_respuesta: 'simbolo'
+        },
+        {   // 7: Quimica
+            modelo: Elemento,
+            generateMethod: (plantilla, respuestas) => this.generateQuestion1to1Relation(plantilla, respuestas),
+            pregunta: (param) => `¿Qué elemento químico representa el símbolo "${param}"?`,
+            filtro: { elemento: { $exists: true }, simbolo: { $exists: true } },
+            campo_pregunta: 'simbolo',
+            campo_respuesta: 'elemento'
+        },
+        {   // 8: Peliculas
+            modelo: Pelicula,
+            generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
+            pregunta: (param) => `¿Quién fue el director de la película "${param}"?`,
+            filtro: { pelicula: { $exists: true }, director: { $exists: true } },
+            filtro_decoys: (answer) => { return { pelicula: { $exists: true }, director: { $exists: true, $ne: answer.director} }},
+            campo_pregunta: 'pelicula',
+            campo_respuesta: 'director'
+        },
+        {   // 9: Peliculas
+            modelo: Pelicula,
+            generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
+            pregunta: (param) => `¿Cuál de estas películas ha sido dirigida por "${param}"?`,
+            filtro: { pelicula: { $exists: true }, director: { $exists: true } },
+            filtro_decoys: (answer) => { return { pelicula: { $exists: true }, director: { $exists: true, $ne: answer.director} }},
+            campo_pregunta: 'director',
+            campo_respuesta: 'pelicula'
+        },
+        {   // 10: Canciones
+            modelo: Cancion,
+            generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
+            pregunta: (param) => `¿Quién canta la canción "${param}"?`,
+            filtro: { cancion: { $exists: true }, artista: { $exists: true } },
+            filtro_decoys: (answer) => { return { cancion: { $exists: true }, artista: { $exists: true, $ne: answer.artista} }},
+            campo_pregunta: 'cancion',
+            campo_respuesta: 'artista'
+        },
+        {   // 11: Canciones
+            modelo: Cancion,
+            generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
+            pregunta: (param) => `¿Cuál de las siguientes canciones es interpretada por "${param}"?`,
+            filtro: { cancion: { $exists: true }, artista: { $exists: true } },
+            filtro_decoys: (answer) => { return { cancion: { $exists: true }, artista: { $exists: true, $ne: answer.artista} }},
+            campo_pregunta: 'artista',
+            campo_respuesta: 'cancion'
         }
+        // {
+        //     modelo: Pais,
+        //     generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
+        //     pregunta: (param) => `¿Qué lengua se habla en ${param}?`,
+        //     filtro: { pais: { $exists: true }, lenguaje: { $exists: true } },
+        //     filtro_decoys: (answer) => { return { pais: { $exists: true }, lenguaje: { $exists: true, $ne: answer} }},
+        //     campo_pregunta: 'pais',
+        //     campo_respuesta: 'lenguaje'
+        // },
         // {
         //     pregunta: (param) => `¿Cuál es la bandera de ${param}?`,
         //     filtro: { bandera: { $exists: true } },
@@ -40,11 +139,50 @@ class QuestionGenerator {
         return [ ...this.temas.keys() ];
     }
 
-    static async generateQuestion(plantilla, respuestas) {
+
+    static async generateQuestionNonDuplicatedAnswers(plantilla, respuestas) {
         console.log("\nPlantilla:");
         console.log(plantilla);
 
-        const randomDocs = await Pais.aggregate([
+        const randomAnswer = await plantilla.modelo.aggregate([
+            { $match: plantilla.filtro },
+            { $sample: { size: 1 } }
+        ]);
+        if (randomAnswer.length < 1) {
+            console.error(`Not enought data found to generate a question`);
+            throw new Error(`Not enought data found to generate a question`);
+        }
+        var randomDecoys = [];
+        if (respuestas > 1){
+            randomDecoys = await plantilla.modelo.aggregate([
+                { $match: plantilla.filtro_decoys(randomAnswer[0]) },
+                { $sample: { size: respuestas-1 } }
+            ]);
+        }
+        if (randomDecoys.length < respuestas-1) {
+            console.error(`Not enought data found to generate a question`);
+            throw new Error(`Not enought data found to generate a question`);
+        }
+        
+        console.log("\nFind:");
+        console.log(randomDecoys);
+
+        var retQuestion = {
+            pregunta: plantilla.pregunta(randomAnswer[0][plantilla.campo_pregunta]),
+            respuesta_correcta: randomAnswer[0][plantilla.campo_respuesta],
+            respuestas_incorrectas: Array.from({ length: respuestas-1 }, (_, i) => randomDecoys[i][plantilla.campo_respuesta])
+        };
+        console.log("\nPregunta generada:");
+        console.log(retQuestion);
+
+        return retQuestion;
+    }
+
+    static async generateQuestion1to1Relation(plantilla, respuestas) {
+        console.log("\nPlantilla:");
+        console.log(plantilla);
+
+        const randomDocs = await plantilla.modelo.aggregate([
             { $match: plantilla.filtro },
             { $sample: { size: respuestas } }
         ]);
@@ -74,7 +212,8 @@ class QuestionGenerator {
         var retQuestions = [];
         for (let i = 0; i < preguntas; i++) {
             let index = Math.floor(Math.random() * plantillasDisponibles.length);
-            retQuestions.push(await this.generateQuestion(this.plantillas[plantillasDisponibles[index]], respuestas));
+            let plantilla = this.plantillas[plantillasDisponibles[index]];
+            retQuestions.push(await plantilla.generateMethod(plantilla, respuestas));
         }
         return retQuestions;
     }
