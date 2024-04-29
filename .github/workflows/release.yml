@@ -148,7 +148,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: questionsservice
-        dockerfile: questionsservice/questiongeneratorservice
+        dockerfile: ./questiongeneratorservice/Dockerfile
         platforms: linux/arm64
   docker-push-wikidataextractorservice:
     name: Push wikidata extractor service Docker Image to GitHub Packages
@@ -169,7 +169,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
         workdir: questionsservice
-        dockerfile: questionsservice/wikidataExtractor
+        dockerfile: ./wikidataExtractor/Dockerfile
         platforms: linux/arm64
   docker-push-storequestionservice:
     name: Push questions store service Docker Image to GitHub Packages
