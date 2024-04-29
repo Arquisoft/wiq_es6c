@@ -13,10 +13,10 @@ import { generateGameId } from '../Util';
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
 let gameId;
-let questions = []
+
 
 const GameConfiguration = () => {
-
+  let questions = []
   const navigation = useNavigate();
     let tematicas = ['Paises', 'Capitales'];
     let state = useLocation().state;
