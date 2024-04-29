@@ -25,9 +25,9 @@ describe('AddUser component', () => {
     mockAxios.onPost('http://localhost:8000/adduser').reply(200);
 
     // Simulate user input
-    fireEvent.change(nameInput, { target: { value: 'testUser' } });
-    fireEvent.change(surnameInput, { target: { value: 'testUser' } });
-    fireEvent.change(usernameInput, { target: { value: 'testUser' } });
+    fireEvent.change(nameInput, { target: { value: 'testUsera' } });
+    fireEvent.change(surnameInput, { target: { value: 'testUsera' } });
+    fireEvent.change(usernameInput, { target: { value: 'testUsera' } });
     fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
     fireEvent.change(confirmPasswordInput, { target: { value: 'testPassword' } });
 
@@ -50,7 +50,7 @@ describe('AddUser component', () => {
 
     // Wait for the Snackbar to be open
     await waitFor(() => {
-      expect(screen.getByText(/Por favor, introduzca tanto el nombre como los apellidos./i)).toBeInTheDocument();
+      expect(screen.getByText(/Todos los campos deben de estar rellenos./i)).toBeInTheDocument();
     });
   });
 
@@ -80,9 +80,9 @@ describe('AddUser component', () => {
     mockAxios.onPost('http://localhost:8000/adduser').reply(500, { error: 'Internal Server Error' });
 
     // Simulate user input
-    fireEvent.change(screen.getByLabelText(/Nombre/), { target: { value: 'testUser' } });
-    fireEvent.change(screen.getByLabelText(/Apellidos/i), { target: { value: 'testUser' } });
-    fireEvent.change(screen.getByLabelText(/Usuario/i), { target: { value: 'testUser' } });
+    fireEvent.change(screen.getByLabelText(/Nombre/), { target: { value: 'a' } });
+    fireEvent.change(screen.getByLabelText(/Apellidos/i), { target: { value: 'a' } });
+    fireEvent.change(screen.getByLabelText(/Usuario/i), { target: { value: 'a' } });
     fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword' } });
     fireEvent.change(screen.getByLabelText(/Repetir contraseña/i), { target: { value: 'testPassword' } });
 
