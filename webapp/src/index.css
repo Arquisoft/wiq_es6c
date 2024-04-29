@@ -17,6 +17,10 @@ code {
   flex-wrap: wrap;
 }
 
+#root > main{
+  margin-top: 6em;
+}
+
 #root > main > h1{
   text-align: center;
 }
