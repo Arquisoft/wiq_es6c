@@ -5,8 +5,7 @@ import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 import Button from '../Button';
 
-let questions = []
-let questionIndex = -1
+let questions = [];
 
 const Calculator = () => {
 
@@ -16,7 +15,6 @@ const Calculator = () => {
         const operator = ['+', '-', 'x', '÷'][secureRandomNumber(3)];
         let correctAnswer;
     
-        // eslint-disable-next-line default-case
         switch (operator) {
             case '+':
                 correctAnswer = num1 + num2;
@@ -32,20 +30,22 @@ const Calculator = () => {
                 break;
         }
     
-        const options = [correctAnswer];
-        while (options.length < 4) {
-            const option = secureRandomNumber(100) + 1;
-            if (!options.includes(option)) {
-                options.push(option);
+        const option = [correctAnswer];
+        while (option.length < 4) {
+            const op = secureRandomNumber(100) + 1;
+            if (!option.includes(op)) {
+                option.push(op);
             }
         }
     
         shuffleArray(options);
-        return {
-            q: `${num1} ${operator} ${num2}`,
-            options: options,
-            correctAnswer: correctAnswer
-        };
+        questions = [
+            {
+                q: `${num1} ${operator} ${num2}`,
+                options: option,
+                correctAnswer: correctAnswer
+            }
+        ];
     }
 
 
@@ -72,13 +72,13 @@ const Calculator = () => {
     
                 <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
                     {generateQuestion()}
-                    {questions.q}
+                    {questions[0].q}
                 </Typography>
     
                 </div>
     
                 <div class="allAnswers">
-                    {questions.options.map((option, index) => (
+                    {questions[0].options.map((option, index) => (
                         <div key={index} >
                         <Button
                             id={`option-${index}`}
@@ -91,15 +91,6 @@ const Calculator = () => {
                     )}
                 </div>
             </div>
-  
-            {/*
-            <Box sx={{ 
-                width: '100%',
-                padding: 3}}>
-    
-                <LinearProgress id='progress'color="secondary" variant={"determinate"} value={remTime} />
-            </Box>
-            */}
   
         </Container>
         <Footer />

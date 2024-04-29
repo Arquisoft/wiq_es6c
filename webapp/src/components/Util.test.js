@@ -5,7 +5,6 @@ jest.mock('axios');
 describe('shuffleArray function', () => {
     // Mocking window.crypto.getRandomValues
     beforeEach(() => {
-        const max = 100;
         global.crypto = {
             getRandomValues: jest.fn().mockImplementation((array) => {
                 for (let i = 0; i < array.length; i++) {
