@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
+import {esperar} from './Util';
 
 let currentQuestionIndex = 0;
 
@@ -51,10 +52,6 @@ const Quiz = () => {
       clearInterval(time);
     };
   });
-
-  const esperar = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  };
   
   function changeButtons(param) {
     var borders = document.getElementsByClassName("border");;
@@ -111,7 +108,6 @@ const Quiz = () => {
       haveFailedQuestion = false;
       load = true
       haveEnter = false
-      console.log("Calbo")
 
       if (currentQuestionIndex === allQuestions.length ) {
         console.log("Entramos aqui")
