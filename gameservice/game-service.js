@@ -54,8 +54,9 @@ app.post('/storeGame', async (req, res) => {
     var username = req.body.username
     var points = req.body.points
     var questions = req.body.questions
+    var avgtime = req.body.avgtime
     console.log("Vamos a guardar resultado")
-    const store = await axios.post(`${userStatsService}/history/game`, {id, username,  points, questions})
+    const store = await axios.post(`${userStatsService}/history/game`, {id, points, username, questions, avgtime})
     console.log("Guardamos resultado")
     res.json(store.data)
   } catch (error) {
