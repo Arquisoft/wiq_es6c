@@ -5,10 +5,8 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import Calculator from './Calculator';
 
 describe('Calculator Component', () => {
-  
+
     test("renders Calculator",async () => {
-        
-        /*
         render(
             <ContextFun>
                 <Router>
@@ -36,7 +34,7 @@ describe('Calculator Component', () => {
             case '÷': result = Math.round(number1 / number2); break;
         }
         expect(screen.getByText(result)).toBeInTheDocument();
-        */
+        
     });
 
  

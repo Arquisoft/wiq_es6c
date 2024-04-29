@@ -6,6 +6,7 @@ import { Nav } from '../nav/Nav';
 import Button from '../Button';
 
 let questions = [];
+const previousBackgroundColor = '#1a1a1a'
 
 const Calculator = () => {
 
@@ -49,15 +50,22 @@ const Calculator = () => {
     }
 
 
-    //CAMBIAR ESTO EN FUNCIÓN DE CÓMO QUERAMOS QUE SEA EL JUEGO
-    const handleOptionClick = (selectedAnswer) => {
-        if (selectedAnswer === questions.correctAnswer) {
-            alert('¡Respuesta correcta!');
-        } else {
-            alert('Respuesta incorrecta. ¡Inténtalo de nuevo!');
+    const handleOptionClick = async (selectedAnswer) => {
+        const numberAnswer = questions.options.indexOf(questions.correctAnswer);
+        const botonCorrecta = document.getElementById('option-' + numberAnswer);
+        let botonIncorrecta = null;
+        botonCorrecta.style.backgroundColor = 'green';
+        if (selectedAnswer !== questions.correctAnswer) {
+            botonIncorrecta = document.getElementById('option-' + questions.options.indexOf(selectedAnswer));
+            botonIncorrecta.style.backgroundColor = 'red';
         }
-        generateQuestion();
+        await esperar(2000);
+        botonCorrecta.style.backgroundColor = previousBackgroundColor;
+        if(botonIncorrecta != null){
+            botonIncorrecta.style.backgroundColor = previousBackgroundColor;
+        }
 
+        generateQuestion();
     };
     
   
