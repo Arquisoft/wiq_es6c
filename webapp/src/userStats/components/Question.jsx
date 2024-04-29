@@ -3,11 +3,13 @@ import React from 'react';
 function Question(props) {
   const { newQuestion } = props;
 
+  console.log(newQuestion)
+
   return (
     <div className='border'>
       <div className='inner'>
         <div className="header">
-        <h4>{newQuestion.title}</h4>
+          <h4>{newQuestion.title}</h4>
         </div>
         <div className='grid'>
           {newQuestion.answers.map((answer, index) => {
@@ -21,6 +23,9 @@ function Question(props) {
             }
           })}
         </div>
+        {newQuestion.ansIndex[0] === -1 ? (
+          <h5 className='noAnswer'>X Sin respuesta</h5>
+        ) : null}
       </div>
     </div>
   );

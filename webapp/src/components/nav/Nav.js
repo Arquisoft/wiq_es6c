@@ -30,10 +30,10 @@ export const Nav = () => {
                 <Link to='/history' style={{color:'#0F0F0F', textDecoration: 'none', marginRight: '2vw', fontSize: '1.25rem'}}>
                     Historial
                 </Link>
-                <Link to='/appQuestion' style={{color:'#0F0F0F', textDecoration: 'none', fontSize: '1.25rem'}}>
+                <Link to='/appQuestion' style={{color:'#0F0F0F', textDecoration: 'none', marginRight: '2vw', fontSize: '1.25rem'}}>
                     Almacén de preguntas
                 </Link>
-                <Link to='/users' style={{color:'white', textDecoration: 'none'}}>
+                <Link to='/users' style={{color:'#0F0F0F', textDecoration: 'none', fontSize: '1.25rem'}}>
                     Usuarios
                 </Link>
             </Container>
@@ -44,7 +44,7 @@ export const Nav = () => {
                         <HelpIcon sx={{ color: "#0F0F0F" }}/>
                     </IconButton>
                 </Link>
-                <Link to='/login' style={{color:'white', textDecoration: 'none'}}>
+                <Link to='/' style={{color:'white', textDecoration: 'none'}}>
                     <IconButton size="large" color="inherit" >
                         <LogoutIcon sx={{ color: "#0F0F0F" }}/>
                     </IconButton>
