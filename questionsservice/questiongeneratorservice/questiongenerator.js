@@ -1,4 +1,5 @@
-const { Pais, Monumento, Elemento, Pelicula, Cancion } = require('./questiongenerator-model')
+const modelUri = process.env.DATAMODELS_URI || '../questiondata-model';
+const { Pais, Monumento, Elemento, Pelicula, Cancion } = require(modelUri);
 
 class QuestionGenerator {
 
@@ -203,10 +204,13 @@ class QuestionGenerator {
 
     static getAvailableTemplates(temas) {
         if (temas.length == 0) {
-            return Array.from({ length: this.plantillas.length }, (_, i) => i);
+            let templates = Array.from({ length: this.plantillas.length }, (_, i) => i);
+            console.log("Temas a utilizar:\n\tTodos\nPlantillas a utilizar:");
+            console.log(`\t${templates}`);
+            return templates;
         }
         let templates = [];
-        console.log("Temas a utilizar:")
+        console.log("Temas a utilizar:");
         temas.forEach(tema => {
             if (this.temas.has(tema)) {
                 templates = templates.concat(this.temas.get(tema));

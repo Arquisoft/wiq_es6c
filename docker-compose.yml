@@ -74,7 +74,9 @@ services:
     container_name: questiongeneratorservice-${teamname:-defaultASW}
     image: ghcr.io/arquisoft/wiq_es6c/questiongeneratorservice:latest
     profiles: ["dev", "prod"]
-    build: ./questionsservice/questiongeneratorservice
+    build: 
+      context: ./questionsservice
+      dockerfile: ./questiongeneratorservice/Dockerfile
     depends_on:
       - mongodb_wiki
       - storequestionservice
@@ -83,6 +85,7 @@ services:
     networks:
       - mynetwork
     environment:
+      DATAMODELS_URI: './questiondata-model'
       MONGODB_URI: mongodb://mongodb_wiki:27017/questions
       STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
     restart: always
@@ -91,7 +94,9 @@ services:
     container_name: wikidataextractorservice-${teamname:-defaultASW}
     image: ghcr.io/arquisoft/wiq_es6c/wikidataextractorservice:latest
     profiles: ["dev", "prod"]
-    build: ./questionsservice/wikidataExtractor
+    build:
+      context: ./questionsservice
+      dockerfile: ./wikidataExtractor/Dockerfile
     depends_on:
       - mongodb_wiki
     ports:
@@ -99,6 +104,7 @@ services:
     networks:
       - mynetwork
     environment:
+      DATAMODELS_URI: './questiondata-model'
       MONGODB_URI: mongodb://mongodb_wiki:27017/questions
     restart: always
 

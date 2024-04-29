@@ -2,7 +2,8 @@ const express = require('express');
 const cron = require('node-cron');
 const mongoose = require('mongoose');
 const WikiQueries = require('./wikidataQueries');
-const { Pais, Monumento, Elemento, Pelicula, Cancion } = require('./wikidataextractor-model');
+const modelUri = process.env.DATAMODELS_URI || '../questiondata-model';
+const { Pais, Monumento, Elemento, Pelicula, Cancion } = require(modelUri);
 
 const app = express();
 const port = 8008;
@@ -87,7 +88,7 @@ async function extractData(template) {
     return transactions;
 }
 
-const minutes = 30;
+const minutes = 1;
 const totalQueries = templates.length;
 let query = 0;
 cron.schedule(`*/${minutes} * * * *`, () => {
