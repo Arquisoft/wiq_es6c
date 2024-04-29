@@ -5,19 +5,20 @@ import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 import Button from '../Button';
 import {esperar} from '../Util';
+import { useState } from 'react';
 
 let questions = [];
 const previousBackgroundColor = '#1a1a1a';
 
 const Calculator = () => {
 
-    let questionIndex = -1
+    //let questionIndex = -1
+    const [questionIndex, setQuestionIndex] = useState(0);
 
     function generateQuestion() {
         let num1 = secureRandomNumber(10) + 1;
         let num2 = secureRandomNumber(10) + 1;
 
-        questionIndex++;
         console.log(questionIndex)
         
         num2 = secureRandomNumber(10) + 1;
@@ -70,11 +71,12 @@ const Calculator = () => {
             botonIncorrecta = document.getElementById('option-' + questions[questionIndex].options.indexOf(selectedAnswer));
             botonIncorrecta.style.backgroundColor = 'red';
         }
-        await esperar(2000);
 
         generateQuestion();
 
         await esperar(2000);
+
+        setQuestionIndex(questionIndex+1);
 
         botonCorrecta.style.backgroundColor = previousBackgroundColor;
         if(botonIncorrecta != null){
