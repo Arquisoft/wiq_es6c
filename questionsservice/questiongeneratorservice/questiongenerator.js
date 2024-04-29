@@ -36,6 +36,10 @@ class QuestionGenerator {
         // }
     ];
 
+    static getAvailableTopics(){
+        return [ ...this.temas.keys() ];
+    }
+
     static async generateQuestion(plantilla, respuestas) {
         console.log("\nPlantilla:");
         console.log(plantilla);
