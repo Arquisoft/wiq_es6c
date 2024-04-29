@@ -184,6 +184,7 @@
 }
 
 #history .dropdown-content{
+    overflow: auto;
     position: flex;
     flex-direction: column;
     /*Quiero meter un gap*/

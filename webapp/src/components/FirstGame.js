@@ -108,7 +108,6 @@ const Quiz = () => {
       haveFailedQuestion = false;
       load = true
       haveEnter = false
-      console.log("Calbo")
 
       if (currentQuestionIndex === allQuestions.length ) {
         console.log("Entramos aqui")
