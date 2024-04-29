@@ -22,6 +22,7 @@ jobs:
     - run: npm --prefix storeQuestionService ci
     - run: npm --prefix userStatsService ci
     - run: npm --prefix gameservice ci
+    - run: npm --prefix apisgatewayservice ci
     - run: npm --prefix users/authservice test -- --coverage
     - run: npm --prefix users/userservice test -- --coverage
     - run: npm --prefix gatewayservice test -- --coverage
