@@ -8,23 +8,23 @@ import Button from './Button';
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
 
-var currentQuestionIndex = 0;
+let currentQuestionIndex = 0;
 
-var haveFailedQuestion = false; 
+let haveFailedQuestion = false; 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
-var isCorrect = false
-var questions = [];
-var points = 0;
-var load = true;
+let isCorrect = false
+let questions = [];
+let points = 0;
+let load = true;
 const previousBackgroundColor = '#1a1a1a'
 
 
 const Quiz = () => {
 
   const navigator = useNavigate();
-  var allQuestions = useLocation().state.questions;
-  var haveEnter = false
-  var id = useLocation().state.gameId;
+  let allQuestions = allQuestions = useLocation().state.questions;
+  let haveEnter = false;
+  let id = useLocation().state.gameId;
   console.log(id)
 
   // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(storedInt);
