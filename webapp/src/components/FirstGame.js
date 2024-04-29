@@ -22,7 +22,7 @@ const previousBackgroundColor = '#1a1a1a'
 const Quiz = () => {
 
   const navigator = useNavigate();
-  let allQuestions = allQuestions = useLocation().state.questions;
+  let allQuestions = useLocation().state.questions;
   let haveEnter = false;
   let id = useLocation().state.gameId;
   console.log(id)
