@@ -4,6 +4,7 @@ import { Container, Typography } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 import Button from '../Button';
+import {esperar} from '../Util';
 
 let questions = [];
 const previousBackgroundColor = '#1a1a1a'

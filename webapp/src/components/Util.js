@@ -24,4 +24,8 @@ function secureRandomNumber(max) {
     return randomBytes[0] % max;
 }
 
-export {shuffleArray, secureRandomNumber}
+const esperar = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+export {esperar, shuffleArray, secureRandomNumber}
