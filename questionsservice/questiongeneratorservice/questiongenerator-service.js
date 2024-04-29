@@ -63,7 +63,18 @@ app.get('/questions', async (req, res) => {
     }
   } catch (error) {
     console.error(`Bad Request: ${error.message}`);
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Route for getting topics for questions
+app.get('/topics', async (req, res) => {
+  try {
+    const topics = QuestionGenerator.getAvailableTopics();
+    res.send(topics);
+  } catch (error) {
+    console.error(`An error occurred: ${error.message}`);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
