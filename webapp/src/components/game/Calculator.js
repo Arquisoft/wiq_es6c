@@ -104,6 +104,8 @@ const Calculator = () => {
             case '÷':
                 correctAnswer = Math.round(num1 / num2);
                 break;
+            default:
+                break;
         }
     
         const option = [correctAnswer];
