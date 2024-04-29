@@ -17,8 +17,8 @@ describe('App', () => {
 
   it('should fetch and display games', async () => {
     const games = [
-        { id: 1, username: 'testuser', points: 100, questions: [{ title: 'Question 1', answers: ['Answer 1', 'Answer 2', 'Answer 3'], ansIndex: [1,1] }], createdAt: "07/04/2024"},
-        { id: 2, username: 'testuser', points: 0, questions: [{ title: 'Question 2', answers: ['Answer 1', 'Answer 2', 'Answer 3'], ansIndex: [0,1] }], createdAt: "07/04/2024"}
+        { id: 1, username: 'testuser', points: 100, avgtime: 100, questions: [{ title: 'Question 1', answers: ['Answer 1', 'Answer 2', 'Answer 3'], ansIndex: [1,1] }], createdAt: "07/04/2024"},
+        { id: 2, username: 'testuser', points: 0, avgtime: 100, questions: [{ title: 'Question 2', answers: ['Answer 1', 'Answer 2', 'Answer 3'], ansIndex: [0,1] }], createdAt: "07/04/2024"}
     ];
 
     axios.get.mockResolvedValueOnce({ data: games });
@@ -45,7 +45,8 @@ describe('App', () => {
     const games = Array.from({ length: 20 }, (_, index) => ({
         _id: String(index + 1),
         username: 'testuser', 
-        points: 100, 
+        points: 100,
+        avgtime: 100, 
         questions: [
             {
                  title: `Question ${index+1}`, 

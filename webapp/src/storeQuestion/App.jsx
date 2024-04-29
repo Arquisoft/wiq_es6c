@@ -11,7 +11,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Número de preguntas por página
 
-  const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
+  const apiEndpoint = process.env.REACT_APIS_ENDPOINT || 'http://localhost:8100';
 
   useEffect(() => {
     const obtenerPreguntas = async () => {

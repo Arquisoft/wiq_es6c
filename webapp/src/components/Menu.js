@@ -2,20 +2,16 @@ import React from 'react';
 import { Container } from '@mui/material';
 import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Importa useHistory
 import Button from './Button'
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
-import {shuffleArray} from './Util'
+import axios from 'axios';
 
+//var isApiCalledRef = false;//ASK - is this necessary?
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
-var gameId;
-//var isApiCalledRef = false;//ASK - is this necessary?
-
-
-var questions = []
+let topics
 
 const Menu = () => {
 
@@ -27,41 +23,24 @@ const Menu = () => {
     const [selectedValue, setSelectedValue] = useState('');
     */
 
-    const initiateGame = async () => {
-      await generateGameId();  
-      await getQuestions()  
-      //isApiCalledRef = true//ASK - is this necessary?
-      navigation("/firstGame", {state: {questions, gameId}})
-    }
-
-    const generateGameId = async () => {
+    const getTopics = async () => {
       try {
-        const response = await axios.get(`${apiEndpoint}/generateGameUnlimitedQuestions`)
-        console.log(response.data)
-        gameId = response.data
+        topics = await axios.get(`${apiEndpoint}/topics`)
+        topics = topics.data
       } catch(error) {
-        console.error(error);
+        console.error(error)
       }
     }
 
-    const getQuestions = async () => {
-        try {
-          const response = await axios.get(`${apiEndpoint}/gameUnlimitedQuestions`, {gameId});
-          console.log(response.data.length)
-          for (var i = 0; i < response.data.length; i++) {
-            var possibleAnswers = [response.data[i].respuesta_correcta, response.data[i].respuestas_incorrectas[0], response.data[i].respuestas_incorrectas[1], response.data[i].respuestas_incorrectas[2]]
-            possibleAnswers = shuffleArray(possibleAnswers)
-            questions.push({
-              question: response.data[i].pregunta,
-              options: possibleAnswers,
-              correctAnswer: response.data[i].respuesta_correcta
-            })
-          }      
-        } catch (error) {
-          console.error(error);
-        }
-        console.log(questions)
-    };
+    const initiateGame = async () => {
+      await getTopics()  
+      //isApiCalledRef = true//ASK - is this necessary?
+      navigation("/gameConfiguration", {state: {topics}})
+    }
+
+    const initiateCalculator = async () => {
+      navigation("/calculator")
+    }
 
     return (
       <>
@@ -70,6 +49,7 @@ const Menu = () => {
           <h2>Modos de juego:</h2>
           <div className='modes'>
               <Button text = "Clásico" name="quiz" onClick={() => initiateGame()}/>
+              <Button text = "Calculadora Humana" name="calc" onClick={() => initiateCalculator()}/>
           </div>
           
         </Container>

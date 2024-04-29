@@ -5,13 +5,14 @@ FROM node:20
 WORKDIR /usr/src/questionsservice/questiongeneratorservice
 
 # Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+COPY ./questiongeneratorservice/package*.json ./
 
 # Install app dependencies
 RUN npm install
 
 # Copy the app source code to the working directory
-COPY . .
+COPY ./questiongeneratorservice/ .
+COPY questiondata-model.js .
 
 # Expose the port the app runs on
 EXPOSE 8007

@@ -54,6 +54,23 @@ services:
       MONGODB_URI: mongodb://mongodb:27017/userdb
     restart: always
 
+  apisgatewayservice:
+    container_name: apisgatewayservice-${teamname:-defaultASW}
+    image: ghcr.io/arquisoft/wiq_es6c/apisgatewayservice:latest
+    profiles: ["dev", "prod"]
+    build: ./apisgatewayservice
+    depends_on:
+      - mongodb
+    ports:
+      - "8100:8100"
+    networks:
+      - mynetwork
+    environment:
+      STORE_QUESTION_SERVICE_URL: http://localhost:8004
+      USER_STATS_SERVICE_URL: http://localhost:8003
+      USER_SERVICE_URL: http://localhost:8001
+    restart: always
+
   gameservice:
     container_name: gameservice-${teamname:-defaultASW}
     image: ghcr.io/arquisoft/wiq_es6c/gameservice:latest
@@ -74,7 +91,9 @@ services:
     container_name: questiongeneratorservice-${teamname:-defaultASW}
     image: ghcr.io/arquisoft/wiq_es6c/questiongeneratorservice:latest
     profiles: ["dev", "prod"]
-    build: ./questionsservice/questiongeneratorservice
+    build: 
+      context: ./questionsservice
+      dockerfile: ./questiongeneratorservice/Dockerfile
     depends_on:
       - mongodb_wiki
       - storequestionservice
@@ -83,6 +102,7 @@ services:
     networks:
       - mynetwork
     environment:
+      DATAMODELS_URI: './questiondata-model'
       MONGODB_URI: mongodb://mongodb_wiki:27017/questions
       STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
     restart: always
@@ -91,7 +111,9 @@ services:
     container_name: wikidataextractorservice-${teamname:-defaultASW}
     image: ghcr.io/arquisoft/wiq_es6c/wikidataextractorservice:latest
     profiles: ["dev", "prod"]
-    build: ./questionsservice/wikidataExtractor
+    build:
+      context: ./questionsservice
+      dockerfile: ./wikidataExtractor/Dockerfile
     depends_on:
       - mongodb_wiki
     ports:
@@ -99,6 +121,7 @@ services:
     networks:
       - mynetwork
     environment:
+      DATAMODELS_URI: './questiondata-model'
       MONGODB_URI: mongodb://mongodb_wiki:27017/questions
     restart: always
 
@@ -139,7 +162,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus-${teamname:-defaultASW}
-    profiles: ["dev"]
+    profiles: ["dev", "prod"]
     networks:
       - mynetwork
     volumes:
@@ -153,7 +176,7 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafana-${teamname:-defaultASW}
-    profiles: ["dev"]
+    profiles: ["dev", "prod"]
     networks:
       - mynetwork
     volumes:
