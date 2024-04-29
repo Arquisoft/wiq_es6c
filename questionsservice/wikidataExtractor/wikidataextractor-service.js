@@ -88,7 +88,7 @@ async function extractData(template) {
     return transactions;
 }
 
-const minutes = 1;
+const minutes = 30;
 const totalQueries = templates.length;
 let query = 0;
 cron.schedule(`*/${minutes} * * * *`, () => {
