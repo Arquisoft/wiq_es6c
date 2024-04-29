@@ -1,19 +1,81 @@
 import React from 'react';
-import { shuffleArray, secureRandomNumber } from '../Util';
-import { Container, Typography } from '@mui/material';
+import { shuffleArray, secureRandomNumber, generateGameId,esperar } from '../Util';
+import { Container, Typography, Box, LinearProgress } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 import Button from '../Button';
-import {esperar} from '../Util';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 let questions = [];
+let load = true;
 const previousBackgroundColor = '#1a1a1a';
+let points = 0;
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
+let answeredQuestions = [];
 
 const Calculator = () => {
 
     //let questionIndex = -1
     const [questionIndex, setQuestionIndex] = useState(0);
+
+    const navigator = useNavigate();
+
+    const [remTime, setRemTime] = useState(0);
+    const [totalTime, setTotalTime] = useState(0);
+
+    let id = generateGameId;
+
+    if(questions.length === 0)
+        generateQuestion();
+
+    useEffect(() => {
+        const time = setInterval(() => {
+        setRemTime((progress) => {
+            if(progress === 100){
+                console.log("Antes", totalTime)
+                setTotalTime(totalTime + progress/10)
+                console.log("Despues", totalTime)
+
+                //TODO: ALMACENAR JUEGO
+                gameStore();
+
+                return 0; 
+            }
+            const diff = 5;
+            return load? Math.min(progress + diff, 100) : progress;
+        });
+        }, 400);
+
+        return () => {
+        clearInterval(time);
+        };
+    });
+
+    const gameStore = async () => {
+        try {
+            var username = localStorage.getItem("username")
+            console.log(username)
+            console.log(answeredQuestions)
+            console.log(totalTime)
+            var avgtime = totalTime/answeredQuestions.length
+            console.log(avgtime)
+            const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions: answeredQuestions, avgtime});
+            console.log(response)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            init();
+            navigator('/menu')
+        }
+    }
+
+    function init(){
+        questions = [];
+        points = 0;
+        answeredQuestions = [];
+    }
 
     function generateQuestion() {
         let num1 = secureRandomNumber(10) + 1;
@@ -67,9 +129,21 @@ const Calculator = () => {
         const botonCorrecta = document.getElementById('option-' + numberAnswer);
         let botonIncorrecta = null;
         botonCorrecta.style.backgroundColor = 'green';
+        answeredQuestions.push({
+            pregunta: 'a',
+            respuesta_correcta: 'a',
+            respuestas_incorrectas: [
+                'a',
+                'a',
+                'a'
+            ]
+        });
         if (selectedAnswer !== questions[questionIndex].correctAnswer) {
+            
             botonIncorrecta = document.getElementById('option-' + questions[questionIndex].options.indexOf(selectedAnswer));
             botonIncorrecta.style.backgroundColor = 'red';
+        } else {
+            points += 100;
         }
 
         generateQuestion();
@@ -95,7 +169,7 @@ const Calculator = () => {
                 <div class="questionCalculator">
     
                 <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-                    {generateQuestion()}
+                    
                     {questions[questionIndex].q}
                 </Typography>
     
@@ -115,6 +189,14 @@ const Calculator = () => {
                     )}
                 </div>
             </div>
+
+            <Box sx={{ 
+                width: '100%',
+                padding: 3}}>
+
+                <LinearProgress id='progress'color="secondary" variant={"determinate"} value={remTime} />
+
+            </Box>
   
         </Container>
         <Footer />

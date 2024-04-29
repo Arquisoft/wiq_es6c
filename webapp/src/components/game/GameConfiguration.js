@@ -8,6 +8,7 @@ import axios from 'axios'
 import { shuffleArray } from '../Util';
 import './GameConfiguration.css';
 import Spinner from '../spinner/Spinner';
+import { generateGameId } from '../Util';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
@@ -63,14 +64,7 @@ const GameConfiguration = () => {
     navigation("/firstGame", {state: {questions, gameId}})
   }
 
-  const generateGameId = async () => {
-    try {
-      const response = await axios.get(`${apiEndpoint}/generateGame`)
-      gameId = response.data
-    } catch(error) {
-      console.error(error);
-    }
-  }
+  gameId = generateGameId();
 
   function formatearTopics() {
     let topicsFormated = '';
