@@ -18,12 +18,18 @@ const AddUser = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const addUser = async () => {
-    if (name.trim() === '' || surname.trim() === '') {
-      setError('Por favor, introduzca tanto el nombre como los apellidos.');
+    if (name.trim() === '' || surname.trim() === '' || username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
+      setError('Todos los campos deben de estar rellenos.');
     } else if(password !== confirmPassword){
       setError('Las contraseñas no coinciden.');
     } else {
       try {
+        const isAvailable = await checkUsernameAvailability(username, password);
+        if (isAvailable != false) {
+          setError('Usuario ya registrado.');
+          return; 
+        }
+
         await axios.post(`${apiEndpoint}/adduser`, { username, password });
         setOpenSnackbar(true);
       } catch (error) {
@@ -31,6 +37,16 @@ const AddUser = () => {
       }
     }
   };
+
+  const checkUsernameAvailability = async (username, password) => {
+    try {
+      const response = await axios.post(`${apiEndpoint}/check-username`, { username });
+      return response.data; 
+    } catch (error) {
+      console.error("Error al comprobar la disponibilidad del nombre de usuario:", error);
+      return false; 
+    }
+  }
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
