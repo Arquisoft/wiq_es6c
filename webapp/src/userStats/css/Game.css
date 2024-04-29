@@ -195,6 +195,10 @@
     gap: 1%;
 }
 
+#history .noAnswer{
+    color: red;
+}
+
 @media (max-width: 720px) {
     #history .game{
         display: grid;
