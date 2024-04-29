@@ -70,17 +70,16 @@ const templates = [
 
 async function extractData(template) {
     console.log("Actualizando los datos sobre:")
-    var data = await template.extractMethod();
+    const data = await template.extractMethod();
     console.log(data);
-    var transactions = data.map(function (element) {
-        var transaction = {
+    const transactions = data.map(function (element) {
+        let transaction = {
             updateOne: {
                 filter: template.filtro(element),
                 update: template.campo_actualizar(element),
                 upsert: true
             }
         };
-        // console.log(transaction);
         return transaction;
     });
     await template.saveMethod(transactions);
@@ -90,7 +89,7 @@ async function extractData(template) {
 
 const minutes = 30;
 const totalQueries = templates.length;
-var query = 0;
+let query = 0;
 cron.schedule(`*/${minutes} * * * *`, () => {
     try {
         console.log(`Running a task every ${minutes} minutes: ${Date()}`);
@@ -101,45 +100,6 @@ cron.schedule(`*/${minutes} * * * *`, () => {
     }
     
 });
-
- /* 
-    ALL ROUTES ARE ONLY FOR DEVELOPING PURPOSES, THEY SHOULD GET DELETED IN PRODUCTION 
-    THIS SERVICE SHOULD NOT BE ACCESSIBLE FROM OUTSIDE
- */
-
-// Route for extracting countries
-// app.get('/extract', async (req, res) => {
-//     try {
-//         res.json(await extractData(templates[1]));
-//     } catch (error) {
-//         console.error(error.message);
-//         res.status(500).json({ message: error.message })
-//         // res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// });
-
-// // // Route for geting countries
-// app.get('/countries', async (req, res) => {
-//     try {
-//         const paises = await Pais.find({})
-//         res.json(paises);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message })
-//         // res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// });
-
-// // // Route for deleting countries
-// app.delete('/countries', async (req, res) => {
-//     try {
-//         const paises = await Pais.deleteMany({})
-//         res.json(paises);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message })
-//         // res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// });
-
 
 app.use((err, req, res, next) => {
     console.error(`An error occurred: ${err}`);

@@ -141,8 +141,6 @@ class QuestionGenerator {
 
 
     static async generateQuestionNonDuplicatedAnswers(plantilla, respuestas) {
-        // console.log("\nPlantilla:");
-        // console.log(plantilla);
         const randomAnswer = await plantilla.modelo.aggregate([
             { $match: plantilla.filtro },
             { $sample: { size: 1 } }
@@ -151,7 +149,7 @@ class QuestionGenerator {
             console.error(`Not enought data found to generate a question`);
             throw new Error(`Not enought data found to generate a question`);
         }
-        var randomDecoys = [];
+        let randomDecoys = [];
         if (respuestas > 1){
             randomDecoys = await plantilla.modelo.aggregate([
                 { $match: plantilla.filtro_decoys(randomAnswer[0]) },
@@ -162,9 +160,8 @@ class QuestionGenerator {
             console.error(`Not enought data found to generate a question`);
             throw new Error(`Not enought data found to generate a question`);
         }
-        // console.log("\nFind:");
-        // console.log(randomDecoys);
-        var retQuestion = {
+
+        const retQuestion = {
             pregunta: plantilla.pregunta(randomAnswer[0][plantilla.campo_pregunta]),
             respuesta_correcta: randomAnswer[0][plantilla.campo_respuesta],
             respuestas_incorrectas: Array.from({ length: respuestas-1 }, (_, i) => randomDecoys[i][plantilla.campo_respuesta])
@@ -173,8 +170,7 @@ class QuestionGenerator {
     }
 
     static async generateQuestion1to1Relation(plantilla, respuestas) {
-        // console.log("\nPlantilla:");
-        // console.log(plantilla);
+
         const randomDocs = await plantilla.modelo.aggregate([
             { $match: plantilla.filtro },
             { $sample: { size: respuestas } }
@@ -183,9 +179,8 @@ class QuestionGenerator {
             console.error(`Not enought data found to generate a question`);
             throw new Error(`Not enought data found to generate a question`);
         }
-        // console.log("\nFind:");
-        // console.log(randomDocs);
-        var retQuestion = {
+
+        const retQuestion = {
             pregunta: plantilla.pregunta(randomDocs[0][plantilla.campo_pregunta]),
             respuesta_correcta: randomDocs[0][plantilla.campo_respuesta],
             respuestas_incorrectas: Array.from({ length: respuestas-1 }, (_, i) => randomDocs[i+1][plantilla.campo_respuesta])
@@ -195,7 +190,7 @@ class QuestionGenerator {
 
     static async generateQuestions(preguntas, respuestas, temas) {
         const plantillasDisponibles = this.getAvailableTemplates(temas);
-        var retQuestions = [];
+        let retQuestions = [];
         for (let i = 0; i < preguntas; i++) {
             let index = Math.floor(Math.random() * plantillasDisponibles.length);
             let plantilla = this.plantillas[plantillasDisponibles[index]];
@@ -210,7 +205,7 @@ class QuestionGenerator {
         if (temas.length == 0) {
             return Array.from({ length: this.plantillas.length }, (_, i) => i);
         }
-        var templates = [];
+        let templates = [];
         console.log("Temas a utilizar:")
         temas.forEach(tema => {
             if (this.temas.has(tema)) {
@@ -218,7 +213,7 @@ class QuestionGenerator {
                 console.log(`\t${tema}`);
             }
             else {
-                console.error(`\tThe topic \'${tema}\' is not currently defined`);
+                console.error(`\tThe topic '${tema}' is not currently defined`);
             }
         });
         if (templates.length == 0) {
