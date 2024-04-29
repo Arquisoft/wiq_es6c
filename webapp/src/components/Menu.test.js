@@ -1,37 +1,81 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, waitFor, fireEvent } from '@testing-library/react';
 import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-import {MemoryRouter} from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom'; 
 import Menu from './Menu';
 
-const mockAxios = new MockAdapter(axios);
+jest.mock('axios');
 
-describe("Menu component", () => {
+describe('Menu component', () => {
 
     beforeEach(() => {
-        mockAxios.reset();
+        axios.get.mockClear();
     });
 
-    test("renders menu",async () => {
-        render(
+    test('busca temas cuando pulsamos en el juego "clásico"', async () => {
+        const topicsData = [{ id: 1, name: 'Topic 1' }, { id: 2, name: 'Topic 2' }];
+        axios.get.mockResolvedValueOnce({ data: topicsData });
+
+        const { getByText } = render(
             <MemoryRouter>
                 <Menu />
             </MemoryRouter>
         );
+        fireEvent.click(getByText('Clásico'));
 
-        const linkElement = screen.getByText(/Modos de juego:/i);
-        expect(linkElement).toBeInTheDocument();
+        await waitFor(() => {
+            expect(axios.get).toHaveBeenCalledTimes(1);
+            expect(axios.get).toHaveBeenCalledWith('http://localhost:8000/topics');
+        });
     });
 
-    test("game modes",async () => {
-        render(
+    test('vamos a GameConfiguration despues de establecer temas', async () => {
+        const topicsData = [{ id: 1, name: 'Topic 1' }, { id: 2, name: 'Topic 2' }];
+        axios.get.mockResolvedValueOnce({ data: topicsData });
+
+        const { getByText } = render(
             <MemoryRouter>
                 <Menu />
             </MemoryRouter>
         );
+        fireEvent.click(getByText('Clásico'));
 
-        const gamesBT = document.getElementsByClassName('modes')
-        expect(gamesBT).toHaveLength(1);
+        await waitFor(() => {
+            expect(axios.get).toHaveBeenCalledTimes(1);
+            expect(axios.get).toHaveBeenCalledWith('http://localhost:8000/topics');
+        });
+
+        expect(window.location.pathname).toBe('/');
+    });
+
+    test('gestiona error en la busqueda de temas', async () => {
+        const errorMessage = 'Network Error';
+        axios.get.mockRejectedValueOnce(new Error(errorMessage));
+
+        const { getByText } = render(
+            <MemoryRouter>
+                <Menu />
+            </MemoryRouter>
+        );
+        fireEvent.click(getByText('Clásico'));
+
+        await waitFor(() => {
+            expect(axios.get).toHaveBeenCalledTimes(1);
+            expect(axios.get).toHaveBeenCalledWith('http://localhost:8000/topics');
+        });
+    });
+
+    test('probamos a empezar el juego de la calculadora humana (este no realiza llamadas a la api)', async () => {
+        const { getByText } = render(
+            <MemoryRouter>
+                <Menu />
+            </MemoryRouter>
+        );
+        fireEvent.click(getByText('Calculadora Humana'));
+    
+        await waitFor(() => {
+            expect(axios.get).toHaveBeenCalledTimes(0); 
+        });
     });
 
 });

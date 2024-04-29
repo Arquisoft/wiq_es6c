@@ -25,11 +25,8 @@ function catchAction(error, res) {
   else if('response' in error && 'status' in error.response){
     res.status(error.response.status).json({ error: 'Unknown error' });
   } else {
-    console.log("Unknown error: " + error);
-  }
-  // } else {
-  //   res.status(500).json({ error: 'Internal server error' });
-  // }
+    res.status(500).json({ error: 'Internal server error' });
+  } 
 }
 
 app.use(metricsMiddleware);
@@ -88,19 +85,21 @@ app.get('/history/questions', async (req, res) => {
 //   }
 // })
 
-app.get('/generateGameUnlimitedQuestions', async (req, res) => {
+app.get('/generateGame', async (req, res) => {
   try {
-    const response = await axios.get(gameService + '/generateGameUnlimitedQuestions')
+    const response = await axios.get(gameService + '/generateGame')
     res.json(response.data)
   } catch (error) {
     catchAction(error, res)
   }
 })
 
-app.get('/gameUnlimitedQuestions', async (req, res) => {
+app.get('/questions', async (req, res) => {
   try {
     console.log("Antes de la llamada")
-    const response = await axios.get(gameService + `/gameUnlimitedQuestions`, req.body)
+    console.log(req.query)
+
+    const response = await axios.get(gameService + req.url)
     console.log(response.data)
     res.json(response.data)
   } catch (error) {
@@ -114,11 +113,20 @@ app.post('/storeGame', async (req, res) => {
     var username = req.body.username
     var points = req.body.points
     var questions = req.body.questions
-    console.log(questions)
+    var avgtime = req.body.avgtime
     console.log("Hacemos la llamada al guardar preguntas")
-    const post = await axios.post(gameService + `/storeGame`, {id, username,  points, questions})
+    const post = await axios.post(gameService + `/storeGame`, {id, username,  points, questions, avgtime})
     console.log("Devuelve la llamada")
     res.json(post.data) 
+  } catch (error) {
+    catchAction(error, res)
+  }
+})
+
+app.get('/topics', async (req, res) => {
+  try {
+    const response = await axios.get(`${gameService}/topics`)
+    res.json(response.data)
   } catch (error) {
     catchAction(error, res)
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography, SvgIcon, Container } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 
 function HomeIcon(props) {
@@ -13,22 +14,8 @@ function HomeIcon(props) {
 
 export const Nav = () => {
 
-    //const navigate = useNavigate();
-    //const { username, isLogged, destroySession } = useContext(context);
-
-    /*
-    const handleOpenUser = () => {
-        navigate(" ... ");
-    };
-
-    const handleLogout = () => {
-        destroySession();
-        navigate("/login");
-    };
-    */
-
     return (
-        <AppBar position="static" sx={{ background: "linear-gradient(163deg, #00ff75 33%, #3700ff 100%)", color: "white"}}>
+        <AppBar position="fixed" sx={{ background: "linear-gradient(163deg, #00ff75 33%, #3700ff 100%)", color: "white"}}>
         <Toolbar sx={{alignItems: 'center', justifyContent:'space-between'}}>
             <Container sx={{alignItems:'left', textAlign:'left', display:'flex', justifyContent:'flex-start' }}>
                 <Link to='/menu' >
@@ -36,17 +23,17 @@ export const Nav = () => {
                         <HomeIcon sx={{ color: "#212121" }}/>
                     </IconButton>
                 </Link>
-                <Typography variant="h6" component="div" sx={{marginTop: '8px'}}>WIQ</Typography>
+                <Typography variant="h6" component="div" sx={{marginTop: '8px', color: '#0F0F0F'}}>WIQ</Typography>
             </Container>
 
             <Container sx={{alignItems:'center', textAlign:'center'}}>
-                <Link to='/history' style={{color:'white', textDecoration: 'none', marginRight: '2vw'}}>
+                <Link to='/history' style={{color:'#0F0F0F', textDecoration: 'none', marginRight: '2vw', fontSize: '1.25rem'}}>
                     Historial
                 </Link>
-                <Link to='/appQuestion' style={{color:'white', textDecoration: 'none'}}>
+                <Link to='/appQuestion' style={{color:'#0F0F0F', textDecoration: 'none', marginRight: '2vw', fontSize: '1.25rem'}}>
                     Almacén de preguntas
                 </Link>
-                <Link to='/users' style={{color:'white', textDecoration: 'none'}}>
+                <Link to='/users' style={{color:'#0F0F0F', textDecoration: 'none', fontSize: '1.25rem'}}>
                     Usuarios
                 </Link>
             </Container>
@@ -54,30 +41,16 @@ export const Nav = () => {
             <Container sx={{alignItems:'right', textAlign:'right'}}>
                 <Link to='/help' style={{color:'white', textDecoration: 'none'}}>
                     <IconButton size="large" color="inherit" >
-                        <HelpIcon sx={{ color: "white" }}/>
+                        <HelpIcon sx={{ color: "#0F0F0F" }}/>
+                    </IconButton>
+                </Link>
+                <Link to='/' style={{color:'white', textDecoration: 'none'}}>
+                    <IconButton size="large" color="inherit" >
+                        <LogoutIcon sx={{ color: "#0F0F0F" }}/>
                     </IconButton>
                 </Link>
             </Container>
 
-            {/*
-            {isLogged ? (
-            <Box>
-                <Button color="inherit" onClick={handleOpenUser}>
-                    {username}
-                </Button>
-
-                <IconButton  size="large" color="inherit" onClick={handleLogout}>
-                    <LogoutIcon />
-                </IconButton>
-            </Box>
-            ) : (
-            <Box>
-                <Button color="inherit" component={Link} to="/login">
-                    Login
-                </Button>
-            </Box>
-            )}
-            */}
         </Toolbar>
         </AppBar>
     );

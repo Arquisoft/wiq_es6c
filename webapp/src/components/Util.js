@@ -1,3 +1,5 @@
+import axios from "axios";
+
 function shuffleArray(array) {
     // Copia del array original
     const shuffledArray = [...array];
@@ -24,4 +26,18 @@ function secureRandomNumber(max) {
     return randomBytes[0] % max;
 }
 
-export {shuffleArray}
+const esperar = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+const generateGameId = async () => {
+  try {
+    const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
+    const response = await axios.get(`${apiEndpoint}/generateGame`)
+    return response.data
+  } catch(error) {
+    console.error(error);
+  }
+}
+
+export {esperar, shuffleArray, secureRandomNumber, generateGameId}

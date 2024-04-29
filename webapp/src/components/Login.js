@@ -46,10 +46,10 @@ const Login = () => {
       {loginSuccess ? (
         <div>
           <Typography component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-            Hello {username}!
+            Hola {username}!
           </Typography>
           <Typography component="p" variant="body1" sx={{ textAlign: 'center', marginTop: 2 }}>
-            Your account was created on {new Date(createdAt).toLocaleDateString()}.
+           Tu cuenta ha sido creada en {new Date(createdAt).toLocaleDateString()}.
           </Typography>
         </div>
       ) : (
@@ -60,20 +60,20 @@ const Login = () => {
           <TextField
             margin="normal"
             fullWidth
-            label="Username"
+            label="Usuario"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
             margin="normal"
             fullWidth
-            label="Password"
+            label="Contraseña"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button text="Login" onClick={loginUser} name="Login"/>
-          <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login successful" />
+          <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login correctamente" />
           {error && (
             <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />
           )}

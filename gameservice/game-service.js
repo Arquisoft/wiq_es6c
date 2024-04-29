@@ -27,25 +27,19 @@ app.use(cors());
 
 var gameId = 0;
 
-app.get('/generateGameUnlimitedQuestions', async (req, res) => {
-  try {
+app.get('/generateGame', async (req, res) => {
     console.log("Llegamos a crear un id del juego")
     var gameId = generateAleatoryString()
     res.json(gameId)
-  } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' })
-  }
 })
 
 
 // Route for getting questions
-app.get('/gameUnlimitedQuestions', async (req, res) => {
+app.get('/questions', async (req, res) => {
   try {
     // TODO: Implement logic to fetch questions from MongoDB and send response 
     // const questions = await Question.find()
-    console.log("Llegamos a pedir preguntas")
-    const questionGenerated = await axios.get(`${questionService}/questions?n_preguntas=${1}`);
-    console.log("Pedimos las preguntas")
+    const questionGenerated = await axios.get(questionService + req.url);
     res.json(questionGenerated.data);
   } catch (error) {
     // res.status(500).json({ message: error.message })
@@ -60,11 +54,21 @@ app.post('/storeGame', async (req, res) => {
     var username = req.body.username
     var points = req.body.points
     var questions = req.body.questions
+    var avgtime = req.body.avgtime
     console.log("Vamos a guardar resultado")
-    const store = await axios.post(`${userStatsService}/history/game`, {id, username,  points, questions})
+    const store = await axios.post(`${userStatsService}/history/game`, {id, points, username, questions, avgtime})
     console.log("Guardamos resultado")
     res.json(store.data)
   } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
+app.get('/topics', async (req, res) => {
+  try {
+    const topics = await axios.get(`${questionService}/topics`)
+    res.json(topics.data)
+  } catch (error) { 
     res.status(500).json({ error: 'Internal Server Error' });
   }
 })

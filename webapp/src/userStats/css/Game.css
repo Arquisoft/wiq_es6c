@@ -40,6 +40,14 @@
     border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
 }*/
 
+#history{
+    margin-top: 6em;
+}
+
+#history main{
+    margin-top: 0;
+}
+
 #history .question{
     /* RGB & HSL params */
     --label-r: 128;
@@ -184,6 +192,7 @@
 }
 
 #history .dropdown-content{
+    overflow: auto;
     position: flex;
     flex-direction: column;
     /*Quiero meter un gap*/
@@ -193,6 +202,10 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(40%, 1fr));
     gap: 1%;
+}
+
+#history .noAnswer{
+    color: red;
 }
 
 @media (max-width: 720px) {
