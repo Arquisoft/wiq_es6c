@@ -114,11 +114,11 @@ const Calculator = () => {
             }
         }
     
-        shuffleArray(option);
+        let shuffled = shuffleArray(option);
         questions.push(
             {
                 q: `${num1} ${operator} ${num2}`,
-                options: option,
+                options: shuffled,
                 correctAnswer: correctAnswer
             }
         );
