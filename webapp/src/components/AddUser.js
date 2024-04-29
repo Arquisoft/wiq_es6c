@@ -24,29 +24,19 @@ const AddUser = () => {
       setError('Las contraseñas no coinciden.');
     } else {
       try {
-        const isAvailable = await checkUsernameAvailability(username, password);
-        if (isAvailable != false) {
+        try {
+          await axios.post(`${apiEndpoint}/login`, { username, password });
           setError('Usuario ya registrado.');
-          return; 
+          setOpenSnackbar(false);
+        } catch (error) {
+          await axios.post(`${apiEndpoint}/adduser`, { username, password });
+          setOpenSnackbar(true);
         }
-
-        await axios.post(`${apiEndpoint}/adduser`, { username, password });
-        setOpenSnackbar(true);
       } catch (error) {
         setError(error.response.data.error);
       }
     }
   };
-
-  const checkUsernameAvailability = async (username, password) => {
-    try {
-      const response = await axios.post(`${apiEndpoint}/check-username`, { username });
-      return response.data; 
-    } catch (error) {
-      console.error("Error al comprobar la disponibilidad del nombre de usuario:", error);
-      return false; 
-    }
-  }
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);

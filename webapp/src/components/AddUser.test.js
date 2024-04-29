@@ -19,7 +19,7 @@ describe('AddUser component', () => {
     const usernameInput = screen.getByLabelText(/Usuario/i);
     const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
     const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
-    const addUserButton = document.getElementsByClassName('inner')[0]
+    const addUserButton = document.getElementsByClassName('inner')[0];
 
     // Mock the axios.post request to simulate a successful response
     mockAxios.onPost('http://localhost:8000/adduser').reply(200);
@@ -38,6 +38,14 @@ describe('AddUser component', () => {
     await waitFor(() => {
       expect(screen.getByText(/Usuario añadido correctamente/i)).toBeInTheDocument();
     });
+
+    /*
+    fireEvent.click(addUserButton);
+    // Wait for the Snackbar to be open
+    await waitFor(() => {
+      expect(screen.getByText(/Usuario ya registrado./i)).toBeInTheDocument();
+    });
+    */
   });
 
   it('try to add user but not introduce name', async () => {
