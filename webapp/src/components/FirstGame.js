@@ -30,12 +30,16 @@ const Quiz = () => {
   // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(storedInt);
   // const [isCorrect, setIsCorrect] = useState(false);
   const [remTime, setRemTime] = useState(0);
+  const [totalTime, setTotalTime] = useState(0);
 
   useEffect(() => {
     const time = setInterval(() => {
       setRemTime((progress) => {
         if(progress === 100){
-          // checkAnswer(-1);
+          checkAnswer(-1);
+          console.log("Antes", totalTime)
+          setTotalTime(totalTime + progress/10)
+          console.log("Despues", totalTime)
           return 0; 
         }
         const diff = 4;
@@ -53,7 +57,6 @@ const Quiz = () => {
   };
   
   function changeButtons(param) {
-    console.log("Entramos aqui")
     var borders = document.getElementsByClassName("border");;
     for(var i = 0; i < Math.min(borders.length, allQuestions[0].options.length); i++) {
       borders[i].setAttribute("data-disabled", param)
@@ -65,7 +68,10 @@ const Quiz = () => {
       var username = localStorage.getItem("username")
       console.log(username)
       console.log(questions)
-      const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions});
+      console.log(totalTime)
+      var avgtime = totalTime/questions.length
+      console.log(avgtime)
+      const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions, avgtime});
       questions = []
       points = 0
       console.log(response)
@@ -80,7 +86,6 @@ const Quiz = () => {
     }
     load = false
     
-
     console.log("Todas las preguntas", allQuestions)
     isCorrect = (option === allQuestions[currentQuestionIndex].correctAnswer);
 
@@ -102,14 +107,20 @@ const Quiz = () => {
       currentQuestionIndex = (currentQuestionIndex + 1);
       botonCorrecta.style.backgroundColor = previousBackgroundColor
       changeButtons("false")
-      await gameStore()
+      
       haveFailedQuestion = false;
       load = true
-      navigator('/menu')
-      return
-    }
+      haveEnter = false
+      console.log("Calbo")
 
-   
+      if (currentQuestionIndex === allQuestions.length ) {
+        console.log("Entramos aqui")
+        gameStore()
+        navigator('/menu')
+      }
+      return
+
+    }
     const botonIncorrecta = document.getElementById('option-' + allQuestions[currentQuestionIndex].options.indexOf(option))
 
     if (!isCorrect) {
@@ -140,6 +151,9 @@ const Quiz = () => {
     }
 
     isCorrect = (false)
+    console.log("Durante antes", totalTime)
+    await setTotalTime(totalTime + remTime/10)
+    console.log("Durante despues", totalTime)
     setRemTime(0)
         
     load = true

@@ -25,11 +25,8 @@ function catchAction(error, res) {
   else if('response' in error && 'status' in error.response){
     res.status(error.response.status).json({ error: 'Unknown error' });
   } else {
-    console.log("Unknown error: " + error);
-  }
-  // } else {
-  //   res.status(500).json({ error: 'Internal server error' });
-  // }
+    res.status(500).json({ error: 'Internal server error' });
+  } 
 }
 
 app.use(metricsMiddleware);
@@ -116,9 +113,9 @@ app.post('/storeGame', async (req, res) => {
     var username = req.body.username
     var points = req.body.points
     var questions = req.body.questions
-    console.log(questions)
+    var avgtime = req.body.avgtime
     console.log("Hacemos la llamada al guardar preguntas")
-    const post = await axios.post(gameService + `/storeGame`, {id, username,  points, questions})
+    const post = await axios.post(gameService + `/storeGame`, {id, username,  points, questions, avgtime})
     console.log("Devuelve la llamada")
     res.json(post.data) 
   } catch (error) {
