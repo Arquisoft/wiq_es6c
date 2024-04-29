@@ -58,13 +58,11 @@ const GameConfiguration = () => {
     console.log(numPreguntas);
     console.log(numRes);
 
-    await generateGameId();  
+    gameId = await generateGameId();  
     await getQuestions();
     //isApiCalledRef = true//ASK - is this necessary?
     navigation("/firstGame", {state: {questions, gameId}})
   }
-
-  gameId = generateGameId();
 
   function formatearTopics() {
     let topicsFormated = '';
