@@ -38,7 +38,7 @@ const Calculator = () => {
             }
         }
     
-        shuffleArray(options);
+        shuffleArray(option);
         questions = [
             {
                 q: `${num1} ${operator} ${num2}`,
