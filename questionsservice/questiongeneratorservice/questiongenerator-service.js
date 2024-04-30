@@ -48,6 +48,7 @@ function validateFields(query) {
 app.get('/questions', async (req, res) => {
   try {
     
+    
     const { preguntas, respuestas, temas } = validateFields(req.query);
     try {
       const retQuestions = await QuestionGenerator.generateQuestions(preguntas, respuestas, temas);

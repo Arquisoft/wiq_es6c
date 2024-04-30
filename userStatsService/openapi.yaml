@@ -104,6 +104,8 @@ paths:
                     type: string
                     format: date-time
                     description: Creation date and time of the game.
+                    format: date-time
+                    description: Creation date and time of the game.
                     example: '2024-03-17T20:47:23.935Z'
                   ___v:
                     type: integer
@@ -205,3 +207,4 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+
