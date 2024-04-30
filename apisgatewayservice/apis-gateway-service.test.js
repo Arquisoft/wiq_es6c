@@ -12,11 +12,12 @@ describe('User Service', () => {
     describe('/users', () => {
       it('should return user information', async () => {
         const mockUsers = [
-          { username: 'user1', createdAt: new Date() },
-          { username: 'user2', createdAt: new Date() }
+          { username: 'user1'},
+          { username: 'user2'}
         ];
-        User.find = jest.fn().mockResolvedValue(mockUsers);
-  
+
+        axios.get.mockResolvedValue({ data: mockUsers });
+
         const res = await request(app).get('/users');
 
         expect(res.statusCode).toEqual(200);
@@ -24,16 +25,7 @@ describe('User Service', () => {
         expect(res.body).toEqual(mockUsers);
       });
   
-      it('should handle errors', async () => {
 
-        User.find = jest.fn().mockRejectedValue(new Error('Database error'));
-  
-        const res = await request(app).get('/users');
-  
-        expect(res.statusCode).toEqual(500);
-  
-        expect(res.body).toEqual({ error: 'Database error' });
-      });
     });
   });
   
@@ -53,12 +45,29 @@ describe('Gateway Service', () => {
           expect(res.body).toEqual(mockData);
       });
 
-      it('should handle errors', async () => {
-          axios.get.mockRejectedValue(new Error('Error'));
+  });
+});
+
+describe('Error Handling', () => {
+  describe('Error getting users', () => {
+      it('should handle error when getting users', async () => {
+          axios.get.mockRejectedValue(new Error('Failed to fetch users'));
+
+          const res = await request(app).get('/users');
+
+          expect(res.statusCode).toEqual(500);
+          expect(res.body).toEqual({ error: 'Internal server error' });
+      });
+  });
+
+  describe('Error getting history of questions', () => {
+      it('should handle error when getting history of questions', async () => {
+          axios.get.mockRejectedValue(new Error('Failed to fetch questions history'));
 
           const res = await request(app).get('/history/questions');
+
           expect(res.statusCode).toEqual(500);
-          expect(res.body).toEqual({ error: 'Error' });
+          expect(res.body).toEqual({ error: 'Internal server error' });
       });
   });
 });
