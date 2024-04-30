@@ -54,4 +54,5 @@ defineFeature(feature, test => {
     browser.close()
   })
 
-});
+})
+})
