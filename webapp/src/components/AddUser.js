@@ -20,6 +20,8 @@ const AddUser = () => {
   const addUser = async () => {
     if (name.trim() === '' || surname.trim() === '' || username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
       setError('Todos los campos deben de estar rellenos.');
+    } else if (password.length < 8){
+      setError('Las contraseñas deben contener más de 8 caracteres.');
     } else if(password !== confirmPassword){
       setError('Las contraseñas no coinciden.');
     } else {
