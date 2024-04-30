@@ -25,11 +25,11 @@ app.use(express.json());
 // Middleware to enable CORS (cross-origin resource sharing). In order for the API to be accessible by other origins (domains).
 app.use(cors());
 
-var gameId = 0;
+let gameId = 0;
 
 app.get('/generateGame', async (req, res) => {
     console.log("Llegamos a crear un id del juego")
-    var gameId = generateAleatoryString()
+    let gameId = generateAleatoryString()
     res.json(gameId)
 })
 
@@ -50,11 +50,11 @@ app.get('/questions', async (req, res) => {
 app.post('/storeGame', async (req, res) => {
   try {
     //hay que preparar los datos para enviarlos al servicio
-    var id = req.body.id
-    var username = req.body.username
-    var points = req.body.points
-    var questions = req.body.questions
-    var avgtime = req.body.avgtime
+    let id = req.body.id
+    let username = req.body.username
+    let points = req.body.points
+    let questions = req.body.questions
+    let avgtime = req.body.avgtime
     console.log("Vamos a guardar resultado")
     const store = await axios.post(`${userStatsService}/history/game`, {id, points, username, questions, avgtime})
     console.log("Guardamos resultado")

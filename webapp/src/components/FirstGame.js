@@ -57,19 +57,19 @@ const Quiz = () => {
   };
   
   function changeButtons(param) {
-    var borders = document.getElementsByClassName("border");;
-    for(var i = 0; i < Math.min(borders.length, allQuestions[0].options.length); i++) {
+    let borders = document.getElementsByClassName("border");;
+    for(let i = 0; i < Math.min(borders.length, allQuestions[0].options.length); i++) {
       borders[i].setAttribute("data-disabled", param)
     }
   }
 
   const gameStore = async () => {
     try {
-      var username = localStorage.getItem("username")
+      let username = localStorage.getItem("username")
       console.log(username)
       console.log(questions)
       console.log(totalTime)
-      var avgtime = totalTime/questions.length
+      let avgtime = totalTime/questions.length
       console.log(avgtime)
       const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions, avgtime});
       questions = []
@@ -132,7 +132,7 @@ const Quiz = () => {
     
     
     // Pasar a la siguiente pregunta después de responder
-    var indexAnswers = [allQuestions[currentQuestionIndex].options.indexOf(option), numberAnswer]
+    let indexAnswers = [allQuestions[currentQuestionIndex].options.indexOf(option), numberAnswer]
 
     questions.push({
         title: allQuestions[currentQuestionIndex].question,

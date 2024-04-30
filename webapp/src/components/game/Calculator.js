@@ -61,11 +61,11 @@ const Calculator = () => {
 
     const gameStore = async () => {
         try {
-            var username = localStorage.getItem("username")
+            let username = localStorage.getItem("username")
             console.log(username)
             console.log(answeredQuestions)
             console.log(totalTime)
-            var avgtime = totalTime/answeredQuestions.length
+            let avgtime = totalTime/answeredQuestions.length
             console.log(avgtime)
             const id = await generateGameId();
             if(!savedGame){
