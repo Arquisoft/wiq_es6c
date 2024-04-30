@@ -32,9 +32,9 @@ defineFeature(feature, test => {
 
     given('An unregistered user', async () => {
       username = name = "pablo"
-      surname = "gonzález"
+      surname = "gonzalez"
       password = "pabloasw"
-      await expect(page).toClick("p", { text: "Don't have an account? Register here." });
+      await expect(page).toClick("p", { text: "¿Todavía no tienes cuenta? Regístrate aquí." });
     });
 
     when('I fill the data in the form and press submit', async () => {
@@ -43,12 +43,11 @@ defineFeature(feature, test => {
       await expect(page).toFill('input[name="confirmPassword"]', password);
       await expect(page).toFill('input[name="name"]', name);
       await expect(page).toFill('input[name="surname"]', surname);
-      await expect(page).toClick('button', { text: 'Añadir' })
+      await expect(page).toClick('button', { text: 'Registrarse' })
     });
 
     then('A confirmation message should be shown in the screen', async () => {
-        await expect(page).toMatchElement("div", { text: "Usuario añadido correctamente" });
-    });
+      await expect(page).toMatchElement("div", { text: "Usuario añadido correctamente" });
   })
 
   afterAll(async ()=>{
