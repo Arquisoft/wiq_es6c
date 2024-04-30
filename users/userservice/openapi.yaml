@@ -39,6 +39,7 @@ paths:
                   username:
                     type: string
                     description: User ID
+                    example: student
                   password:
                     type: string
                     description: Hashed password

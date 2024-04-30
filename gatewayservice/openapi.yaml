@@ -39,6 +39,7 @@ paths:
                   username:
                     type: string
                     description: User ID
+                    example: student
                   password:
                     type: string
                     description: Hashed password
@@ -209,6 +210,7 @@ paths:
                   id:
                     type: string
                     description: The id of the game created.
+                    example: sqeweg12er56yg46u89k
                   token:
                     type: string
                     description: User token.
@@ -254,13 +256,15 @@ paths:
                   answers:
                     type: List<String>
                     description: List with the possible answers.
-                    example: 
+                    example: Madrid, Paris, Roma o Londres
                   question:
                     type: String
                     description: The question that is going to be done
+                    example: ¿Cual es la capital de españa?
                   correctAnswer:
                     type: String
                     description: The correct answer for the question 
+                    example: Madrid
         '500':
           description: Internal server error.
           content:
@@ -290,20 +294,24 @@ paths:
                 username:
                   type: string
                   description: The name if the user.
+                  example: student
                 points:
                   type: integer
                   description: The number of points that the user score.
+                  example: 1000
                 questions:
                   answers:
                     type: List<String>
                     description: List with the possible answers.
-                    example: 
+                    example: Madrid, Paris, Roma o Londres
                   question:
                     type: String
                     description: The question that is going to be done
+                    example: ¿Cual es la capital de españa?
                   correctAnswer:
                     type: String
                     description: The correct answer for the question
+                    example: Madrid
       responses:
         '200':
           description: Question created and returned successfuly.
@@ -315,11 +323,11 @@ paths:
                   id:
                     type: string
                     description: The question that is going to bre realized.
-                    example: 
+                    example: sqeweg12er56yg46u89k
                   answers:
                     type: List<String>
                     description: List with the possible answers.
-                    example: 
+                    example: Madrid, Paris, Roma o Londres
         '500':
           description: Internal server error.
           content:
