@@ -15,6 +15,8 @@ let points = 0;
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 let answeredQuestions = [];
 
+let savedGame = false;
+
 const Calculator = () => {
 
     //let questionIndex = -1
@@ -24,8 +26,6 @@ const Calculator = () => {
 
     const [remTime, setRemTime] = useState(0);
     const [totalTime, setTotalTime] = useState(0);
-
-    let id = generateGameId;
 
     if(questions.length === 0)
         generateQuestion();
@@ -38,12 +38,11 @@ const Calculator = () => {
                 setTotalTime(totalTime + progress/10)
                 console.log("Despues", totalTime)
 
-                //TODO: ALMACENAR JUEGO
                 gameStore();
 
                 return 0; 
             }
-            const diff = 5;
+            const diff = 0.5;
             return load? Math.min(progress + diff, 100) : progress;
         });
         }, 400);
@@ -61,8 +60,12 @@ const Calculator = () => {
             console.log(totalTime)
             var avgtime = totalTime/answeredQuestions.length
             console.log(avgtime)
-            const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions: answeredQuestions, avgtime});
-            console.log(response)
+            const id = await generateGameId();
+            if(!savedGame){
+                savedGame = true;
+                const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions: answeredQuestions, avgtime});
+                console.log(response)
+            }
         } catch (error) {
             console.error(error)
         } finally {
@@ -111,11 +114,11 @@ const Calculator = () => {
             }
         }
     
-        shuffleArray(option);
+        let shuffled = shuffleArray(option);
         questions.push(
             {
                 q: `${num1} ${operator} ${num2}`,
-                options: option,
+                options: shuffled,
                 correctAnswer: correctAnswer
             }
         );
@@ -124,22 +127,22 @@ const Calculator = () => {
 
     //CAMBIAR ESTO EN FUNCIÓN DE CÓMO QUERAMOS QUE SEA EL JUEGO
     const handleOptionClick = async (selectedAnswer) => {
+        load = false;
         const numberAnswer = questions[questionIndex].options.indexOf(questions[questionIndex].correctAnswer);
+        const choiceNumber = questions[questionIndex].options.indexOf(selectedAnswer);
+
+        console.log(numberAnswer)
+        console.log(choiceNumber)
+
         //console.log(numberAnswer)
         const botonCorrecta = document.getElementById('option-' + numberAnswer);
         let botonIncorrecta = null;
         botonCorrecta.style.backgroundColor = 'green';
-        answeredQuestions.push({
-            pregunta: 'a',
-            respuesta_correcta: 'a',
-            respuestas_incorrectas: [
-                'a',
-                'a',
-                'a'
-            ]
-        });
+        /*title: allQuestions[currentQuestionIndex].question,
+        answers: allQuestions[currentQuestionIndex].options,
+        ansIndex: indexAnswers*/
+        storeQuestion(questions[questionIndex].q, questions[questionIndex].options, [choiceNumber, numberAnswer]);
         if (selectedAnswer !== questions[questionIndex].correctAnswer) {
-            
             botonIncorrecta = document.getElementById('option-' + questions[questionIndex].options.indexOf(selectedAnswer));
             botonIncorrecta.style.backgroundColor = 'red';
         } else {
@@ -156,7 +159,17 @@ const Calculator = () => {
         if(botonIncorrecta != null){
             botonIncorrecta.style.backgroundColor = previousBackgroundColor;
         }
+
+        load = true;
     };
+
+    function storeQuestion(title, answers, ansIndex){
+        answeredQuestions.push({
+            title: title,
+            answers: answers,
+            ansIndex: ansIndex
+        });
+    }
     
   
     return (
