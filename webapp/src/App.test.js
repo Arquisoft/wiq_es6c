@@ -11,7 +11,7 @@ test('renders learn react link', () => {
     </Router>
   </ContextFun>
   );
-  const linkElement = screen.getByText(/Welcome to wiq_0/i);
+  const linkElement = screen.getByText(/Bienvenido a WIQEII/i);
   expect(linkElement).toBeInTheDocument();
 });
 
@@ -24,9 +24,9 @@ it('alternando entre las vistas de inicio de sesión y añadir usuario', () => {
     </ContextFun>
   );
 
-  expect(screen.getAllByText('Login')).toHaveLength(2);
-  fireEvent.click(screen.getByText('Don\'t have an account? Register here.'));
-  expect(screen.getByText('Añadir Usuario')).toBeInTheDocument();
+  expect(screen.getAllByText('Iniciar sesión')).toHaveLength(2);
+  fireEvent.click(screen.getByText('¿Todavía no tienes cuenta? Regístrate aquí.'));
+  expect(screen.getByText('Registro')).toBeInTheDocument();
 });
 
 it('renders correct', () => {
@@ -38,9 +38,9 @@ it('renders correct', () => {
     </ContextFun>
     );
 
-  expect(getByText('Don\'t have an account? Register here.')).toBeInTheDocument();
-  fireEvent.click(getByText('Don\'t have an account? Register here.'));
-  expect(getByText('Already have an account? Login here.')).toBeInTheDocument();
+  expect(getByText('¿Todavía no tienes cuenta? Regístrate aquí.')).toBeInTheDocument();
+  fireEvent.click(getByText('¿Todavía no tienes cuenta? Regístrate aquí.'));
+  expect(getByText('¿Ya tienes una cuenta? Inicia sesión aquí.')).toBeInTheDocument();
 });
 
 it('hacemos clic en el enlace', () => {
@@ -52,6 +52,6 @@ it('hacemos clic en el enlace', () => {
     </ContextFun>
     );
 
-  fireEvent.click(getByText('Don\'t have an account? Register here.'));
-  expect(getByText('Already have an account? Login here.')).toBeInTheDocument();
+  fireEvent.click(getByText('¿Todavía no tienes cuenta? Regístrate aquí.'));
+  expect(getByText('¿Ya tienes una cuenta? Inicia sesión aquí.')).toBeInTheDocument();
 });

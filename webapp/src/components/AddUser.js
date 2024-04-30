@@ -46,7 +46,7 @@ const AddUser = () => {
     <Container className='addUser' component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       
       <Typography component="h1" variant="h5">
-        Añadir Usuario
+        Registro
       </Typography>
 
       <TextField
