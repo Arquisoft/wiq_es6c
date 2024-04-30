@@ -9,17 +9,17 @@ servers:
   - url: http://gameservice:8005
     description: Production server
 paths:
-  /generateGameUnlimitedQuestions:
+
+  /generateGame:
     get:
-      summary: Generate the id for the unlimited game questions.
-      operationId: generateGameUnlimitedQuestions
+      summary: Generate the id for the game.
+      operationId: generateGame
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
-              example: an object
       responses:
         '200':
           description: Create the id of the game and returned successfuly.
@@ -43,10 +43,11 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
-  /gameUnlimitedQuestion:
+
+  /questions:
     get:
-      summary: Generate questions for the unlimited game questions.
-      operationId: gameUnlimitedQuestions
+      summary: Generate questions for the game.
+      operationId: questions
       requestBody:
         required: true
         content:
@@ -125,6 +126,10 @@ paths:
                     type: String
                     description: The correct answer for the question
                     example: Madrid
+                avgtime:
+                  type: integer
+                  description: The average time taken to answer questions in seconds.
+                  example: 23
       responses:
         '200':
           description: Question created and returned successfuly.

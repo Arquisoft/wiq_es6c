@@ -67,6 +67,7 @@ app.get('/history/games/:username', async (req, res) => {
   }
 })
 
+//FALTA ???
 app.get('/history/questions', async (req, res) => {
   try {
     const response = await axios.get(storeQuestionsServiceUrl+'/history/questions');
@@ -75,15 +76,6 @@ app.get('/history/questions', async (req, res) => {
     catchAction(error, res)
   }
 })
-
-// app.get(`/questions`, async (req, res) => {
-//   try {
-//     const response = await axios.get(questionsGeneratorServiceUrl+`/questions`);
-//     res.json(response.data);
-//   } catch (error) {
-//     res.status(error.response.status).json({ error: error.response.data.error });
-//   }
-// })
 
 app.get('/generateGame', async (req, res) => {
   try {
@@ -123,6 +115,7 @@ app.post('/storeGame', async (req, res) => {
   }
 })
 
+//FALTA ???
 app.get('/topics', async (req, res) => {
   try {
     const response = await axios.get(`${gameService}/topics`)

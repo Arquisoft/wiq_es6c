@@ -143,6 +143,7 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+
   /history/games/:username:
     get:
       summary: Access to de history of games of the user.
@@ -189,10 +190,11 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
-  /generateGameUnlimitedQuestions:
+
+  /generateGame:
     get:
-      summary: Generate the id for the unlimited game questions.
-      operationId: generateGameUnlimitedQuestions
+      summary: Generate the id for the game.
+      operationId: generateGame
       requestBody:
         required: true
         content:
@@ -230,10 +232,11 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
-  /gameUnlimitedQuestion:
+
+  /questions:
     get:
-      summary: Generate questions for the unlimited game questions.
-      operationId: gameUnlimitedQuestions
+      summary: Generate questions for the game.
+      operationId: questions
       requestBody:
         required: true
         content:
@@ -312,6 +315,10 @@ paths:
                     type: String
                     description: The correct answer for the question
                     example: Madrid
+                avgtime: 
+                  type: integer
+                  description: average time to answer the questions
+                  example: 23
       responses:
         '200':
           description: Question created and returned successfuly.

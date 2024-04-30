@@ -125,6 +125,7 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+
   /history/games/{username}:
     get:
       summary: Access to the history of games of the user.
@@ -209,6 +210,7 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+
   /history/games:
     get:
       summary: Get the history of all games.
@@ -274,6 +276,7 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+                    
   /history/users:
     get:
       summary: Get the history of all users.
