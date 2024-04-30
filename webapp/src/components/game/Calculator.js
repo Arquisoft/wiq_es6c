@@ -17,6 +17,10 @@ let answeredQuestions = [];
 
 let savedGame = false;
 
+let numQuestionsCorrect = 0;
+let numQuestionsIncorrect = 0;
+let showInfoOfQuestions = false;
+
 const Calculator = () => {
 
     //let questionIndex = -1
@@ -37,6 +41,9 @@ const Calculator = () => {
                 console.log("Antes", totalTime)
                 setTotalTime(totalTime + progress/10)
                 console.log("Despues", totalTime)
+
+                //showInfoOfQuestions = true;
+                //await esperar(5000);
 
                 gameStore();
 
@@ -127,7 +134,6 @@ const Calculator = () => {
     }
 
 
-    //CAMBIAR ESTO EN FUNCIÓN DE CÓMO QUERAMOS QUE SEA EL JUEGO
     const handleOptionClick = async (selectedAnswer) => {
         load = false;
         const numberAnswer = questions[questionIndex].options.indexOf(questions[questionIndex].correctAnswer);
@@ -136,7 +142,6 @@ const Calculator = () => {
         console.log(numberAnswer)
         console.log(choiceNumber)
 
-        //console.log(numberAnswer)
         const botonCorrecta = document.getElementById('option-' + numberAnswer);
         let botonIncorrecta = null;
         botonCorrecta.style.backgroundColor = 'green';
@@ -145,10 +150,12 @@ const Calculator = () => {
         ansIndex: indexAnswers*/
         storeQuestion(questions[questionIndex].q, questions[questionIndex].options, [choiceNumber, numberAnswer]);
         if (selectedAnswer !== questions[questionIndex].correctAnswer) {
+            numQuestionsIncorrect += 1;
             botonIncorrecta = document.getElementById('option-' + questions[questionIndex].options.indexOf(selectedAnswer));
             botonIncorrecta.style.backgroundColor = 'red';
         } else {
             points += 100;
+            numQuestionsCorrect += 1;
         }
 
         generateQuestion();
@@ -184,7 +191,6 @@ const Calculator = () => {
                 <div class="questionCalculator">
     
                 <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-                    
                     {questions[questionIndex].q}
                 </Typography>
     
@@ -203,6 +209,22 @@ const Calculator = () => {
                     )
                     )}
                 </div>
+
+            </div>
+
+            <div class="gameResult">
+
+            {showInfoOfQuestions?
+                <div>
+                    <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
+                        Resultados
+                    </Typography>
+                    <p>Número de preguntas correctas: {numQuestionsCorrect} </p>
+                    <p>Número de preguntas incorrectas: {numQuestionsIncorrect} </p>
+                </div>:
+                <></>
+            };
+
             </div>
 
             <Box sx={{ 
