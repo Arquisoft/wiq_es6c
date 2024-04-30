@@ -67,7 +67,6 @@ app.get('/history/games/:username', async (req, res) => {
   }
 })
 
-//FALTA ???
 app.get('/history/questions', async (req, res) => {
   try {
     const response = await axios.get(storeQuestionsServiceUrl+'/history/questions');
