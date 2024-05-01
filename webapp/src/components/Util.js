@@ -21,9 +21,7 @@ function shuffleArray(array) {
 }
 
 function secureRandomNumber(max) {
-    const randomBytes = new Uint32Array(1);
-    window.crypto.getRandomValues(randomBytes);
-    return randomBytes[0] % max;
+  return Math.floor(Math.random() * max);
 }
 
 const esperar = (ms) => {
@@ -40,4 +38,15 @@ const generateGameId = async () => {
   }
 }
 
-export {esperar, shuffleArray, secureRandomNumber, generateGameId}
+async function gameStore(id, username, points, questions, avgtime) {
+  try {
+    
+    const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
+    await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions, avgtime});
+    questions = []
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export {esperar, shuffleArray, secureRandomNumber, generateGameId, gameStore}
