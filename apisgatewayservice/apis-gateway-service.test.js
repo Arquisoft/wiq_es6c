@@ -29,7 +29,6 @@ describe('User Service', () => {
     });
   });
   
-
 describe('Gateway Service', () => {
   describe('/history/questions', () => {
       it('should return all questions', async () => {
@@ -44,6 +43,27 @@ describe('Gateway Service', () => {
           expect(res.statusCode).toEqual(200);
           expect(res.body).toEqual(mockData);
       });
+
+  });
+});
+
+describe('User data is send correctly', () => {
+  describe('/users', () => {
+    it('should return user information', async () => {
+      const mockUsers = [
+        { username: 'user1', tpoints: 100, ttime: 10, ngames: 1 },
+        { username: 'user2', tpoints: 100, ttime: 10, ngames: 1 }
+      ];
+
+      axios.get.mockResolvedValue({ data: mockUsers });
+
+      const res = await request(app).get('/usersStats');
+
+      expect(res.statusCode).toEqual(200);
+
+      expect(res.body).toEqual(mockUsers);
+    });
+
 
   });
 });
@@ -70,4 +90,15 @@ describe('Error Handling', () => {
           expect(res.body).toEqual({ error: 'Internal server error' });
       });
   });
+
+  describe('Error getting history of questions', () => {
+    it('should handle error when getting history of questions', async () => {
+        axios.get.mockRejectedValue(new Error('Failed to fetch questions history'));
+
+        const res = await request(app).get('/usersStats');
+
+        expect(res.statusCode).toEqual(500);
+        expect(res.body).toEqual({ error: 'Internal server error' });
+    });
+});
 });

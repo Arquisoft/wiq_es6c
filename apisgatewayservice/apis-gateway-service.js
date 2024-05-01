@@ -46,6 +46,15 @@ app.get('/history/questions', async (req, res) => {
   }
 })
 
+app.get('/usersStats', async (req, res) => {
+  try {
+    const response = await axios.get(userStatsServiceUrl+`/history/users`);
+    res.json(response.data);
+  } catch (error) {
+    catchAction(error, res)
+  }
+})
+
 // Start the gateway service
 const server = app.listen(port, () => {
   console.log(`Gateway Service listening at http://localhost:${port}`);
