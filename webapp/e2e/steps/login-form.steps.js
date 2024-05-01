@@ -29,8 +29,8 @@ defineFeature(feature, test => {
     let password;
 
     given('A registered user', async () => {
-      username = "pablo"
-      password = "pabloasw"
+      username = "AlbertoQL"
+      password = "CuevaRector2024"
     });
 
     when('I fill the data in the form and press submit', async () => {

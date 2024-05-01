@@ -21,6 +21,44 @@ defineFeature(feature, test => {
         waitUntil: "networkidle0",
       })
       .catch(() => {});
+
+      await page.setRequestInterception(true)
+
+      page.on('request', (req) => {
+        if (req.url().includes('/questions')) {
+          req.respond({
+              status: 200,
+              headers: {
+                  'Access-Control-Allow-Origin': '*'
+              },
+              contentType: 'application/json',
+              body: JSON.stringify([
+                {
+                  pregunta: "¿Cuál es la capital de España?",
+                  respuesta_correcta: "Madrid",
+                  respuestas_incorrectas: ["Valencia"]
+                },{
+                  pregunta: "¿Cuál es la capital de España?",
+                  respuesta_correcta: "Madrid",
+                  respuestas_incorrectas: ["Barcelona"]
+                }
+              ])
+          });
+        } else if (req.url().includes('/topics')){
+          req.respond({
+              status: 200,
+              headers: {
+                  'Access-Control-Allow-Origin': '*'
+              },
+              contentType: 'application/json',
+              body: JSON.stringify([
+                ['capitales']
+              ])
+          });
+        } else {
+          req.continue();
+        }
+      })
   });
 
   test('The user plays a game with default settings', ({given,when,then}) => {
@@ -69,8 +107,8 @@ defineFeature(feature, test => {
 });
 
 async function login(page) {
-    username = "pablo"
-    password = "pabloasw"
+    username = "AlbertoQL"
+    password = "CuevaRector2024"
     await expect(page).toFill('input[name="username"]', username);
     await expect(page).toFill('input[name="password"]', password);
     await expect(page).toClick('button', { text: 'Iniciar sesión' })
