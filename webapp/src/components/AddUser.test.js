@@ -28,24 +28,23 @@ describe('AddUser component', () => {
     fireEvent.change(nameInput, { target: { value: 'testUsera' } });
     fireEvent.change(surnameInput, { target: { value: 'testUsera' } });
     fireEvent.change(usernameInput, { target: { value: 'testUsera' } });
-    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
-    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassword' } });
+    fireEvent.change(passwordInput, { target: { value: 'testP' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'testP' } });
 
-    // Trigger the add user button click
+    // Probamos a poner una contraseña corta 
     fireEvent.click(addUserButton);
+    await waitFor(() => {
+      expect(screen.getByText(/Las contraseñas deben contener más de 8 caracteres./i)).toBeInTheDocument();
+    });
 
-    // Wait for the Snackbar to be open
+    //Modificamos la contraseña para que contenga al menos de 8 caracteres
+    fireEvent.change(passwordInput, { target: { value: 'testPassw' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassw' } });
+    fireEvent.click(addUserButton);
     await waitFor(() => {
       expect(screen.getByText(/Usuario añadido correctamente/i)).toBeInTheDocument();
     });
 
-    /*
-    fireEvent.click(addUserButton);
-    // Wait for the Snackbar to be open
-    await waitFor(() => {
-      expect(screen.getByText(/Usuario ya registrado./i)).toBeInTheDocument();
-    });
-    */
   });
 
   it('try to add user but not introduce name', async () => {

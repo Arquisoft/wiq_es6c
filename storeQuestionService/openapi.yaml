@@ -23,17 +23,19 @@ paths:
                 pregunta:
                   type: string
                   description: The question.
-                  example: 
+                  example: ¿Cual es la capital de España?
                 respuesta_correcta:
                   type: string
                   description: The correct answer.
-                  example: 
+                  example: Madrid
                 respuestas_incorrectas:
                   type: List<string>
                   description: The other possible answers.
+                  example: Paris, Roma, Londres
                 createdAt:
                   type: string
-                  description: Creation date.               
+                  description: Creation date.     
+                  example: '2024-03-17T20:47:23.935Z'     
       responses:
         '200':
           description: Question stored correctly and returns it.
@@ -49,6 +51,7 @@ paths:
                   question:
                     type: Question
                     description: Question.
+                    example: ¿Cual es la capital de España?
                   createdAt:
                     type: string
                     description: Creation date.
@@ -78,17 +81,19 @@ paths:
                 preguntas:
                   type: string
                   description: The question.
-                  example: 
+                  example: ¿Cual es la capital de España?
                 respuesta_correcta:
                   type: string
                   description: The correct answer.
-                  example: 
+                  example: Madrid
                 respuestas_incorrectas:
                   type: List<string>
                   description: The other possible answers.
+                  example: Paris, Roma, Londres
                 createdAt:
                   type: string
-                  description: Creation date.               
+                  description: Creation date.  
+                  example: '2024-03-17T20:47:23.935Z'             
       responses:
         '200':
           description: Questions stored correctly and returns its.
@@ -104,6 +109,7 @@ paths:
                   questions:
                     type: List<Question>
                     description: Question.
+                    example: ¿Cual es la capital de España?, ¿Cual es la capital de Francia?
                   createdAt:
                     type: string
                     description: Creation date.
@@ -143,6 +149,7 @@ paths:
                   questions:
                     type: List<Question>
                     description: Question.
+                    example: ¿Cual es la capital de España?, ¿Cual es la capital de Francia?
                   createdAt:
                     type: string
                     description: Creation date.

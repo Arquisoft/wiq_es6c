@@ -55,9 +55,10 @@ const Login = () => {
       ) : (
         <div className='login'>
           <Typography component="h1" variant="h5">
-            Login
+            Iniciar sesión
           </Typography>
           <TextField
+            name = "username"
             margin="normal"
             fullWidth
             label="Usuario"
@@ -65,6 +66,7 @@ const Login = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
+            name = "password"
             margin="normal"
             fullWidth
             label="Contraseña"
@@ -72,7 +74,7 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button text="Login" onClick={loginUser} name="Login"/>
+          <Button text="Iniciar sesión" onClick={loginUser} name="Login"/>
           <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Login correctamente" />
           {error && (
             <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError('')} message={`Error: ${error}`} />

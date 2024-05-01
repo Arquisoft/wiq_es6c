@@ -13,16 +13,16 @@ function App() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <h1>Welcome to wiq_06c</h1>
+      <h1>Bienvenido a WIQEII</h1>
       {showLogin ? <Login /> : <AddUser />}
       <Typography component="div" align="center" sx={{ marginTop: 2 }}>
         {showLogin ? (
           <p className='link' name="gotoregister"  onClick={handleToggleView}>
-            Don't have an account? Register here.
+            ¿Todavía no tienes cuenta? Regístrate aquí.
           </p>
         ) : (
           <p className='link' onClick={handleToggleView}>
-            Already have an account? Login here.
+            ¿Ya tienes una cuenta? Inicia sesión aquí.
           </p>
         )}
       </Typography>
