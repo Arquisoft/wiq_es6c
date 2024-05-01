@@ -96,10 +96,10 @@ const GameConfiguration = () => {
     console.log(questions)
   }
 
-    return (
-        <>
-        <Nav />
-        <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
+  return (
+    <>
+      <Nav />
+      <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
 
         <h2>Configuración de la partida</h2>
         
@@ -107,22 +107,8 @@ const GameConfiguration = () => {
 
             <h3>Selecciona las temáticas</h3>
 
-            <div className="allTopics">
-            {tematicas.map((option, index) => (
-                <div key={index} >
-                    <Button
-                    id={`topic-${option}`}
-                    name="topic"
-                    value={option}
-                    onClick={() => addTopic(option)}
-                    />
-                </div>
-                )
-                )}
-
-            </div>
-
-            <div>
+           {tematicas.map((option, index) => (
+              <div>
                 <input
                 type="checkbox"
                 id={`t${index}`}
@@ -138,9 +124,9 @@ const GameConfiguration = () => {
         </div>
 
 
-            <div className="configureNumberOfQuestions">
+        <div className="configureNumberOfQuestions">
 
-            <h3>Selecciona el número de preguntas</h3>
+          <h3>Selecciona el número de preguntas</h3>
 
           <div>
             <label htmlFor="numPreguntas">Número de preguntas:</label>
