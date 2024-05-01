@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const mongoose = require('mongoose');
+const mongooseUri = (process.env.DATAMODELS_URI === undefined) ? '../node_modules/mongoose' : 'mongoose';
+const mongoose = require(mongooseUri);
 const { QuestionGenerator } = require('./questiongenerator')
 
 const app = express();
@@ -47,7 +48,6 @@ function validateFields(query) {
 // Route for getting questions
 app.get('/questions', async (req, res) => {
   try {
-    
     const { preguntas, respuestas, temas } = validateFields(req.query);
     try {
       const retQuestions = await QuestionGenerator.generateQuestions(preguntas, respuestas, temas);
@@ -64,17 +64,6 @@ app.get('/questions', async (req, res) => {
   } catch (error) {
     console.error(`Bad Request: ${error.message}`);
     res.status(400).json({ error: error.message });
-  }
-});
-
-// Route for getting topics for questions
-app.get('/topics', async (req, res) => {
-  try {
-    const topics = QuestionGenerator.getAvailableTopics();
-    res.send(topics);
-  } catch (error) {
-    console.error(`An error occurred: ${error.message}`);
-    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
