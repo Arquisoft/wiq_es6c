@@ -1,18 +1,18 @@
 openapi: 3.0.0
 info:
-  title: StoreGameAPI
-  description: Historic Game OpenAPI specification.
-  version: 0.3.0
+  title: User Stats API
+  description: UserStats OpenAPI specification.
+  version: 0.3.1
 servers:
   - url: http://localhost:8003
     description: Development server
-  - url: http://SOMEIP:8003
+  - url: http://userstatsservice:8003
     description: Production server
 paths:
   /history/game:
     post:
-      summary: Add a game from the database.
-      operationId: addGame
+      summary: Stores the actual game in the database.
+      operationId: historyGame
       requestBody:
         required: true
         content:
@@ -21,42 +21,37 @@ paths:
               type: object
               properties:
                 id:
-                    type: string
-                    description: Game ID.
-                    example: 123ww
+                  type: string
+                  description: Game Id.
+                  example: sqeweg12er56yg46u89k
                 username:
                   type: string
-                  description: User name who played the game.
-                  example: Jose
+                  description: The name if the user.
                 points:
                   type: integer
-                  description: Game points.
-                  example: 1232
+                  description: The number of points that the user score.
                 questions:
                   type: array
-                  description: Array of questions which follow the same structure as how they are stored.
                   items:
                     type: object
                     properties:
-                      title:
+                      question:
                         type: string
-                        description: Question.
-                        example: Which is the capital of Leon
+                        description: The question that is going to be done.
+                      correctAnswer:
+                        type: string
+                        description: The correct answer for the question.
                       answers:
                         type: array
                         items:
                           type: string
-                          description: Possible answer.
-                          example: Valladolid
-                      ansIndex:
-                        type: array
-                        description: Two integers that represent the answer chose by the user and the correcto one.
-                        example: [1, 2]
-                        items:
-                          type: integer
+                          description: List with the possible answers.
+                avgtime:
+                  type: integer
+                  description: The average time taken to answer questions in seconds.
       responses:
         '200':
-          description: A game was send succesfully.
+          description: Game created and returned successfully.
           content:
             application/json:
               schema:
@@ -64,54 +59,40 @@ paths:
                 properties:
                   id:
                     type: string
-                    description: Game ID.
-                    example: 123ww
+                    description: Game Id.
+                    example: sqeweg12er56yg46u89k
                   username:
                     type: string
-                    description: User name who played the game.
-                    example: Jose
+                    description: The name if the user.
                   points:
                     type: integer
-                    description: Game points.
-                    example: 1232
+                    description: The number of points that the user scored.
+                  avgtime:
+                    type: integer
+                    description: The average time taken to answer questions in seconds.
                   questions:
                     type: array
-                    description: Array of questions which follow the same structure as how they are stored.
                     items:
                       type: object
                       properties:
-                        title:
+                        question:
                           type: string
-                          description: Question.
-                          example: Which is the capital of Leon
+                          description: The question that was done.
+                        correctAnswer:
+                          type: string
+                          description: The correct answer for the question.
                         answers:
                           type: array
                           items:
                             type: string
-                            description: Possible answer.
-                            example: Valladolid
-                        ansIndex:
-                          type: array
-                          description: Two integers that represent the answer chose by the user and the correcto one.
-                          example: [1, 2]
-                          items:
-                            type: integer
-                  _id:
-                    type: string
-                    description: Identification
-                    example: 65f756db3fa22d227a4b7c7d
+                            description: List with the possible answers.
                   createdAt:
                     type: string
                     format: date-time
                     description: Creation date and time of the game.
-                    format: date-time
-                    description: Creation date and time of the game.
                     example: '2024-03-17T20:47:23.935Z'
-                  ___v:
-                    type: integer
-                    example: '0'                                        
         '400':
-          description: Failed to add a new game.
+          description: Bad request.
           content:
             application/json:
               schema:
@@ -120,82 +101,7 @@ paths:
                   error:
                     type: string
                     description: Error information.
-                    example: getaddrinfo EAI_AGAIN mongodb
-  /history/games/:username:
-    get:
-      summary: Get all games played by a user.
-      operationId: getGamesUser
-      requestBody:
-        required: true
-        content:
-          type: string
-          description: Username.
-          example: Jose
-      responses:
-        '200':
-          description: The user was found and all games played by them are send.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                properties:
-                  id:
-                    type: string
-                    description: Game ID.
-                    example: 123ww
-                  username:
-                    type: string
-                    description: User name who played the game.
-                    example: Jose
-                  points:
-                    type: integer
-                    description: Game points.
-                    example: 1232
-                  questions:
-                    type: array
-                    description: Array of questions which follow the same structure as how they are stored.
-                    items:
-                      type: object
-                      properties:
-                        title:
-                          type: string
-                          description: Question.
-                          example: Which is the capital of Leon
-                        answers:
-                          type: array
-                          items:
-                            type: string
-                            description: Possible answer.
-                            example: Valladolid
-                        ansIndex:
-                          type: array
-                          description: Two integers that represent the answer chose by the user and the correcto one.
-                          example: [1, 2]
-                          items:
-                            type: integer
-                  _id:
-                    type: string
-                    description: Identification
-                    example: 65f756db3fa22d227a4b7c7d
-                  createdAt:
-                    type: string
-                    description: Creation date.
-                    example: '2024-03-17T20:47:23.935Z'
-                  ___v:
-                    type: integer
-                    example: '0' 
-        '404':
-          description: Element not found.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Shows the error info..
-                    example: Element not found
+                    example: Bad Request
         '500':
           description: Internal server error.
           content:
@@ -207,4 +113,183 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
-
+  /history/games/{username}:
+    get:
+      summary: Access to the history of games of the user.
+      operationId: historyGames
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: Username of the user.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Information of games returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Game Id.
+                      example: sqeweg12er56yg46u89k
+                    username:
+                      type: string
+                      description: Username of the user.
+                      example: student
+                    points:
+                      type: integer
+                      description: The number of points that the user scored.
+                    avgtime:
+                      type: integer
+                      description: The average time taken to answer questions in seconds.
+                    questions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          question:
+                            type: string
+                            description: The question that was done.
+                          correctAnswer:
+                            type: string
+                            description: The correct answer for the question.
+                          answers:
+                            type: array
+                            items:
+                              type: string
+                              description: List with the possible answers.
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Creation date and time of the game.
+                      example: '2024-03-17T20:47:23.935Z'
+        '404':
+          description: User not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: User not found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error
+  /history/games:
+    get:
+      summary: Get the history of all games.
+      operationId: historyAllGames
+      responses:
+        '200':
+          description: Information of games returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Game Id.
+                      example: sqeweg12er56yg46u89k
+                    username:
+                      type: string
+                      description: Username of the user.
+                      example: student
+                    points:
+                      type: integer
+                      description: The number of points that the user scored.
+                    avgtime:
+                      type: integer
+                      description: The average time taken to answer questions in seconds.
+                    questions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          question:
+                            type: string
+                            description: The question that was done.
+                          correctAnswer:
+                            type: string
+                            description: The correct answer for the question.
+                          answers:
+                            type: array
+                            items:
+                              type: string
+                              description: List with the possible answers.
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Creation date and time of the game.
+                      example: '2024-03-17T20:47:23.935Z'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error
+  /history/users:
+    get:
+      summary: Get the history of all users.
+      operationId: historyAllUsers
+      responses:
+        '200':
+          description: Information of users returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: Username of the user.
+                    tpoints:
+                      type: integer
+                      description: Total points earned by the user.
+                    ttime:
+                      type: integer
+                      description: Total time spent by the user (in seconds).
+                    ngames:
+                      type: integer
+                      description: Number of games played by the user.
+                    createdAt:
+                      type: string
+                      format: date-time
+                      description: Creation date and time of the user.
+                      example: '2024-03-17T20:47:23.935Z'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error
