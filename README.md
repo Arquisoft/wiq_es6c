@@ -1,5 +1,20 @@
 # wiq_es6c
 
+## Contributors
+<div align="center">
+    
+| Contributor | Contact |
+| ------------- | ------------- | 
+| Liliana Suárez Díaz | <a href="https://github.com/uo288574"><img src="https://img.shields.io/badge/uo288574-Liliana Suárez-green"></a> |
+| Marco Quintana García | <a href="https://github.com/marco-qg"><img src="https://img.shields.io/badge/marcoqg-Marco Quintana-red"></a> |
+| Abel Menéndez Hernández | <a href="https://github.com/AbelMH1"><img src="https://img.shields.io/badge/AbelMH1-Abel Menéndez-purple"></a>  |
+| Marcos Barril Villaverde | <a href="https://github.com/MarcosBarrilVillaverde"><img src="https://img.shields.io/badge/MarcosBarrilVillaverde-Marcos Barril-yellow"></a> |
+| Alejandro García Mansilla | <a href="https://github.com/alegarman2002"><img src="https://img.shields.io/badge/alegarman2002-Alejandro García-blue"></a> |
+
+</div>
+
+## Code analisis
+
 <div align="center">
     
 [![Deploy on release](https://github.com/Arquisoft/wiq_es6c/actions/workflows/release.yml/badge.svg)](https://github.com/Arquisoft/wiq_es6c/actions/workflows/release.yml)
@@ -7,21 +22,6 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_es6c&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_es6c)
 
 </div>
-
-
-## Contributors
-<div align="center">
-    
-| Contributor | Contact |
-| ------------- | ------------- | 
-| Liliana Suárez Díaz | UO288574@uniovi.es |
-| Marco Quintana García | UO287872@uniovi.es |
-| Abel Menéndez Hernández | UO283274@uniovi.es |
-| Marcos Barril Villaverde | UO283472@uniovi.es |
-| Alejandro García Mansilla |  |
-
-</div>
-
 
 ## Components
 
@@ -35,9 +35,6 @@ This is a repo for the [Software Architecture course](http://arquisoft.github.io
 - **Auth service**. Express service that handles the authentication of users.
 - **User stats service**. 
 - **Webapp**. React web application that uses the gateway service to allow basic login and new user features.
-
-
-All the service share a Mongo database that is accessed with mongoose.
 
 
 ## Quick start guide
