@@ -39,6 +39,7 @@ paths:
                   username:
                     type: string
                     description: User ID
+                    example: student
                   password:
                     type: string
                     description: Hashed password
@@ -142,6 +143,7 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+
   /history/games/:username:
     get:
       summary: Access to de history of games of the user.
@@ -188,10 +190,53 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
-  /generateGameUnlimitedQuestions:
+  
+  /history/questions:
     get:
-      summary: Generate the id for the unlimited game questions.
-      operationId: generateGameUnlimitedQuestions
+      summary: Returns the the stored questions.
+      operationId: gethistoryQuestions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Question stored correctly and returns it.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: User token.
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
+                  questions:
+                    type: List<Question>
+                    description: Question.
+                    example: ¿Cual es la capital de España?, ¿Cual es la capital de Francia?
+                  createdAt:
+                    type: string
+                    description: Creation date.
+                    example: '2024-03-17T20:47:23.935Z'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error information.
+                    example: Internal Server Error
+
+  /generateGame:
+    get:
+      summary: Generate the id for the game.
+      operationId: generateGame
       requestBody:
         required: true
         content:
@@ -209,6 +254,7 @@ paths:
                   id:
                     type: string
                     description: The id of the game created.
+                    example: sqeweg12er56yg46u89k
                   token:
                     type: string
                     description: User token.
@@ -228,10 +274,11 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
-  /gameUnlimitedQuestion:
+
+  /questions:
     get:
-      summary: Generate questions for the unlimited game questions.
-      operationId: gameUnlimitedQuestions
+      summary: Generate questions for the game.
+      operationId: questions
       requestBody:
         required: true
         content:
@@ -254,13 +301,15 @@ paths:
                   answers:
                     type: List<String>
                     description: List with the possible answers.
-                    example: 
+                    example: Madrid, Paris, Roma o Londres
                   question:
                     type: String
                     description: The question that is going to be done
+                    example: ¿Cual es la capital de españa?
                   correctAnswer:
                     type: String
                     description: The correct answer for the question 
+                    example: Madrid
         '500':
           description: Internal server error.
           content:
@@ -272,6 +321,7 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+                    
   /storeGame:
     post:
       summary: Stores the actual game in the database.
@@ -290,20 +340,28 @@ paths:
                 username:
                   type: string
                   description: The name if the user.
+                  example: student
                 points:
                   type: integer
                   description: The number of points that the user score.
+                  example: 1000
                 questions:
                   answers:
                     type: List<String>
                     description: List with the possible answers.
-                    example: 
+                    example: Madrid, Paris, Roma o Londres
                   question:
                     type: String
                     description: The question that is going to be done
+                    example: ¿Cual es la capital de españa?
                   correctAnswer:
                     type: String
                     description: The correct answer for the question
+                    example: Madrid
+                avgtime: 
+                  type: integer
+                  description: average time to answer the questions
+                  example: 23
       responses:
         '200':
           description: Question created and returned successfuly.
@@ -315,11 +373,11 @@ paths:
                   id:
                     type: string
                     description: The question that is going to bre realized.
-                    example: 
+                    example: sqeweg12er56yg46u89k
                   answers:
                     type: List<String>
                     description: List with the possible answers.
-                    example: 
+                    example: Madrid, Paris, Roma o Londres
         '500':
           description: Internal server error.
           content:

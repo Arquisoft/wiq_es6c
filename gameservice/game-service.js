@@ -37,8 +37,6 @@ app.get('/generateGame', async (req, res) => {
 // Route for getting questions
 app.get('/questions', async (req, res) => {
   try {
-    // TODO: Implement logic to fetch questions from MongoDB and send response 
-    // const questions = await Question.find()
     const questionGenerated = await axios.get(questionService + req.url);
     res.json(questionGenerated.data);
   } catch (error) {
@@ -64,6 +62,7 @@ app.post('/storeGame', async (req, res) => {
   }
 })
 
+//FALTA
 app.get('/topics', async (req, res) => {
   try {
     const topics = await axios.get(`${questionService}/topics`)
