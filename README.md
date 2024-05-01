@@ -1,26 +1,31 @@
 # wiq_es6c
 
+<div align="center">
+    
 [![Deploy on release](https://github.com/Arquisoft/wiq_es6c/actions/workflows/release.yml/badge.svg)](https://github.com/Arquisoft/wiq_es6c/actions/workflows/release.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_es6c&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_es6c)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_es6c&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_es6c)
 
+</div>
+
 
 ## Contributors
+<div align="center">
+    
+| Contributor | Contact |
+| ------------- | ------------- | 
+| Liliana Suárez Díaz | UO288574@uniovi.es |
+| Marco Quintana García | UO287872@uniovi.es |
+| Abel Menéndez Hernández | UO283274@uniovi.es |
+| Marcos Barril Villaverde | UO283472@uniovi.es |
+| Alejandro García Mansilla |  |
 
-| Contributor | 
-| ------------- | 
-| Liliana Suárez Díaz | 
-| Marco Quintana García |
-| Abel Menéndez Hernández | 
-| Marcos Barril Villaverde | 
-| Alejandro García Mansilla | 
+</div>
 
 
 ## Components
 
-This is a base repo for the [Software Architecture course](http://arquisoft.github.io/) in [2023/2024 edition](https://arquisoft.github.io/course2324.html). 
-
-This repo is a basic application composed of several components.
+This is a repo for the [Software Architecture course](http://arquisoft.github.io/) in [2023/2024 edition](https://arquisoft.github.io/course2324.html) composed of the following components.
 
 - **Game service**. 
 - **Gateway service**. Express service that is exposed to the public and serves as a proxy to the two previous ones.
