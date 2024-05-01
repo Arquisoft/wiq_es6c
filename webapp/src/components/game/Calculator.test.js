@@ -1,79 +1,50 @@
 import React from 'react';
-import { render, fireEvent, act, waitFor } from '@testing-library/react';
-import axios from 'axios';
-import Calculator from './Calculator';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { ContextFun } from '../Context';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
-
-// Mock axios post request
-jest.mock('axios');
-
-
+import Calculator from './Calculator';
 
 describe('Calculator Component', () => {
-    beforeEach(() => {
-        jest.mock('../Util', () => ({
-            ...jest.requireActual('../Util'), // Import and retain the original module functionality
-            secureRandomNumber: jest.fn(() => 5), // Mock secureRandomNumber to return a fixed value for testing
-        }));
-        // global.crypto = {
-        //     getRandomValues: jest.fn().mockImplementation((array) => {
-        //         for (let i = 0; i < array.length; i++) {
-        //             array[i] = i; 
-        //         }
-        //     }),
-        // };
-        localStorage.clear();
+    jest.setTimeout(10000);
+    
+    test("renders Calculator",async () => {
+        render(
+            <ContextFun>
+                <Router>
+                    <Calculator/>
+                </Router>
+            </ContextFun>
+        );
+
+        // Comprobamos que el número de elementos sea 3
+        let operation = document.getElementById("questionText").textContent;
+        const separatedText = operation.split(' ');
+        expect(separatedText.length).toBe(3);
+
+        // Comprobamos que el número de respuestas posibles sea 4
+        let answers = document.getElementsByClassName('allAnswers')[0].childNodes;
+        expect(answers).toHaveLength(4);
+
+        // Tratamos de hacer la operación
+        //for(let i = 0; i < 2; i++){
+            let number1 = parseInt(separatedText[0]);
+            let number2 = parseInt(separatedText[2]);
+            let op = separatedText[1];
+            let result;
+            switch (op) {
+                case '+': result = number1 + number2; break;
+                case '-': result = number1 - number2; break;
+                case 'x': result = number1 * number2; break;
+                case '÷': result = Math.round(number1 / number2); break;
+            }
+            let bt = screen.getByText(result);
+            expect(bt).toBeInTheDocument();
+            bt.click();
+            expect(window.getComputedStyle(bt).getPropertyValue('background-color')).toBe("green");
+                
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            expect(window.getComputedStyle(bt).getPropertyValue('background-color')).not.toBe("green");      
+        //}
     });
-
-    test('renders without crashing', () => {
-        // render(<ContextFun>
-        //     <Router>
-        //       <Calculator />
-        //     </Router>
-        //     </ContextFun>);
-    });
-
-    // test('handles option click correctly', async () => {
-    //     const { getByText } = render(<ContextFun>
-    //         <Router>
-    //           <Calculator />
-    //         </Router>
-    //         </ContextFun>);
-    //     await act(async () => {
-    //         fireEvent.click(getByText('Option Text')); // Change 'Option Text' to match your button text
-    //         // Add assertions to check if the correct logic is executed after button click
-    //     });
-    // });
-
-    // test('timer logic works correctly', async () => {
-    //     jest.useFakeTimers();
-    //     render(<ContextFun>
-    //         <Router>
-    //           <Calculator />
-    //         </Router>
-    //         </ContextFun>);
-    //     await act(async () => {
-    //         jest.advanceTimersByTime(1000); // Advance timer by 1 second
-    //         // Add assertions to check if the timer updates correctly
-    //     });
-    // });
-
-    // test('game store works correctly', async () => {
-    //     localStorage.setItem('username', 'testUser');
-    //     const mockResponse = { data: { success: true } }; // Mock response from server
-    //     axios.post.mockResolvedValueOnce(mockResponse); // Mock the axios post request
-
-    //     const { getByText } = render(<ContextFun>
-    //         <Router>
-    //           <Calculator />
-    //         </Router>
-    //         </ContextFun>);
-    //     await act(async () => {
-    //         fireEvent.click(getByText('Option Text')); // Change 'Option Text' to match your button text
-    //         await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    //         expect(localStorage.getItem('username')).toBe('testUser'); // Check if username is stored
-    //         // Add more assertions as needed
-    //     });
-    // });
+ 
 });

@@ -21,9 +21,7 @@ function shuffleArray(array) {
 }
 
 function secureRandomNumber(max) {
-    const randomBytes = new Uint32Array(1);
-    window.crypto.getRandomValues(randomBytes);
-    return randomBytes[0] % max;
+  return Math.floor(Math.random() * max);
 }
 
 const esperar = (ms) => {
