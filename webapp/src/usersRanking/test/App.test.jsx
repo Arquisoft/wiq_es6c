@@ -14,10 +14,10 @@ describe('App', () => {
     const mockUser = Array.from({ length: 20 }, (_, index) => ({
       _id: String(index + 1),
       username: `User ${index + 1}`,
-      tpoints: 100,
-      avgpoints:  100,
-      ttime:  100,
-      avgtime:  100,
+      tpoints: 100 + index,
+      avgpoints:  100 + index,
+      ttime:  100 - index,
+      avgtime:  100 - index,
       createdAt: '05/04/2024',
     }));
 
@@ -81,6 +81,61 @@ describe('App', () => {
 
   });
 
+  test('sorts users by username', async () => {
+    const { getByText } = render(<MemoryRouter><App /></MemoryRouter>);
+  
+    userEvent.click(getByText('Nombre de Usuario'));
+  
+    await waitFor(() => {
+      expect(getByText('User 10')).toBeInTheDocument();
+      expect(getByText('User 11')).toBeInTheDocument();
+    });
+  });
+  
+  test('sorts users by tpoints', async () => {
+    const { getByText } = render(<MemoryRouter><App /></MemoryRouter>);
+  
+    userEvent.click(getByText('Puntos totales'));
+  
+    await waitFor(() => {
+      expect(getByText('User 1')).toBeInTheDocument();
+      expect(getByText('User 10')).toBeInTheDocument();
+    });
+  });
+  
+  test('sorts users by avgpoints', async () => {
+    const { getByText } = render(<MemoryRouter><App /></MemoryRouter>);
+  
+    userEvent.click(getByText('Puntos promedio'));
+
+    await waitFor(() => {
+      expect(getByText('User 11')).toBeInTheDocument();
+      expect(getByText('User 20')).toBeInTheDocument();
+    });
+  });
+  
+  test('sorts users by ttime', async () => {
+    const { getByText } = render(<MemoryRouter><App /></MemoryRouter>);
+  
+    userEvent.click(getByText('Tiempo Total'));
+  
+    await waitFor(() => {
+      expect(getByText('User 1')).toBeInTheDocument();
+      expect(getByText('User 10')).toBeInTheDocument();
+    });
+  });
+  
+  test('sorts users by avgtime', async () => {
+    const { getByText } = render(<MemoryRouter><App /></MemoryRouter>);
+  
+    userEvent.click(getByText('Tiempo promedio'));
+  
+    await waitFor(() => {
+      expect(getByText('User 1')).toBeInTheDocument();
+      expect(getByText('User 10')).toBeInTheDocument();
+    });
+  });
+
 });
 
 test('handles unknown error when fetching users', async () => {
@@ -100,3 +155,4 @@ test('handles error with response.data.error when fetching users', async () => {
 
   expect(axios.get).toHaveBeenCalledWith('http://localhost:8100/usersStats');
 });
+
