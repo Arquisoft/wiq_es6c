@@ -6,16 +6,12 @@ import { Nav } from '../nav/Nav';
 import Button from '../Button';
 import { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 let questions = [];
 let load = true;
 const previousBackgroundColor = '#1a1a1a';
 let points = 0;
-const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 let answeredQuestions = [];
-
-let savedGame = false;
 
 
 const Calculator = () => {

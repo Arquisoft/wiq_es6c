@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box, LinearProgress} from '@mui/material';
 import './FirstGame.css';
 import 'react-circular-progressbar/dist/styles.css';
-import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { Footer } from './footer/Footer';
@@ -12,7 +11,6 @@ import { gameStore } from './Util';
 let currentQuestionIndex = 0;
 
 let haveFailedQuestion = false; 
-const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 let isCorrect = false
 let questions = [];
 let points = 0;
