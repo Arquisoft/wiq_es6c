@@ -86,12 +86,15 @@ defineFeature(feature, test => {
         for(let i = 0; i < 2; i++){//Dos preguntas
             await expect(page).toMatchElement("div", { class: "questionStructure" });//Comprobamos que existe el div de la pregunta
 
+            await page.waitForSelector(`#option-1`);
             const button = await page.$(`#option-1`);//Comprobamos que existe la segunda opción
-            expect(button).not.toBeNull();
+            await expect(button).not.toBeNull();
 
             const noButton = await page.$(`#option-2`);//Comprobamos que no existe una tercera opción
             expect(noButton).toBeNull();
-            button.click();//Respondemos la segunda opción
+
+            await new Promise((resolve) => setTimeout(resolve, 200)); //Simulación del tiempo de reflexión del usuario
+            await expect(page).toClick('#option-0');//Respondemos la primera opción
     
             await new Promise((resolve) => setTimeout(resolve, 2100)); //Esperar a que se muestre la pregunta
         }
