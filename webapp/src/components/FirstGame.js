@@ -20,7 +20,7 @@ const previousBackgroundColor = '#1a1a1a'
 
 
 const Quiz = () => {
-
+  let username = localStorage.getItem("username")
   const navigator = useNavigate();
   let allQuestions = useLocation().state.questions;
   let haveEnter = false;
@@ -37,9 +37,7 @@ const Quiz = () => {
       setRemTime((progress) => {
         if(progress === 100){
           checkAnswer(-1);
-          console.log("Antes", totalTime)
           setTotalTime(totalTime + progress/10)
-          console.log("Despues", totalTime)
           return 0; 
         }
         const diff = 4;
@@ -65,16 +63,11 @@ const Quiz = () => {
 
   const gameStore = async () => {
     try {
-      let username = localStorage.getItem("username")
-      console.log(username)
-      console.log(questions)
-      console.log(totalTime)
+      
       let avgtime = totalTime/questions.length
-      console.log(avgtime)
       const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions, avgtime});
       questions = []
       points = 0
-      console.log(response)
     } catch (error) {
       console.error(error)
     }
@@ -86,7 +79,6 @@ const Quiz = () => {
     }
     load = false
     
-    console.log("Todas las preguntas", allQuestions)
     isCorrect = (option === allQuestions[currentQuestionIndex].correctAnswer);
 
     changeButtons("true")
@@ -103,7 +95,6 @@ const Quiz = () => {
       })
       
       await esperar(2000)
-      console.log(option)
       currentQuestionIndex = (currentQuestionIndex + 1);
       botonCorrecta.style.backgroundColor = previousBackgroundColor
       changeButtons("false")
@@ -111,10 +102,8 @@ const Quiz = () => {
       haveFailedQuestion = false;
       load = true
       haveEnter = false
-      console.log("Calbo")
 
       if (currentQuestionIndex === allQuestions.length ) {
-        console.log("Entramos aqui")
         gameStore()
         navigator('/menu')
       }
@@ -124,7 +113,6 @@ const Quiz = () => {
     const botonIncorrecta = document.getElementById('option-' + allQuestions[currentQuestionIndex].options.indexOf(option))
 
     if (!isCorrect) {
-      console.log("Entramos en el correct")
       botonIncorrecta.style.backgroundColor = 'red'
     } else {
       points = points += 100;
@@ -140,10 +128,10 @@ const Quiz = () => {
         ansIndex: indexAnswers
       }
     )
-
     await esperar(2000); // Espera 2000 milisegundos (2 segundos)
-    botonIncorrecta.style.backgroundColor = previousBackgroundColor
-    botonCorrecta.style.backgroundColor = previousBackgroundColor
+    
+    botonIncorrecta.style.backgroundColor = botonCorrecta.style.backgroundColor = previousBackgroundColor
+    
     if (allQuestions.length-1 !== currentQuestionIndex) {
       currentQuestionIndex = (currentQuestionIndex + 1);
     } else {
@@ -151,16 +139,12 @@ const Quiz = () => {
     }
 
     isCorrect = (false)
-    console.log("Durante antes", totalTime)
     await setTotalTime(totalTime + remTime/10)
-    console.log("Durante despues", totalTime)
     setRemTime(0)
         
     load = true
     changeButtons("false")
-    console.log(haveFailedQuestion)
     if(haveFailedQuestion) {
-      console.log("Entramos a guardar el juego")
       await gameStore()
       haveFailedQuestion = false;
       currentQuestionIndex += 1

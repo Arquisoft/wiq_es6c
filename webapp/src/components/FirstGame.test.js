@@ -1,38 +1,141 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { ContextFun } from './Context';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import React from 'react';
+import { act, render, fireEvent, waitFor } from '@testing-library/react';
+import Quiz from './FirstGame'; // Asegúrate de importar correctamente tu componente Quiz
 import { BrowserRouter as Router } from 'react-router-dom';
-import FirstGame from './FirstGame';
-import GameConfiguration from './game/GameConfiguration';
+import { ContextFun } from './Context';
 
-const mockAxios = new MockAdapter(axios);
+beforeEach(() => {
+    
+});
 
-describe("First game component", () => {
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useLocation: () => ({
+      state: {
+        questions: [
+          {
+            question: 'What is 2 + 2?',
+            options: ['3', '4', '5', '6'],
+            correctAnswer: '4',
+          },
+          {
+            question: 'What is 2 + 2?',
+            options: ['3', '4', '5', '6'],
+            correctAnswer: '4',
+          }
+        ],
+        gameId: '123456',
+      }
+    })
+}));
 
-    beforeEach(() => {
-        mockAxios.reset();
-    });
+describe('Quiz Component', () => { 
+    jest.setTimeout(13000);
+    it('selects the correct answer', async () => {
+        const questions = [
+          {
+            question: 'What is 2 + 2?',
+            options: ['3', '4', '5', '6'],
+            correctAnswer: '4',
+          },
+          {
+            question: 'What is 2 + 2?',
+            options: ['3', '4', '5', '6'],
+            correctAnswer: '4',
+          }
+        ];
+    
+        const state = {
+          questions: questions,
+          gameId: '123456',
+        };
+    
+        const { getByText, getByTestId } = render(<ContextFun>
+            <Router>
+              <Quiz />
+            </Router>
+            </ContextFun>, { initialState: { state } });
+    
+        // Wait for questions to load
+        await waitFor(() => getByText('What is 2 + 2?'));
+    
+        // Select the correct answer and check if it's green
+        fireEvent.click(getByText('4'));
+        expect(getByText('4')).toHaveStyle('background-color: green');
+        await new Promise((r) => setTimeout(r, 2000));
+        expect(getByText('4')).toHaveStyle('background-color: #1a1a1a')
+      });
+    
 
-    test("one question -> 4 possible answers",async () => {
-        render(
-            <ContextFun>
-                <Router>
-                    <GameConfiguration />
-                </Router>
-            </ContextFun>
-        );
+  it('selects a wrong answer', async () => {
+    const questions = [
+      {
+        question: 'What is 2 + 2?',
+        options: ['3', '4', '5', '6'],
+        correctAnswer: '4',
+      },
+      {
+        question: 'What is 2 + 2?',
+        options: ['3', '4', '5', '6'],
+        correctAnswer: '4',
+      }
+    ];
 
-        //Marcar la primera temática
-        let topic1 = document.getElementById('t0');
-        fireEvent.click(topic1);
-        expect(topic1).toBeChecked();
-        //Iniciamos el juego 
-        let bt = screen.getByText('Comenzar Juego');
-        fireEvent.click(bt);  
-        //comprobamos que haya 2 botones para responder
-        const gamesBT = document.getElementsByClassName('allAnswers');
-        //expect(gamesBT).toHaveLength(2);
-    });
+    const state = {
+      questions: questions,
+      gameId: '123456',
+    };
+
+    const { getByText, getByTestId } = render(<ContextFun>
+        <Router>
+          <Quiz />
+        </Router>
+        </ContextFun>, { initialState: { state } });
+
+    // Wait for questions to load
+    await waitFor(() => getByText('What is 2 + 2?'));
+
+    // Select the correct answer and check if it's green
+    fireEvent.click(getByText('5'));
+    expect(getByText('5')).toHaveStyle('background-color: red');
+    await new Promise((r) => setTimeout(r, 2000));
+    expect(getByText('5')).toHaveStyle('background-color: #1a1a1a')
+
+
+  });
+
+//   it('do not select answer', async () => {
+//     const questions = [
+//       {
+//         question: 'What is 2 + 2?',
+//         options: ['3', '4', '5', '6'],
+//         correctAnswer: '4',
+//       },
+//       {
+//         question: 'What is 2 + 2?',
+//         options: ['3', '4', '5', '6'],
+//         correctAnswer: '4',
+//       }
+//     ];
+
+//     const state = {
+//       questions: questions,
+//       gameId: '123456',
+//     };
+
+//     const { getByText, getByTestId } = render(<ContextFun>
+//         <Router>
+//           <Quiz />
+//         </Router>
+//         </ContextFun>, { initialState: { state } });
+
+//     // Wait for questions to load
+//     await waitFor(() => getByText('What is 2 + 2?'));
+
+//     // Select the correct answer and check if it's green
+//     await new Promise((r) => setTimeout(r, 1000)); 
+//     // await waitFor(() => (getByText('4')).toHaveStyle('background-color: green'))
+//   });
 
 });
+
