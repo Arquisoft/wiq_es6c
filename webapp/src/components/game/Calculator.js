@@ -34,12 +34,9 @@ const Calculator = () => {
         const time = setInterval(() => {
         setRemTime((progress) => {
             if(progress === 100){
-                console.log("Antes", totalTime)
                 setTotalTime(totalTime + progress/10)
-                console.log("Despues", totalTime)
 
                 gameStore();
-
                 return 0; 
             }
             const diff = 0.5;
@@ -55,16 +52,11 @@ const Calculator = () => {
     const gameStore = async () => {
         try {
             var username = localStorage.getItem("username")
-            console.log(username)
-            console.log(answeredQuestions)
-            console.log(totalTime)
             var avgtime = totalTime/answeredQuestions.length
-            console.log(avgtime)
             const id = await generateGameId();
             if(!savedGame){
                 savedGame = true;
                 const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions: answeredQuestions, avgtime});
-                console.log(response)
             }
         } catch (error) {
             console.error(error)
@@ -84,10 +76,6 @@ const Calculator = () => {
         let num1 = secureRandomNumber(10) + 1;
         let num2 = secureRandomNumber(10) + 1;
 
-        console.log(questionIndex)
-        
-        num2 = secureRandomNumber(10) + 1;
-
         const operator = ['+', '-', 'x', '÷'][secureRandomNumber(3)];
         let correctAnswer;
     
@@ -104,8 +92,7 @@ const Calculator = () => {
             case '÷':
                 correctAnswer = Math.round(num1 / num2);
                 break;
-            default:
-                break;
+            default: break;
         }
     
         const option = [correctAnswer];
@@ -133,16 +120,10 @@ const Calculator = () => {
         const numberAnswer = questions[questionIndex].options.indexOf(questions[questionIndex].correctAnswer);
         const choiceNumber = questions[questionIndex].options.indexOf(selectedAnswer);
 
-        console.log(numberAnswer)
-        console.log(choiceNumber)
-
-        //console.log(numberAnswer)
         const botonCorrecta = document.getElementById('option-' + numberAnswer);
         let botonIncorrecta = null;
         botonCorrecta.style.backgroundColor = 'green';
-        /*title: allQuestions[currentQuestionIndex].question,
-        answers: allQuestions[currentQuestionIndex].options,
-        ansIndex: indexAnswers*/
+
         storeQuestion(questions[questionIndex].q, questions[questionIndex].options, [choiceNumber, numberAnswer]);
         if (selectedAnswer !== questions[questionIndex].correctAnswer) {
             botonIncorrecta = document.getElementById('option-' + questions[questionIndex].options.indexOf(selectedAnswer));
@@ -183,8 +164,7 @@ const Calculator = () => {
   
                 <div class="questionCalculator">
     
-                <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-                    
+                <Typography id="questionText" dclass="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
                     {questions[questionIndex].q}
                 </Typography>
     
