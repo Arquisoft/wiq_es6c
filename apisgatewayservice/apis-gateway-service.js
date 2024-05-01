@@ -48,8 +48,18 @@ app.get('/history/questions', async (req, res) => {
 
 app.get('/usersStats', async (req, res) => {
   try {
-    const response = await axios.get(userStatsServiceUrl+`/history/users`);
-    res.json(response.data);
+    const users = await axios.get(userStatsServiceUrl+`/history/users`);
+    
+    const usersInformation = users.data.map(user => ({
+      username: user.username,
+      tpoints: user.tpoints,
+      avgpoints: user.tpoints / user.ngames,
+      ttime: user.ttime,
+      avgtime: user.ttime / user.ngames,
+      createdAt: user.createdAt
+    }));
+
+    res.json(usersInformation);
   } catch (error) {
     catchAction(error, res)
   }

@@ -52,7 +52,12 @@ describe('User data is send correctly', () => {
     it('should return user information', async () => {
       const mockUsers = [
         { username: 'user1', tpoints: 100, ttime: 10, ngames: 1 },
-        { username: 'user2', tpoints: 100, ttime: 10, ngames: 1 }
+        { username: 'user2', tpoints: 100, ttime: 10, ngames: 2 }
+      ];
+
+      const resutlsUsers = [
+        { username: 'user1', avgpoints: 100, avgtime: 10, tpoints: 100, ttime: 10 },
+        { username: 'user2', avgpoints: 50, avgtime: 5, tpoints: 100, ttime: 10 }
       ];
 
       axios.get.mockResolvedValue({ data: mockUsers });
@@ -61,7 +66,7 @@ describe('User data is send correctly', () => {
 
       expect(res.statusCode).toEqual(200);
 
-      expect(res.body).toEqual(mockUsers);
+      expect(res.body).toEqual(resutlsUsers);
     });
 
 
