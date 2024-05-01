@@ -19,6 +19,7 @@ import AppQuestion from './storeQuestion/App'
 import Help from './help/Help';
 import GameConfiguration from './components/game/GameConfiguration';
 import Calculator from './components/game/Calculator';
+import Ranking from './usersRanking/App'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -35,6 +36,7 @@ root.render(
         <Route path="/help" element={<Help/>}></Route>
         <Route path="/gameConfiguration" element={<GameConfiguration/>}></Route>
         <Route path="/calculator" element={<Calculator/>}></Route>
+        <Route path="/ranking" element={<Ranking/>}></Route>
       </Routes>
     </Router>
   </React.StrictMode>

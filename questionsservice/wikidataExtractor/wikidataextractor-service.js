@@ -1,6 +1,7 @@
 const express = require('express');
 const cron = require('node-cron');
-const mongoose = require('mongoose');
+const mongooseUri = (process.env.DATAMODELS_URI === undefined) ? '../node_modules/mongoose' : 'mongoose';
+const mongoose = require(mongooseUri);
 const WikiQueries = require('./wikidataQueries');
 const modelUri = process.env.DATAMODELS_URI || '../questiondata-model';
 const { Pais, Monumento, Elemento, Pelicula, Cancion } = require(modelUri);

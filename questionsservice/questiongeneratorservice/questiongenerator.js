@@ -171,7 +171,6 @@ class QuestionGenerator {
     }
 
     static async generateQuestion1to1Relation(plantilla, respuestas) {
-
         const randomDocs = await plantilla.modelo.aggregate([
             { $match: plantilla.filtro },
             { $sample: { size: respuestas } }

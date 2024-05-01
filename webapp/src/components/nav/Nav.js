@@ -33,8 +33,8 @@ export const Nav = () => {
                 <Link to='/appQuestion' style={{color:'#0F0F0F', textDecoration: 'none', marginRight: '2vw', fontSize: '1.25rem'}}>
                     Almacén de preguntas
                 </Link>
-                <Link to='/users' style={{color:'#0F0F0F', textDecoration: 'none', fontSize: '1.25rem'}}>
-                    Usuarios
+                <Link to='/ranking' style={{color:'#0F0F0F', textDecoration: 'none', fontSize: '1.25rem'}}>
+                    Ranking de Usuarios
                 </Link>
             </Container>
 
