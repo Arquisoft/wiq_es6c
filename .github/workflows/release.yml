@@ -21,15 +21,15 @@ jobs:
     - run: npm --prefix webapp ci
     - run: npm --prefix gameservice ci
     - run: npm --prefix apisgatewayservice ci
-    - run: npm --prefix apisgatewayservice ci
     - run: npm --prefix users/authservice test -- --coverage
     - run: npm --prefix users/userservice test -- --coverage
     - run: npm --prefix gatewayservice test -- --coverage
     - run: npm --prefix webapp test -- --coverage
     - run: npm --prefix storeQuestionService test -- --coverage
     - run: npm --prefix userStatsService test -- --coverage
-    - run: npm --prefix apisgatewayservice test -- --coverage
-    #- run: npm --prefix gameservice test -- --coverage
+    - run: npm --prefix gameservice test -- --coverage
+    
+
     - name: Analyze with SonarCloud
       uses: sonarsource/sonarcloud-github-action@master
       env:
@@ -150,7 +150,8 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
-        workdir: questionsservice/questiongeneratorservice
+        workdir: questionsservice
+        dockerfile: ./questiongeneratorservice/Dockerfile
         platforms: linux/arm64
   docker-push-wikidataextractorservice:
     name: Push wikidata extractor service Docker Image to GitHub Packages
@@ -170,7 +171,8 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
-        workdir: questionsservice/wikidataExtractor
+        workdir: questionsservice
+        dockerfile: ./wikidataExtractor/Dockerfile
         platforms: linux/arm64
   docker-push-storequestionservice:
     name: Push questions store service Docker Image to GitHub Packages
@@ -234,6 +236,26 @@ jobs:
         platforms: linux/arm64
   docker-push-apisgatewayservice:
     name: Push apis gateway service Docker Image to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: [e2e-tests]
+    steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - uses: actions/checkout@v4
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v5
+      with:
+        name: arquisoft/wiq_es6c/apisgatewayservice
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ghcr.io
+        workdir: apisgatewayservice
+        platforms: linux/arm64
+  deploy:
+    name: Deploy over SSH
     runs-on: ubuntu-latest
     permissions:
       contents: read
