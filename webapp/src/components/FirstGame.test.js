@@ -29,27 +29,27 @@ jest.mock('react-router-dom', () => ({
     })
 }));
 
+const questions = [
+  {
+    question: 'What is 2 + 2?',
+    options: ['3', '4', '5', '6'],
+    correctAnswer: '4',
+  },
+  {
+    question: 'What is 2 + 2?',
+    options: ['3', '4', '5', '6'],
+    correctAnswer: '4',
+  }
+];
+
+const state = {
+  questions: questions,
+  gameId: '123456',
+};
+
 describe('Quiz Component', () => { 
     jest.setTimeout(13000);
-    it('selects the correct answer', async () => {
-        const questions = [
-          {
-            question: 'What is 2 + 2?',
-            options: ['3', '4', '5', '6'],
-            correctAnswer: '4',
-          },
-          {
-            question: 'What is 2 + 2?',
-            options: ['3', '4', '5', '6'],
-            correctAnswer: '4',
-          }
-        ];
-    
-        const state = {
-          questions: questions,
-          gameId: '123456',
-        };
-    
+    it('selects the correct answer', async () => {    
         const { getByText, getByTestId } = render(<ContextFun>
             <Router>
               <Quiz />
@@ -68,23 +68,7 @@ describe('Quiz Component', () => {
     
 
   it('selects a wrong answer', async () => {
-    const questions = [
-      {
-        question: 'What is 2 + 2?',
-        options: ['3', '4', '5', '6'],
-        correctAnswer: '4',
-      },
-      {
-        question: 'What is 2 + 2?',
-        options: ['3', '4', '5', '6'],
-        correctAnswer: '4',
-      }
-    ];
-
-    const state = {
-      questions: questions,
-      gameId: '123456',
-    };
+    
 
     const { getByText, getByTestId } = render(<ContextFun>
         <Router>
@@ -103,39 +87,6 @@ describe('Quiz Component', () => {
 
 
   });
-
-//   it('do not select answer', async () => {
-//     const questions = [
-//       {
-//         question: 'What is 2 + 2?',
-//         options: ['3', '4', '5', '6'],
-//         correctAnswer: '4',
-//       },
-//       {
-//         question: 'What is 2 + 2?',
-//         options: ['3', '4', '5', '6'],
-//         correctAnswer: '4',
-//       }
-//     ];
-
-//     const state = {
-//       questions: questions,
-//       gameId: '123456',
-//     };
-
-//     const { getByText, getByTestId } = render(<ContextFun>
-//         <Router>
-//           <Quiz />
-//         </Router>
-//         </ContextFun>, { initialState: { state } });
-
-//     // Wait for questions to load
-//     await waitFor(() => getByText('What is 2 + 2?'));
-
-//     // Select the correct answer and check if it's green
-//     await new Promise((r) => setTimeout(r, 1000)); 
-//     // await waitFor(() => (getByText('4')).toHaveStyle('background-color: green'))
-//   });
 
 });
 
