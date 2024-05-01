@@ -157,17 +157,6 @@ describe('Test the GET /topics endpoint', () => {
   });
 });
 
-// describe('Error getting users', () => {
-//   it('should handle error when getting users', async () => {
-//     axios.get.mockRejectedValue(new Error('Failed to fetch users'));
-
-//     const res = await request(app).get('/users');
-
-//     expect(res.statusCode).toEqual(500);
-//     expect(res.body).toEqual({ error: 'Internal server error' });
-//   });
-// });
-
 describe('Test the GET /questions endpoint with correct params', () => {
   it('Should ', async () => {
     axios.post.mockRejectedValue(new Error());
