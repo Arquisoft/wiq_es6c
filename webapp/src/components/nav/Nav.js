@@ -34,7 +34,7 @@ export const Nav = () => {
                     Almacén de preguntas
                 </Link>
                 <Link to='/ranking' style={{color:'#0F0F0F', textDecoration: 'none', fontSize: '1.25rem'}}>
-                    Usuarios
+                    Ranking de Usuarios
                 </Link>
             </Container>
 
