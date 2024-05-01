@@ -64,29 +64,15 @@ describe('Quiz Component', () => {
         expect(getByText('4')).toHaveStyle('background-color: green');
         await new Promise((r) => setTimeout(r, 2000));
         expect(getByText('4')).toHaveStyle('background-color: #1a1a1a')
+
+        await waitFor(() => getByText('What is 2 + 2?'));
+
+        // Select the correct answer and check if it's green
+        fireEvent.click(getByText('5'));
+        expect(getByText('5')).toHaveStyle('background-color: red');
+        await new Promise((r) => setTimeout(r, 2000));
+        expect(getByText('5')).toHaveStyle('background-color: #1a1a1a')
       });
     
-
-  it('selects a wrong answer', async () => {
-    
-
-    const { getByText, getByTestId } = render(<ContextFun>
-        <Router>
-          <Quiz />
-        </Router>
-        </ContextFun>, { initialState: { state } });
-
-    // Wait for questions to load
-    await waitFor(() => getByText('What is 2 + 2?'));
-
-    // Select the correct answer and check if it's green
-    fireEvent.click(getByText('5'));
-    expect(getByText('5')).toHaveStyle('background-color: red');
-    await new Promise((r) => setTimeout(r, 2000));
-    expect(getByText('5')).toHaveStyle('background-color: #1a1a1a')
-
-
-  });
-
 });
 
