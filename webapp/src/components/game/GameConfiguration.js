@@ -99,7 +99,7 @@ const GameConfiguration = () => {
   return (
     <>
       <Nav />
-      <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
+      <Container id="config" component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
 
         <h2>Configuración de la partida</h2>
         
@@ -148,7 +148,7 @@ const GameConfiguration = () => {
 
         </div>
 
-        <Button onClick={initiateGame} text="Comenzar Juego"/>
+        <Button id="initGame" onClick={initiateGame} text="Comenzar Juego"/>
             
       </Container>
       <Footer />

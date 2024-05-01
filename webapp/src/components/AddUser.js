@@ -48,7 +48,7 @@ const AddUser = () => {
     <Container className='addUser' component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       
       <Typography component="h1" variant="h5">
-        Añadir Usuario
+        Registro
       </Typography>
 
       <TextField
@@ -98,7 +98,7 @@ const AddUser = () => {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
 
-      <Button text="Añadir" onClick={addUser} name = "Add user"/>
+      <Button text="Registrarse" onClick={addUser} name = "Add user"/>
 
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Usuario añadido correctamente" />
       {error && (
