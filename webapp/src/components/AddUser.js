@@ -20,6 +20,8 @@ const AddUser = () => {
   const addUser = async () => {
     if (name.trim() === '' || surname.trim() === '' || username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
       setError('Todos los campos deben de estar rellenos.');
+    } else if (password.length < 8){
+      setError('Las contraseñas deben contener más de 8 caracteres.');
     } else if(password !== confirmPassword){
       setError('Las contraseñas no coinciden.');
     } else {
@@ -46,7 +48,7 @@ const AddUser = () => {
     <Container className='addUser' component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
       
       <Typography component="h1" variant="h5">
-        Añadir Usuario
+        Registro
       </Typography>
 
       <TextField
@@ -96,7 +98,7 @@ const AddUser = () => {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
 
-      <Button text="Añadir" onClick={addUser} name = "Add user"/>
+      <Button text="Registrarse" onClick={addUser} name = "Add user"/>
 
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Usuario añadido correctamente" />
       {error && (

@@ -102,3 +102,7 @@
   #numPreguntas{
     width: 2rem;
   }
+
+  #config .border{
+    margin-bottom: 10rem;
+  }

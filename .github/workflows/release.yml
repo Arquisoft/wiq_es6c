@@ -45,6 +45,9 @@ jobs:
         node-version: 20
     - run: npm --prefix users/authservice install
     - run: npm --prefix users/userservice install
+    - run: npm --prefix gameservice install
+    - run: npm --prefix storeQuestionService install
+    - run: npm --prefix userStatsService install
     - run: npm --prefix gatewayservice install
     - run: npm --prefix webapp install
     - run: npm --prefix webapp run build

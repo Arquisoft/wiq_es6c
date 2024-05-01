@@ -36,9 +36,9 @@ class Spinner extends React.Component {
 	render() {
 	  return (
 		<div className="input-number">
-		  <button type="button" onClick={this.decrement}>&minus;</button>
+		  <button id={this.props.id+"-"} type="button" onClick={this.decrement}>&minus;</button>
 		  <span id={this.props.id}>{this.value}</span>
-		  <button type="button" onClick={this.increment}>&#43;</button>     
+		  <button d={this.props.id+"+"} type="button" onClick={this.increment}>&#43;</button>     
 		</div>
 	  )
 	}

@@ -38,8 +38,8 @@ paths:
                 properties:
                   username:
                     type: string
-                    description: Authetificacion token used by the webapp.
-                    example: asd912eapsd
+                    description: User ID
+                    example: student
                   password:
                     type: string
                     description: String with the name of the user.
