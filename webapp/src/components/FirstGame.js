@@ -23,10 +23,7 @@ const Quiz = () => {
   let allQuestions = useLocation().state.questions;
   let haveEnter = false;
   let id = useLocation().state.gameId;
-  console.log(id)
 
-  // const [currentQuestionIndex, setCurrentQuestionIndex] = useState(storedInt);
-  // const [isCorrect, setIsCorrect] = useState(false);
   const [remTime, setRemTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
 
@@ -104,8 +101,7 @@ const Quiz = () => {
     } else {
       points = points += 100;
     }
-    
-    
+        
     // Pasar a la siguiente pregunta después de responder
     let indexAnswers = [allQuestions[currentQuestionIndex].options.indexOf(option), numberAnswer]
 

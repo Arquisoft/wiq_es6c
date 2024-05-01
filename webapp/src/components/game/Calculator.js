@@ -15,7 +15,6 @@ let answeredQuestions = [];
 
 const Calculator = () => {
 
-    //let questionIndex = -1
     let username = localStorage.getItem("username")
     const [questionIndex, setQuestionIndex] = useState(0);
     const id = generateGameId();
@@ -96,7 +95,6 @@ const Calculator = () => {
     }
 
 
-    //CAMBIAR ESTO EN FUNCIÓN DE CÓMO QUERAMOS QUE SEA EL JUEGO
     const handleOptionClick = async (selectedAnswer) => {
         load = false;
         const numberAnswer = questions[questionIndex].options.indexOf(questions[questionIndex].correctAnswer);

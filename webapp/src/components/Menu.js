@@ -8,7 +8,6 @@ import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
 import axios from 'axios';
 
-//var isApiCalledRef = false;//ASK - is this necessary?
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
 let topics
@@ -16,12 +15,6 @@ let topics
 const Menu = () => {
 
     const navigation = useNavigate(); 
-
-    /*
-    const [selectedButtonCustomize, isSelectedButtonCustomize] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [selectedValue, setSelectedValue] = useState('');
-    */
 
     const getTopics = async () => {
       try {
@@ -34,7 +27,6 @@ const Menu = () => {
 
     const initiateGame = async () => {
       await getTopics()  
-      //isApiCalledRef = true//ASK - is this necessary?
       navigation("/gameConfiguration", {state: {topics}})
     }
 
