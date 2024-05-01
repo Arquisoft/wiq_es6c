@@ -5,10 +5,9 @@ import { Nav } from '../nav/Nav';
 import Button from '../Button';
 import { useLocation, useNavigate } from 'react-router-dom'; // Importa useHistory
 import axios from 'axios'
-import { shuffleArray } from '../Util';
+import { shuffleArray, generateGameId } from '../Util';
 import './GameConfiguration.css';
 import Spinner from '../spinner/Spinner';
-import { generateGameId } from '../Util';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 

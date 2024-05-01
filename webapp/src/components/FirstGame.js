@@ -148,7 +148,7 @@ const Quiz = () => {
 
         <div className="questionStructure">
 
-          <div class="questionFirstGame">
+          <div className="questionFirstGame">
 
             <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
               {allQuestions[currentQuestionIndex].question}
@@ -156,7 +156,7 @@ const Quiz = () => {
 
           </div>
 
-          <div class="allAnswers">
+          <div className="allAnswers">
             {allQuestions[currentQuestionIndex].options.map((option, index) => (
               <div key={index} >
                 <Button
