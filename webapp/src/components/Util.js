@@ -38,4 +38,15 @@ const generateGameId = async () => {
   }
 }
 
-export {esperar, shuffleArray, secureRandomNumber, generateGameId}
+async function gameStore(id, username, points, questions, avgtime) {
+  try {
+    
+    const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
+    const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions, avgtime});
+    questions = []
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export {esperar, shuffleArray, secureRandomNumber, generateGameId, gameStore}

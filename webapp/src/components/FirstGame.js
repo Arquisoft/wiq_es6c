@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
+import { gameStore } from './Util';
 
 let currentQuestionIndex = 0;
 
@@ -17,7 +18,6 @@ let questions = [];
 let points = 0;
 let load = true;
 const previousBackgroundColor = '#1a1a1a'
-
 
 const Quiz = () => {
   let username = localStorage.getItem("username")
@@ -61,18 +61,6 @@ const Quiz = () => {
     }
   }
 
-  const gameStore = async () => {
-    try {
-      
-      let avgtime = totalTime/questions.length
-      const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions, avgtime});
-      questions = []
-      points = 0
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   const checkAnswer = async (option) => {
     if (haveEnter) {
       return
@@ -104,7 +92,8 @@ const Quiz = () => {
       haveEnter = false
 
       if (currentQuestionIndex === allQuestions.length ) {
-        gameStore()
+        gameStore(id, username, points, questions, totalTime/questions.length)
+        points = 0
         navigator('/menu')
       }
       return
@@ -145,7 +134,9 @@ const Quiz = () => {
     load = true
     changeButtons("false")
     if(haveFailedQuestion) {
-      await gameStore()
+      await gameStore(id, username, points, questions, totalTime/questions.length)
+      questions = []
+      points = 0
       haveFailedQuestion = false;
       currentQuestionIndex += 1
       navigator('/menu')

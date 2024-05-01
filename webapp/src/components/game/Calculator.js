@@ -1,5 +1,5 @@
 import React from 'react';
-import { shuffleArray, secureRandomNumber, generateGameId,esperar } from '../Util';
+import { shuffleArray, secureRandomNumber, generateGameId, esperar, gameStore} from '../Util';
 import { Container, Typography, Box, LinearProgress } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
@@ -17,10 +17,13 @@ let answeredQuestions = [];
 
 let savedGame = false;
 
+
 const Calculator = () => {
 
     //let questionIndex = -1
+    let username = localStorage.getItem("username")
     const [questionIndex, setQuestionIndex] = useState(0);
+    const id = generateGameId();
 
     const navigator = useNavigate();
 
@@ -35,8 +38,9 @@ const Calculator = () => {
         setRemTime((progress) => {
             if(progress === 100){
                 setTotalTime(totalTime + progress/10)
-
-                gameStore();
+                gameStore(id, username, points, answeredQuestions, totalTime/answeredQuestions.length);
+                init();
+                navigator('/menu')
                 return 0; 
             }
             const diff = 0.5;
@@ -48,23 +52,6 @@ const Calculator = () => {
         clearInterval(time);
         };
     });
-
-    const gameStore = async () => {
-        try {
-            var username = localStorage.getItem("username")
-            var avgtime = totalTime/answeredQuestions.length
-            const id = await generateGameId();
-            if(!savedGame){
-                savedGame = true;
-                const response = await axios.post(`${apiEndpoint}/storeGame`, { id, username,  points, questions: answeredQuestions, avgtime});
-            }
-        } catch (error) {
-            console.error(error)
-        } finally {
-            init();
-            navigator('/menu')
-        }
-    }
 
     function init(){
         questions = [];
