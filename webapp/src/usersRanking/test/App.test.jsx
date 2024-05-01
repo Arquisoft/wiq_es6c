@@ -14,6 +14,10 @@ describe('App', () => {
     const mockUser = Array.from({ length: 20 }, (_, index) => ({
       _id: String(index + 1),
       username: `User ${index + 1}`,
+      tpoints: 100,
+      avgpoints:  100,
+      ttime:  100,
+      avgtime:  100,
       createdAt: '05/04/2024',
     }));
 
@@ -36,7 +40,7 @@ describe('App', () => {
     });
 
     // Verifica que se haya llamado axios.get con el endpoint correcto
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:8100/users');
+    expect(axios.get).toHaveBeenCalledWith('http://localhost:8100/usersStats');
   });
 
   test('navigates to the next page', async () => {
@@ -85,7 +89,7 @@ test('handles unknown error when fetching users', async () => {
 
   render(<MemoryRouter><App /></MemoryRouter>);
 
-  expect(axios.get).toHaveBeenCalledWith('http://localhost:8100/users');
+  expect(axios.get).toHaveBeenCalledWith('http://localhost:8100/usersStats');
 });
 
 test('handles error with response.data.error when fetching users', async () => {
@@ -94,5 +98,5 @@ test('handles error with response.data.error when fetching users', async () => {
 
   render(<MemoryRouter><App /></MemoryRouter>);
 
-  expect(axios.get).toHaveBeenCalledWith('http://localhost:8100/users');
+  expect(axios.get).toHaveBeenCalledWith('http://localhost:8100/usersStats');
 });
