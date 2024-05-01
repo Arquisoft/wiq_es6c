@@ -6,10 +6,21 @@ function User(props) {
   return (
     <div className='border'>
       <div className='question inner'>
-        <h3>{newUser.username}</h3>
-          <div className='container footer'>
-            <footer>{newUser.createdAt.substring(0,10)}</footer>
-          </div>
+        <div>
+          <label><h3>{newUser.username}</h3></label>
+        </div>
+        <div>
+          <label><h3>{newUser.tpoints}</h3></label>
+        </div>
+        <div>
+          <label><h3>{newUser.avgpoints}</h3></label>
+        </div>
+        <div>
+          <label><h3>{newUser.ttime}</h3></label>
+        </div>
+        <div>
+          <label><h3>{newUser.avgtime}</h3></label>
+        </div>
       </div>
     </div>
   );

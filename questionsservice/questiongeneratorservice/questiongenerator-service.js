@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const mongoose = require('mongoose');
+const mongooseUri = (process.env.DATAMODELS_URI === undefined) ? '../node_modules/mongoose' : 'mongoose';
+const mongoose = require(mongooseUri);
 const { QuestionGenerator } = require('./questiongenerator')
 
 const app = express();
@@ -28,8 +29,8 @@ app.set('query parser', 'simple');
 function validateNumberInQuery(number, minValue, paramName, defValue) {
   if (!(paramName in number)) return defValue;
   n = Number(number[paramName]);
-  if (isNaN(n)) throw new Error(`A number was expected in param \'${paramName}\'`);
-  if (n < minValue) throw new Error(`\'${paramName}\' must be at least \'${minValue}\'`);
+  if (isNaN(n)) throw new Error(`A number was expected in param '${paramName}'`);
+  if (n < minValue) throw new Error(`'${paramName}' must be at least '${minValue}'`);
   return n;
 }
 
@@ -47,7 +48,6 @@ function validateFields(query) {
 // Route for getting questions
 app.get('/questions', async (req, res) => {
   try {
-    
     const { preguntas, respuestas, temas } = validateFields(req.query);
     try {
       const retQuestions = await QuestionGenerator.generateQuestions(preguntas, respuestas, temas);
@@ -69,24 +69,7 @@ app.get('/questions', async (req, res) => {
 
 // Route for getting topics for questions
 app.get('/topics', async (req, res) => {
-  try {
-    const topics = QuestionGenerator.getAvailableTopics();
-    res.send(topics);
-  } catch (error) {
-    console.error(`An error occurred: ${error.message}`);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-// Route for getting topics for questions
-app.get('/topics', async (req, res) => {
-  try {
-    const topics = QuestionGenerator.getAvailableTopics();
-    res.send(topics);
-  } catch (error) {
-    console.error(`An error occurred: ${error.message}`);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+  res.send(QuestionGenerator.getAvailableTopics());
 });
 
 app.use((err, req, res, next) => {
