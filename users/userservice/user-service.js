@@ -33,8 +33,7 @@ app.post('/adduser', async (req, res) => {
 
         // Encrypt the password before saving it
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
-        const { username, password } = req.body;
+        const username = req.body.username.toString();
 
         const user = await User.findOne({ username });
 
