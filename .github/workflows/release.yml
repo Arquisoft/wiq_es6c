@@ -69,16 +69,17 @@ jobs:
     - uses: actions/checkout@v4
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
-      env:
-        API_URI: http://${{ secrets.DEPLOY_HOST }}:8000
       with:
           name: arquisoft/wiq_es6c/webapp
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
           workdir: webapp
-          buildargs: API_URI
+          buildargs: API_URI1, API_URI2
           platforms: linux/arm64
+      env:
+            API_URI1: http://${{ secrets.DEPLOY_HOST }}:8000
+            API_URI2: http://${{ secrets.DEPLOY_HOST }}:8100
   docker-push-authservice:
     name: Push auth service Docker Image to GitHub Packages
     runs-on: ubuntu-latest

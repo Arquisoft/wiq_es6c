@@ -11,7 +11,8 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Número de usuarios por página
 
-  const apiEndpoint = process.env.REACT_APIS_ENDPOINT || 'http://localhost:8100';
+  const apiEndpoint = process.env.REACT_APP_APIS_ENDPOINT || 'http://localhost:8100';
+  console.log(process.env.REACT_APP_APIS_ENDPOINT)
 
   useEffect(() => {
     const obtenerUsuarios = async () => {
