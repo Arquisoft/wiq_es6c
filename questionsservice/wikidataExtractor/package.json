@@ -5,7 +5,8 @@
   "main": "wikidataextractor-service.js",
   "scripts": {
     "devStart": "nodemon wikidataextractor-service.js",
-    "start": "node wikidataextractor-service.js"
+    "start": "node wikidataextractor-service.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,9 @@
     "node-cron": "^3.0.3"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^9.1.5",
+    "nodemon": "^3.1.0",
+    "supertest": "^7.0.0"
   }
 }
