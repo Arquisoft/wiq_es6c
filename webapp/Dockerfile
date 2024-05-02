@@ -10,7 +10,7 @@ ARG API_URI1="http://localhost:8000"
 ENV REACT_APP_API_ENDPOINT=$API_URI1
 
 ARG API_URI2="http://localhost:8100"
-ENV REACT_APIS_ENDPOINT=$API_URI2
+ENV REACT_APP_APIS_ENDPOINT=$API_URI2
 
 #Create an optimized version of the webapp
 RUN npm run build
