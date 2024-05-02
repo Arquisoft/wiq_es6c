@@ -10,19 +10,19 @@ paths:
       description: Retrieve generated questions based on provided parameters
       parameters:
         - in: query
-          name: preguntas
+          name: n_preguntas
           required: true
           schema:
             type: string
           description: Criteria for selecting questions
         - in: query
-          name: respuestas
+          name: n_respuestas
           required: true
           schema:
             type: string
           description: Criteria for selecting answers
         - in: query
-          name: temas
+          name: tema
           required: true
           schema:
             type: string
@@ -74,13 +74,3 @@ paths:
                 items:
                   type: string
                   description: Available topic
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message
