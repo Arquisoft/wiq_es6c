@@ -26,8 +26,6 @@ describe("Game Configuration", () => {
         expect(linkElement).toBeInTheDocument();
         linkElement = screen.getByText(/Selecciona las temáticas/i);
         expect(linkElement).toBeInTheDocument();
-        linkElement = screen.getByText(/Selecciona el número de preguntas/i);
-        expect(linkElement).toBeInTheDocument();
         linkElement = screen.getByText(/Comenzar Juego/i);
         expect(linkElement).toBeInTheDocument();
 
@@ -74,7 +72,7 @@ describe("Game Configuration", () => {
         //comprobamos que los elementos están correctamente 
         let div = document.getElementsByClassName('configureTopic')[0];
         let divChild = div.childNodes;
-        expect(divChild).toHaveLength(3);
+        expect(divChild).toHaveLength(2);
         //Probamos a marcar la primera temática
         let topic1 = document.getElementById('t0');
         expect(topic1).toHaveAttribute('type', 'checkbox');

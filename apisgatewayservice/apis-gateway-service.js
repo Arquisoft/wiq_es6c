@@ -22,11 +22,8 @@ function catchAction(error, res) {
   else if('response' in error && 'status' in error.response){
     res.status(error.response.status).json({ error: 'Unknown error' });
   } else {
-    console.log("Unknown error: " + error);
+     res.status(500).json({ error: 'Internal server error' });
   }
-  // } else {
-  //   res.status(500).json({ error: 'Internal server error' });
-  // }
 }
 
 app.use(metricsMiddleware);
@@ -44,6 +41,25 @@ app.get('/history/questions', async (req, res) => {
   try {
     const response = await axios.get(storeQuestionsServiceUrl+'/history/questions');
     res.json(response.data);
+  } catch (error) {
+    catchAction(error, res)
+  }
+})
+
+app.get('/usersStats', async (req, res) => {
+  try {
+    const users = await axios.get(userStatsServiceUrl+`/history/users`);
+    
+    const usersInformation = users.data.map(user => ({
+      username: user.username,
+      tpoints: user.tpoints,
+      avgpoints: user.tpoints / user.ngames,
+      ttime: user.ttime,
+      avgtime: user.ttime / user.ngames,
+      createdAt: user.createdAt
+    }));
+
+    res.json(usersInformation);
   } catch (error) {
     catchAction(error, res)
   }

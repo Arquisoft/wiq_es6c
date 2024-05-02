@@ -28,12 +28,13 @@
 }
 
 .allTopics {
-    display: grid;
-    grid-template-columns: auto auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 3em;
 }
 
 .allTopics > div{
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,7 +53,6 @@
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
-    top: 13.33333px;
     right: 0;
     bottom: 0;
     left: 0;
@@ -103,6 +103,37 @@
     width: 2rem;
   }
 
-  #config .border{
+  #config{
+    --label-r: 128;
+    --label-g: 128;
+    --label-b: 128;
+    --label-h: 0;
+    --label-s: 0;
+    --label-l: 50;
+
+    --perceived-lightness: calc( ((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255 );
+    --lightness-switch: max(0, min(calc((1/(var(--lightness-threshold) - var(--perceived-lightness)))), 1));
+    --lightness-threshold: 0.6;
+    --background-alpha: 0.18;
+    --border-alpha: 0.3;
+    --lighten-by: calc(((var(--lightness-threshold) - var(--perceived-lightness)) * 100) * var(--lightness-switch));
+    /* color: hsl(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%)); */
+    background: rgba(var(--label-r), var(--label-g), var(--label-b), var(--background-alpha));
+    border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
+    border-radius: 1em;
+    padding: 1%;
     margin-bottom: 10rem;
+  }
+
+  #config h2{
+    text-align: center;
+  }
+
+  #config .configureNumberOfQuestions, #config .configureNumberOfAnswers{
+    margin: 1em 0 0 0;
+  }
+
+  #config .configureNumberOfQuestions label, #config .configureNumberOfAnswers label{
+    font-size: 1.17em;
+    font-weight: 700;
   }

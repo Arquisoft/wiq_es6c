@@ -15,12 +15,14 @@ jobs:
     - run: npm --prefix users/authservice ci
     - run: npm --prefix users/userservice ci
     - run: npm --prefix gatewayservice ci
-    - run: npm --prefix questionsservice/questiongeneratorservice ci
+    - run: npm --prefix webapp ci
     - run: npm --prefix storeQuestionService ci
     - run: npm --prefix userStatsService ci
-    - run: npm --prefix webapp ci
     - run: npm --prefix gameservice ci
     - run: npm --prefix apisgatewayservice ci
+    - run: npm --prefix questionsservice ci
+    - run: npm --prefix questionsservice/questiongeneratorservice ci
+    - run: npm --prefix questionsservice/wikidataExtractor ci
     - run: npm --prefix users/authservice test -- --coverage
     - run: npm --prefix users/userservice test -- --coverage
     - run: npm --prefix gatewayservice test -- --coverage
@@ -28,8 +30,10 @@ jobs:
     - run: npm --prefix storeQuestionService test -- --coverage
     - run: npm --prefix userStatsService test -- --coverage
     - run: npm --prefix gameservice test -- --coverage
+    - run: npm --prefix apisgatewayservice test -- --coverage
+    - run: npm --prefix questionsservice/questiongeneratorservice test -- --coverage
+    # - run: npm --prefix questionsservice/wikidataExtractor test -- --coverage
     
-
     - name: Analyze with SonarCloud
       uses: sonarsource/sonarcloud-github-action@master
       env:
@@ -260,7 +264,7 @@ jobs:
   deploy:
     name: Deploy over SSH
     runs-on: ubuntu-latest
-    needs: [docker-push-userservice,docker-push-authservice,docker-push-gatewayservice,docker-push-webapp, docker-push-questiongeneratorservice, docker-push-storequestionservice, docker-push-userstatsservice, docker-push-wikidataextractorservice, docker-push-gameservice]
+    needs: [docker-push-userservice,docker-push-authservice,docker-push-gatewayservice,docker-push-webapp, docker-push-questiongeneratorservice, docker-push-storequestionservice, docker-push-userstatsservice, docker-push-wikidataextractorservice, docker-push-gameservice, docker-push-apisgatewayservice]
     steps:
     - name: Deploy over SSH
       uses: fifsky/ssh-action@master

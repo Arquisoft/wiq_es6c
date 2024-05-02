@@ -47,14 +47,29 @@ body {
     color: hsl(0, 0%, 94%)
 }
 
-#storeUser .question .grid {
+#storeUser h2 {
+    margin-top: 4.5em;
+}
+
+#storeUser{
     display: grid;
-    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: center;
+}
+
+#storeUser .pagination{
+    width: 100%;
+}
+
+#storeUser .grid{
+    display: grid;
+    grid-template-columns: repeat(1, minmax(40%, 1fr));
+    grid-gap: 0px;
 }
 
 #storeUser main {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(1, minmax(40%, 1fr));
 }
 
 #storeUser h2, #storeUser h3{
@@ -66,7 +81,6 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
     padding: 5px;
-    grid-gap: 10px;
 }
 
 #storeUser .container{
@@ -132,7 +146,7 @@ body {
 
 #storeUser .question .grid{
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(1, minmax(40%, 1fr));
     padding: 5px;
     column-gap: 1vw;
 }
@@ -166,13 +180,13 @@ body {
     justify-content: center;
 }
 
-@media (max-width: 880px) {
-    #storeUser .grid{
-        display: grid;
-        grid-template-columns: repeat(1, minmax(40%, 1fr));
-    }
+#storeUser .question.inner {
+    display: flex;
+    flex-wrap: nowrap; 
+    justify-content: space-around; 
+    width: 100%;
 }
-
+  
 @media (max-width: 680px) {
     .pagination{
         display: ruby;
@@ -186,4 +200,14 @@ body {
         align-items: stretch;
         flex-direction: column;
     }
+}
+
+table{
+    border: 1px solid #00ffee;
+    border-bottom: 1px solid #00ffee;
+}
+
+th{
+    border-left: 1px solid #00ffee;
+    border-right: 1px solid #00ffee;
 }

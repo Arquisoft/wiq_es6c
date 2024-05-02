@@ -9,7 +9,7 @@ import { shuffleArray, generateGameId } from '../Util';
 import './GameConfiguration.css';
 import Spinner from '../spinner/Spinner';
 
-const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 let gameId;
 
@@ -17,35 +17,37 @@ let gameId;
 const GameConfiguration = () => {
   let questions = []
   const navigation = useNavigate();
-    let tematicas = ['Paises', 'Capitales'];
-    let state = useLocation().state;
+  let tematicas = ['Paises', 'Capitales'];
+  let state = useLocation().state;
 
-    if( state !== null)
-      tematicas = state.topics;
 
-    // Almacen de temáticas 
-    const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
-    
-    let numPreguntas = 10;
+  if( state !== null)
+    tematicas = state.topics;
 
-    let numRes = 2
 
-    const handleTematicaChange = (event) => {
-        const tematicaSeleccionada = event.target.value;
+  // Almacen de temáticas 
+  const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
 
-        if (tematicasSeleccionadas.includes(tematicaSeleccionada)) {
-        // Si está seleccionada -> la eliminamos
-        setTematicasSeleccionadas(
-            tematicasSeleccionadas.filter(tema => tema !== tematicaSeleccionada));
-        } else {
-        setTematicasSeleccionadas([...tematicasSeleccionadas, tematicaSeleccionada]);
-        }
-    };
+  let numPreguntas = 10;
+
+  let numRes = 2
+
+  const handleTematicaChange = (event) => {
+    const tematicaSeleccionada = event.target.value;
+
+    if (tematicasSeleccionadas.includes(tematicaSeleccionada)) {
+      // Si está seleccionada -> la eliminamos
+      setTematicasSeleccionadas(
+        tematicasSeleccionadas.filter(tema => tema !== tematicaSeleccionada));
+    } else {
+      setTematicasSeleccionadas([...tematicasSeleccionadas, tematicaSeleccionada]);
+    }
+  };
 
 
   const initiateGame = async () => {
     //Sacar número de preguntas y respuestas
-    const numQuestions =  parseInt(document.getElementById("questionsSpinner").innerText);
+    const numQuestions = parseInt(document.getElementById("questionsSpinner").innerText);
     const numRespuestas = parseInt(document.getElementById("answersSpinner").innerText);
 
     numPreguntas = numQuestions;
@@ -81,7 +83,7 @@ const GameConfiguration = () => {
           options: possibleAnswers,
           correctAnswer: pregunta.respuesta_correcta
         })
-      }   
+      }
     } catch (error) {
       console.error(error);
     }
@@ -93,53 +95,52 @@ const GameConfiguration = () => {
       <Container id="config" component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
 
         <h2>Configuración de la partida</h2>
-        
+
         <div className="configureTopic">
 
-            <h3>Selecciona las temáticas</h3>
+          <h3>Selecciona las temáticas</h3>
 
-           {tematicas.map((option, index) => (
-              <div>
+          <div className='allTopics'>
+            {tematicas.map((option, index) => (
+              <div className='option'>
                 <input
-                type="checkbox"
-                id={`t${index}`}
-                value={option}
-                className='option-input'
-                onChange={handleTematicaChange}
-              />
+                  type="checkbox"
+                  id={`t${index}`}
+                  value={option}
+                  className='option-input'
+                  onChange={handleTematicaChange}
+                />
               <label htmlFor={`t${index}`}>{option}</label>
               </div>
             )
             )}
+          </div>
         </div>
 
 
         <div className="configureNumberOfQuestions">
 
-          <h3>Selecciona el número de preguntas</h3>
 
           <div>
             <label htmlFor="numPreguntas">Número de preguntas:</label>
-            <Spinner min={1} value={10} max={50} id="questionsSpinner"/>
+            <Spinner min={1} value={10} max={50} id="questionsSpinner" />
           </div>
 
         </div>
 
         <div className="configureNumberOfAnswers">
 
-          <h3>Selecciona el número de respuestas(mínimo 2)</h3>
-
           <div>
-            <label htmlFor="numRes">Número de respuestas:</label>
-            <Spinner min={2} value={2} max={10} id="answersSpinner"/>
+            <label htmlFor="numRes">Número de respuestas(mínimo 2):</label>
+            <Spinner min={2} value={2} max={10} id="answersSpinner" />
           </div>
 
-          
+
 
         </div>
 
-        <Button id="initGame" onClick={initiateGame} text="Comenzar Juego"/>
-            
+        <Button id="initGame" onClick={initiateGame} text="Comenzar Juego" />
+
       </Container>
       <Footer />
     </>
