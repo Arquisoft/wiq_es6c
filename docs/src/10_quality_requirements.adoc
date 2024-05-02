@@ -8,7 +8,7 @@ the action to be performed by the user or the system (stimulus) in order to gene
 
 === Quality Tree
 
-image::QualityTree.jpg[]
+image::QualityTree.png[]
 
 === Quality Scenarios
 
