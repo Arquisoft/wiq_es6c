@@ -58,7 +58,7 @@ describe('Test the Wikidata Conexion', () => {
         await startJob();
         expect(cron.schedule).toBeCalledWith(`*/30 * * * *`, expect.any(Function));
         expect(fetch).toHaveBeenCalledWith(expect.stringContaining('https://query.wikidata.org/sparql?query='), expect.anything());
-        expect(consoleLogSpy).toBeCalledWith(`Running a task every 30 minutes: ${Date()}`);
+        expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('Running a task every 30 minutes:'));
     });
 
     it('Should return an error', async () => {
@@ -79,7 +79,7 @@ describe('Test the Wikidata Conexion', () => {
         await startJob();
         expect(cron.schedule).toBeCalledWith(`*/30 * * * *`, expect.any(Function));
         expect(fetch).toHaveBeenCalledWith(expect.stringContaining('https://query.wikidata.org/sparql?query='), expect.anything());
-        expect(errorLogSpy).toBeCalledWith('Error al realizar la consulta a Wikidata:', 'Debería fallar');
+        expect(errorLogSpy).toHaveBeenCalledWith('Error al realizar la consulta a Wikidata:', 'Debería fallar');
     });
 });
 
