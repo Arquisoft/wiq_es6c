@@ -13,6 +13,13 @@
 
 </div>
 
+## Links
+- [WIQEII](http://158.179.212.42:3000)
+- [User's API](http://158.179.212.42:8100)
+    - [/users](http://158.179.212.42:8100/users) -> Información de los usuarios
+    - [/history/questions](http://158.179.212.42:8100/history/questions) -> Información de las preguntas generadas
+    - [/usersStats](http://158.179.212.42:8100/usersStats) -> Información de las estadísticas de los usuarios
+
 ## Code analisis
 
 <div align="center">
