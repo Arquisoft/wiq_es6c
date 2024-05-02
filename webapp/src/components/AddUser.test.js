@@ -14,8 +14,6 @@ describe('AddUser component', () => {
   it('should add user successfully', async () => {
     render(<AddUser />);
 
-    const nameInput = screen.getByLabelText(/Nombre/);
-    const surnameInput = screen.getByLabelText(/Apellidos/i);
     const usernameInput = screen.getByLabelText(/Usuario/i);
     const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
     const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
@@ -25,8 +23,6 @@ describe('AddUser component', () => {
     mockAxios.onPost('http://localhost:8000/adduser').reply(200);
 
     // Simulate user input
-    fireEvent.change(nameInput, { target: { value: 'testUsera' } });
-    fireEvent.change(surnameInput, { target: { value: 'testUsera' } });
     fireEvent.change(usernameInput, { target: { value: 'testUsera' } });
     fireEvent.change(passwordInput, { target: { value: 'testPassw' } });
     fireEvent.change(confirmPasswordInput, { target: { value: 'testPassw' } });
@@ -65,8 +61,6 @@ describe('AddUser component', () => {
     render(<AddUser />);
 
     // Simulate user input
-    fireEvent.change(screen.getByLabelText(/Nombre/), { target: { value: 'userForTest' } });
-    fireEvent.change(screen.getByLabelText(/Apellidos/i), { target: { value: 'userForTest' } });
     fireEvent.change(screen.getByLabelText(/Usuario/i), { target: { value: 'userForTest' } });
     fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword2' } });
     fireEvent.change(screen.getByLabelText(/Repetir contraseña/i), { target: { value: 'password' } });
@@ -87,8 +81,6 @@ describe('AddUser component', () => {
     mockAxios.onPost('http://localhost:8000/adduser').reply(500, { error: 'Internal Server Error' });
 
     // Simulate user input
-    fireEvent.change(screen.getByLabelText(/Nombre/), { target: { value: 'a' } });
-    fireEvent.change(screen.getByLabelText(/Apellidos/i), { target: { value: 'a' } });
     fireEvent.change(screen.getByLabelText(/Usuario/i), { target: { value: 'a' } });
     fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword2' } });
     fireEvent.change(screen.getByLabelText(/Repetir contraseña/i), { target: { value: 'testPassword2' } });
@@ -98,7 +90,7 @@ describe('AddUser component', () => {
 
     // Wait for the error Snackbar to be open
     await waitFor(() => {
-      expect(screen.getByText(/Error: Internal Server Error/i)).toBeInTheDocument();
+      expect(screen.getByText(/Usuario ya registrado./i)).toBeInTheDocument();
     });
   });
 });
