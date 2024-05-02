@@ -3,7 +3,7 @@ const cors = require('cors');
 const axios = require('axios');
 const mongooseUri = (process.env.DATAMODELS_URI === undefined) ? '../node_modules/mongoose' : 'mongoose';
 const mongoose = require(mongooseUri);
-const { QuestionGenerator } = require('./questiongenerator')
+const { QuestionGenerator } = require('./questiongenerator');
 
 const app = express();
 const port = 8007;

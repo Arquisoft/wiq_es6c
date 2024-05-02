@@ -5,7 +5,7 @@ jest.mock('axios');
 
 const { QuestionGenerator } = require('./questiongenerator')
 const modelUri = process.env.DATAMODELS_URI || '../questiondata-model';
-const { Pais, Monumento, Elemento, Pelicula, Cancion } = require('../questiondata-model');
+const { Pais, Monumento, Elemento, Pelicula, Cancion } = require(modelUri);
 
 let mongoServer;
 let app;
