@@ -1,0 +1,86 @@
+openapi: 3.0.0
+info:
+  title: Question Generation API
+  description: API for generating questions and retrieving topics
+  version: 1.0.0
+paths:
+  /questions:
+    get:
+      summary: Get Questions
+      description: Retrieve generated questions based on provided parameters
+      parameters:
+        - in: query
+          name: preguntas
+          required: true
+          schema:
+            type: string
+          description: Criteria for selecting questions
+        - in: query
+          name: respuestas
+          required: true
+          schema:
+            type: string
+          description: Criteria for selecting answers
+        - in: query
+          name: temas
+          required: true
+          schema:
+            type: string
+          description: Criteria for selecting topics
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  questions:
+                    type: array
+                    items:
+                      type: string
+                      description: Generated question
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+  /topics:
+    get:
+      summary: Get Available Topics
+      description: Retrieve available topics for questions
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  description: Available topic
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
