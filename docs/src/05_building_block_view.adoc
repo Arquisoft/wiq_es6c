@@ -112,22 +112,22 @@ package "WIQ App"{
     }
 }
 
-User -right-> WebApp : Uses
-WebApp <-down-> GatewayS: Redirects requests
+User --> WebApp : "  Uses"
+WebApp <-down-> GatewayS: "Redirects\t\t\t\nrequests\t\t\t"
 
-GatewayS <--down--> "UserAuth Service" : "Handles user\nlogin/registry"
-GatewayS <-down-> "Game Service" : "Handles user current game"
+GatewayS <------> "UserAuth Service" : "Handles user\nlogin/registry\n\n\n"
+GatewayS <--> "Game Service" : "Handles user\n current game"
 
-ApisGateway <-- WebApp : "Gets data from the Api"
-ApisGateway -up-> QHS : "Gets Generated Questions"
-ApisGateway -up-> USS  : "Gets Users' Stats"
+ApisGateway <-up- WebApp : "Gets data\n from the Api"
+ApisGateway -left-> QHS : "Gets Generated\n Questions"
+ApisGateway ---> USS  : "Gets Users' Stats"
 
-"Game Service" <---> "Questions Service" : "Receives question petitions,\nsends questions\n\n"
-"Game Service" ---> "USS" : "Sends user\t\nstatistics\t\t"
+"Game Service" <-----> "Questions Service" : "Receives question \npetitions,\nsends questions"
+"Game Service"-> "USS" : "Sends user\t\nstatistics\t\t"
 "Questions Service" -up-> "QHS" : " Sends\n  generated\n  questions"
 
-"Wikidata" .up.> "Wikidata Extractor" : "Returns data"
-"Wikidata" <.up. "Wikidata Extractor" : "Queries"
+"Wikidata" .up..> "Wikidata Extractor" : "Returns data"
+"Wikidata" <.up.. "Wikidata Extractor" : "Queries"
 "Wikidata Extractor" --> QSDB
 "Questions Generator Service" <-- QSDB
 "Questions Generator Service" --> QSDB

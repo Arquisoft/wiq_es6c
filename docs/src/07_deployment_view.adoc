@@ -51,26 +51,26 @@ cloud "Wikidata"
 actor "User"
 
 
-"User" -left- "Web App" : "\t\tHTTP/port:3000\t\t"
+"User" -- "Web App" : "  HTTP/port:3000"
 
-"Web App" -down- "Gateway Service" : "port: 8000"
+"Web App" -down- "Gateway Service" : "port: 8000    "
 
-"Api's Gateway Service" -down- "Web App" : "port: 8100"
+"Api's Gateway Service" -up- "Web App" : "port: 8100"
 
-"Gateway Service" -down- "Auth Service" : "port: 8002"
-"Gateway Service" -down- "User Service" : "port: 8001"
-"Gateway Service" -left- "Game Service"  : "port: 8005"
+"Gateway Service" --- "Auth Service" : "   port: 8002"
+"Gateway Service" --- "User Service" : "port: 8001          "
+"Gateway Service" --- "Game Service"  : "port: 8005\t\t"
 
-"User Stats Service" -down- "Game Service" : "port: 8003"
+"User Stats Service" -- "Game Service" : "  port: 8003"
 
-"User Stats Service" -- "Api's Gateway Service" : "port: 8003"
-"Store Question Service" -- "Api's Gateway Service" : " port: 8004"
+"User Stats Service" -up- "Api's Gateway Service" : "  port: 8003"
+"Store Question Service" -up- "Api's Gateway Service" : "\tport: 8004"
 
-"Store Question Service" -down- "Question Generator Service" : "port: 8004"
-"Question Generator Service" -down--- "Wikidata Extractor Service" : "port: 8008"
-"Question Generator Service" -down- "Game Service" : "port: 8007"
+"Store Question Service" -- "Question Generator Service" : "\tport: 8004"
+"Question Generator Service" -- "Wikidata Extractor Service" : "\tport: 8008"
+"Question Generator Service" -- "Game Service" : "port: 8007"
 
-"Wikidata Extractor Service" -down- "Wikidata" : "HTTPS"
+"Wikidata Extractor Service" -- "Wikidata" : "\tHTTPS"
 ----
 
 In addition to what is shown in the diagram, we will also use Graphana and Prometheus during the production stage as code monitoring systems.
