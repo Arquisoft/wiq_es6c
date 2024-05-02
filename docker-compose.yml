@@ -66,9 +66,9 @@ services:
     networks:
       - mynetwork
     environment:
-      STORE_QUESTION_SERVICE_URL: http://localhost:8004
-      USER_STATS_SERVICE_URL: http://localhost:8003
-      USER_SERVICE_URL: http://localhost:8001
+      STORE_QUESTION_SERVICE_URL: http://storequestionservice:8004
+      USER_STATS_SERVICE_URL: http://userstatsservice:8003
+      USER_SERVICE_URL: http://userservice:8001
     restart: always
 
   gameservice:

@@ -27,9 +27,11 @@ paths:
                 username:
                   type: string
                   description: The name if the user.
+                  example: student
                 points:
                   type: integer
                   description: The number of points that the user score.
+                  example: 1000
                 questions:
                   type: array
                   items:
@@ -38,17 +40,21 @@ paths:
                       question:
                         type: string
                         description: The question that is going to be done.
+                        example: ¿Cuál es la capital de España?
                       correctAnswer:
                         type: string
                         description: The correct answer for the question.
+                        example: Madrid
                       answers:
                         type: array
                         items:
                           type: string
                           description: List with the possible answers.
+                          example: Madrid, Paris, Roma o Londres (en dif items)
                 avgtime:
                   type: integer
                   description: The average time taken to answer questions in seconds.
+                  example: 23
       responses:
         '200':
           description: Game created and returned successfully.
@@ -64,12 +70,15 @@ paths:
                   username:
                     type: string
                     description: The name if the user.
+                    example: student
                   points:
                     type: integer
                     description: The number of points that the user scored.
+                    example: 1000
                   avgtime:
                     type: integer
                     description: The average time taken to answer questions in seconds.
+                    example: 23
                   questions:
                     type: array
                     items:
@@ -78,14 +87,17 @@ paths:
                         question:
                           type: string
                           description: The question that was done.
+                          example: ¿Cuál es la capital de España?
                         correctAnswer:
                           type: string
                           description: The correct answer for the question.
+                          example: Madrid
                         answers:
                           type: array
                           items:
                             type: string
                             description: List with the possible answers.
+                            example: Madrid, Paris, Roma o Londres (en diferentes items)
                   createdAt:
                     type: string
                     format: date-time
@@ -113,6 +125,7 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+
   /history/games/{username}:
     get:
       summary: Access to the history of games of the user.
@@ -124,6 +137,7 @@ paths:
           description: Username of the user.
           schema:
             type: string
+            example: student
       responses:
         '200':
           description: Information of games returned successfully.
@@ -145,9 +159,11 @@ paths:
                     points:
                       type: integer
                       description: The number of points that the user scored.
+                      example: 1000
                     avgtime:
                       type: integer
                       description: The average time taken to answer questions in seconds.
+                      example: 23
                     questions:
                       type: array
                       items:
@@ -156,14 +172,17 @@ paths:
                           question:
                             type: string
                             description: The question that was done.
+                            example: ¿Cuál es la capital de España?
                           correctAnswer:
                             type: string
                             description: The correct answer for the question.
+                            example: Madrid
                           answers:
                             type: array
                             items:
                               type: string
                               description: List with the possible answers.
+                              example: Madrid, Paris, Roma o Londres (en diferentes items)
                     createdAt:
                       type: string
                       format: date-time
@@ -191,6 +210,7 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+
   /history/games:
     get:
       summary: Get the history of all games.
@@ -216,9 +236,11 @@ paths:
                     points:
                       type: integer
                       description: The number of points that the user scored.
+                      example: 1000
                     avgtime:
                       type: integer
                       description: The average time taken to answer questions in seconds.
+                      example: 23
                     questions:
                       type: array
                       items:
@@ -227,14 +249,17 @@ paths:
                           question:
                             type: string
                             description: The question that was done.
+                            example: ¿Cuál es la capital de España?
                           correctAnswer:
                             type: string
                             description: The correct answer for the question.
+                            example: Madrid
                           answers:
                             type: array
                             items:
                               type: string
                               description: List with the possible answers.
+                              example: Madrid, Paris, Roma o Londres (en diferentes items)
                     createdAt:
                       type: string
                       format: date-time
@@ -251,6 +276,7 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
+                    
   /history/users:
     get:
       summary: Get the history of all users.
@@ -268,15 +294,19 @@ paths:
                     username:
                       type: string
                       description: Username of the user.
+                      example: student
                     tpoints:
                       type: integer
                       description: Total points earned by the user.
+                      example: 1000
                     ttime:
                       type: integer
                       description: Total time spent by the user (in seconds).
+                      example: 330
                     ngames:
                       type: integer
                       description: Number of games played by the user.
+                      example: 2
                     createdAt:
                       type: string
                       format: date-time

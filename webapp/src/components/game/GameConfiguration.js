@@ -10,7 +10,7 @@ import './GameConfiguration.css';
 import Spinner from '../spinner/Spinner';
 import { generateGameId } from '../Util';
 
-const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 let gameId;
 
@@ -18,38 +18,38 @@ let gameId;
 const GameConfiguration = () => {
   let questions = []
   const navigation = useNavigate();
-    let tematicas = ['Paises', 'Capitales'];
-    let state = useLocation().state;
+  let tematicas = ['Paises', 'Capitales'];
+  let state = useLocation().state;
 
-    console.log(state)
+  console.log(state)
 
-    if( state !== null)
-      tematicas = state.topics;
-    console.log(tematicas)
+  if (state !== null)
+    tematicas = state.topics;
+  console.log(tematicas)
 
-    // Almacen de temáticas 
-    const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
-    
-    let numPreguntas = 10;
+  // Almacen de temáticas 
+  const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
 
-    let numRes = 2
+  let numPreguntas = 10;
 
-    const handleTematicaChange = (event) => {
-        const tematicaSeleccionada = event.target.value;
+  let numRes = 2
 
-        if (tematicasSeleccionadas.includes(tematicaSeleccionada)) {
-        // Si está seleccionada -> la eliminamos
-        setTematicasSeleccionadas(
-            tematicasSeleccionadas.filter(tema => tema !== tematicaSeleccionada));
-        } else {
-        setTematicasSeleccionadas([...tematicasSeleccionadas, tematicaSeleccionada]);
-        }
-    };
+  const handleTematicaChange = (event) => {
+    const tematicaSeleccionada = event.target.value;
+
+    if (tematicasSeleccionadas.includes(tematicaSeleccionada)) {
+      // Si está seleccionada -> la eliminamos
+      setTematicasSeleccionadas(
+        tematicasSeleccionadas.filter(tema => tema !== tematicaSeleccionada));
+    } else {
+      setTematicasSeleccionadas([...tematicasSeleccionadas, tematicaSeleccionada]);
+    }
+  };
 
 
   const initiateGame = async () => {
     //Sacar número de preguntas y respuestas
-    const numQuestions =  parseInt(document.getElementById("questionsSpinner").innerText);
+    const numQuestions = parseInt(document.getElementById("questionsSpinner").innerText);
     const numRespuestas = parseInt(document.getElementById("answersSpinner").innerText);
 
     numPreguntas = numQuestions;
@@ -58,10 +58,10 @@ const GameConfiguration = () => {
     console.log(numPreguntas);
     console.log(numRes);
 
-    gameId = await generateGameId();  
+    gameId = await generateGameId();
     await getQuestions();
     //isApiCalledRef = true//ASK - is this necessary?
-    navigation("/firstGame", {state: {questions, gameId}})
+    navigation("/firstGame", { state: { questions, gameId } })
   }
 
   function formatearTopics() {
@@ -89,7 +89,7 @@ const GameConfiguration = () => {
           options: possibleAnswers,
           correctAnswer: pregunta.respuesta_correcta
         })
-      }   
+      }
     } catch (error) {
       console.error(error);
     }
@@ -99,57 +99,56 @@ const GameConfiguration = () => {
   return (
     <>
       <Nav />
-      <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
+      <Container id="config" component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
 
         <h2>Configuración de la partida</h2>
-        
+
         <div className="configureTopic">
 
-            <h3>Selecciona las temáticas</h3>
+          <h3>Selecciona las temáticas</h3>
 
-           {tematicas.map((option, index) => (
-              <div>
+          <div className='allTopics'>
+            {tematicas.map((option, index) => (
+              <div className='option'>
                 <input
-                type="checkbox"
-                id={`t${index}`}
-                value={option}
-                className='option-input'
-                // checked={tematicasSeleccionadas.includes({option})}
-                onChange={handleTematicaChange}
-              />
-              <label htmlFor={`t${index}`}>{option}</label>
+                  type="checkbox"
+                  id={`t${index}`}
+                  value={option}
+                  className='option-input'
+                  // checked={tematicasSeleccionadas.includes({option})}
+                  onChange={handleTematicaChange}
+                />
+                <label htmlFor={`t${index}`}>{option}</label>
               </div>
             )
             )}
+          </div>
         </div>
 
 
         <div className="configureNumberOfQuestions">
 
-          <h3>Selecciona el número de preguntas</h3>
 
           <div>
             <label htmlFor="numPreguntas">Número de preguntas:</label>
-            <Spinner min={1} value={10} max={50} id="questionsSpinner"/>
+            <Spinner min={1} value={10} max={50} id="questionsSpinner" />
           </div>
 
         </div>
 
         <div className="configureNumberOfAnswers">
 
-          <h3>Selecciona el número de respuestas(mínimo 2)</h3>
-
           <div>
-            <label htmlFor="numRes">Número de respuestas:</label>
-            <Spinner min={2} value={2} max={10} id="answersSpinner"/>
+            <label htmlFor="numRes">Número de respuestas(mínimo 2):</label>
+            <Spinner min={2} value={2} max={10} id="answersSpinner" />
           </div>
 
-          
+
 
         </div>
 
-        <Button onClick={initiateGame} text="Comenzar Juego"/>
-            
+        <Button id="initGame" onClick={initiateGame} text="Comenzar Juego" />
+
       </Container>
       <Footer />
     </>

@@ -4,14 +4,25 @@ function User(props) {
   const { newUser } = props;
 
   return (
-    <div className='border'>
-      <div className='question inner'>
-        <h3>{newUser.username}</h3>
-          <div className='container footer'>
-            <footer>{newUser.createdAt.substring(0,10)}</footer>
-          </div>
-      </div>
-    </div>
+  
+      <tr>
+        <th>
+          <label><h3>{newUser.username}</h3></label>
+        </th>
+        <th>
+          <label><h3>{newUser.tpoints}</h3></label>
+        </th>
+        <th>
+          <label><h3>{newUser.avgpoints.toFixed(2)}</h3></label>
+        </th>
+        <th>
+          <label><h3>{newUser.ttime.toFixed(2)}</h3></label>
+        </th>
+        <th>
+          <label><h3>{newUser.avgtime.toFixed(2)}</h3></label>
+        </th>
+      </tr>
+  
   );
 }
 

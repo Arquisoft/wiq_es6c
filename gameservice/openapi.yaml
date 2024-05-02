@@ -9,10 +9,11 @@ servers:
   - url: http://gameservice:8005
     description: Production server
 paths:
-  /generateGameUnlimitedQuestions:
+
+  /generateGame:
     get:
-      summary: Generate the id for the unlimited game questions.
-      operationId: generateGameUnlimitedQuestions
+      summary: Generate the id for the game.
+      operationId: generateGame
       requestBody:
         required: true
         content:
@@ -30,6 +31,7 @@ paths:
                   id:
                     type: string
                     description: The id of the game created.
+                    example: Game id created (sqeweg12er56yg46u89k)
         '500':
           description: Internal server error.
           content:
@@ -41,10 +43,11 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
-  /gameUnlimitedQuestion:
+
+  /questions:
     get:
-      summary: Generate questions for the unlimited game questions.
-      operationId: gameUnlimitedQuestions
+      summary: Generate questions for the game.
+      operationId: questions
       requestBody:
         required: true
         content:
@@ -67,13 +70,15 @@ paths:
                   answers:
                     type: List<String>
                     description: List with the possible answers.
-                    example: 
+                    example: Madrid, Paris, Roma o Londres.
                   question:
                     type: String
                     description: The question that is going to be done
+                    example: ¿Capital de España?
                   correctAnswer:
                     type: String
-                    description: The correct answer for the question       
+                    description: The correct answer for the question      
+                    example: Madrid.
         '500':
           description: Internal server error.
           content:
@@ -103,20 +108,28 @@ paths:
                 username:
                   type: string
                   description: The name if the user.
+                  example: username.
                 points:
                   type: integer
                   description: The number of points that the user score.
+                  example: 1000.
                 questions:
                   answers:
                     type: List<String>
                     description: List with the possible answers.
-                    example: 
+                    example: Madrid, Paris, Roma o Londres.
                   question:
                     type: String
                     description: The question that is going to be done
+                    example: ¿Capital de España?
                   correctAnswer:
                     type: String
                     description: The correct answer for the question
+                    example: Madrid
+                avgtime:
+                  type: integer
+                  description: The average time taken to answer questions in seconds.
+                  example: 23
       responses:
         '200':
           description: Question created and returned successfuly.
@@ -127,12 +140,12 @@ paths:
                 properties:
                   id:
                     type: string
-                    description: The question that is going to bre realized.
-                    example: 
+                    description: The question that is going to be realized.
+                    example: ¿Capital de España?
                   answers:
                     type: List<String>
                     description: List with the possible answers.
-                    example: 
+                    example: Madrid, Paris, Roma o Londres.
         '500':
           description: Internal server error.
           content:
