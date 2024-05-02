@@ -70,7 +70,8 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
-        API_URI: http://${{ secrets.DEPLOY_HOST }}:8000
+        API_URI1: http://${{ secrets.DEPLOY_HOST }}:8000
+        API_URI2: http://${{ secrets.DEPLOY_HOST }}:8100
       with:
           name: arquisoft/wiq_es6c/webapp
           username: ${{ github.actor }}
