@@ -1,122 +1,132 @@
-import {
-  Pais,
-  Monumento,
-  Elemento,
-  Pelicula,
-  Cancion
-} from './wikidataextractor-service';
+const { MongoMemoryServer } = require('mongodb-memory-server');
+const cron = require('node-cron');
+let startJob, close;
 
-describe('Wikidata Extractor Service', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+const modelUri = process.env.DATAMODELS_URI || '../questiondata-model';
+const { Pais } = require(modelUri);
 
-  describe('Templates', () => {
-    const mockTransactions = [{ updateOne: jest.fn() }];
-
-    const mockWikiQueries = {
-      obtenerPaisYCapital: jest.fn(),
-      obtenerPaisYContinente: jest.fn(),
-      obtenerMonumentoYPais: jest.fn(),
-      obtenerSimboloQuimico: jest.fn(),
-      obtenerPeliculaYDirector: jest.fn(),
-      obtenerCancionYArtista: jest.fn()
+jest.mock('node-cron', () => {
+    return {
+        schedule: jest.fn(),
     };
+});
+const consoleLogSpy = jest.spyOn(console, 'log');
+const errorLogSpy = jest.spyOn(console, 'error');
 
-    const mockData = {
-      countryLabel: 'Country',
-      capitalLabel: 'Capital',
-      continentLabel: 'Continent',
-      monumentLabel: 'Monument',
-      elementLabel: 'Element',
-      symbol: 'Symbol',
-      peliculaLabel: 'Movie',
-      directorLabel: 'Director',
-      songLabel: 'Song',
-      artistLabel: 'Artist'
-    };
+let mongoServer;
+beforeAll(async () => {
+    mongoServer = await MongoMemoryServer.create();
+    const mongoUri = mongoServer.getUri();
+    process.env.MONGODB_URI = mongoUri;
 
-    const mockSaveMethod = jest.fn();
+    ({ startJob, close } = require('./wikidataextractor-service'));
 
-    const templates = [
-      {
-        extractMethod: mockWikiQueries.obtenerPaisYCapital,
-        filtro: (element) => ({ pais: String(element.countryLabel) }),
-        campo_actualizar: (element) => ({ capital: element.capitalLabel }),
-        saveMethod: mockSaveMethod
-      },
-      {
-        extractMethod: mockWikiQueries.obtenerPaisYContinente,
-        filtro: (element) => ({ pais: String(element.countryLabel) }),
-        campo_actualizar: (element) => ({ continente: element.continentLabel }),
-        saveMethod: mockSaveMethod
-      },
-      {
-        extractMethod: mockWikiQueries.obtenerMonumentoYPais,
-        filtro: (element) => ({ monumento: String(element.monumentLabel) }),
-        campo_actualizar: (element) => ({ pais: element.countryLabel }),
-        saveMethod: mockSaveMethod
-      },
-      {
-        extractMethod: mockWikiQueries.obtenerSimboloQuimico,
-        filtro: (element) => ({ elemento: String(element.elementLabel) }),
-        campo_actualizar: (element) => ({ simbolo: element.symbol }),
-        saveMethod: mockSaveMethod
-      },
-      {
-        extractMethod: mockWikiQueries.obtenerPeliculaYDirector,
-        filtro: (element) => ({ pelicula: String(element.peliculaLabel) }),
-        campo_actualizar: (element) => ({ director: element.directorLabel }),
-        saveMethod: mockSaveMethod
-      },
-      {
-        extractMethod: mockWikiQueries.obtenerCancionYArtista,
-        filtro: (element) => ({ cancion: String(element.songLabel) }),
-        campo_actualizar: (element) => ({ artista: element.artistLabel }),
-        saveMethod: mockSaveMethod
-      }
-    ];
+    const newPais1 = new Pais({
+        pais: 'Japan',
+        capital: 'Tokyo',
+        continente: 'Asia'
+      });
+      await newPais1.save();
+});
 
-    test('Template 1', async () => {
-      mockWikiQueries.obtenerPaisYCapital.mockResolvedValue(mockData);
-      await templates[0].extractMethod();
-      expect(mockWikiQueries.obtenerPaisYCapital).toHaveBeenCalled();
-      expect(mockSaveMethod).toHaveBeenCalledWith(mockTransactions);
+afterAll(async () => {
+    close();
+    await mongoServer.stop();
+});
+
+afterEach(() => {
+    consoleLogSpy.mockReset();
+    errorLogSpy.mockReset();
+});
+
+describe('Test the Wikidata Conexion', () => {
+    it('Should return a list of countryLabels and capitalLabels', async () => {
+        global.fetch = jest.fn().mockImplementationOnce(() => // Mock data to be returned by the fetch call
+            Promise.resolve({
+                json: () => Promise.resolve({
+                    results: {
+                        bindings: [
+                            { countryLabel: { value: 'Spain' }, capitalLabel: { value: 'Madrid' } },
+                            { countryLabel: { value: 'France' }, capitalLabel: { value: 'Paris' } }
+                        ]
+                    }
+                }),
+                ok: true
+            })
+        );
+        cron.schedule.mockImplementation(async (frequency, callback) => await callback());
+        await startJob();
+        expect(cron.schedule).toBeCalledWith(`*/30 * * * *`, expect.any(Function));
+        expect(fetch).toHaveBeenCalledWith(expect.stringContaining('https://query.wikidata.org/sparql?query='), expect.anything());
+        expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('Running a task every 30 minutes:'));
     });
 
-    test('Template 2', async () => {
-      mockWikiQueries.obtenerPaisYContinente.mockResolvedValue(mockData);
-      await templates[1].extractMethod();
-      expect(mockWikiQueries.obtenerPaisYContinente).toHaveBeenCalled();
-      expect(mockSaveMethod).toHaveBeenCalledWith(mockTransactions);
+    it('Should return an error', async () => {
+        global.fetch = jest.fn().mockImplementationOnce(() =>
+            Promise.resolve({
+                json: () => Promise.resolve({
+                    results: {
+                        bindings: [
+                            { countryLabel: { value: 'Spain' }, capitalLabel: { value: 'Madrid' } },
+                            { countryLabel: { value: 'France' }, capitalLabel: { value: 'Paris' } }
+                        ]
+                    }
+                }),
+                ok: false,
+                statusText: 'Debería fallar'
+            })
+        );
+        await startJob();
+        expect(cron.schedule).toBeCalledWith(`*/30 * * * *`, expect.any(Function));
+        expect(fetch).toHaveBeenCalledWith(expect.stringContaining('https://query.wikidata.org/sparql?query='), expect.anything());
+        expect(errorLogSpy).toHaveBeenCalledWith('Error al realizar la consulta a Wikidata:', 'Debería fallar');
+    });
+});
+
+describe('Test the different Wikidata Queries', () => {
+    it('Should return a list of countries and continents', async () => {
+        global.fetch = jest.fn().mockImplementation(() =>
+            Promise.resolve({
+                json: () => Promise.resolve({
+                    results: {
+                        bindings: [
+                            { countryLabel: { value: 'Spain' }, capitalLabel: { value: 'Madrid' } },
+                            { countryLabel: { value: 'France' }, capitalLabel: { value: 'Paris' } }
+                        ]
+                    }
+                }),
+                ok: true
+            })
+        );
+        cron.schedule.mockImplementation(async (frequency, callback) => await callback());
+        await startJob(30, 1);
+        expect(cron.schedule).toBeCalledWith(`*/30 * * * *`, expect.any(Function));
+        expect(fetch).toHaveBeenCalledWith(expect.stringContaining('https://query.wikidata.org/sparql?query='), expect.anything());
+        expect(consoleLogSpy).toHaveBeenNthCalledWith(2, 'Actualizando los datos sobre:');
+        expect(consoleLogSpy).toHaveBeenNthCalledWith(3, 'Países y Continentes');
     });
 
-    test('Template 3', async () => {
-      mockWikiQueries.obtenerMonumentoYPais.mockResolvedValue(mockData);
-      await templates[2].extractMethod();
-      expect(mockWikiQueries.obtenerMonumentoYPais).toHaveBeenCalled();
-      expect(mockSaveMethod).toHaveBeenCalledWith(mockTransactions);
+    it('Should return a list of countries and monuments', async () => {
+        await startJob(30, 2);
+        expect(cron.schedule).toBeCalledWith(`*/30 * * * *`, expect.any(Function));
+        expect(consoleLogSpy).toHaveBeenNthCalledWith(3, 'Países y Monumentos');
     });
 
-    test('Template 4', async () => {
-      mockWikiQueries.obtenerSimboloQuimico.mockResolvedValue(mockData);
-      await templates[3].extractMethod();
-      expect(mockWikiQueries.obtenerSimboloQuimico).toHaveBeenCalled();
-      expect(mockSaveMethod).toHaveBeenCalledWith(mockTransactions);
+    it('Should return a list of chemical elements and its symbols', async () => {
+        await startJob(30, 3);
+        expect(cron.schedule).toBeCalledWith(`*/30 * * * *`, expect.any(Function));
+        expect(consoleLogSpy).toHaveBeenNthCalledWith(3, 'Símbolos químicos');
     });
 
-    test('Template 5', async () => {
-      mockWikiQueries.obtenerPeliculaYDirector.mockResolvedValue(mockData);
-      await templates[4].extractMethod();
-      expect(mockWikiQueries.obtenerPeliculaYDirector).toHaveBeenCalled();
-      expect(mockSaveMethod).toHaveBeenCalledWith(mockTransactions);
+    it('Should return a list of films and directors', async () => {
+        await startJob(30, 4);
+        expect(cron.schedule).toBeCalledWith(`*/30 * * * *`, expect.any(Function));
+        expect(consoleLogSpy).toHaveBeenNthCalledWith(3, 'Películas y Directores');
     });
 
-    test('Template 6', async () => {
-      mockWikiQueries.obtenerCancionYArtista.mockResolvedValue(mockData);
-      await templates[5].extractMethod();
-      expect(mockWikiQueries.obtenerCancionYArtista).toHaveBeenCalled();
-      expect(mockSaveMethod).toHaveBeenCalledWith(mockTransactions);
+    it('Should return a list of songs and artists', async () => {
+        await startJob(30, 5);
+        expect(cron.schedule).toBeCalledWith(`*/30 * * * *`, expect.any(Function));
+        expect(consoleLogSpy).toHaveBeenNthCalledWith(3, 'Canciones y Artistas');
     });
-  });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import Quiz from './FirstGame'; // Asegúrate de importar correctamente tu componente Quiz
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ContextFun } from './Context';
@@ -50,7 +50,7 @@ const state = {
 describe('Quiz Component', () => { 
     jest.setTimeout(13000);
     it('selects the correct answer', async () => {    
-        const { getByText, getByTestId } = render(<ContextFun>
+        const { getByText } = render(<ContextFun>
             <Router>
               <Quiz />
             </Router>

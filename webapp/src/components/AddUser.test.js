@@ -14,8 +14,6 @@ describe('AddUser component', () => {
   it('should add user successfully', async () => {
     render(<AddUser />);
 
-    const nameInput = screen.getByLabelText(/Nombre/);
-    const surnameInput = screen.getByLabelText(/Apellidos/i);
     const usernameInput = screen.getByLabelText(/Usuario/i);
     const passwordInput = screen.getAllByLabelText(/Contraseña/i)[0];
     const confirmPasswordInput = screen.getByLabelText(/Repetir contraseña/i);
@@ -25,21 +23,19 @@ describe('AddUser component', () => {
     mockAxios.onPost('http://localhost:8000/adduser').reply(200);
 
     // Simulate user input
-    fireEvent.change(nameInput, { target: { value: 'testUsera' } });
-    fireEvent.change(surnameInput, { target: { value: 'testUsera' } });
     fireEvent.change(usernameInput, { target: { value: 'testUsera' } });
-    fireEvent.change(passwordInput, { target: { value: 'testP' } });
-    fireEvent.change(confirmPasswordInput, { target: { value: 'testP' } });
+    fireEvent.change(passwordInput, { target: { value: 'testPassw' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassw' } });
 
     // Probamos a poner una contraseña corta 
     fireEvent.click(addUserButton);
     await waitFor(() => {
-      expect(screen.getByText(/Las contraseñas deben contener más de 8 caracteres./i)).toBeInTheDocument();
+      expect(screen.getByText(/Las contraseñas deben contener al menos una letra mayúscula, una letra minúscula y un número, y tener más de 8 caracteres./i)).toBeInTheDocument();
     });
 
-    //Modificamos la contraseña para que contenga al menos de 8 caracteres
-    fireEvent.change(passwordInput, { target: { value: 'testPassw' } });
-    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassw' } });
+    //Modificamos la contraseña para que contenga al menos de 8 caracteres y un numero
+    fireEvent.change(passwordInput, { target: { value: 'testPassw2' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassw2' } });
     fireEvent.click(addUserButton);
     await waitFor(() => {
       expect(screen.getByText(/Usuario añadido correctamente/i)).toBeInTheDocument();
@@ -65,10 +61,8 @@ describe('AddUser component', () => {
     render(<AddUser />);
 
     // Simulate user input
-    fireEvent.change(screen.getByLabelText(/Nombre/), { target: { value: 'userForTest' } });
-    fireEvent.change(screen.getByLabelText(/Apellidos/i), { target: { value: 'userForTest' } });
     fireEvent.change(screen.getByLabelText(/Usuario/i), { target: { value: 'userForTest' } });
-    fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword' } });
+    fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword2' } });
     fireEvent.change(screen.getByLabelText(/Repetir contraseña/i), { target: { value: 'password' } });
 
     // Trigger the add user button click
@@ -87,18 +81,16 @@ describe('AddUser component', () => {
     mockAxios.onPost('http://localhost:8000/adduser').reply(500, { error: 'Internal Server Error' });
 
     // Simulate user input
-    fireEvent.change(screen.getByLabelText(/Nombre/), { target: { value: 'a' } });
-    fireEvent.change(screen.getByLabelText(/Apellidos/i), { target: { value: 'a' } });
     fireEvent.change(screen.getByLabelText(/Usuario/i), { target: { value: 'a' } });
-    fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword' } });
-    fireEvent.change(screen.getByLabelText(/Repetir contraseña/i), { target: { value: 'testPassword' } });
+    fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword2' } });
+    fireEvent.change(screen.getByLabelText(/Repetir contraseña/i), { target: { value: 'testPassword2' } });
 
     // Trigger the add user button click
     fireEvent.click(document.getElementsByClassName('inner')[0]);
 
     // Wait for the error Snackbar to be open
     await waitFor(() => {
-      expect(screen.getByText(/Error: Internal Server Error/i)).toBeInTheDocument();
+      expect(screen.getByText(/Usuario ya registrado./i)).toBeInTheDocument();
     });
   });
 });

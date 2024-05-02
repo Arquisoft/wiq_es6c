@@ -1,8 +1,7 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Typography, TextField, Snackbar } from '@mui/material';
-import { useNavigate } from 'react-router-dom'; // Importa useHistory
+import { useNavigate } from 'react-router-dom'; 
 import Button from './Button';
 
 const Login = () => {
@@ -15,7 +14,7 @@ const Login = () => {
 
   const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
-  const navigation = useNavigate(); // Añade esto
+  const navigation = useNavigate(); 
 
   const loginUser = async () => {
     try {

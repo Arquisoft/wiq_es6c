@@ -27,13 +27,10 @@ defineFeature(feature, test => {
     
     let username;
     let password;
-    let name;
-    let surname;
 
     given('An unregistered user', async () => {
-      username = name = "pablo"
-      surname = "gonzalez"
-      password = "pabloasw"
+      username = "pablo"
+      password = "Pabloasw0"
       await expect(page).toClick("p", { text: "¿Todavía no tienes cuenta? Regístrate aquí." });
     });
 
@@ -41,8 +38,6 @@ defineFeature(feature, test => {
       await expect(page).toFill('input[name="username"]', username);
       await expect(page).toFill('input[name="password"]', password);
       await expect(page).toFill('input[name="confirmPassword"]', password);
-      await expect(page).toFill('input[name="name"]', name);
-      await expect(page).toFill('input[name="surname"]', surname);
       await expect(page).toClick('button', { text: 'Registrarse' })
     });
 

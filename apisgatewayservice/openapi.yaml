@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: Get users
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      description: User ID
+                      example: student
+                    createdAt:
+                      type: string
+                      description: Creation date.
+                      example: '2024-03-17T20:47:23.935Z'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /history/questions:
+    get:
+      summary: Get history questions
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    pregunta:
+                      type: string
+                      description: The question.
+                      example: ¿Cual es la capital de España?
+                    respuesta_correcta:
+                      type: string
+                      description: The correct answer.
+                      example: Madrid
+                    respuestas_incorrectas:
+                      type: array
+                      items:
+                        type: string
+                      description: The other possible answers.
+                      example: [Paris, Roma, Londres]
+                    createdAt:
+                      type: string
+                      description: Creation date.
+                      example: '2024-03-17T20:47:23.935Z'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /usersStats:
+    get:
+      summary: Get users stats
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                    tpoints:
+                      type: integer
+                    avgpoints:
+                      type: number
+                    ttime:
+                      type: integer
+                    avgtime:
+                      type: number
+                    createdAt:
+                      type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string

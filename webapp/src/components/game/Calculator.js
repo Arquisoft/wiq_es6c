@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { shuffleArray, secureRandomNumber, generateGameId, esperar, gameStore} from '../Util';
 import { Container, Typography, Box, LinearProgress } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 import Button from '../Button';
-import { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 let questions = [];
@@ -16,7 +15,6 @@ let answeredQuestions = [];
 
 const Calculator = () => {
 
-    //let questionIndex = -1
     let username = localStorage.getItem("username")
     const [questionIndex, setQuestionIndex] = useState(0);
     const id = generateGameId();
@@ -97,7 +95,6 @@ const Calculator = () => {
     }
 
 
-    //CAMBIAR ESTO EN FUNCIÓN DE CÓMO QUERAMOS QUE SEA EL JUEGO
     const handleOptionClick = async (selectedAnswer) => {
         load = false;
         const numberAnswer = questions[questionIndex].options.indexOf(questions[questionIndex].correctAnswer);
@@ -145,7 +142,7 @@ const Calculator = () => {
   
             <div className="questionStructure">
   
-                <div class="questionCalculator">
+                <div className="questionCalculator">
     
                 <Typography id="questionText" dclass="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
                     {questions[questionIndex].q}
@@ -153,7 +150,7 @@ const Calculator = () => {
     
                 </div>
     
-                <div class="allAnswers">
+                <div className="allAnswers">
                     {questions[questionIndex].options.map((option, index) => (
                         <div key={index} >
                         <Button
