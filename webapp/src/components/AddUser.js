@@ -17,9 +17,13 @@ const AddUser = () => {
   const addUser = async () => {
     if (username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
       setError('Todos los campos deben de estar rellenos.');
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) {
+    } else if (username.length > 20) {
+      setError('El nombre debe contener menos de 21 caracteres.');
+    } else if (password.length > 128) {
+      setError('La contraseña debe contener menos de 129 caracteres.');
+    }else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) {
       setError('Las contraseñas deben contener al menos una letra mayúscula, una letra minúscula y un número, y tener más de 8 caracteres.');
-    } else if(password !== confirmPassword){
+    } else if (password !== confirmPassword) {
       setError('Las contraseñas no coinciden.');
     } else {
       try {
@@ -42,7 +46,7 @@ const AddUser = () => {
 
   return (
     <Container className='addUser' component="main" maxWidth="xs" sx={{ marginTop: 4 }}>
-      
+
       <Typography component="h1" variant="h5">
         Registro
       </Typography>
@@ -76,7 +80,7 @@ const AddUser = () => {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
 
-      <Button text="Registrarse" onClick={addUser} name = "Add user"/>
+      <Button text="Registrarse" onClick={addUser} name="Add user" />
 
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} message="Usuario añadido correctamente" />
       {error && (
