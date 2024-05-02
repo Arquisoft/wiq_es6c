@@ -159,7 +159,7 @@ services:
     ports:
       - "3000:3000" 
     environment:
-      - REACT_APIS_ENDPOINT: http://apisgatewayservice:8100
+      REACT_APIS_ENDPOINT: http://apisgatewayservice:8100
     restart: always
 
   prometheus:
