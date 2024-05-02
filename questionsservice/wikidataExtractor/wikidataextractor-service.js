@@ -15,7 +15,6 @@ db.once('open', () => console.log("Connected to MongoDB: %s", mongoUri));
 
 function close() {
     mongoose.connection.close();
-    mongoose.disconnect();
 }
 
 const templates = [
@@ -92,4 +91,4 @@ async function startJob(minutes = 30, startQuery = 0) {
 
 startJob();
 
-module.exports = { startJob, extractData, close };
+module.exports = { startJob, close };

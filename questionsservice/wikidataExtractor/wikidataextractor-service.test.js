@@ -1,6 +1,9 @@
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const cron = require('node-cron');
-let startJob, extractData, close;
+let startJob, close;
+
+const modelUri = process.env.DATAMODELS_URI || '../questiondata-model';
+const { Pais } = require(modelUri);
 
 jest.mock('node-cron', () => {
     return {
@@ -16,7 +19,14 @@ beforeAll(async () => {
     const mongoUri = mongoServer.getUri();
     process.env.MONGODB_URI = mongoUri;
 
-    ({ startJob, extractData, close } = await require('./wikidataextractor-service'));
+    ({ startJob, close } = require('./wikidataextractor-service'));
+
+    const newPais1 = new Pais({
+        pais: 'Japan',
+        capital: 'Tokyo',
+        continente: 'Asia'
+      });
+      await newPais1.save();
 });
 
 afterAll(async () => {
@@ -36,8 +46,8 @@ describe('Test the Wikidata Conexion', () => {
                 json: () => Promise.resolve({
                     results: {
                         bindings: [
-                            { countryLabel: 'Spain', capitalLabel: 'Madrid' },
-                            { countryLabel: 'France', capitalLabel: 'Paris' }
+                            { countryLabel: { value: 'Spain' }, capitalLabel: { value: 'Madrid' } },
+                            { countryLabel: { value: 'France' }, capitalLabel: { value: 'Paris' } }
                         ]
                     }
                 }),
@@ -57,8 +67,8 @@ describe('Test the Wikidata Conexion', () => {
                 json: () => Promise.resolve({
                     results: {
                         bindings: [
-                            { countryLabel: 'Spain', capitalLabel: 'Madrid' },
-                            { countryLabel: 'France', capitalLabel: 'Paris' }
+                            { countryLabel: { value: 'Spain' }, capitalLabel: { value: 'Madrid' } },
+                            { countryLabel: { value: 'France' }, capitalLabel: { value: 'Paris' } }
                         ]
                     }
                 }),
@@ -80,8 +90,8 @@ describe('Test the different Wikidata Queries', () => {
                 json: () => Promise.resolve({
                     results: {
                         bindings: [
-                            { countryLabel: 'Spain', capitalLabel: 'Madrid' },
-                            { countryLabel: 'France', capitalLabel: 'Paris' }
+                            { countryLabel: { value: 'Spain' }, capitalLabel: { value: 'Madrid' } },
+                            { countryLabel: { value: 'France' }, capitalLabel: { value: 'Paris' } }
                         ]
                     }
                 }),
