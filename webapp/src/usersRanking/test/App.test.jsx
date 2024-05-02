@@ -27,7 +27,7 @@ describe('App', () => {
 
   test('renders the app title', async() => {
     await waitFor( () => render(<MemoryRouter><App /></MemoryRouter>));
-    expect(screen.getAllByText('Almacén de usuarios')).toHaveLength(1);
+    expect(screen.getAllByText('Ranking de usuarios')).toHaveLength(1);
   });
 
   test('fetches and displays users', async () => {

@@ -47,6 +47,20 @@ body {
     color: hsl(0, 0%, 94%)
 }
 
+#storeUser h2 {
+    margin-top: 4.5em;
+}
+
+#storeUser{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+#storeUser .pagination{
+    width: 100%;
+}
+
 #storeUser .grid{
     display: grid;
     grid-template-columns: repeat(1, minmax(40%, 1fr));
@@ -186,4 +200,14 @@ body {
         align-items: stretch;
         flex-direction: column;
     }
+}
+
+table{
+    border: 1px solid #00ffee;
+    border-bottom: 1px solid #00ffee;
+}
+
+th{
+    border-left: 1px solid #00ffee;
+    border-right: 1px solid #00ffee;
 }

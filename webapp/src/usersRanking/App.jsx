@@ -87,29 +87,31 @@ function App() {
     <>
       <Nav />
       <div id='storeUser'>
-        <h2>Almacén de usuarios</h2>
-        <div className='question inner'>
-          <div>
-            <Button text='Nombre de Usuario' onClick={() => sortUsers('username')} />
-          </div>
-          <div>
-            <Button text='Puntos totales' onClick={() => sortUsers('tpoints')} />
-          </div>
-          <div>
-            <Button text='Puntos promedio' onClick={() => sortUsers('avgpoints')} />
-          </div>
-          <div>
-            <Button text='Tiempo Total' onClick={() => sortUsers('ttime')} />
-          </div>
-          <div>
-            <Button text='Tiempo promedio' onClick={() => sortUsers('avgtime')} />
-          </div>
-        </div>
-        <main className='grid'>
-          {currentUsers.map(user => (
-            <User key={user._id} newUser={user} />
-          ))}
-        </main>
+        <h2>Ranking de usuarios</h2>
+        <table>
+          <thead>
+            <th scope='col'>
+              <Button text='Nombre de Usuario' onClick={() => sortUsers('username')} />
+            </th>
+            <th scope='col'>
+              <Button text='Puntos totales' onClick={() => sortUsers('tpoints')} />
+            </th>
+            <th scope='col'>
+              <Button text='Puntos promedio' onClick={() => sortUsers('avgpoints')} />
+            </th>
+            <th scope='col'>
+              <Button text='Tiempo Total' onClick={() => sortUsers('ttime')} />
+            </th>
+            <th scope='col'>
+              <Button text='Tiempo promedio' onClick={() => sortUsers('avgtime')} />
+            </th>
+          </thead>
+          <tbody >
+            {currentUsers.map(user => (
+              <User key={user._id} newUser={user} />
+            ))}
+          </tbody>
+        </table>
         <footer className='pagination'>
           <Button text='Primera' onClick={firstPage}/>
           <Button text='Anterior' onClick={prevPage}/>
