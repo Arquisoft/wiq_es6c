@@ -78,7 +78,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
           workdir: webapp
-          buildargs: API_URI
+          buildargs: |
+            API_URI1=${API_URI1}
+            API_URI2=${API_URI2}
           platforms: linux/arm64
   docker-push-authservice:
     name: Push auth service Docker Image to GitHub Packages
