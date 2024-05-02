@@ -18,7 +18,7 @@ const AddUser = () => {
   const addUser = async () => {
     if (username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
       setError('Todos los campos deben de estar rellenos.');
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/.test(password)) {
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) {
       setError('Las contraseñas deben contener al menos una letra mayúscula, una letra minúscula y un número, y tener más de 8 caracteres.');
     } else if(password !== confirmPassword){
       setError('Las contraseñas no coinciden.');
