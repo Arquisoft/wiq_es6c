@@ -31,8 +31,8 @@ describe("Help for game", () => {
         expect(screen.getByText(/Calculadora humana/i)).toBeInTheDocument();
         expect(screen.getByText(/¿Te atreves a poner a prueba tus habilidades de cálculo mental?/i)).toBeInTheDocument();
     
-        const preElements = document.getElementsByTagName('pre');
-        expect(preElements.length).toBe(6);
+        const pElements = document.getElementsByTagName('p');
+        expect(pElements.length).toBe(7);
         const ulElements = document.getElementsByTagName('ul');
         expect(ulElements.length).toBe(3);
         const liElements = document.getElementsByTagName('li');
