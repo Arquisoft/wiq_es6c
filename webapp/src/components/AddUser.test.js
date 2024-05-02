@@ -28,18 +28,18 @@ describe('AddUser component', () => {
     fireEvent.change(nameInput, { target: { value: 'testUsera' } });
     fireEvent.change(surnameInput, { target: { value: 'testUsera' } });
     fireEvent.change(usernameInput, { target: { value: 'testUsera' } });
-    fireEvent.change(passwordInput, { target: { value: 'testP' } });
-    fireEvent.change(confirmPasswordInput, { target: { value: 'testP' } });
+    fireEvent.change(passwordInput, { target: { value: 'testPassw' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassw' } });
 
     // Probamos a poner una contraseña corta 
     fireEvent.click(addUserButton);
     await waitFor(() => {
-      expect(screen.getByText(/Las contraseñas deben contener más de 8 caracteres./i)).toBeInTheDocument();
+      expect(screen.getByText(/Las contraseñas deben contener al menos una letra mayúscula, una letra minúscula y un número, y tener más de 8 caracteres./i)).toBeInTheDocument();
     });
 
-    //Modificamos la contraseña para que contenga al menos de 8 caracteres
-    fireEvent.change(passwordInput, { target: { value: 'testPassw' } });
-    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassw' } });
+    //Modificamos la contraseña para que contenga al menos de 8 caracteres y un numero
+    fireEvent.change(passwordInput, { target: { value: 'testPassw2' } });
+    fireEvent.change(confirmPasswordInput, { target: { value: 'testPassw2' } });
     fireEvent.click(addUserButton);
     await waitFor(() => {
       expect(screen.getByText(/Usuario añadido correctamente/i)).toBeInTheDocument();
@@ -68,7 +68,7 @@ describe('AddUser component', () => {
     fireEvent.change(screen.getByLabelText(/Nombre/), { target: { value: 'userForTest' } });
     fireEvent.change(screen.getByLabelText(/Apellidos/i), { target: { value: 'userForTest' } });
     fireEvent.change(screen.getByLabelText(/Usuario/i), { target: { value: 'userForTest' } });
-    fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword' } });
+    fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword2' } });
     fireEvent.change(screen.getByLabelText(/Repetir contraseña/i), { target: { value: 'password' } });
 
     // Trigger the add user button click
@@ -90,8 +90,8 @@ describe('AddUser component', () => {
     fireEvent.change(screen.getByLabelText(/Nombre/), { target: { value: 'a' } });
     fireEvent.change(screen.getByLabelText(/Apellidos/i), { target: { value: 'a' } });
     fireEvent.change(screen.getByLabelText(/Usuario/i), { target: { value: 'a' } });
-    fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword' } });
-    fireEvent.change(screen.getByLabelText(/Repetir contraseña/i), { target: { value: 'testPassword' } });
+    fireEvent.change(screen.getAllByLabelText(/Contraseña/i)[0], { target: { value: 'testPassword2' } });
+    fireEvent.change(screen.getByLabelText(/Repetir contraseña/i), { target: { value: 'testPassword2' } });
 
     // Trigger the add user button click
     fireEvent.click(document.getElementsByClassName('inner')[0]);

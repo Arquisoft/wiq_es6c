@@ -34,13 +34,23 @@ app.post('/adduser', async (req, res) => {
         // Encrypt the password before saving it
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-        const newUser = new User({
+        const { username, password } = req.body;
+
+        const user = await User.findOne({ username });
+
+        // Check if the doesn't exists 
+        if (user) {
+          res.status(400).json({ error: 'User already registered' });
+        } else {
+          const newUser = new User({
             username: req.body.username,
             password: hashedPassword,
-        });
+          });
 
-        await newUser.save();
-        res.json(newUser);
+          await newUser.save();
+          res.json(newUser);
+        }
+
     } catch (error) {
         res.status(400).json({ error: error.message }); 
     }});

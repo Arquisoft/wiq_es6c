@@ -20,19 +20,19 @@ const AddUser = () => {
   const addUser = async () => {
     if (name.trim() === '' || surname.trim() === '' || username.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
       setError('Todos los campos deben de estar rellenos.');
-    } else if (password.length < 8){
-      setError('Las contraseñas deben contener más de 8 caracteres.');
+    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/.test(password)) {
+      setError('Las contraseñas deben contener al menos una letra mayúscula, una letra minúscula y un número, y tener más de 8 caracteres.');
     } else if(password !== confirmPassword){
       setError('Las contraseñas no coinciden.');
     } else {
       try {
         try {
-          await axios.post(`${apiEndpoint}/login`, { username, password });
-          setError('Usuario ya registrado.');
-          setOpenSnackbar(false);
-        } catch (error) {
           await axios.post(`${apiEndpoint}/adduser`, { username, password });
           setOpenSnackbar(true);
+        } catch (error) {
+          await axios.post(`${apiEndpoint}/adduser`, { username, password });
+          setError('Usuario ya registrado.');
+          setOpenSnackbar(false);
         }
       } catch (error) {
         setError(error.response.data.error);
