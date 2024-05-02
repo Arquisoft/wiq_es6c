@@ -9,7 +9,7 @@ servers:
   - url: http://storequestionservice:8004
     description: Production server
 paths:
- /history/question:
+  /history/question:
     post:
       summary: Stores the generated question.
       operationId: historyQuestion
@@ -29,9 +29,11 @@ paths:
                   description: The correct answer.
                   example: Madrid
                 respuestas_incorrectas:
-                  type: List<string>
+                  type: array
+                  items:
+                    type: string
                   description: The other possible answers.
-                  example: Paris, Roma, Londres
+                  example: [Paris, Roma, Londres]
                 createdAt:
                   type: string
                   description: Creation date.     
@@ -49,7 +51,7 @@ paths:
                     description: User token.
                     example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
                   question:
-                    type: Question
+                    type: string
                     description: Question.
                     example: ¿Cual es la capital de España?
                   createdAt:
@@ -67,7 +69,7 @@ paths:
                     type: string
                     description: Error information.
                     example: Internal Server Error
- /history/questions:
+  /history/questions:
     post:
       summary: Stores the generated questions.
       operationId: historyQuestions
@@ -87,9 +89,11 @@ paths:
                   description: The correct answer.
                   example: Madrid
                 respuestas_incorrectas:
-                  type: List<string>
+                  type: array
+                  items:
+                    type: string
                   description: The other possible answers.
-                  example: Paris, Roma, Londres
+                  example: [Paris, Roma, Londres]
                 createdAt:
                   type: string
                   description: Creation date.  
@@ -102,17 +106,23 @@ paths:
               schema:
                 type: object
                 properties:
-                  token:
+                  preguntas:
                     type: string
-                    description: User token.
-                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
-                  questions:
-                    type: List<Question>
-                    description: Question.
-                    example: ¿Cual es la capital de España?, ¿Cual es la capital de Francia?
+                    description: The question.
+                    example: ¿Cual es la capital de España?
+                  respuesta_correcta:
+                    type: string
+                    description: The correct answer.
+                    example: Madrid
+                  respuestas_incorrectas:
+                    type: array
+                    items:
+                      type: string
+                    description: The other possible answers.
+                    example: [Paris, Roma, Londres]
                   createdAt:
                     type: string
-                    description: Creation date.
+                    description: Creation date.  
                     example: '2024-03-17T20:47:23.935Z'
         '400':
           description: Internal server error.
@@ -126,34 +136,36 @@ paths:
                     description: Error information.
                     example: Internal Server Error
     get:
-      summary: Returns the the stored questions.
+      summary: Returns the stored questions.
       operationId: gethistoryQuestions
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
       responses:
         '200':
-          description: Question stored correctly and returns it.
+          description: Questions retrieved successfully.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  token:
-                    type: string
-                    description: User token.
-                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWY3NTZkYjNmYTIyZDIyN2E0YjdjN2QiLCJpYXQiOjE3MTA3MDg3NDUsImV4cCI6MTcxMDcxMjM0NX0.VMG_5DOyQ4GYlJQRcu1I6ICG1IGzuo2Xuei093ONHxw
-                  questions:
-                    type: List<Question>
-                    description: Question.
-                    example: ¿Cual es la capital de España?, ¿Cual es la capital de Francia?
-                  createdAt:
-                    type: string
-                    description: Creation date.
-                    example: '2024-03-17T20:47:23.935Z'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    preguntas:
+                      type: string
+                      description: The question.
+                      example: ¿Cual es la capital de España?
+                    respuesta_correcta:
+                      type: string
+                      description: The correct answer.
+                      example: Madrid
+                    respuestas_incorrectas:
+                      type: array
+                      items:
+                        type: string
+                      description: The other possible answers.
+                      example: [Paris, Roma, Londres]
+                    createdAt:
+                      type: string
+                      description: Creation date.  
+                      example: '2024-03-17T20:47:23.935Z'
         '500':
           description: Internal server error.
           content:
