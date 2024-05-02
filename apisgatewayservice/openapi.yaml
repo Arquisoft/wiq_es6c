@@ -1,38 +1,8 @@
 openapi: 3.0.0
 info:
-  title: Sample API
+  title: Api's Gateway Open Api information
   version: 1.0.0
 paths:
-  /users:
-    get:
-      summary: Get users
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    username:
-                      type: string
-                      description: User ID
-                      example: student
-                    createdAt:
-                      type: string
-                      description: Creation date.
-                      example: '2024-03-17T20:47:23.935Z'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
   /history/questions:
     get:
       summary: Get history questions
