@@ -31,7 +31,7 @@ jobs:
     - run: npm --prefix userStatsService test -- --coverage
     - run: npm --prefix gameservice test -- --coverage
     - run: npm --prefix questionsservice/questiongeneratorservice test -- --coverage
-    # - run: npm --prefix questionsservice/wikidataExtractor test -- --coverage
+    - run: npm --prefix questionsservice/wikidataExtractor test -- --coverage
     
     - name: Analyze with SonarCloud
       uses: sonarsource/sonarcloud-github-action@master
