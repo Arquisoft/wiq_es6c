@@ -35,7 +35,7 @@ const Quiz = () => {
       setRemTime((progress) => {
         if(progress === 100){
           checkAnswer(-1);
-          setTotalTime(totalTime + progress/10)
+          setTotalTime(totalTime + (10-progress/10))
           return 0; 
         }
         const diff = 4;
