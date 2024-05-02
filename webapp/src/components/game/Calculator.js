@@ -33,7 +33,7 @@ const Calculator = () => {
         const time = setInterval(() => {
         setRemTime((progress) => {
             if(progress === 100){
-                setTotalTime(totalTime + (80-progress/10))
+                setTotalTime(totalTime + (80-progress/10)/questions.length)
                 gameStore(id, username, points, answeredQuestions, totalTime/answeredQuestions.length);
                 init();
                 navigator('/menu')
