@@ -79,11 +79,11 @@ app.use((err, req, res, next) => {
 
 //libraries required for OpenAPI-Swagger
 const swaggerUi = require('swagger-ui-express'); 
-const fs = require("fs")
-const YAML = require('yaml')
+const fs = require("fs");
+const YAML = require('yaml');
 
 // Read the OpenAPI YAML file synchronously
-openapiPath='./openapi.yaml'
+const openapiPath='./openapi.yaml';
 if (fs.existsSync(openapiPath)) {
   const file = fs.readFileSync(openapiPath, 'utf8');
 
@@ -95,7 +95,7 @@ if (fs.existsSync(openapiPath)) {
   // It takes the parsed Swagger document as input
   app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 } else {
-  console.log("Not configuring OpenAPI. Configuration file not present.")
+  console.log("Not configuring OpenAPI. Configuration file not present.");
 }
 
 // Start the server
