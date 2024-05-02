@@ -30,7 +30,6 @@ const AddUser = () => {
           await axios.post(`${apiEndpoint}/adduser`, { username, password });
           setOpenSnackbar(true);
         } catch (error) {
-          await axios.post(`${apiEndpoint}/adduser`, { username, password });
           setError('Usuario ya registrado.');
           setOpenSnackbar(false);
         }
