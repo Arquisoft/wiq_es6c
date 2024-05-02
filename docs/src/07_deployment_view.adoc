@@ -55,7 +55,7 @@ actor "User"
 
 "Web App" -down- "Gateway Service" : "port: 8000"
 
-"Api's Gateway Container" -down- "Web App" : "port: 8100"
+"Api's Gateway Service" -down- "Web App" : "port: 8100"
 
 "Gateway Service" -down- "Auth Service" : "port: 8002"
 "Gateway Service" -down- "User Service" : "port: 8001"
@@ -63,8 +63,8 @@ actor "User"
 
 "User Stats Service" -down- "Game Service" : "port: 8003"
 
-"User Stats Service" -- "Api's Gateway Container" : "port: 8003"
-"Store Question Service" -- "Api's Gateway Container" : " port: 8004"
+"User Stats Service" -- "Api's Gateway Service" : "port: 8003"
+"Store Question Service" -- "Api's Gateway Service" : " port: 8004"
 
 "Store Question Service" -down- "Question Generator Service" : "port: 8004"
 "Question Generator Service" -down--- "Wikidata Extractor Service" : "port: 8008"

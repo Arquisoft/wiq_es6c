@@ -120,7 +120,7 @@ GatewayS <-down-> "Game Service" : "Handles user current game"
 
 ApisGateway <-- WebApp : "Gets data from the Api"
 ApisGateway -up-> QHS : "Gets Generated Questions"
-ApisGateway -up-> "User Stats Service" : "Gets Users' Stats"
+ApisGateway -up-> USS  : "Gets Users' Stats"
 
 "Game Service" <---> "Questions Service" : "Receives question petitions,\nsends questions\n\n"
 "Game Service" ---> "USS" : "Sends user\t\nstatistics\t\t"
