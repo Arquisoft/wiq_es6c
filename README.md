@@ -1,19 +1,48 @@
 # wiq_es6c
 
+## Contributors
+<div align="center">
+    
+| Contributor | Contact |
+| ------------- | ------------- | 
+| Liliana Suárez Díaz | <a href="https://github.com/uo288574"><img src="https://img.shields.io/badge/uo288574-Liliana Suárez-green"></a> |
+| Marco Quintana García | <a href="https://github.com/marco-qg"><img src="https://img.shields.io/badge/marcoqg-Marco Quintana-red"></a> |
+| Abel Menéndez Hernández | <a href="https://github.com/AbelMH1"><img src="https://img.shields.io/badge/AbelMH1-Abel Menéndez-purple"></a>  |
+| Marcos Barril Villaverde | <a href="https://github.com/MarcosBarrilVillaverde"><img src="https://img.shields.io/badge/MarcosBarrilVillaverde-Marcos Barril-yellow"></a> |
+| Alejandro García Mansilla | <a href="https://github.com/alegarman2002"><img src="https://img.shields.io/badge/alegarman2002-Alejandro García-blue"></a> |
+
+</div>
+
+## Links
+- [WIQEII](http://158.179.212.42:3000)
+- [User's API](http://158.179.212.42:8100)
+    - [/users](http://158.179.212.42:8100/users) -> Información de los usuarios
+    - [/history/questions](http://158.179.212.42:8100/history/questions) -> Información de las preguntas generadas
+    - [/usersStats](http://158.179.212.42:8100/usersStats) -> Información de las estadísticas de los usuarios
+
+## Code analisis
+
+<div align="center">
+    
 [![Deploy on release](https://github.com/Arquisoft/wiq_es6c/actions/workflows/release.yml/badge.svg)](https://github.com/Arquisoft/wiq_es6c/actions/workflows/release.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_es6c&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_es6c)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_wiq_es6c&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_wiq_es6c)
 
-This is a base repo for the [Software Architecture course](http://arquisoft.github.io/) in [2023/2024 edition](https://arquisoft.github.io/course2324.html). 
+</div>
 
-This repo is a basic application composed of several components.
+## Components
 
+This is a repo for the [Software Architecture course](http://arquisoft.github.io/) in [2023/2024 edition](https://arquisoft.github.io/course2324.html) composed of the following components.
+
+- **Game service**. 
 - **Gateway service**. Express service that is exposed to the public and serves as a proxy to the two previous ones.
+- **Question service**. 
+- **Store question service**. 
 - **User service**. Express service that handles the insertion of new users in the system.
 - **Auth service**. Express service that handles the authentication of users.
+- **User stats service**. 
 - **Webapp**. React web application that uses the gateway service to allow basic login and new user features.
 
-Both the user and auth service share a Mongo database that is accessed with mongoose.
 
 ## Quick start guide
 

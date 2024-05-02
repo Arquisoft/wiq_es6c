@@ -100,11 +100,11 @@ app.get('/questions', async (req, res) => {
 
 app.post('/storeGame', async (req, res) => {
   try {
-    var id = req.body.id
-    var username = req.body.username
-    var points = req.body.points
-    var questions = req.body.questions
-    var avgtime = req.body.avgtime
+    let id = req.body.id
+    let username = req.body.username
+    let points = req.body.points
+    let questions = req.body.questions
+    let avgtime = req.body.avgtime
     console.log("Hacemos la llamada al guardar preguntas")
     const post = await axios.post(gameService + `/storeGame`, {id, username,  points, questions, avgtime})
     console.log("Devuelve la llamada")
@@ -131,7 +131,7 @@ const YAML = require('yaml')
 
 
 // Read the OpenAPI YAML file synchronously
-openapiPath='./openapi.yaml'
+let openapiPath='./openapi.yaml'
 if (fs.existsSync(openapiPath)) {
   const file = fs.readFileSync(openapiPath, 'utf8');
 

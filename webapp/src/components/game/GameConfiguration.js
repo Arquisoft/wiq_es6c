@@ -3,12 +3,11 @@ import { Container } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 import Button from '../Button';
-import { useLocation, useNavigate } from 'react-router-dom'; // Importa useHistory
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import axios from 'axios'
-import { shuffleArray } from '../Util';
+import { shuffleArray, generateGameId } from '../Util';
 import './GameConfiguration.css';
 import Spinner from '../spinner/Spinner';
-import { generateGameId } from '../Util';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
@@ -21,11 +20,10 @@ const GameConfiguration = () => {
   let tematicas = ['Paises', 'Capitales'];
   let state = useLocation().state;
 
-  console.log(state)
 
-  if (state !== null)
+  if( state !== null)
     tematicas = state.topics;
-  console.log(tematicas)
+
 
   // Almacen de temáticas 
   const [tematicasSeleccionadas, setTematicasSeleccionadas] = useState([]);
@@ -55,13 +53,9 @@ const GameConfiguration = () => {
     numPreguntas = numQuestions;
     numRes = numRespuestas;
 
-    console.log(numPreguntas);
-    console.log(numRes);
-
-    gameId = await generateGameId();
+    gameId = await generateGameId();  
     await getQuestions();
-    //isApiCalledRef = true//ASK - is this necessary?
-    navigation("/firstGame", { state: { questions, gameId } })
+    navigation("/firstGame", {state: {questions, gameId}})
   }
 
   function formatearTopics() {
@@ -93,7 +87,6 @@ const GameConfiguration = () => {
     } catch (error) {
       console.error(error);
     }
-    console.log(questions)
   }
 
   return (
@@ -115,10 +108,9 @@ const GameConfiguration = () => {
                   id={`t${index}`}
                   value={option}
                   className='option-input'
-                  // checked={tematicasSeleccionadas.includes({option})}
                   onChange={handleTematicaChange}
                 />
-                <label htmlFor={`t${index}`}>{option}</label>
+              <label htmlFor={`t${index}`}>{option}</label>
               </div>
             )
             )}

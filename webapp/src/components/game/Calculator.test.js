@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ContextFun } from '../Context';
-import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Calculator from './Calculator';
 
 describe('Calculator Component', () => {
