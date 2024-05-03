@@ -41,8 +41,7 @@ const Calculator = () => {
         const time = setInterval(() => {
         setRemTime((progress) => {
             if(progress === 100){
-                console.log("Imprimimos id", id)
-                console.log("Answered questions", answeredQuestions)
+
                 let avgtime = 80/questions.length
                 if (answeredQuestions.length !== 0) {
                     gameStore(id, username, points, answeredQuestions, avgtime);

@@ -20,7 +20,6 @@ const Quiz = () => {
   let username = localStorage.getItem("username")
   const navigator = useNavigate();
   let allQuestions = useLocation().state.questions;
-  console.log(allQuestions)
   let haveEnter = false;
   let id = useLocation().state.gameId;
 
