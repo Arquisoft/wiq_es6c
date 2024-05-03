@@ -43,14 +43,15 @@ This level shows how the application will work internally in generaly. The clien
 :User:
 package "WIQ App" {
 :User: -> [WebApp] : " Interacts    "
-[WebApp] <-> [Gateway Service] : Redirects Requests
+[WebApp] <--> [Gateway Service] : Redirects Requests
 [Gateway Service] <--down-> [Game Service] : Plays
-[Gateway Service] <-- [Store Question Service] : Loads data
-[Gateway Service] <-- [User Stats Service] : Loads data
-[Gateway Service] <-> [UserAuth Service] : Logs in / Registers
+[Apisgateway Service] <-up- [WebApp] : Gets Data
+[Apisgateway Service] ---> [Store Question Service] : Gets Data
+[Apisgateway Service] --> [User Stats Service] : Gets Data
+[Gateway Service] <-left-> [UserAuth Service] : Logs in / Registers
+[Questions Service] -up--> [Store Question Service] : Stores data
 [Game Service] -> [User Stats Service] : Stores data
-[Game Service] <-left-> [Questions Service] : Gets questions
-[Questions Service] -up-> [Store Question Service] : Stores data
+[Game Service] <--right--> [Questions Service] : Gets questions
 }
 [Questions Service] <.left.> [WikiData] : "  Gets data  "
 ----
@@ -87,6 +88,8 @@ package "WIQ App"{
     component "WebApp"
     component "Gateway Service" as GatewayS
 
+    component "Api's Gateway" as ApisGateway
+
     component "Game Service" 
         package "Store Question Service" as QHS{
         component "Store-Q Service" as QHController
@@ -109,20 +112,22 @@ package "WIQ App"{
     }
 }
 
-User -right-> WebApp : Uses
-WebApp <-right-> GatewayS: Redirects requests
+User --> WebApp : "  Uses"
+WebApp <-down-> GatewayS: "Redirects\t\t\t\nrequests\t\t\t"
 
-GatewayS <--up--> "UserAuth Service" : "Handles user\nlogin/registry"
-GatewayS <-down-> "Game Service" : "Handles user current game"
-GatewayS <--up-- "QHS" : "\nReceives generated\nquestions"
-GatewayS <--- "USS" : "Receives\t\t\t\nuser statistics\t\t\t"
+GatewayS <------> "UserAuth Service" : "Handles user\nlogin/registry\n\n\n"
+GatewayS <--> "Game Service" : "Handles user\n current game"
 
-"Game Service" <---> "Questions Service" : "Receives question petitions,\nsends questions\n\n"
-"Game Service" ---> "USS" : "Sends user\t\nstatistics\t\t"
+ApisGateway <-up- WebApp : "Gets data\n from the Api"
+ApisGateway -left-> QHS : "Gets Generated\n Questions"
+ApisGateway ---> USS  : "Gets Users' Stats"
+
+"Game Service" <-----> "Questions Service" : "Receives question \npetitions,\nsends questions"
+"Game Service"-> "USS" : "Sends user\t\nstatistics\t\t"
 "Questions Service" -up-> "QHS" : " Sends\n  generated\n  questions"
 
-"Wikidata" .up.> "Wikidata Extractor" : "Returns data"
-"Wikidata" <.up. "Wikidata Extractor" : "Queries"
+"Wikidata" .up..> "Wikidata Extractor" : "Returns data"
+"Wikidata" <.up.. "Wikidata Extractor" : "Queries"
 "Wikidata Extractor" --> QSDB
 "Questions Generator Service" <-- QSDB
 "Questions Generator Service" --> QSDB

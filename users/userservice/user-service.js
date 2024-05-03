@@ -26,16 +26,27 @@ function validateRequiredFields(req, requiredFields) {
     }
 }
 
+function validateFieldLength(fieldName, value, minLength, maxLength) {
+  if (value.toString().length < minLength) {
+    throw new Error(`The field '${fieldName}' must have at least ${minLength} characters`);
+  } if (value.toString().length > maxLength) {
+    throw new Error(`The field '${fieldName}' can't have more than ${maxLength} characters`);
+  }
+}
+
 app.post('/adduser', async (req, res) => {
     try {
         // Check if required fields are present in the request body
         validateRequiredFields(req, ['username', 'password']);
 
+        const {username, password} = req.body;
+        validateFieldLength('username', username, 1, 20);
+        validateFieldLength('password', password, 8, 128);
+
         // Encrypt the password before saving it
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const username = req.body.username.toString();
 
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ username: username.toString() });
 
         // Check if the doesn't exists 
         if (user) {

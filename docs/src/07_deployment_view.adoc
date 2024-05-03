@@ -40,6 +40,9 @@ cloud "Azure Cloud\n" {
             node "Wikidata Extractor Container"{
                 node "Wikidata Extractor Service"
             }
+            node "Api's Gateway Container"{
+                node "Api's Gateway Service"
+            }
         }
     }
 }
@@ -48,23 +51,26 @@ cloud "Wikidata"
 actor "User"
 
 
-"User" -left- "Web App" : "\t\tHTTP/port:3000\t\t"
+"User" -- "Web App" : "  HTTP/port:3000"
 
-"Web App" -- "Gateway Service" : "port: 8000"
+"Web App" -down- "Gateway Service" : "port: 8000    "
 
-"Gateway Service" -- "Store Question Service" : "port: 8004"
-"Gateway Service" -- "User Stats Service" : "port: 8003"
-"Gateway Service" -up- "Auth Service" : "port: 8002         "
-"Gateway Service" -up- "User Service" : "port: 8001"
-"Gateway Service" -right- "Game Service"  : "           port: 8005     "
+"Api's Gateway Service" -up- "Web App" : "port: 8100"
 
-"Game Service" -- "User Stats Service" : "port: 8003"
-"Game Service" -- "Question Generator Service" : " port: 8007"
+"Gateway Service" --- "Auth Service" : "   port: 8002"
+"Gateway Service" --- "User Service" : "port: 8001          "
+"Gateway Service" --- "Game Service"  : "port: 8005\t\t"
 
-"Question Generator Service" -- "Store Question Service" : "port: 8004"
-"Question Generator Service" -- "Wikidata Extractor Service" : "port: 8008"
+"User Stats Service" -- "Game Service" : "  port: 8003"
 
-"Wikidata Extractor Service" -- "Wikidata" : "HTTPS"
+"User Stats Service" -up- "Api's Gateway Service" : "  port: 8003"
+"Store Question Service" -up- "Api's Gateway Service" : "\tport: 8004"
+
+"Store Question Service" -- "Question Generator Service" : "\tport: 8004"
+"Question Generator Service" -- "Wikidata Extractor Service" : "\tport: 8008"
+"Question Generator Service" -- "Game Service" : "port: 8007"
+
+"Wikidata Extractor Service" -- "Wikidata" : "\tHTTPS"
 ----
 
 In addition to what is shown in the diagram, we will also use Graphana and Prometheus during the production stage as code monitoring systems.

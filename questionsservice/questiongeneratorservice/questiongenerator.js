@@ -36,7 +36,7 @@ class QuestionGenerator {
             generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
             pregunta: (param) => `¿En qué continente se situa ${param}?`,
             filtro: { pais: { $exists: true }, continente: { $exists: true } },
-            filtro_decoys: (answer) => { return { pais: { $exists: true }, continente: { $exists: true, $ne: answer.continente} }},
+            filtro_decoys: (answer) => { return { pais: { $exists: true }, continente: { $exists: true, $ne: answer.continente } } },
             campo_pregunta: 'pais',
             campo_respuesta: 'continente'
         },
@@ -45,7 +45,7 @@ class QuestionGenerator {
             generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
             pregunta: (param) => `¿Cual de los siguientes paises se situa en ${param}?`,
             filtro: { pais: { $exists: true }, continente: { $exists: true } },
-            filtro_decoys: (answer) => { return { pais: { $exists: true }, continente: { $exists: true, $ne: answer.continente} }},
+            filtro_decoys: (answer) => { return { pais: { $exists: true }, continente: { $exists: true, $ne: answer.continente } } },
             campo_pregunta: 'continente',
             campo_respuesta: 'pais'
         },
@@ -54,7 +54,7 @@ class QuestionGenerator {
             generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
             pregunta: (param) => `¿En qué país se situa la atracción turística "${param}"?`,
             filtro: { pais: { $exists: true }, monumento: { $exists: true } },
-            filtro_decoys: (answer) => { return { monumento: { $exists: true }, pais: { $exists: true, $ne: answer.pais} }},
+            filtro_decoys: (answer) => { return { monumento: { $exists: true }, pais: { $exists: true, $ne: answer.pais } } },
             campo_pregunta: 'monumento',
             campo_respuesta: 'pais'
         },
@@ -63,7 +63,7 @@ class QuestionGenerator {
             generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
             pregunta: (param) => `¿Cuál de las siguientes atraccioones turísticas se encuentra en ${param}?`,
             filtro: { pais: { $exists: true }, monumento: { $exists: true } },
-            filtro_decoys: (answer) => { return { monumento: { $exists: true }, pais: { $exists: true, $ne: answer.pais} }},
+            filtro_decoys: (answer) => { return { monumento: { $exists: true }, pais: { $exists: true, $ne: answer.pais } } },
             campo_pregunta: 'pais',
             campo_respuesta: 'monumento'
         },
@@ -88,7 +88,7 @@ class QuestionGenerator {
             generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
             pregunta: (param) => `¿Quién fue el director de la película "${param}"?`,
             filtro: { pelicula: { $exists: true }, director: { $exists: true } },
-            filtro_decoys: (answer) => { return { pelicula: { $exists: true }, director: { $exists: true, $ne: answer.director} }},
+            filtro_decoys: (answer) => { return { pelicula: { $exists: true }, director: { $exists: true, $ne: answer.director } } },
             campo_pregunta: 'pelicula',
             campo_respuesta: 'director'
         },
@@ -97,7 +97,7 @@ class QuestionGenerator {
             generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
             pregunta: (param) => `¿Cuál de estas películas ha sido dirigida por "${param}"?`,
             filtro: { pelicula: { $exists: true }, director: { $exists: true } },
-            filtro_decoys: (answer) => { return { pelicula: { $exists: true }, director: { $exists: true, $ne: answer.director} }},
+            filtro_decoys: (answer) => { return { pelicula: { $exists: true }, director: { $exists: true, $ne: answer.director } } },
             campo_pregunta: 'director',
             campo_respuesta: 'pelicula'
         },
@@ -106,7 +106,7 @@ class QuestionGenerator {
             generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
             pregunta: (param) => `¿Quién canta la canción "${param}"?`,
             filtro: { cancion: { $exists: true }, artista: { $exists: true } },
-            filtro_decoys: (answer) => { return { cancion: { $exists: true }, artista: { $exists: true, $ne: answer.artista} }},
+            filtro_decoys: (answer) => { return { cancion: { $exists: true }, artista: { $exists: true, $ne: answer.artista } } },
             campo_pregunta: 'cancion',
             campo_respuesta: 'artista'
         },
@@ -115,7 +115,7 @@ class QuestionGenerator {
             generateMethod: (plantilla, respuestas) => this.generateQuestionNonDuplicatedAnswers(plantilla, respuestas),
             pregunta: (param) => `¿Cuál de las siguientes canciones es interpretada por "${param}"?`,
             filtro: { cancion: { $exists: true }, artista: { $exists: true } },
-            filtro_decoys: (answer) => { return { cancion: { $exists: true }, artista: { $exists: true, $ne: answer.artista} }},
+            filtro_decoys: (answer) => { return { cancion: { $exists: true }, artista: { $exists: true, $ne: answer.artista } } },
             campo_pregunta: 'artista',
             campo_respuesta: 'cancion'
         }
@@ -136,8 +136,8 @@ class QuestionGenerator {
         // }
     ];
 
-    static getAvailableTopics(){
-        return [ ...this.temas.keys() ];
+    static getAvailableTopics() {
+        return [...this.temas.keys()];
     }
 
 
@@ -151,13 +151,13 @@ class QuestionGenerator {
             throw new Error(`Not enought data found to generate a question`);
         }
         let randomDecoys = [];
-        if (respuestas > 1){
+        if (respuestas > 1) {
             randomDecoys = await plantilla.modelo.aggregate([
                 { $match: plantilla.filtro_decoys(randomAnswer[0]) },
-                { $sample: { size: respuestas-1 } }
+                { $sample: { size: respuestas - 1 } }
             ]);
         }
-        if (randomDecoys.length < respuestas-1) {
+        if (randomDecoys.length < respuestas - 1) {
             console.error(`Not enought data found to generate a question`);
             throw new Error(`Not enought data found to generate a question`);
         }
@@ -165,7 +165,7 @@ class QuestionGenerator {
         const retQuestion = {
             pregunta: plantilla.pregunta(randomAnswer[0][plantilla.campo_pregunta]),
             respuesta_correcta: randomAnswer[0][plantilla.campo_respuesta],
-            respuestas_incorrectas: Array.from({ length: respuestas-1 }, (_, i) => randomDecoys[i][plantilla.campo_respuesta])
+            respuestas_incorrectas: Array.from({ length: respuestas - 1 }, (_, i) => randomDecoys[i][plantilla.campo_respuesta])
         };
         return retQuestion;
     }
@@ -183,7 +183,7 @@ class QuestionGenerator {
         const retQuestion = {
             pregunta: plantilla.pregunta(randomDocs[0][plantilla.campo_pregunta]),
             respuesta_correcta: randomDocs[0][plantilla.campo_respuesta],
-            respuestas_incorrectas: Array.from({ length: respuestas-1 }, (_, i) => randomDocs[i+1][plantilla.campo_respuesta])
+            respuestas_incorrectas: Array.from({ length: respuestas - 1 }, (_, i) => randomDocs[i + 1][plantilla.campo_respuesta])
         };
         return retQuestion;
     }
@@ -196,6 +196,7 @@ class QuestionGenerator {
             let plantilla = this.plantillas[plantillasDisponibles[index]];
             retQuestions.push(await plantilla.generateMethod(plantilla, respuestas));
         }
+        this.easterEgg(plantillasDisponibles, retQuestions);
         console.log("\nPreguntas generadas:");
         console.log(retQuestions);
         return retQuestions;
@@ -226,6 +227,18 @@ class QuestionGenerator {
         console.log("Plantillas a utilizar:");
         console.log(`\t${[...new Set(templates)]}`);
         return [...new Set(templates)];
+    }
+
+    static easterEgg(plantillasDisponibles, retQuestions) {
+        if (plantillasDisponibles.includes(10)){
+            for(let question of retQuestions) {
+                if (question.pregunta.includes('Quién canta la canción')) {
+                    question.pregunta = '¿Quién es el famoso batería del grupo Kactus Jack?';
+                    question.respuesta_correcta = 'Jose Emilio Labra Gayo';
+                    return;
+                }
+            }
+        }
     }
 
 }

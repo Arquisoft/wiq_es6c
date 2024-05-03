@@ -83,7 +83,15 @@ include::src/10_quality_requirements.adoc[]
 include::src/11_technical_risks.adoc[]
 
 <<<<
-// 12. Glossary
-include::src/12_glossary.adoc[]
+// 12. Testing
+include::src/12_testing.adoc[]
+
+<<<<
+// 13. Monitoring
+include::src/13_monitoring.adoc[]
+
+<<<<
+// 14. Glossary
+include::src/14_glossary.adoc[]
 
 
