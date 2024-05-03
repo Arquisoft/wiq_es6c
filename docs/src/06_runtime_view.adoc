@@ -11,21 +11,29 @@ autonumber
 
 actor "User" as user
 
-user -> "Game Service": Begins game
-"Game Service" -> "Question Service" : Requests n questions
-"Question Service" -> "Wikidata REST API" : Requests information to create questions
-"Wikidata REST API" -> "Question Service" : Returns information
-"Question Service" -> "Question Service" : Creates questions
-"Question Service" -> "Game Service" : Returns questions
+user -> "Webapp": [clicks] Starts New Game
+
+"Webapp" -> "Game Service": Requests new game
+"Game Service" -> "Game Service" : Creates new game
+"Game Service" -> "Question Generator Service" : Requests n questions
+
+database "MongoDB database" as DB
+
+"Question Generator Service" -> DB : Requests information to create questions
+DB --> "Question Generator Service" : Returns information
+"Question Generator Service" -> "Question Generator Service" : Creates questions
+"Question Generator Service" -> "Question Historic Service" : Sends the generated questions
+"Question Generator Service" --> "Game Service" : Returns questions
 
 loop n times
-    "Game Service" -> user : Shows question
+    "Game Service" --> "Webapp" : Returns question
+    "Webapp" -> user : Shows question
     …
-    user -> "Game Service" : Responds question
+    user -> "Webapp" : Responds question
+    "Webapp" -> "Game Service" : Responds question
 end
 
-"Game Service" -> "Question Historic Service" : Sends the shown questions
-"Game Service" -> "Player Statistics Service" : Sends the  user's match data
+"Game Service" -> "User Stats Service" : Sends the  user's match data
 ----
 
 In circumstances in which few questions are needed for the game, it may be possible to extract all of them in a batch without affecting performance and response times. Besides, extracting them this way opens up the possibility of using multiple threads to gather the data, greatly increasing performance. However, if the querying times are too high, this strategy may cause great delays while loading the game. A possible alternative is explained below:
@@ -38,34 +46,50 @@ autonumber
 
 actor "User" as user
 
-user -> "Game Service": Begins game
-"Game Service" -> "Question Service" : Requests n questions
-"Question Service" -> "Wikidata REST API" : Requests information to create questions
-"Wikidata REST API" -> "Question Service" : Returns information
-"Question Service" -> "Game Service" : Returns questions
+user -> "Webapp": [clicks] Starts New Game
+
+"Webapp" -> "Game Service": Requests new game
+"Game Service" -> "Game Service" : Creates new game
+"Game Service" -> "Question Generator Service" : Requests n questions
+
+database "MongoDB Database" as db
+
+"Question Generator Service" -> db : Requests information to create questions
+db --> "Question Generator Service" : Returns information
+
+"Question Generator Service" -> "Question Historic Service" : Sends the shown questions
+
+"Question Generator Service" --> "Game Service" : Returns questions
+
+
 
 loop Until the game ends
     loop n-k times
-        "Game Service" -> user : Shows question
-        ...
-        user -> "Game Service" : Responds question
+        "Game Service" --> "Webapp" : Returns question
+        "Webapp" -> user : Shows question
+        …
+        user -> "Webapp" : Responds question
+        "Webapp" -> "Game Service" : Responds question
     end
 
-    "Game Service" -> "Question Service" : Requests n questions
-    "Question Service" -> "Wikidata REST API" : Requests information to create questions
-    "Wikidata REST API" -> "Question Service" : Returns information
-    "Question Service" -> "Question Service" : Creates questions
-    "Question Service" -> "Game Service" : Returns questions
+    "Game Service" -> "Question Generator Service" : Requests n questions
+    "Question Generator Service" -> db : Requests information to create questions
+    db --> "Question Generator Service" : Returns information
+    "Question Generator Service" -> "Question Historic Service" : Sends the shown questions
+    "Question Generator Service" -> "Question Generator Service" : Creates questions
+    "Question Generator Service" --> "Game Service" : Returns questions
 
     loop k times
-        "Game Service" -> user : Shows question
-        ...
-        user -> "Game Service" : Responds question
+        "Game Service" --> "Webapp" : Returns question
+        "Webapp" -> user : Shows question
+        …
+        user -> "Webapp" : Responds question
+        "Webapp" -> "Game Service" : Responds question
     end
 end
 
-"Game Service" -> "Question Historic Service" : Sends the shown questions
-"Game Service" -> "Player Statistics Service" : Sends the  user's match data
+
+"Game Service" -> "User Stats Service" : Sends the  user's match data
 ----
 
 In cases where a lot of questions are needed, or wikidata querying has a great impact on performance, this alternative may prove to be convenient. By distributing the data fetching along the entire match, bottlenecks on performance will be reduced. Depending on the system load, or even on client device's specifications, batch sizes may vary adapting to maintain responsiveness.
@@ -78,10 +102,13 @@ autonumber
 
 actor "User" as user
 
-user -> "Player Statistics Service" : Requests user data
-"Player Statistics Service" -> "MongoDB Server" : Makes petition through REST API
-"MongoDB Server" -> "Player Statistics Service" : Returns information
-"Player Statistics Service" -> user : Shows data
+user -> "Player Stats Service" : Requests user data
+
+database "MongoDB Database" as db
+
+"Player Stats Service" -> db : Makes petition through REST API
+db -> "Player Stats Service" : Returns information
+"Player Stats Service" -> user : Shows data
 ----
 
 === User consults questions used in games.
@@ -92,8 +119,17 @@ autonumber
 
 actor "User" as user
 
-user -> "Question Historic Service" : Requests user data
-"Question Historic Service" -> "MongoDB Server" : Makes petition through REST API
-"MongoDB Server" -> "Question Historic Service" : Returns information
-"Question Historic Service" -> user : Shows data
+user -> "WebApp" : Requests questions data
+"WebApp" -> "Api's Gateway Service" : Requests questions data
+"Api's Gateway Service" -> "Store Question Service" : Requests questions data
+
+database "MongoDB Database" as db
+
+"Store Question Service" -> db : Makes petition through REST API
+
+db --> "Store Question Service" : Returns Data
+"Api's Gateway Service" <-- "Store Question Service" : Returns Data
+"WebApp" <-- "Api's Gateway Service" : Returns Data
+"WebApp" -> user : Shows data
+
 ----
