@@ -34,13 +34,15 @@
 
 This is a repo for the [Software Architecture course](http://arquisoft.github.io/) in [2023/2024 edition](https://arquisoft.github.io/course2324.html) composed of the following components.
 
-- **Game service**. 
+- **Game service**. Express server that mainly send requests from gateway to question generator service
 - **Gateway service**. Express service that is exposed to the public and serves as a proxy to the two previous ones.
-- **Question service**. 
-- **Store question service**. 
+- **Question Generator service**. Express service that is going to generate the questions based on the wikidata information and the parameters given by the user
+- **Store question service**. Express service that is going to store all the generated questions
 - **User service**. Express service that handles the insertion of new users in the system.
 - **Auth service**. Express service that handles the authentication of users.
-- **User stats service**. 
+- **User stats service**. Express service that is going to store all the users data so we are going to be able to access to it later
+- **Api's Gateway Service** Express service that is exposed to check the users information and the questions generated
+- **Wikidata Extractor Service** Express service that extracts and update information from wikidata to a related topic each 30 minutes
 - **Webapp**. React web application that uses the gateway service to allow basic login and new user features.
 
 
