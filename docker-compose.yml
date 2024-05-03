@@ -155,6 +155,7 @@ services:
     build: ./webapp
     depends_on:
       - gatewayservice
+      - apisgatewayservice
     ports:
       - "3000:3000" 
     restart: always

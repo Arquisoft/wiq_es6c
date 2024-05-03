@@ -7,6 +7,7 @@ import Button from './Button'
 import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
 import axios from 'axios';
+import { generateGameId } from './Util';
 
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT|| 'http://localhost:8000';
 
@@ -31,7 +32,8 @@ const Menu = () => {
     }
 
     const initiateCalculator = async () => {
-      navigation("/calculator")
+      let gameId = await generateGameId();  
+      navigation("/calculator", {state: {gameId}})
     }
 
     return (

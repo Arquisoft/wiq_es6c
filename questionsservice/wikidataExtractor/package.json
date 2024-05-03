@@ -5,7 +5,8 @@
   "main": "wikidataextractor-service.js",
   "scripts": {
     "devStart": "nodemon wikidataextractor-service.js",
-    "start": "node wikidataextractor-service.js"
+    "start": "node wikidataextractor-service.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -19,11 +20,12 @@
   },
   "homepage": "https://github.com/arquisoft/wiq_es6c#readme",
   "dependencies": {
-    "express": "^4.18.2",
     "mongoose": "^8.2.0",
     "node-cron": "^3.0.3"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^9.1.5",
     "nodemon": "^3.1.0"
   }
 }

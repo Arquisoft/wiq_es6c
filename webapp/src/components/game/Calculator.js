@@ -4,25 +4,25 @@ import { Container, Typography, Box, LinearProgress } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
 import Button from '../Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 let questions = [];
 let load = true;
 const previousBackgroundColor = '#1a1a1a';
 let points = 0;
 let answeredQuestions = [];
+let enter = false
 
 
 const Calculator = () => {
 
     let username = localStorage.getItem("username")
     const [questionIndex, setQuestionIndex] = useState(0);
-    const id = generateGameId();
+    let id = useLocation().state.gameId;
 
     const navigator = useNavigate();
 
     const [remTime, setRemTime] = useState(0);
-    const [totalTime, setTotalTime] = useState(0);
 
     if(questions.length === 0)
         generateQuestion();
@@ -31,9 +31,13 @@ const Calculator = () => {
         const time = setInterval(() => {
         setRemTime((progress) => {
             if(progress === 100){
-                setTotalTime(totalTime + (80-progress/10)/questions.length)
-                gameStore(id, username, points, answeredQuestions, totalTime/answeredQuestions.length);
-                init();
+                console.log("Imprimimos id", id)
+                console.log("Answered questions", answeredQuestions)
+                let avgtime = 80/questions.length
+                if (!enter) {
+                    gameStore(id, username, points, answeredQuestions, avgtime);
+                    init();
+                }
                 navigator('/menu')
                 return 0; 
             }
