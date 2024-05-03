@@ -3,4 +3,68 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-testing]]
 == Testing
 
-Aquí se hablará de testing
+=== Unit tests
+Unit testing is fundamental to ensure application working as intended. Our goal is to have a minimun of 80% of code coverage.
+Jest is used as the testing framework due to its simplicity and speed.
+
+=== Acceptance tests
+As for acceptance tests, we currently have five scenarios:
+
+* Registering a new user
+** Given An unregistered user
+** When I fill the data in the form and press submit
+** Then A confirmation message should be shown on the screen
+* Login with an existing user
+** Given A registered user
+** When I fill the data in the form and press submit
+** Then Menu screen is displayed
+* Playing classic game with default settings
+** Given A logged user
+** When I play with configured settings(2 questions 2 answers)
+** Then 2 questions with 2 answers are asked
+* Playing calculator game with default settings
+** Given A logged user
+** When I press play button
+** Then questions with 4 answers are displayed till time finishes
+* Checking history
+** Given A logged user
+** When I go to History section
+** Then games with questions and answers are shown
+
+=== Load Tests
+For load tests, we have been using Gatling with Firefox proxy to simulate a real user experience.
+
+[horizontal]
+|===
+|Scenario | t <800ms | t ∈ [800ms - 1200ms) | t >= 1200ms | Failed
+
+|2 new users per second(peak: 59 users)
+|100%
+|0%
+|0%
+|0%
+
+|Peak 1000 users
+|67%
+|1%
+|26%
+|5%
+
+|Peak 1500 users
+|64%
+|0%
+|16%
+|20%
+
+|Peak 2000 users
+|66%
+|0%
+|11%
+|23%
+
+|Peak 3000 users
+|49%
+|8%
+|12%
+|31%
+|===

@@ -1,0 +1,13 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-monitoring]]
+== Monitoring
+We have been using Grafana and Prometheus for monitiring the entire application.
+
+Grafana dashboard currently shows the following metrics related to requests:
+
+* Number of requests
+* Number of failed requests
+* Amount of time to process a request
+
+image::Grafana.png[align="center",title="Requests Monitoring"]
