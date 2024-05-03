@@ -505,7 +505,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#section-technical-risks">11. Risks and Technical Debts</a></li>
-<li><a href="#section-glossary">12. Glossary</a></li>
+<li><a href="#section-testing">12. Testing</a>
+<ul class="sectlevel2">
+<li><a href="#_unit_tests">12.1. Unit tests</a></li>
+<li><a href="#_acceptance_tests">12.2. Acceptance tests</a></li>
+<li><a href="#_load_tests">12.3. Load Tests</a></li>
+</ul>
+</li>
+<li><a href="#section-monitoring">13. Monitoring</a></li>
+<li><a href="#section-glossary">14. Glossary</a></li>
 </ul>
 </div>
 </div>
@@ -972,7 +980,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_level_2">5.2. Level 2</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Level%202%20Diagram.png" alt="Level 2 Diagram" width="860" height="313">
+<img src="./images/Level%202%20Diagram.png" alt="Level 2 Diagram" width="757" height="491">
 </div>
 </div>
 <div class="sect3">
@@ -1031,7 +1039,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_level_3">5.3. Level 3</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Level%203%20Diagram.png" alt="Level 3 Diagram" width="839" height="860">
+<img src="./images/Level%203%20Diagram.png" alt="Level 3 Diagram" width="798" height="1080">
 </div>
 </div>
 <div class="sect3">
@@ -1096,7 +1104,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_user_plays_a_match_only_one_question_batch_is_needed">6.1. User plays a match. Only one question batch is needed.</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Question%20generation%201.png" alt="Question generation 1" width="1045" height="560">
+<img src="./images/Question%20generation%201.png" alt="Question generation 1" width="1200" height="694">
 </div>
 </div>
 <div class="paragraph">
@@ -1107,7 +1115,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_user_plays_a_match_an_example_of_dynamic_question_generation">6.2. User plays a match. An example of dynamic question generation.</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Question%20generation%202.png" alt="Question generation 2" width="1062" height="835">
+<img src="./images/Question%20generation%202.png" alt="Question generation 2" width="1225" height="1060">
 </div>
 </div>
 <div class="paragraph">
@@ -1118,7 +1126,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_user_consults_its_game_statistics">6.3. User consults its game statistics.</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Consult%20Statistics.png" alt="Consult Statistics" width="466" height="305">
+<img src="./images/Consult%20Statistics.png" alt="Consult Statistics" width="467" height="305">
 </div>
 </div>
 </div>
@@ -1126,7 +1134,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_user_consults_questions_used_in_games">6.4. User consults questions used in games.</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Consult%20questions.png" alt="Consult questions" width="466" height="305">
+<img src="./images/Consult%20questions.png" alt="Consult questions" width="856" height="426">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1140,7 +1148,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_infrastructure_level_1">7.1. Infrastructure Level 1</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Deployment%20View.png" alt="Deployment View" width="833" height="725">
+<img src="./images/Deployment%20View.png" alt="Deployment View" width="965" height="957">
 </div>
 </div>
 <div class="paragraph">
@@ -1228,7 +1236,7 @@ the action to be performed by the user or the system (stimulus) in order to gene
 <h3 id="_quality_tree">10.1. Quality Tree</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/QualityTree.jpg" alt="QualityTree">
+<img src="./images/QualityTree.png" alt="QualityTree">
 </div>
 </div>
 </div>
@@ -1320,7 +1328,202 @@ occurs.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-glossary">12. Glossary</h2>
+<h2 id="section-testing">12. Testing</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_unit_tests">12.1. Unit tests</h3>
+<div class="paragraph">
+<p>Unit testing is fundamental to ensure application working as intended. Our goal is to have a minimun of 80% of code coverage.
+Jest is used as the testing framework due to its simplicity and speed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_acceptance_tests">12.2. Acceptance tests</h3>
+<div class="paragraph">
+<p>As for acceptance tests, we currently have five scenarios:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Registering a new user</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Given An unregistered user</p>
+</li>
+<li>
+<p>When I fill the data in the form and press submit</p>
+</li>
+<li>
+<p>Then A confirmation message should be shown on the screen</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Login with an existing user</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Given A registered user</p>
+</li>
+<li>
+<p>When I fill the data in the form and press submit</p>
+</li>
+<li>
+<p>Then Menu screen is displayed</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Playing classic game with default settings</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Given A logged user</p>
+</li>
+<li>
+<p>When I play with configured settings(2 questions 2 answers)</p>
+</li>
+<li>
+<p>Then 2 questions with 2 answers are asked</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Playing calculator game with default settings</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Given A logged user</p>
+</li>
+<li>
+<p>When I press play button</p>
+</li>
+<li>
+<p>Then questions with 4 answers are displayed till time finishes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Checking history</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Given A logged user</p>
+</li>
+<li>
+<p>When I go to History section</p>
+</li>
+<li>
+<p>Then games with questions and answers are shown</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_load_tests">12.3. Load Tests</h3>
+<div class="paragraph">
+<p>For load tests, we have been using Gatling with Firefox proxy to simulate a real user experience.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">t &lt;800ms</th>
+<th class="tableblock halign-left valign-top">t ∈ [800ms - 1200ms)</th>
+<th class="tableblock halign-left valign-top">t &gt;= 1200ms</th>
+<th class="tableblock halign-left valign-top">Failed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 new users per second(peak: 59 users)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">100%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Peak 1000 users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">67%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">26%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Peak 1500 users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Peak 2000 users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">66%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Peak 3000 users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">49%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31%</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="section-monitoring">13. Monitoring</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We have been using Grafana and Prometheus for monitiring the entire application.</p>
+</div>
+<div class="paragraph">
+<p>Grafana dashboard currently shows the following metrics related to requests:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Number of requests</p>
+</li>
+<li>
+<p>Number of failed requests</p>
+</li>
+<li>
+<p>Amount of time to process a request</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./images/Grafana.png" alt="Grafana">
+</div>
+<div class="title">Figure 1. Requests Monitoring</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="section-glossary">14. Glossary</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1366,7 +1569,7 @@ occurs.</p>
 <div id="footer">
 <div id="footer-text">
 Version 8.2 EN<br>
-Last updated 2024-04-11 12:53:26 +0200
+Last updated 2024-05-03 03:12:37 +0200
 </div>
 </div>
 </body>
