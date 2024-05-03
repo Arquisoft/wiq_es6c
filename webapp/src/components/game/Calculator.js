@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { shuffleArray, secureRandomNumber, generateGameId, esperar, gameStore} from '../Util';
+import { shuffleArray, secureRandomNumber, esperar, gameStore} from '../Util';
 import { Container, Typography, Box, LinearProgress } from '@mui/material';
 import { Footer } from '../footer/Footer';
 import { Nav } from '../nav/Nav';
@@ -29,8 +29,8 @@ const Calculator = () => {
     }
     const navigator = useNavigate();
 
-    const [questions, setQuestions] = useState([])
-    const [answeredQuestions, setAnsweredQuestions] = useState([])
+    const [questions] = useState([])
+    const [answeredQuestions] = useState([])
     const [points, setPoints] = useState(0)
     const [remTime, setRemTime] = useState(0);
 

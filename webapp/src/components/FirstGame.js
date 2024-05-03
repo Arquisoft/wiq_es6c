@@ -23,7 +23,7 @@ const Quiz = () => {
   let haveEnter = false;
   let id = useLocation().state.gameId;
 
-  const [questions, setQuestion] = useState([]);
+  const [questions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [remTime, setRemTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
