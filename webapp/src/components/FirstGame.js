@@ -8,22 +8,24 @@ import { Footer } from './footer/Footer';
 import { Nav } from './nav/Nav';
 import { gameStore } from './Util';
 
-let currentQuestionIndex = 0;
-
 let haveFailedQuestion = false; 
 let isCorrect = false
-let questions = [];
-let points = 0;
+
 let load = true;
 const previousBackgroundColor = '#1a1a1a'
+// let points = 0;
 
 const Quiz = () => {
+
   let username = localStorage.getItem("username")
   const navigator = useNavigate();
   let allQuestions = useLocation().state.questions;
+  console.log(allQuestions)
   let haveEnter = false;
   let id = useLocation().state.gameId;
 
+  const [questions, setQuestion] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [remTime, setRemTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
 
@@ -71,14 +73,14 @@ const Quiz = () => {
     botonCorrecta.style.backgroundColor = 'green' 
     if (option < 0 && !haveEnter) {
       haveEnter = true
-      questions.push({
+      await questions.push({
         title: allQuestions[currentQuestionIndex].question,
         answers: allQuestions[currentQuestionIndex].options,
         ansIndex: [-1, numberAnswer]
       })
       
       await esperar(2000)
-      currentQuestionIndex = (currentQuestionIndex + 1);
+      await setCurrentQuestionIndex(currentQuestionIndex + 1);
       botonCorrecta.style.backgroundColor = previousBackgroundColor
       changeButtons("false")
       
@@ -87,8 +89,14 @@ const Quiz = () => {
       haveEnter = false
 
       if (currentQuestionIndex === allQuestions.length ) {
-        gameStore(id, username, points, questions, totalTime/questions.length)
-        points = 0
+        let points = 0;
+        for (let i = 0; i < questions.length; i++) {
+          if (questions[i].ansIndex[0] === questions[i].ansIndex[1] ) {
+            points += 100
+          }
+        }
+        await gameStore(id, username, points, questions, totalTime/questions.length)
+        // points = 0;
         navigator('/menu')
       }
       return
@@ -99,13 +107,13 @@ const Quiz = () => {
     if (!isCorrect) {
       botonIncorrecta.style.backgroundColor = 'red'
     } else {
-      points = points += 100;
+      // points += 100
     }
         
     // Pasar a la siguiente pregunta después de responder
     let indexAnswers = [allQuestions[currentQuestionIndex].options.indexOf(option), numberAnswer]
 
-    questions.push({
+    await questions.push({
         title: allQuestions[currentQuestionIndex].question,
         answers: allQuestions[currentQuestionIndex].options,
         ansIndex: indexAnswers
@@ -116,7 +124,7 @@ const Quiz = () => {
     botonIncorrecta.style.backgroundColor = botonCorrecta.style.backgroundColor = previousBackgroundColor
     
     if (allQuestions.length-1 !== currentQuestionIndex) {
-      currentQuestionIndex = (currentQuestionIndex + 1);
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       haveFailedQuestion = true
     }
@@ -128,11 +136,15 @@ const Quiz = () => {
     load = true
     changeButtons("false")
     if(haveFailedQuestion) {
+      let points = 0;
+        for (let j = 0; j < questions.length; j++) {
+          if (questions[j].ansIndex[0] === questions[j].ansIndex[1] ) {
+            points += 100
+          }
+        }
       await gameStore(id, username, points, questions, totalTime/questions.length)
-      questions = []
-      points = 0
       haveFailedQuestion = false;
-      currentQuestionIndex += 1
+      // points = 0;
       navigator('/menu')
     }
   };
@@ -141,41 +153,40 @@ const Quiz = () => {
     <>
       <Nav />
       <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
-
+  
         <div className="questionStructure">
-
-          <div className="questionFirstGame">
-
-            <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
-              {allQuestions[currentQuestionIndex].question}
-            </Typography>
-
-          </div>
-
-          <div className="allAnswers">
-            {allQuestions[currentQuestionIndex].options.map((option, index) => (
-              <div key={index} >
-                <Button
-                  id={`option-${index}`}
-                  name="quiz"
-                  value={option}
-                  onClick={() => checkAnswer(option)}
-                  text={option}
-                />
+          {allQuestions && allQuestions.length > currentQuestionIndex && (
+            <>
+              <div className="questionFirstGame">
+                <Typography class="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
+                  {allQuestions[currentQuestionIndex].question}
+                </Typography>
               </div>
-            )
-            )}
-          </div>
+  
+              <div className="allAnswers">
+                {allQuestions[currentQuestionIndex].options && allQuestions[currentQuestionIndex].options.map((option, index) => (
+                  <div key={index}>
+                    <Button
+                      id={`option-${index}`}
+                      name="quiz"
+                      value={option}
+                      onClick={() => checkAnswer(option)}
+                      text={option}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
-
+  
         <Box sx={{ 
             width: '100%',
             padding: 3}}>
-
-            <LinearProgress id='progress'color="secondary" variant={"determinate"} value={remTime} />
-
+  
+            <LinearProgress id='progress' color="secondary" variant={"determinate"} value={remTime} />
         </Box>
-
+  
       </Container>
       <Footer />
     </>

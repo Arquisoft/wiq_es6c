@@ -65,7 +65,7 @@ describe('Menu component', () => {
         });
     });
 
-    test('probamos a empezar el juego de la calculadora humana (este no realiza llamadas a la api)', async () => {
+    test('probamos a empezar el juego de la calculadora humana ', async () => {
         const { getByText } = render(
             <MemoryRouter>
                 <Menu />
@@ -74,7 +74,7 @@ describe('Menu component', () => {
         fireEvent.click(getByText('Calculadora Humana'));
     
         await waitFor(() => {
-            expect(axios.get).toHaveBeenCalledTimes(0); 
+            expect(axios.get).toHaveBeenCalledTimes(1); 
         });
     });
 

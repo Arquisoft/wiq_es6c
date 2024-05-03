@@ -12,10 +12,10 @@ import Spinner from '../spinner/Spinner';
 const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:8000';
 
 let gameId;
-
+let questions = []
 
 const GameConfiguration = () => {
-  let questions = []
+  
   const navigation = useNavigate();
   let tematicas = ['Paises', 'Capitales'];
   let state = useLocation().state;
@@ -70,6 +70,7 @@ const GameConfiguration = () => {
 
   const getQuestions = async () => {
     try {
+      questions = []
       const topicsFormated = formatearTopics()
       const response = await axios.get(`${apiEndpoint}/questions?n_preguntas=${numPreguntas}&n_respuestas=${numRes}${topicsFormated}`);
       for (const pregunta of response.data) {

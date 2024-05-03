@@ -6,22 +6,32 @@ import { Nav } from '../nav/Nav';
 import Button from '../Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-let questions = [];
+
 let load = true;
 const previousBackgroundColor = '#1a1a1a';
-let points = 0;
-let answeredQuestions = [];
-let enter = false
-
+// let questions = []
+// let answeredQuestions = []
 
 const Calculator = () => {
 
     let username = localStorage.getItem("username")
     const [questionIndex, setQuestionIndex] = useState(0);
-    let id = useLocation().state.gameId;
+    let id;
+    let idTest = 'asdsdfsadgf';
+    let state = useLocation().state;   
 
+
+    if( state !== null) {
+        id = state.gameId;
+    }    
+    else {
+        id = idTest
+    }
     const navigator = useNavigate();
 
+    const [questions, setQuestions] = useState([])
+    const [answeredQuestions, setAnsweredQuestions] = useState([])
+    const [points, setPoints] = useState(0)
     const [remTime, setRemTime] = useState(0);
 
     if(questions.length === 0)
@@ -34,10 +44,11 @@ const Calculator = () => {
                 console.log("Imprimimos id", id)
                 console.log("Answered questions", answeredQuestions)
                 let avgtime = 80/questions.length
-                if (!enter) {
+                if (answeredQuestions.length !== 0) {
                     gameStore(id, username, points, answeredQuestions, avgtime);
-                    init();
                 }
+                init();
+                
                 navigator('/menu')
                 return 0; 
             }
@@ -52,9 +63,6 @@ const Calculator = () => {
     });
 
     function init(){
-        questions = [];
-        points = 0;
-        answeredQuestions = [];
     }
 
     function generateQuestion() {
@@ -113,7 +121,7 @@ const Calculator = () => {
             botonIncorrecta = document.getElementById('option-' + questions[questionIndex].options.indexOf(selectedAnswer));
             botonIncorrecta.style.backgroundColor = 'red';
         } else {
-            points += 100;
+            await setPoints(points + 100);
         }
 
         generateQuestion();
@@ -140,47 +148,51 @@ const Calculator = () => {
     
   
     return (
-      <>
-        <Nav />
-        <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
-  
+        <>
+          <Nav />
+          <Container component="main" maxWidth="xl" sx={{ marginTop: 4 }}>
+      
             <div className="questionStructure">
-  
+      
+              {questions && questions.length > questionIndex && questions[questionIndex].q && (
                 <div className="questionCalculator">
-    
-                <Typography id="questionText" dclass="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
+      
+                  <Typography id="questionText" className="questionText" component="h1" variant="h5" sx={{ textAlign: 'center' }}>
                     {questions[questionIndex].q}
-                </Typography>
-    
+                  </Typography>
+      
                 </div>
-    
+              )}
+      
+              {questions && questions.length > questionIndex && questions[questionIndex].options && (
                 <div className="allAnswers">
-                    {questions[questionIndex].options.map((option, index) => (
-                        <div key={index} >
-                        <Button
-                            id={`option-${index}`}
-                            value={option}
-                            onClick={() => handleOptionClick(option)}
-                            text={option}
-                        />
-                        </div>
-                    )
-                    )}
+                  {questions[questionIndex].options.map((option, index) => (
+                    <div key={index} >
+                      <Button
+                        id={`option-${index}`}
+                        value={option}
+                        onClick={() => handleOptionClick(option)}
+                        text={option}
+                      />
+                    </div>
+                  ))}
                 </div>
+              )}
+      
             </div>
-
+      
             <Box sx={{ 
                 width: '100%',
                 padding: 3}}>
-
-                <LinearProgress id='progress'color="secondary" variant={"determinate"} value={remTime} />
-
+      
+                <LinearProgress id='progress' color="secondary" variant={"determinate"} value={remTime} />
+      
             </Box>
-  
-        </Container>
-        <Footer />
-      </>
-    );
+      
+          </Container>
+          <Footer />
+        </>
+      );
   };
   
   export default Calculator;
