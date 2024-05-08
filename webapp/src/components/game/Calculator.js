@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 
 let load = true;
-const previousBackgroundColor = '#1a1a1a';
+const previousBackgroundColor = '#3b3b3b';
 // let questions = []
 // let answeredQuestions = []
 

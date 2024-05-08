@@ -12,7 +12,7 @@ let haveFailedQuestion = false;
 let isCorrect = false
 
 let load = true;
-const previousBackgroundColor = '#1a1a1a'
+const previousBackgroundColor = '#3b3b3b'
 // let points = 0;
 
 const Quiz = () => {

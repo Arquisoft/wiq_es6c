@@ -51,7 +51,7 @@ code {
 }
 
 .inner{
-  background-color: #1a1a1a;
+  background-color: #3b3b3b;
   color: #F0F0F0;
   transition: all .2s;
   border-radius: 1em;
@@ -86,6 +86,10 @@ input, label{
 
 .addUser .inner{
   padding: 1em 4.25em;
+}
+
+#history main .inner, #storeQuestion main .inner{
+  background-color: #1a1a1a;
 }
 
 main input:-internal-autofill-selected{

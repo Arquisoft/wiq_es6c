@@ -41,12 +41,12 @@ export const Nav = () => {
             <Container sx={{alignItems:'right', textAlign:'right'}}>
                 <Link to='/help' style={{color:'white', textDecoration: 'none'}}>
                     <IconButton size="large" color="inherit" >
-                        <HelpIcon sx={{ color: "#0F0F0F" }}/>
+                        <HelpIcon sx={{ color: "#F0F0F0" }}/>
                     </IconButton>
                 </Link>
                 <Link to='/' style={{color:'white', textDecoration: 'none'}}>
                     <IconButton size="large" color="inherit" >
-                        <LogoutIcon sx={{ color: "#0F0F0F" }}/>
+                        <LogoutIcon sx={{ color: "#F0F0F0" }}/>
                     </IconButton>
                 </Link>
             </Container>
